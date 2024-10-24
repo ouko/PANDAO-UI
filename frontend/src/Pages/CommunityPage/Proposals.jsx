@@ -452,9 +452,15 @@ const Proposals = () => {
                         >
                           <Badge
                             variant={
-                              proposalItem.is_active ? ' success' : 'destructive'
+                              proposalItem.is_active
+                                ? ' success'
+                                : 'destructive'
                             }
-                            className={`absolute right-2 ${proposalItem.is_active ? "bg-green-600 text-white" :""} `}
+                            className={`absolute right-2 ${
+                              proposalItem.is_active
+                                ? 'bg-green-600 text-white'
+                                : ''
+                            } `}
                           >
                             {proposalItem.is_active ? 'Pending' : 'Executed'}
                           </Badge>
@@ -637,10 +643,18 @@ const Proposals = () => {
                       <div>
                         <Button
                           onClick={handleExecuteActiveProposal}
-                          disabled={execute || timeLeft !== 'Time is up!'}
-                          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500 to-blue-700 hover:to-blue-800 "
+                          disabled={
+                            execute ||
+                            activeProposal.is_active === false ||
+                            timeLeft !== 'Time is up!'
+                          }
+                          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500 to-blue-700 hover:to-blue-800"
                         >
-                          {execute ? 'Excuting....' : ' Execute Proposal'}
+                          {execute
+                            ? 'Executing....'
+                            : activeProposal.is_active === false
+                            ? 'Already Executed'
+                            : 'Execute Proposal'}
                         </Button>
                       </div>
                     </div>
