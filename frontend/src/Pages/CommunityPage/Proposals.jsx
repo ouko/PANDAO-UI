@@ -28,6 +28,7 @@ const formatTime = (duration) => {
 const Proposals = () => {
   const { accounts } = useAccount()
   const [timeLeft, setTimeLeft] = useState('')
+  const [execute, setExecute] = useState(false)
   const [activeProposal, setActiveProposal] = useState(null)
   const [vote, setVote] = useState(Boolean)
   const navigate = useNavigate()
@@ -325,11 +326,63 @@ const Proposals = () => {
       setLoadingButtonFor(false)
     }
   }
+  const handleExecuteActiveProposal = async () => {
+    setExecute(true)
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/manifest/proposal/execute`,
+        {
+          proposal_address: activeProposal.proposal_address,
+          proposal_id: 0,
+        },
+      )
+
+      console.log('Vote submitted successfully:', res.data)
+      setManifestForVoteAgainst(res.data)
+
+      // Send the transaction
+      const { receipt } = await sendTransaction(res.data)
+      let txId = receipt.transaction.intent_hash
+
+      if (txId) {
+        try {
+          // Post transaction ID to backend
+          const response = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+            {
+              tx_id: txId,
+              user_address: accounts[0].address,
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+
+          console.log(response.data)
+          toast.success('Executed')
+        } catch (error) {
+          toast.error('Something went wrong while submitting the transaction')
+          console.error(error)
+        }
+      }
+    } catch (error) {
+      if (error.response.data.detail.error === 'does not hold any token') {
+        toast.error('Please buy some token first before Executing')
+        return
+      }
+      toast.error('Something Went wrong')
+      console.error('Error submitting vote:', error)
+    } finally {
+      setExecute(false)
+    }
+  }
   useEffect(() => {
     if (activeProposal) {
       const intervalId = setInterval(() => {
         const currentTime = Date.now()
-        const endTime = activeProposal.ends_time * 1000 
+        const endTime = activeProposal.ends_time * 1000
         const duration = endTime - currentTime
 
         if (duration > 0) {
@@ -353,7 +406,6 @@ const Proposals = () => {
     navigate('/')
     return null
   }
-  console.log(activeProposal, 'acti')
   return (
     <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
       {form && !activeProposal ? (
@@ -414,7 +466,6 @@ const Proposals = () => {
                                 {convertUnixTimestamp(proposalItem.ends_time)}
                               </span>
                             </div>
-                          
                           </div>
 
                           {/* Voting buttons (commented out) */}
@@ -525,50 +576,61 @@ const Proposals = () => {
                         </span>
                       </div>
                       <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
-                              <span>Time Left:</span>
-                              <span className="font-semibold">{timeLeft}</span>
-                            </div>
+                        <span>Time Left:</span>
+                        <span className="font-semibold">{timeLeft}</span>
+                      </div>
                     </div>
 
                     {/* Voting buttons (commented out) */}
-                    <div className="flex items-center gap-3 ">
-                      {loadingButtonFor ? (
-                        <Button
-                          size="sm"
-                          disabled
-                          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800 "
-                        >
-                          Voting...
-                        </Button>
-                      ) : (
-                        <Button
-                          size="sm"
-                          onClick={handleFor}
-                          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800 "
-                        >
-                          <span>Voted For :</span>
-                          <span>{activeProposal.voted_for}</span>
-                        </Button>
-                      )}
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center gap-3 ">
+                        {loadingButtonFor ? (
+                          <Button
+                            size="sm"
+                            disabled
+                            className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800 "
+                          >
+                            Voting...
+                          </Button>
+                        ) : (
+                          <Button
+                            size="sm"
+                            onClick={handleFor}
+                            className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800 "
+                          >
+                            <span>Voted For :</span>
+                            <span>{activeProposal.voted_for}</span>
+                          </Button>
+                        )}
 
-                      {loadingButtonAgainst ? (
+                        {loadingButtonAgainst ? (
+                          <Button
+                            size="sm"
+                            disabled
+                            className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
+                          >
+                            Voting..
+                          </Button>
+                        ) : (
+                          <Button
+                            size="sm"
+                            onClick={handleAgainst}
+                            className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
+                          >
+                            <span>Voted Against : </span>
+                            <span> {activeProposal.voted_against} </span>
+                          </Button>
+                        )}
+                      </div>
+                      <div>
                         <Button
-                          size="sm"
-                          disabled
-                          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
+                          onClick={handleExecuteActiveProposal}
+                          disabled={execute || timeLeft !== "Time is up!" }
+                          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500 to-blue-700 hover:to-blue-800 "
                         >
-                          Voting..
+                          {execute ? 'Excuting....' : ' Execute Proposal'}
                         </Button>
-                      ) : (
-                        <Button
-                          size="sm"
-                          onClick={handleAgainst}
-                          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
-                        >
-                          <span>Voted Against : </span>
-                          <span> {activeProposal.voted_against} </span>
-                        </Button>
-                      )}
+                      </div>
                     </div>
 
                     <div className="text-xs">
