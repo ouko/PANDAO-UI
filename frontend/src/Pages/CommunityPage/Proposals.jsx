@@ -17,9 +17,17 @@ import { useSendTransaction } from '@/hooks/useSendTransaction'
 import { toast } from 'sonner'
 import { convertUnixTimestamp } from '@/utils/functions/ConvertDate'
 import { formatStandardDateTime } from '@/utils/functions/convertActivityData'
-
+const formatTime = (duration) => {
+  const hours = Math.floor(
+    (duration % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+  )
+  const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60))
+  const seconds = Math.floor((duration % (1000 * 60)) / 1000)
+  return `${hours}h ${minutes}m ${seconds}s`
+}
 const Proposals = () => {
   const { accounts } = useAccount()
+  const [timeLeft, setTimeLeft] = useState('')
   const [activeProposal, setActiveProposal] = useState(null)
   const [vote, setVote] = useState(Boolean)
   const navigate = useNavigate()
@@ -317,7 +325,24 @@ const Proposals = () => {
       setLoadingButtonFor(false)
     }
   }
+  useEffect(() => {
+    if (activeProposal) {
+      const intervalId = setInterval(() => {
+        const currentTime = Date.now()
+        const endTime = activeProposal.ends_time * 1000 
+        const duration = endTime - currentTime
 
+        if (duration > 0) {
+          setTimeLeft(formatTime(duration))
+        } else {
+          clearInterval(intervalId)
+          setTimeLeft('Time is up!')
+        }
+      }, 1000)
+
+      return () => clearInterval(intervalId)
+    }
+  }, [activeProposal])
   useEffect(() => {
     fetchProposals()
   }, [params.id])
@@ -328,6 +353,7 @@ const Proposals = () => {
     navigate('/')
     return null
   }
+  console.log(activeProposal, 'acti')
   return (
     <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
       {form && !activeProposal ? (
@@ -388,6 +414,7 @@ const Proposals = () => {
                                 {convertUnixTimestamp(proposalItem.ends_time)}
                               </span>
                             </div>
+                          
                           </div>
 
                           {/* Voting buttons (commented out) */}
@@ -448,7 +475,6 @@ const Proposals = () => {
                     </div>
                   )}
                 </Card>
-              
               </div>
             </div>
           </div>
@@ -498,48 +524,52 @@ const Proposals = () => {
                           {convertUnixTimestamp(activeProposal.ends_time)}
                         </span>
                       </div>
+                      <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
+                              <span>Time Left:</span>
+                              <span className="font-semibold">{timeLeft}</span>
+                            </div>
                     </div>
 
                     {/* Voting buttons (commented out) */}
                     <div className="flex items-center gap-3 ">
-          {loadingButtonFor ? (
-            <Button
-              size="sm"
-              disabled
-              className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800 "
-            >
-              Voting...
-            </Button>
-          ) : (
-            <Button
-              size="sm"
-              onClick={handleFor}
-              className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800 "
-            >
-              <span>Voted For :</span>
-              <span>{activeProposal.voted_for}</span>
-            </Button>
-          )}
+                      {loadingButtonFor ? (
+                        <Button
+                          size="sm"
+                          disabled
+                          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800 "
+                        >
+                          Voting...
+                        </Button>
+                      ) : (
+                        <Button
+                          size="sm"
+                          onClick={handleFor}
+                          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800 "
+                        >
+                          <span>Voted For :</span>
+                          <span>{activeProposal.voted_for}</span>
+                        </Button>
+                      )}
 
-          {loadingButtonAgainst ? (
-            <Button
-              size="sm"
-              disabled
-              className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
-            >
-              Voting..
-            </Button>
-          ) : (
-            <Button
-              size="sm"
-              onClick={handleAgainst}
-              className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
-            >
-              <span>Voted Against : </span>
-              <span> {activeProposal.voted_against} </span>
-            </Button>
-          )}
-        </div>
+                      {loadingButtonAgainst ? (
+                        <Button
+                          size="sm"
+                          disabled
+                          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
+                        >
+                          Voting..
+                        </Button>
+                      ) : (
+                        <Button
+                          size="sm"
+                          onClick={handleAgainst}
+                          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
+                        >
+                          <span>Voted Against : </span>
+                          <span> {activeProposal.voted_against} </span>
+                        </Button>
+                      )}
+                    </div>
 
                     <div className="text-xs">
                       Published by{' '}
@@ -558,78 +588,80 @@ const Proposals = () => {
               </div>
             )}
           </Card>
-            <div className="grid mt-3  md:grid-cols-3 grid-cols-1 gap-3 px-1">
-                  <div className="bg-white col-span-2 rounded-md p-2">
-                    <div>
-                      {loadingCommnets && proposal ? (
-                        <div className="flex h-[200px] items-center justify-center text-center  mt-5 ">
-                          <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
-                        </div>
-                      ) : (
-                        <>
-                          {comments &&
-                            comments.map((comment, index) => (
+          <div className="grid mt-3  md:grid-cols-3 grid-cols-1 gap-3 px-1">
+            <div className="bg-white col-span-2 rounded-md p-2">
+              <div>
+                {loadingCommnets && proposal ? (
+                  <div className="flex h-[200px] items-center justify-center text-center  mt-5 ">
+                    <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
+                  </div>
+                ) : (
+                  <>
+                    {comments &&
+                      comments.map((comment, index) => (
+                        <div
+                          key={index}
+                          className="flex items-start gap-4 bg-white border-b-2 rounded-none p-3  text-black"
+                        >
+                          <Avatar className="shrink-0 object-cover">
+                            <img src={comment.image_url} alt="Avatar" />
+                            <AvatarFallback>JD</AvatarFallback>
+                          </Avatar>
+                          <div className="flex-1 space-y-2">
+                            <div className="flex items-center justify-between">
                               <div
-                                key={index}
-                                className="flex items-start gap-4 bg-white border-b-2 rounded-none p-3  text-black"
+                                className="group"
+                                onClick={() =>
+                                  navigate(
+                                    `/userDashboard/userProfile/${comment.public_address}`,
+                                  )
+                                }
                               >
-                                <Avatar className="shrink-0 object-cover">
-                                  <img src={comment.image_url} alt="Avatar" />
-                                  <AvatarFallback>JD</AvatarFallback>
-                                </Avatar>
-                                <div className="flex-1 space-y-2">
-                                  <div className="flex items-center justify-between">
-                                    <div
-                                      className="group"
-                                      onClick={() =>
-                                        navigate(
-                                          `/userDashboard/userProfile/${comment.public_address}`,
-                                        )
-                                      }
-                                    >
-                                      <div className="font-medium group-hover:underline cursor-pointer">
-                                        {comment.user_name}
-                                      </div>
-                                      <div className="font-light group-hover:underline cursor-pointer">
-                                        {clipAddress(comment.public_address)}
-                                      </div>
-                                    </div>
-                                    <div className="text-xs text-gray-700 dark:text-gray-700">2 days ago</div>
-                                  </div>
-                                  <p className="text-gray-800 dark:text-gray-400 font-medium">
-                                    {comment.comment}
-                                  </p>
-                                  <div>
-                                    {formatStandardDateTime(comment.timestamp)}
-                                  </div>
+                                <div className="font-medium group-hover:underline cursor-pointer">
+                                  {comment.user_name}
+                                </div>
+                                <div className="font-light group-hover:underline cursor-pointer">
+                                  {clipAddress(comment.public_address)}
                                 </div>
                               </div>
-                            ))}
-                        </>
-                      )}
+                              <div className="text-xs text-gray-700 dark:text-gray-700">
+                                2 days ago
+                              </div>
+                            </div>
+                            <p className="text-gray-800 dark:text-gray-400 font-medium">
+                              {comment.comment}
+                            </p>
+                            <div>
+                              {formatStandardDateTime(comment.timestamp)}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  </>
+                )}
 
-                      <div className="flex flex-col items-end gap-2 mt-1">
-                        <Textarea
-                          placeholder="Add a new comment..."
-                          className="flex-1 text-black"
-                          value={comment}
-                          required
-                          onChange={(e) => setComment(e.target.value)}
-                        />
-                        <Button
-                          onClick={handleAddComment}
-                          variant="radix"
-                          disabled={loadingCom}
-                        >
-                          {loadingCom ? 'Submiting...' : ' Submit'}
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-span-1 bg-white shadow-sm flex items-center justify-center p-2 rounded-md">
-                    Previous
-                  </div>
+                <div className="flex flex-col items-end gap-2 mt-1">
+                  <Textarea
+                    placeholder="Add a new comment..."
+                    className="flex-1 text-black"
+                    value={comment}
+                    required
+                    onChange={(e) => setComment(e.target.value)}
+                  />
+                  <Button
+                    onClick={handleAddComment}
+                    variant="radix"
+                    disabled={loadingCom}
+                  >
+                    {loadingCom ? 'Submiting...' : ' Submit'}
+                  </Button>
                 </div>
+              </div>
+            </div>
+            <div className="col-span-1 bg-white shadow-sm flex items-center justify-center p-2 rounded-md">
+              Previous
+            </div>
+          </div>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center max-w-[1440px] mx-auto my-6 p-2">
