@@ -17,6 +17,7 @@ import { useSendTransaction } from '@/hooks/useSendTransaction'
 import { toast } from 'sonner'
 import { convertUnixTimestamp } from '@/utils/functions/ConvertDate'
 import { formatStandardDateTime } from '@/utils/functions/convertActivityData'
+import { Badge } from '@/components/ui/badge'
 const formatTime = (duration) => {
   const hours = Math.floor(
     (duration % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
@@ -95,7 +96,7 @@ const Proposals = () => {
   const fetchProposals = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/proposal/active/${
+        `${import.meta.env.VITE_BACKEND_URL}/community/proposal/all/${
           params.id
         }`,
       )
@@ -447,12 +448,23 @@ const Proposals = () => {
                             setActiveProposal(proposalItem)
                             setShowForm(null)
                           }}
-                          className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-4 bg-white border-b-2 rounded-none p-3 text-black"
+                          className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-2 bg-white border-b-2 rounded-none p-3 text-black relative"
                         >
+                          <Badge
+                            variant={
+                              proposalItem.is_active ? ' success' : 'destructive'
+                            }
+                            className={`absolute right-2 ${proposalItem.is_active ? "bg-green-600 text-white" :""} `}
+                          >
+                            {proposalItem.is_active ? 'Pending' : 'Executed'}
+                          </Badge>
+
                           <div className="capitalize font-semibold text-xl">
                             {proposalItem.proposal}
                           </div>
-
+                          <div className="capitalize font-semibold text-md">
+                            {proposalItem.description}
+                          </div>
                           <div className="flex flex-col items-center gap-3">
                             <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
                               <span>Start Time :</span>
@@ -625,7 +637,7 @@ const Proposals = () => {
                       <div>
                         <Button
                           onClick={handleExecuteActiveProposal}
-                          disabled={execute || timeLeft !== "Time is up!" }
+                          disabled={execute || timeLeft !== 'Time is up!'}
                           className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500 to-blue-700 hover:to-blue-800 "
                         >
                           {execute ? 'Excuting....' : ' Execute Proposal'}
