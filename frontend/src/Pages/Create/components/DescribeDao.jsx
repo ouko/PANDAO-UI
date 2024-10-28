@@ -182,9 +182,9 @@ const DescribeView = () => {
               <SelectValue placeholder="Select who can publish proposal" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="everyone">Every One</SelectItem>
-              <SelectItem value="admin">Admin</SelectItem>
-              <SelectItem value="tokenholder">Token Holder</SelectItem>
+              <SelectItem value="EveryOne">Every One</SelectItem>
+              <SelectItem value="Admin">Admin</SelectItem>
+              <SelectItem value="TokenHolder">Token Holder</SelectItem>
             </SelectContent>
           </Select2>
         </div>
