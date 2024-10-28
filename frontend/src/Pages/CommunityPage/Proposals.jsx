@@ -407,6 +407,7 @@ const Proposals = () => {
     navigate('/')
     return null
   }
+  console.log(proposal.length)
   return (
     <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
       {form && !activeProposal ? (
@@ -432,7 +433,7 @@ const Proposals = () => {
                   </div>
                   {!loading && (
                     <div className="space-y-4">
-                      {!proposal && (
+                      { !proposal.length > 0 && (
                         <div className="flex items-center justify-center h-10">
                           No Active Proposal
                         </div>
