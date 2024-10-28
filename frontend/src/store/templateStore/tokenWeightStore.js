@@ -17,7 +17,8 @@ const useTokenWeightStore = create((set) => ({
     lending_borrowing:"",
     tags: [],
     proposal_right:'',
-    proposal_minimum_token:0
+    proposal_minimum_token:0,
+    vote_type:''
   },
   formFields: {
     communityName: "",
@@ -34,7 +35,8 @@ const useTokenWeightStore = create((set) => ({
     lending_borrowing:"",
     tags: [], 
     proposal_right:'',
-    proposal_minimum_token:0
+    proposal_minimum_token:0,
+    vote_type:''
   },
   setFormFields: (fields) => set((state) => ({
     formFields: {
