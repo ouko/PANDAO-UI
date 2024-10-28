@@ -1,26 +1,32 @@
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import useViewStore from "@/store/view";
-import { Progress } from "@/components/ui/progress";
-import { useEffect, useState } from "react";
-import { useAccount } from "@/AccountContext";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import useTokenWeightStore from "@/store/templateStore/tokenWeightStore";
-import CommunityImageUrl from "@/Pages/components/CommunityImageUrl";
-import TokenImageURL from "@/Pages/components/TokenImage";
-import { Select as Select2, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import Select from 'react-select';  // Import react-select
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import useViewStore from '@/store/view'
+import { Progress } from '@/components/ui/progress'
+import { useEffect, useState } from 'react'
+import { useAccount } from '@/AccountContext'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import useTokenWeightStore from '@/store/templateStore/tokenWeightStore'
+import CommunityImageUrl from '@/Pages/components/CommunityImageUrl'
+import TokenImageURL from '@/Pages/components/TokenImage'
+import {
+  Select as Select2,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import Select from 'react-select' // Import react-select
 
 const DescribeView = () => {
-  const { setView } = useViewStore();
-  const navigate = useNavigate();
-  const { accounts } = useAccount();
-  const { formFields, setFormFields } = useTokenWeightStore(); 
-  const [data, setData] = useState([]);
-  
+  const { setView } = useViewStore()
+  const navigate = useNavigate()
+  const { accounts } = useAccount()
+  const { formFields, setFormFields } = useTokenWeightStore()
+  const [data, setData] = useState([])
+
   const predefinedTags = [
     { value: 'blockchain', label: 'Blockchain' },
     { value: 'web3', label: 'Web3' },
@@ -28,73 +34,81 @@ const DescribeView = () => {
     { value: 'defi', label: 'DeFi' },
     { value: 'community', label: 'Community' },
     // Add more tags as needed
-  ];
+  ]
 
   const handleUrlId = (id) => {
-    const url = `https://ucarecdn.com/${id}/-/preview/1000x562/`;
-    setFormFields({ communityImage: url });
-  };
+    const url = `https://ucarecdn.com/${id}/-/preview/1000x562/`
+    setFormFields({ communityImage: url })
+  }
 
   const handleTokenUrl = (id2) => {
-    const url2 = `https://ucarecdn.com/${id2}/-/preview/1000x562/`;
-    setFormFields({ tokenImage: url2 });
-  };
+    const url2 = `https://ucarecdn.com/${id2}/-/preview/1000x562/`
+    setFormFields({ tokenImage: url2 })
+  }
 
   useEffect(() => {
     if (accounts && accounts.length > 0) {
-      setFormFields({ userAddress: accounts[0].address }); // Set the userAddress
+      setFormFields({ userAddress: accounts[0].address }) // Set the userAddress
     }
-  }, [accounts, setFormFields]);
+  }, [accounts, setFormFields])
 
   const handleViewChange = () => {
-    setView("4");
-  };
+    setView('4')
+  }
 
   useEffect(() => {
     const fetchBluePrint = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/blueprint`);
-        setData(res.data);
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/blueprint`,
+        )
+        setData(res.data)
       } catch (error) {
-        console.error("Error fetching blueprint data:", error);
+        console.error('Error fetching blueprint data:', error)
       }
-    };
-    fetchBluePrint();
-  }, []);
+    }
+    fetchBluePrint()
+  }, [])
 
   if (!accounts || accounts.length === 0 || !data) {
-    navigate("/");
-    return null;
+    navigate('/')
+    return null
   }
 
   const allFieldsFilled = () => {
     return (
-      formFields.communityName.trim() !== "" &&
-      formFields.description.trim() !== "" &&
-      formFields.communityImage.trim() !== "" &&
-      formFields.tokenImage.trim() !== "" && 
-      formFields.purpose.trim() !== "" &&
-      formFields.tags && formFields.tags.length > 0 // Ensure tags are selected
-    );
-  };
+      formFields.communityName.trim() !== '' &&
+      formFields.description.trim() !== '' &&
+      formFields.communityImage.trim() !== '' &&
+      formFields.tokenImage.trim() !== '' &&
+      formFields.purpose.trim() !== '' &&
+      formFields.tags &&
+      formFields.tags.length > 0 &&
+      formFields.proposal_right.trim() !== ''
+    )
+  }
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormFields({ [name]: value });
-  };
+    const { name, value } = e.target
+    setFormFields({ [name]: value })
+  }
 
   const handleDaoPurposeChange = (value) => {
-    setFormFields({ purpose: value });
-  };
-
+    setFormFields({ purpose: value })
+  }
+  const handleDaoPrposalCreator = (value) => {
+    setFormFields({ proposal_right: value })
+  }
   const handleTagsChange = (selectedTags) => {
-    const labels = selectedTags.map(tag => tag.label);
+    const labels = selectedTags.map((tag) => tag.label)
     // console.log(labels);
-    setFormFields({ tags: labels });
-  };
-  const selectedTags = formFields.tags ? formFields.tags.map(label => 
-    predefinedTags.find(tag => tag.label === label)
-  ).filter(tag => tag) : [];
+    setFormFields({ tags: labels })
+  }
+  const selectedTags = formFields.tags
+    ? formFields.tags
+        .map((label) => predefinedTags.find((tag) => tag.label === label))
+        .filter((tag) => tag)
+    : []
   return (
     <div className="max-w-[1000px] mx-auto mt-20">
       <Card className="bg-white relative z-40 text-black mt-10 p-12 flex flex-col gap-3 rounded-xl shadow-sm">
@@ -109,7 +123,8 @@ const DescribeView = () => {
         <div className="text-4xl font-semibold">Describe your DAO</div>
         <div className="flex md:flex-row flex-col items-center justify-between gap-3">
           <span className="w-full">
-            Start simple and learn as you go. You can always evolve your DAO in the future.
+            Start simple and learn as you go. You can always evolve your DAO in
+            the future.
           </span>
         </div>
       </Card>
@@ -127,7 +142,9 @@ const DescribeView = () => {
           />
         </div>
         <div className="flex flex-col gap-1">
-          <span className="font-medium text-lg px-1">Community Description</span>
+          <span className="font-medium text-lg px-1">
+            Community Description
+          </span>
           <span className="text-xs px-1">Keep it short and simple</span>
           <Textarea
             name="description"
@@ -139,19 +156,49 @@ const DescribeView = () => {
           />
         </div>
         <div className="flex flex-col gap-1">
-          <span className="font-medium text-lg px-1">What is the purpose of creating this DAO. </span>
+          <span className="font-medium text-lg px-1">
+            What is the purpose of creating this DAO.{' '}
+          </span>
           <Select2 onValueChange={handleDaoPurposeChange}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select the purpose" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="governance">Governance</SelectItem>
-              <SelectItem value="communityBuilding">Community Building</SelectItem>
+              <SelectItem value="communityBuilding">
+                Community Building
+              </SelectItem>
               <SelectItem value="fundraising">Fundraising</SelectItem>
               <SelectItem value="socialImpact">Social Impact</SelectItem>
             </SelectContent>
           </Select2>
         </div>
+        <div className="flex flex-col gap-1">
+          <span className="font-medium text-lg px-1">
+            Who can create Proposal.{' '}
+          </span>
+          <Select2 onValueChange={handleDaoPrposalCreator}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select who can publish proposal" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="everyone">Every One</SelectItem>
+              <SelectItem value="admin">Admin</SelectItem>
+              <SelectItem value="tokenholder">Token Holder</SelectItem>
+            </SelectContent>
+          </Select2>
+        </div>
+        {formFields.proposal_right === 'tokenholder' && (
+          <Input
+          type="number"
+            name="proposal_minimum_token"
+            className="border-slate-300 focus:ring-1 focus:ring-purple-400"
+            placeholder="Tell how many token should proposal creator should have"
+            value={formFields.proposal_minimum_token}
+            onChange={handleInputChange}
+            required
+          />
+        )}
         <div className="flex flex-col gap-1">
           <span className="font-medium text-lg px-1">Community Image URL</span>
           <div className="flex items-center ">
@@ -194,14 +241,14 @@ const DescribeView = () => {
           />
         </div>
         <div className="flex items-center justify-between">
-          <Button onClick={() => setView("2")}>Back</Button>
+          <Button onClick={() => setView('2')}>Back</Button>
           <Button disabled={!allFieldsFilled()} onClick={handleViewChange}>
             Next
           </Button>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DescribeView;
+export default DescribeView
