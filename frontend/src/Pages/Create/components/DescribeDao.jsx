@@ -97,7 +97,12 @@ const DescribeView = () => {
     setFormFields({ purpose: value })
   }
   const handleDaoPrposalCreator = (value) => {
-    setFormFields({ proposal_right: value })
+    if (value === 'TokenHolder') {
+      setFormFields({ proposal_right: value })
+    } else {
+      setFormFields({ proposal_right: value })
+      setFormFields({ proposal_minimum_token: 0 })
+    }
   }
   const handleTagsChange = (selectedTags) => {
     const labels = selectedTags.map((tag) => tag.label)
@@ -188,9 +193,9 @@ const DescribeView = () => {
             </SelectContent>
           </Select2>
         </div>
-        {formFields.proposal_right === 'tokenholder' && (
+        {formFields.proposal_right === 'TokenHolder' && (
           <Input
-          type="number"
+            type="number"
             name="proposal_minimum_token"
             className="border-slate-300 focus:ring-1 focus:ring-purple-400"
             placeholder="Tell how many token should proposal creator should have"
