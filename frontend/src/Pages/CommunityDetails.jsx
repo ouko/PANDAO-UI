@@ -462,7 +462,7 @@ const CommunityDetails = () => {
                     {data.funds} XRD
                   </div>
                 </Card>
-                <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg flex items-center justify-between "></Card>
+              
                 <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg ">
                   {communities.length === 0 && (
                     <div className="flex items-center justify-center">
