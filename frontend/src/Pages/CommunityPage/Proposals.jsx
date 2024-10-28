@@ -176,39 +176,41 @@ const Proposals = () => {
       // Handle successful submission (e.g., navigate to success page, show confirmation)
       console.log('Proposal submitted successfully:', res.data)
       setManifest(res.data)
-
-      // Optionally update UI or navigate to another page after successful submission
-    } catch (error) {
-      console.error('Error submitting proposal:', error)
-      // Handle error (e.g., show error message to user)
-    }
-    const { receipt } = await sendTransaction(manifest).finally(() => {
-      setLoading(false)
-      setLoadingButton(false)
-    })
-    let txId = receipt.transaction.intent_hash
-    if (txId) {
-      try {
-        const response = await axios.post(
-          `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
-          {
-            tx_id: txId,
-            user_address: accounts[0].address,
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json',
+      const { receipt } = await sendTransaction(manifest).finally(() => {
+        setLoading(false)
+        setLoadingButton(false)
+      })
+      let txId = receipt.transaction.intent_hash
+      if (txId) {
+        try {
+          const response = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+            {
+              tx_id: txId,
+              user_address: accounts[0].address,
             },
-          },
-        )
-        console.log(response.data)
-        toast.success('Proposal Submitted')
-        setLoadingButton(false)
-      } catch (error) {
-        toast.error('Something went wrong')
-        setLoadingButton(false)
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+          console.log(response.data)
+          toast.success('Proposal Submitted')
+          setLoadingButton(false)
+        } catch (error) {
+          toast.error('Something went wrong')
+          setLoadingButton(false)
+        }
       }
+    } catch (error) {
+      console.error('Error submitting proposal:', error.response.data.detail.error)
+      toast.error(error.response.data.detail.error.toUpperCase())
+    }finally{
+    
+      setLoadingButton(false)
     }
+ 
   }
   const handleAgainst = async () => {
     setVote(true)
