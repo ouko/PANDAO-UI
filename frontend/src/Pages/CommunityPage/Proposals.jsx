@@ -7,6 +7,13 @@ import { Textarea } from '@/components/ui/textarea'
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import axios from 'axios'
 import { ChevronLeft, HandHelping } from 'lucide-react'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
@@ -55,6 +62,7 @@ const Proposals = () => {
   const [comments, setComments] = useState([])
   const [minimumQuorum, setMinimumQuorum] = useState('')
   const [proposalText, setProposalText] = useState('')
+  const [voteType,setVoteType]=useState('')
   const [proposalDescription, setProposalDescription] = useState('')
   const [manifest, setManifest] = useState('')
   const [manifestForVoteAgainst, setManifestForVoteAgainst] = useState('')
@@ -92,6 +100,9 @@ const Proposals = () => {
       setLoadingCom(false)
       setComment('')
     }
+  }
+  const handleVoteType= (value)=>{
+setVoteType(value)
   }
   const fetchProposals = async () => {
     try {
@@ -141,7 +152,7 @@ const Proposals = () => {
       !bondIssuerAddress ||
       !targetXrdAmount ||
       !startTime ||
-      !endTime
+      !endTime || !voteType
     ) {
       alert('Please fill out all fields.')
       return
@@ -170,6 +181,7 @@ const Proposals = () => {
           description: proposalDescription,
           bond_issuer_address: bondIssuerAddress,
           target_xrd_amount: targetXrdAmount,
+          vote_type:voteType
         },
       )
 
@@ -204,13 +216,14 @@ const Proposals = () => {
         }
       }
     } catch (error) {
-      console.error('Error submitting proposal:', error.response.data.detail.error)
+      console.error(
+        'Error submitting proposal:',
+        error.response.data.detail.error,
+      )
       toast.error(error.response.data.detail.error.toUpperCase())
-    }finally{
-    
+    } finally {
       setLoadingButton(false)
     }
- 
   }
   const handleAgainst = async () => {
     setVote(true)
@@ -435,7 +448,7 @@ const Proposals = () => {
                   </div>
                   {!loading && (
                     <div className="space-y-4">
-                      { !proposal.length > 0 && (
+                      {!proposal.length > 0 && (
                         <div className="flex items-center justify-center h-10">
                           No Active Proposal
                         </div>
@@ -823,6 +836,20 @@ const Proposals = () => {
                     value={minimumQuorum}
                     onChange={(e) => setMinimumQuorum(e.target.value)}
                   />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Label className="text-2xl p-1">Vote Type</Label>
+                  <Select onValueChange={handleVoteType}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Vote Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Equality">Equality</SelectItem>
+                      <SelectItem value="ResourceOwned">
+                        Resource Owned
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="flex flex-col gap-2">
                   <Label className="text-2xl p-1">Bond Issuer Address</Label>

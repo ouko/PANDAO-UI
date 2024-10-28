@@ -84,8 +84,7 @@ const DescribeView = () => {
       formFields.purpose.trim() !== '' &&
       formFields.tags &&
       formFields.tags.length > 0 &&
-      formFields.proposal_right.trim() !== '' &&
-      formFields.proposal.vote_type.trim() !==''
+      formFields.proposal_right.trim() !== ''
     )
   }
 
@@ -97,9 +96,7 @@ const DescribeView = () => {
   const handleDaoPurposeChange = (value) => {
     setFormFields({ purpose: value })
   }
-  const handleVoteType = (value) => {
-    setFormFields({ vote_type: value })
-  }
+
   const handleDaoPrposalCreator = (value) => {
     if (value === 'TokenHolder') {
       setFormFields({ proposal_right: value })
@@ -194,20 +191,6 @@ const DescribeView = () => {
               <SelectItem value="EveryOne">Every One</SelectItem>
               <SelectItem value="Admin">Admin</SelectItem>
               <SelectItem value="TokenHolder">Token Holder</SelectItem>
-            </SelectContent>
-          </Select2>
-        </div>
-        <div className="flex flex-col gap-1">
-          <span className="font-medium text-lg px-1">
-            Vote Type.{' '}
-          </span>
-          <Select2 onValueChange={handleVoteType}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select Vote Type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Equality">Equality</SelectItem>
-              <SelectItem value="ResourceOwned">Resource Owned</SelectItem>
             </SelectContent>
           </Select2>
         </div>
