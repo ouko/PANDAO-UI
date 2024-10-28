@@ -73,9 +73,14 @@ const CommunityDetails = () => {
         `${import.meta.env.VITE_BACKEND_URL}/community/participant`,
         data,
       )
-      console.log('Response:', response.data)
-      toast.success('Welcome to the Community')
-      fetchParticipant()
+      if(response.data !== null){
+        console.log('Response:', response.data)
+        toast.success('Welcome to the Community')
+        fetchParticipant()
+      }else {
+        toast.error('Something went wrong') 
+      }
+  
     } catch (error) {
       console.log('Error joining community:', error)
       toast.error('Something went wrong')
