@@ -4,13 +4,17 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import AvatarCircles from '@/components/ui/myComponents/avatarCircle'
 import { clipAddress } from '@/utils/functions/ClipAddress'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+
 import axios from 'axios'
 import {
   Bitcoin,
   Check,
   ChevronRight,
+  CircleAlert,
   Contact,
   Copy,
+  Terminal,
   Users,
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -73,14 +77,13 @@ const CommunityDetails = () => {
         `${import.meta.env.VITE_BACKEND_URL}/community/participant`,
         data,
       )
-      if(response.data !== null){
+      if (response.data !== null) {
         console.log('Response:', response.data)
         toast.success('Welcome to the Community')
         fetchParticipant()
-      }else {
-        toast.error('Something went wrong') 
+      } else {
+        toast.error('Something went wrong')
       }
-  
     } catch (error) {
       console.log('Error joining community:', error)
       toast.error('Something went wrong')
@@ -364,6 +367,7 @@ const CommunityDetails = () => {
                   <h1 className="text-3xl font-bold text-left w-full">
                     {data.name}
                   </h1>
+
                   <div className="flex items-end md:items-start md:justify-end w-full gap-2">
                     {!isUserParticipant && (
                       <Button variant="radix" onClick={handleJoinCommunity}>
@@ -372,67 +376,70 @@ const CommunityDetails = () => {
                     )}
                   </div>
                 </div>
-                <div className="grid gap-4">
-                  <div>
-                    <h2 className="text-xl font-semibold">
-                      Community Overview
-                    </h2>
-                    <p className=" mt-2">{data.description}</p>
-                  </div>
-                  <div>
-                    <h2 className="text-md font-semibold">Pupose</h2>
-                    <p className="text-gray-800 dark:text-gray-400 mt-2">
-                      {data.purpose || 'N/A'}
-                    </p>
-                  </div>
-                  <div>
-                    <h2 className="text-md font-semibold">Owner Address</h2>
-                    <div className="flex items-center  gap-2">
-                      <p className="text-gray-900 dark:text-gray-400 mt-2 text-ellipsis overflow-hidden">
-                        {clipAddress(data.owner_address || 'N/A')}
-                      </p>
-                      <p
-                        className="cursor-pointer"
-                        onClick={() => handleCopy(data.owner_address)}
-                      >
-                        {copied ? (
-                          <Check className="h-4 w-4" />
-                        ) : (
-                          <Copy className="h-4 w-4" />
-                        )}
+                <div className="flex ">
+                  <div className="grid gap-4">
+                    <div>
+                      <h2 className="text-xl font-semibold">
+                        Community Overview
+                      </h2>
+                      <p className=" mt-2">{data.description}</p>
+                    </div>
+                    <div>
+                      <h2 className="text-md font-semibold">Pupose</h2>
+                      <p className="text-gray-800 dark:text-gray-400 mt-2">
+                        {data.purpose || 'N/A'}
                       </p>
                     </div>
-                  </div>
-                  <div>
-                    <h2 className="text-md font-semibold">Component Address</h2>
-                    <p className="text-gray-900 dark:text-gray-400 mt-2 text-ellipsis w-fit ">
-                      {data.component_address || 'N/A'}
-                    </p>
-                  </div>
-                  <div className="">
-                    <h2 className="text-md font-semibold">Proposal Rights</h2>
-                    {data.proposal_rights === 'TOKEN_HOLDER_THRESHOLD' ? (
-                      <div className="mt-2">
-                        <p>
-                          Proposal submission is restricted. You need to hold at
-                          least{' '}
-                          <span className="font-bold">
-                            {data.proposal_minimum_token || 10}{' '}
-                          </span>{' '}
-                          tokens to make a proposal.
+                    <div>
+                      <h2 className="text-md font-semibold">Owner Address</h2>
+                      <div className="flex items-center  gap-2">
+                        <p className="text-gray-900 dark:text-gray-400 mt-2 text-ellipsis overflow-hidden">
+                          {clipAddress(data.owner_address || 'N/A')}
+                        </p>
+                        <p
+                          className="cursor-pointer"
+                          onClick={() => handleCopy(data.owner_address)}
+                        >
+                          {copied ? (
+                            <Check className="h-4 w-4" />
+                          ) : (
+                            <Copy className="h-4 w-4" />
+                          )}
                         </p>
                       </div>
-                    ) : data.proposal_rights === 'ADMIN' ? (
-                      <div className="mt-2">
-                        <p>Proposal creation is restricted to Admin only.</p>
-                      </div>
-                    ) : (
-                      <div className="mt-2">
-                        Proposal creation is open to all.
-                      </div>
-                    )}
-                  </div>
-                  {/* <div>
+                    </div>
+                    <div>
+                      <h2 className="text-md font-semibold">
+                        Component Address
+                      </h2>
+                      <p className="text-gray-900 dark:text-gray-400 mt-2 text-ellipsis w-fit ">
+                        {data.component_address || 'N/A'}
+                      </p>
+                    </div>
+                    <div className="">
+                      <h2 className="text-md font-semibold">Proposal Rights</h2>
+                      {data.proposal_rights === 'TOKEN_HOLDER_THRESHOLD' ? (
+                        <div className="mt-2">
+                          <p>
+                            Proposal submission is restricted. You need to hold
+                            at least{' '}
+                            <span className="font-bold">
+                              {data.proposal_minimum_token || 10}{' '}
+                            </span>{' '}
+                            tokens to make a proposal.
+                          </p>
+                        </div>
+                      ) : data.proposal_rights === 'ADMIN' ? (
+                        <div className="mt-2">
+                          <p>Proposal creation is restricted to Admin only.</p>
+                        </div>
+                      ) : (
+                        <div className="mt-2">
+                          Proposal creation is open to all.
+                        </div>
+                      )}
+                    </div>
+                    {/* <div>
                     <h2 className="text-md font-semibold">Tags</h2>
                     <div className="flex items-center gap-1">
                         {data.tags &&
@@ -443,6 +450,38 @@ const CommunityDetails = () => {
                           ))}
                       </div>
                   </div> */}
+                  </div>
+                  <div className=" mt-4">
+                    <Alert>
+                      <CircleAlert className="h-4 w-4" />
+                      <AlertTitle>Proposal Rights</AlertTitle>
+                      <AlertDescription>
+                        {data.proposal_rights === 'TOKEN_HOLDER_THRESHOLD' ? (
+                          <div className="mt-2">
+                            <p>
+                              Proposal submission is restricted. You need to
+                              hold at least{' '}
+                              <span className="font-bold">
+                                {data.proposal_minimum_token || 10}{' '}
+                              </span>{' '}
+                              tokens to make a proposal.
+                            </p>
+                          </div>
+                        ) : data.proposal_rights === 'ADMIN' ? (
+                          <div className="mt-2">
+                            <p>
+                              Proposal creation is restricted to Admin only.
+                            </p>
+                          </div>
+                        ) : (
+                          <div className="mt-2">
+                            Proposal creation is open to all.
+                          </div>
+                        )}
+                      </AlertDescription>
+                    </Alert>
+           
+                  </div>
                 </div>
               </div>
             </Card>
@@ -467,7 +506,7 @@ const CommunityDetails = () => {
                     {data.funds} XRD
                   </div>
                 </Card>
-              
+
                 <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg ">
                   {communities.length === 0 && (
                     <div className="flex items-center justify-center">
