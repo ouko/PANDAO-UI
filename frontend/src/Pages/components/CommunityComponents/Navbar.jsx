@@ -1,32 +1,40 @@
-import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
-import { Button } from "../../../components/ui/button";
-import MobileSidebar from "../MobileSidebar";
-import { ChevronLeft} from "lucide-react";
-import { useRdt } from "@/hooks/useRdt";
-import axios from "axios";
-import MobileNav from "./MobileNav";
+import { Link, NavLink, useNavigate, useParams } from 'react-router-dom'
+import { Button } from '../../../components/ui/button'
+import MobileSidebar from '../MobileSidebar'
+import { ChevronLeft } from 'lucide-react'
+import { useRdt } from '@/hooks/useRdt'
+import axios from 'axios'
+import MobileNav from './MobileNav'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 const Navbar = () => {
-  const rdt = useRdt();
-  const navigate = useNavigate();
-  const params = useParams();
+  const rdt = useRdt()
+  const navigate = useNavigate()
+  const params = useParams()
 
   rdt.walletApi.provideConnectResponseCallback(async (result) => {
     if (result.isErr()) {
-      console.log("Error");
+      console.log('Error')
     } else {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/user/check-signup/${
             result.value.accounts[0].address
-          }`
-        );
-        console.log(response.data.exist);
+          }`,
+        )
+        console.log(response.data.exist)
 
         if (response.data.exist === false) {
-          navigate("/signup");
+          navigate('/signup')
         } else {
-          navigate("/userDashboard");
+          navigate('/userDashboard')
           // try {
           //   const loginResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/login`, {
           //     public_address: result.value.accounts[0].address
@@ -41,28 +49,28 @@ const Navbar = () => {
           // }
         }
       } catch (error) {
-        console.log("Error in API call", error);
+        console.log('Error in API call', error)
       }
     }
-  });
+  })
 
   return (
     <div className="z-50 p-4  w-full  rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-80  bg-purple-50  text-black fixed ">
       <div className="max-w-[1440px] mx-auto flex  items-center justify-between h-10 md:px-10  ">
         <ul className="md:flex hidden items-center justify-start gap-5 w-full font-semibold text-lg">
-        <NavLink
+          <NavLink
             to="/"
-         className="bg-white p-2 rounded-xl hover:text-sky-600 group"
+            className="bg-white p-2 rounded-xl hover:text-sky-600 group"
             end
           >
-           <ChevronLeft className="group-hover:-translate-x-[2px] duration-300 transition-transform" />
+            <ChevronLeft className="group-hover:-translate-x-[2px] duration-300 transition-transform" />
           </NavLink>
           <NavLink
             to={`/community/detail/${params.id}`}
             className={({ isActive }) =>
               isActive
-                ? "bg-white text-blue-800 w-32 text-center py-2 px-4 rounded-lg font-semibold"
-                : "bg-transparent text-black w-32 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] "
+                ? 'bg-white text-blue-800 w-32 text-center py-2 px-4 rounded-lg font-semibold'
+                : 'bg-transparent text-black w-32 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
             }
             end
           >
@@ -72,8 +80,8 @@ const Navbar = () => {
             to={`/community/detail/${params.id}/members`}
             className={({ isActive }) =>
               isActive
-                ? "bg-white text-blue-800 w-32 text-center py-2 px-4 rounded-lg font-semibold"
-                : "bg-transparent text-black w-32 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] "
+                ? 'bg-white text-blue-800 w-32 text-center py-2 px-4 rounded-lg font-semibold'
+                : 'bg-transparent text-black w-32 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
             }
             end
           >
@@ -83,8 +91,8 @@ const Navbar = () => {
             to={`/community/detail/${params.id}/discussion`}
             className={({ isActive }) =>
               isActive
-                ? "bg-white text-blue-800 w-32 text-center py-2 px-4 rounded-lg font-semibold"
-                : "bg-transparent text-black w-32 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] "
+                ? 'bg-white text-blue-800 w-32 text-center py-2 px-4 rounded-lg font-semibold'
+                : 'bg-transparent text-black w-32 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
             }
             end
           >
@@ -94,8 +102,8 @@ const Navbar = () => {
             to={`/community/detail/${params.id}/tokenDistribution`}
             className={({ isActive }) =>
               isActive
-                ? "bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold"
-                : "bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] "
+                ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
+                : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
             }
             end
           >
@@ -105,8 +113,8 @@ const Navbar = () => {
             to={`/community/detail/${params.id}/activity`}
             className={({ isActive }) =>
               isActive
-                ? "bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold"
-                : "bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] "
+                ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
+                : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
             }
             end
           >
@@ -116,33 +124,51 @@ const Navbar = () => {
             to={`/community/detail/${params.id}/proposals`}
             className={({ isActive }) =>
               isActive
-                ? "bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold"
-                : "bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] "
+                ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
+                : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
             }
             end
           >
             <li>Proposals</li>
           </NavLink>
+          <DropdownMenu>
+            <DropdownMenuTrigger>More</DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>
+                <NavLink
+                  to={`/community/detail/${params.id}/bondissue`}
+                  className={({ isActive }) =>
+                    isActive
+                      ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
+                      : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
+                  }
+                  end
+                >
+                  <li>Bond Issue</li>
+                </NavLink>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </ul>
         <div className="w-full md:flex items-center justify-end gap-4 hidden ">
           <radix-connect-button />
         </div>
         <div className="md:hidden gap-3 flex items-center justify-between w-full">
-        <NavLink
+          <NavLink
             to="/"
-         className="bg-white p-2 rounded-xl hover:text-sky-600"
+            className="bg-white p-2 rounded-xl hover:text-sky-600"
             end
           >
-           <ChevronLeft/>
-          </NavLink>  
+            <ChevronLeft />
+          </NavLink>
           <MobileNav />
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
 //const image_url = "https://github.com/shadcn.png";
 //  public_address: result.value.accounts[0].address,
 //         name: result.value.persona.label,

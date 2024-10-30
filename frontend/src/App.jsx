@@ -26,6 +26,7 @@ import ExploreAllDao from "./Pages/ExploreAllDaos";
 import Blog from "./Pages/Blogs";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
 import Termsandconditon from "./Pages/TermsandConditions";
+import BondIssue from "./Pages/CommunityPage/BondIssues";
 
 function App() {
   return (
@@ -70,7 +71,7 @@ function App() {
           <Route path="activity" element={<Activity />} />
           <Route path="proposals" element={<Proposals />} />
 
-
+          <Route path="bondissue" element={<BondIssue />} />
           
         </Route>
    
