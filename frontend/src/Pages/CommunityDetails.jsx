@@ -480,7 +480,6 @@ const CommunityDetails = () => {
                         )}
                       </AlertDescription>
                     </Alert>
-           
                   </div>
                 </div>
               </div>
@@ -502,8 +501,13 @@ const CommunityDetails = () => {
                 </Card>
                 <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg flex items-center justify-between ">
                   <div>Total Funds</div>
-                  <div className="bg-purple-600 shadow-lg min-w-28 flex items-center justify-center rounded-lg text-white p-1">
-                    {data.funds} XRD
+                  <div className="flex items-center gap-2">
+                    <div className="bg-purple-600 shadow-lg min-w-28 flex items-center justify-center rounded-lg text-white p-1">
+                      {Math.round(data.funds_in_usd * 10000) / 10000} $
+                    </div>{' '}
+                    <div className="bg-purple-600 shadow-lg min-w-28 flex items-center justify-center rounded-lg text-white p-1">
+                      {data.funds} XRD
+                    </div>
                   </div>
                 </Card>
 
@@ -678,7 +682,15 @@ const CommunityDetails = () => {
                         <div className="flex flex-col text-base">
                           <span>Token Price: {data.token_price}</span>
                           <span>
+                            Token Price in USD:{' '}
+                            {Math.round(data.token_price_in_usd * 10000) / 10000} $
+                          </span>
+                          <span>
                             Token Buy Back Price : {data.token_buy_back_price}
+                          </span>
+                          <span>
+                            Token Buy Back Price in USD:{' '}
+                            {Math.round(data.token_buy_back_price_in_usd * 10000) / 10000} $
                           </span>
                         </div>
                       </div>
