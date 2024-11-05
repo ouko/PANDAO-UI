@@ -86,8 +86,11 @@ const BondIssue = () => {
   const [isFormComplete, setIsFormComplete] = useState(false)
   const [loading, setLoading] = useState(true)
   const handleformSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    setLoading(true); // Set loading to true at the start of the process
+    
     try {
+      // Initial post request to submit the bond data
       const res = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/manifest/zero-coupon-bond`,
         {
@@ -96,43 +99,55 @@ const BondIssue = () => {
           user_address: accounts[0].address,
           initial_exchange_date: new Date(bond.initial_exchange_date).toISOString(),
           maturity_date: new Date(bond.maturity_date).toISOString(),
-        },
-      )
-      if(res.status === 200){
-        setManifest(res.data)
-      const { receipt } = await sendTransaction(manifest).finally(() => {
-        setLoading(false)
-      })
-      let txId = receipt.transaction.intent_hash
-      if (txId) {
-        try {
-          const response = await axios.post(
-            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
-            {
-              tx_id: txId,
-              user_address: accounts[0].address,
-            },
-            {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            },
-          )
-          console.log(response.data)
-          toast.success('Bond Issues')
-        } catch (error) {
-          toast.error('Something went wrong')
         }
+      );
+  
+      if (res.status === 200) {
+        setManifest(res.data);
+        console.log('Form submitted successfully', res.data);
+  
+        // Wait for manifest to update before sending the transaction
+        const { receipt } = await sendTransaction(res.data); // Using res.data instead of manifest
+  
+        // Transaction receipt handling
+        if (receipt?.transaction?.intent_hash) {
+          let txId = receipt.transaction.intent_hash;
+  
+          try {
+            const response = await axios.post(
+              `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+              {
+                tx_id: txId,
+                user_address: accounts[0].address,
+              },
+              {
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              }
+            );
+            console.log(response.data);
+            toast.success('Bond Issued');
+          } catch (error) {
+            console.error('Error in submit-tx:', error);
+            toast.error('Failed to submit transaction');
+            setLoading(false)
+          }
+        } else {
+          toast.error('Transaction hash missing');
+        }
+      } else {
+        toast.error('Failed to create bond manifest');
       }
-      }
-      console.log('Form submitted successfully', res.data)
     } catch (error) {
-      console.log('Error submitting form:', error)
-    }finally{
-resetBond()
-toast.error('Something went wrong')
+      console.error('Error submitting form:', error);
+      toast.error('Something went wrong');
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
+  
 
   const handleChange = (e) => {
     updateBond(e.target.name, e.target.value)
@@ -308,7 +323,7 @@ toast.error('Something went wrong')
                     </Select>
                   </div>
                   <div className="flex items-center justify-end">
-                    <Button type="submit" disabled={!isFormComplete || !loading}>
+                    <Button type="submit" disabled={!isFormComplete || loading }>
                       Submit
                     </Button>
                   </div>
