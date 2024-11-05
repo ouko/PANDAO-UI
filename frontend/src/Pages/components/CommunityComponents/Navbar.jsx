@@ -147,6 +147,19 @@ const Navbar = () => {
                   <li>Bond Issue</li>
                 </NavLink>
               </DropdownMenuItem>
+              <DropdownMenuItem>
+                <NavLink
+                  to={`/community/detail/${params.id}/bondissued`}
+                  className={({ isActive }) =>
+                    isActive
+                      ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
+                      : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
+                  }
+                  end
+                >
+                  <li>Bond Issued</li>
+                </NavLink>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </ul>

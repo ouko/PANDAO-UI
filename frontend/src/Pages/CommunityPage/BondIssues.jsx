@@ -178,7 +178,7 @@ toast.error('Something went wrong')
                       </Button>
                     </div> */}
                 </div>
-                <div className="text-3xl font-semibold">Bond</div>
+                <div className="text-3xl font-semibold">Create Bond</div>
               </Card>
               <Card className="p-5">
                 <form

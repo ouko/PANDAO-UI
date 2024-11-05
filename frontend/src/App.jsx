@@ -27,6 +27,7 @@ import Blog from "./Pages/Blogs";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
 import Termsandconditon from "./Pages/TermsandConditions";
 import BondIssue from "./Pages/CommunityPage/BondIssues";
+import BondIssued from "./Pages/CommunityPage/BondIssued";
 
 function App() {
   return (
@@ -72,7 +73,7 @@ function App() {
           <Route path="proposals" element={<Proposals />} />
 
           <Route path="bondissue" element={<BondIssue />} />
-          
+          <Route path="bondissued" element={<BondIssued />} />
         </Route>
    
       </Routes>
