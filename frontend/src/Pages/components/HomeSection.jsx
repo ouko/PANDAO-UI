@@ -22,7 +22,7 @@ const HomeSection = () => {
           {!accounts || accounts.length === 0 ? (
             <Button variant="radix">Get Started</Button>
           ) : (
-            <Button onClick={() => navigate('/userDashboard')} variant="radix2">
+            <Button onClick={() => navigate('/userDashboard')} variant="radix">
               My Dashboard
             </Button>
           )}
