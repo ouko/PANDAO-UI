@@ -91,7 +91,6 @@ const ExploreSection = () => {
   //   navigate("/");
   //   return null;
   // }
-  console.log(data)
   return (
     <div className="bg-slate-100 ">
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
