@@ -37,14 +37,16 @@ export function AnimatedGridPattern({
 
   const updateSquarePosition = (id) => {
     setSquares((currentSquares) =>
-      currentSquares.map((sq) =>
-        sq.id === id
-          ? {
-              ...sq,
-              pos: getPos(),
-            }
-          : sq
-      )
+      Array.isArray(currentSquares) // Check if currentSquares is an array
+        ? currentSquares.map((sq) =>
+            sq.id === id
+              ? {
+                  ...sq,
+                  pos: getPos(),
+                }
+              : sq
+          )
+        : []
     );
   };
 
@@ -104,26 +106,27 @@ export function AnimatedGridPattern({
       </defs>
       <rect width="100%" height="100%" fill={`url(#${id})`} />
       <svg x={x} y={y} className="overflow-visible">
-        {squares.map(({ pos: [x, y], id }, index) => (
-          <motion.rect
-            initial={{ opacity: 0 }}
-            animate={{ opacity: maxOpacity }}
-            transition={{
-              duration,
-              repeat: 1,
-              delay: index * 0.1,
-              repeatType: "reverse",
-            }}
-            onAnimationComplete={() => updateSquarePosition(id)}
-            key={`${x}-${y}-${index}`}
-            width={width - 1}
-            height={height - 1}
-            x={x * width + 1}
-            y={y * height + 1}
-            fill="purple"
-            strokeWidth="0"
-          />
-        ))}
+        {Array.isArray(squares) && // Check if squares is an array before mapping
+          squares.map(({ pos: [x, y], id }, index) => (
+            <motion.rect
+              initial={{ opacity: 0 }}
+              animate={{ opacity: maxOpacity }}
+              transition={{
+                duration,
+                repeat: 1,
+                delay: index * 0.1,
+                repeatType: "reverse",
+              }}
+              onAnimationComplete={() => updateSquarePosition(id)}
+              key={`${x}-${y}-${index}`}
+              width={width - 1}
+              height={height - 1}
+              x={x * width + 1}
+              y={y * height + 1}
+              fill="purple"
+              strokeWidth="0"
+            />
+          ))}
       </svg>
     </svg>
   );
