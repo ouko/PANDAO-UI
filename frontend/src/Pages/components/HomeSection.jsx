@@ -2,7 +2,7 @@ import { useAccount } from '@/AccountContext'
 import { Button } from '../../components/ui/button'
 import { useNavigate } from 'react-router-dom'
 import AnimatedGridPattern from '@/components/ui/myComponents/animated-grid'
-import { BorderBeam } from '@/components/ui/myComponents/border-beam'
+
 
 const HomeSection = () => {
   const { accounts } = useAccount()
@@ -10,7 +10,7 @@ const HomeSection = () => {
 
   return (
     <div className="relative ">
-      <AnimatedGridPattern />
+      {/* <AnimatedGridPattern /> */}
       <div className="h-[600px] flex items-start  justify-start  text-black max-w-[1200px] mx-auto">
         <div className="flex flex-col  items-center text-center  gap-5 justify-center  p-5 w-full h-full object-cover bg-no-repeat md:bg-none">
           <div className="md:text-7xl text-3xl font-extrabold tracking-wider md:leading-[75px] leading-[40px] ">
