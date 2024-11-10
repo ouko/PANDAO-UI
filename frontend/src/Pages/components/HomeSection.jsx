@@ -30,7 +30,7 @@ const HomeSection = () => {
       </div>
       <div className='pb-40 flex items-center justify-center relative'>
  
-      <img src="/home.jpg" alt="" className='bg-white  rounded-xl border-4 border-purple-200'/>
+      <img src="/home.jpg" alt="" className='bg-white  rounded-xl border-4 border-purple-200 shadow-purple-200 shadow-2xl'/>
    
       </div>
   
