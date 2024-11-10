@@ -1,84 +1,83 @@
-import { Link, useNavigate } from "react-router-dom";
-import { Button } from "../../components/ui/button";
-import MobileSidebar from "./MobileSidebar";
-import { Rocket } from "lucide-react";
-import { useRdt } from "@/hooks/useRdt";
-import axios from "axios";
-import { useEffect } from "react";
-import { useAccount } from "@/AccountContext";
-
-
+import { Link, useNavigate } from 'react-router-dom'
+import { Button } from '../../components/ui/button'
+import MobileSidebar from './MobileSidebar'
+import { Rocket } from 'lucide-react'
+import { useRdt } from '@/hooks/useRdt'
+import axios from 'axios'
+import { useEffect } from 'react'
+import { useAccount } from '@/AccountContext'
 
 const Navbar = () => {
-  const rdt = useRdt();
-  const { accounts } = useAccount();
-  const navigate=useNavigate()
- rdt.walletApi.provideConnectResponseCallback(async (result) => {
-  if (result.isErr()) {
-    console.log("Error");
-  } else {
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/user/check-signup/${result.value.accounts[0].address}`);
-      console.log(response.data.exist);
-      
-      if (response.data.exist === false) {
-        navigate("/signup");
-      } else {
-        
-        navigate("/userDashboard");
-        // try {
-        //   const loginResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/login`, {
-        //     public_address: result.value.accounts[0].address
-        //   });
-        //   console.log("Login successful", loginResponse.data);
-        //   if(loginResponse.status==200){
-
-        //   navigate("/userDashboard");
-        //   }
-        // } catch (loginError) {
-        //   console.log("Error during login API call", loginError);
-        // }
-      }
-    } catch (error) {
-      console.log("Error in API call", error);
-    }
-  }
-});
-
-
-useEffect(() => {
-  const checkSignup = async () => {
-    if (accounts && accounts.length > 0) {
+  const rdt = useRdt()
+  const { accounts } = useAccount()
+  const navigate = useNavigate()
+  rdt.walletApi.provideConnectResponseCallback(async (result) => {
+    if (result.isErr()) {
+      console.log('Error')
+    } else {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/check-signup/${accounts[0].address}`
-        );
-        
-        console.log('Signup status:', response.data.exist);
+          `${import.meta.env.VITE_BACKEND_URL}/user/check-signup/${
+            result.value.accounts[0].address
+          }`,
+        )
+        console.log(response.data.exist)
+
         if (response.data.exist === false) {
-          await rdt.disconnect();
-        
-        } 
-        
+          navigate('/signup')
+        } else {
+          navigate('/userDashboard')
+          // try {
+          //   const loginResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/login`, {
+          //     public_address: result.value.accounts[0].address
+          //   });
+          //   console.log("Login successful", loginResponse.data);
+          //   if(loginResponse.status==200){
+
+          //   navigate("/userDashboard");
+          //   }
+          // } catch (loginError) {
+          //   console.log("Error during login API call", loginError);
+          // }
+        }
       } catch (error) {
-        console.error("Error checking signup status:", error);
-    
+        console.log('Error in API call', error)
       }
     }
-  };
+  })
 
-  checkSignup();
-}, [])
+  useEffect(() => {
+    const checkSignup = async () => {
+      if (accounts && accounts.length > 0) {
+        try {
+          const response = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/user/check-signup/${
+              accounts[0].address
+            }`,
+          )
+
+          console.log('Signup status:', response.data.exist)
+          if (response.data.exist === false) {
+            await rdt.disconnect()
+          }
+        } catch (error) {
+          console.error('Error checking signup status:', error)
+        }
+      }
+    }
+
+    checkSignup()
+  }, [])
 
   return (
-    <div className="z-50 p-4  w-full bg-gradient-to-r from-[#375e91] from-0%  to-[#68237b] bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-0   text-white fixed ">
-      <div className="max-w-[1440px] mx-auto flex  items-center justify-between h-10   ">
+    <div className="flex items-center justify-center">
+      <div className="max-w-[1200px] mx-auto flex rounded-3xl bg-gradient-to-t from-black/80 to-purple-600 text-white fixed w-full top-6 z-50  items-center justify-center h-14 p-5   ">
         <div className="w-full ">
           <Link to="/">
-            <img src="/logo.png" alt="Logo" className=" h-14 " />
+            <img src="/logo.png" alt="Logo" className=" h-12 " />
           </Link>
         </div>
-        <ul className="md:flex hidden items-center justify-center gap-5 w-full font-semibold text-lg">
+        <ul className="md:flex hidden items-center justify-center  gap-5 w-[130%] font-semibold text-lg">
           <Link to="/aboutus">
             <li>About Us</li>
           </Link>
@@ -97,20 +96,18 @@ useEffect(() => {
           </Link>
         </ul>
         <div className="w-full md:flex items-center justify-end gap-4 hidden ">
-         
-          <radix-connect-button  />
+          <radix-connect-button />
         </div>
         <div className="md:hidden block">
           <MobileSidebar />
         </div>
-      
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
- //const image_url = "https://github.com/shadcn.png";
-  //  public_address: result.value.accounts[0].address,
-  //         name: result.value.persona.label,
-  //         image_url,
+export default Navbar
+//const image_url = "https://github.com/shadcn.png";
+//  public_address: result.value.accounts[0].address,
+//         name: result.value.persona.label,
+//         image_url,
