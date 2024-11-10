@@ -49,20 +49,28 @@ const ExploreSection = () => {
     const fetchBluePrint = async () => {
       try {
         const res = await axios.get(
-          `${
-            import.meta.env.VITE_BACKEND_URL
-          }/community?sort=${selectedOption}`,
+          `${import.meta.env.VITE_BACKEND_URL}/community?sort=${selectedOption}`
         )
-        setData(res.data)
+        
+        // Check if the response data is an array
+        if (Array.isArray(res.data)) {
+          setData(res.data)
+        } else {
+          console.error('Error: Received data is not an array', res.data)
+          setData([]) // Fallback to an empty array if data is not an array
+        }
       } catch (error) {
         console.error('Error fetching blueprint data:', error)
+        setData([]) // Set an empty array in case of an error
       } finally {
         setLoading(false)
       }
     }
+  
     setView('1')
     fetchBluePrint()
   }, [setView, selectedOption])
+  
   const options = [
     { id: 'participants', label: 'Participants' },
     { id: 'funds', label: 'Funds' },
