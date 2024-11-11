@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { Button } from '../../components/ui/button'
 import MobileSidebar from './MobileSidebar'
 import { Rocket } from 'lucide-react'
@@ -6,11 +6,13 @@ import { useRdt } from '@/hooks/useRdt'
 import axios from 'axios'
 import { useEffect } from 'react'
 import { useAccount } from '@/AccountContext'
+import useScrollTop from '@/hooks/useScroll'
 
 const Navbar = () => {
   const rdt = useRdt()
   const { accounts } = useAccount()
   const navigate = useNavigate()
+  const scrolled = useScrollTop()
   rdt.walletApi.provideConnectResponseCallback(async (result) => {
     if (result.isErr()) {
       console.log('Error')
@@ -68,32 +70,81 @@ const Navbar = () => {
 
     checkSignup()
   }, [])
-
+  console.log(scrolled, 'scrolled')
   return (
     <div className="flex items-center justify-center">
-      <div className="max-w-[1200px] mx-auto flex rounded-3xl bg-gradient-to-t from-black/80 to-purple-600 text-white fixed w-full top-6 z-50  items-center justify-center h-14 p-5   ">
+      <div
+        className={`mx-auto flex  bg-gradient-to-t from-black/80 to-purple-900 text-white fixed w-full  z-50 transition-all duration-300  items-center justify-center h-14 p-5  ${
+          scrolled ? 'top-6 max-w-[1200px] rounded-3xl ' : 'top-0 max-w-full '
+        }   `}
+      >
         <div className="w-full ">
           <Link to="/">
             <img src="/logo.png" alt="Logo" className=" h-12 " />
           </Link>
         </div>
-        <ul className="md:flex hidden items-center justify-center  gap-5 w-[130%] font-semibold text-lg">
-          <Link to="/aboutus">
+        <ul className="md:flex hidden items-center justify-center  gap-5 w-[140%] font-semibold text-lg">
+          <NavLink
+            to="/aboutus"
+            className={
+              ({ isActive }) =>
+                isActive
+                  ? 'bg-purple-700/70 p-2 rounded-xl text-white font-semibold' // Active state with a darker purple background
+                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-white font-semibold' // Inactive state with a light purple hover effect
+            }
+            end
+          >
             <li>About Us</li>
-          </Link>
+          </NavLink>
 
-          <Link to="/products">
+          <NavLink
+            to="/products"
+            className={
+              ({ isActive }) =>
+                isActive
+                  ? 'bg-purple-700/70 p-2 rounded-xl text-white font-semibold' // Active state with a darker purple background
+                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-white font-semibold' // Inactive state with a light purple hover effect
+            }
+            end
+          >
             <li>Products</li>
-          </Link>
-          <Link to="/resources">
+          </NavLink>
+          <NavLink
+            to="/resources"
+            className={
+              ({ isActive }) =>
+                isActive
+                  ? 'bg-purple-700/70 p-2 rounded-xl text-white font-semibold' // Active state with a darker purple background
+                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-white font-semibold' // Inactive state with a light purple hover effect
+            }
+            end
+          >
             <li>Resources</li>
-          </Link>
-          <Link to="/explore">
+          </NavLink>
+          <NavLink
+            to="/blog"
+            className={
+              ({ isActive }) =>
+                isActive
+                  ? 'bg-purple-700/70 p-2 rounded-xl text-white font-semibold' // Active state with a darker purple background
+                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-white font-semibold' // Inactive state with a light purple hover effect
+            }
+            end
+          >
+            <li>Blogs</li>
+          </NavLink>
+          <NavLink
+            to="/explore"
+            className={
+              ({ isActive }) =>
+                isActive
+                  ? 'bg-purple-700/70 p-2 rounded-xl text-white font-semibold' // Active state with a darker purple background
+                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-white font-semibold' // Inactive state with a light purple hover effect
+            }
+            end
+          >
             <li>Explore</li>
-          </Link>
-          <Link to="/blog">
-            <li>Blog</li>
-          </Link>
+          </NavLink>
         </ul>
         <div className="w-full md:flex items-center justify-end gap-4 hidden ">
           <radix-connect-button />
@@ -107,7 +158,3 @@ const Navbar = () => {
 }
 
 export default Navbar
-//const image_url = "https://github.com/shadcn.png";
-//  public_address: result.value.accounts[0].address,
-//         name: result.value.persona.label,
-//         image_url,
