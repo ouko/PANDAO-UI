@@ -83,7 +83,7 @@ const Navbar = () => {
             <img src="/logo.png" alt="Logo" className=" h-12 " />
           </Link>
         </div>
-        <ul className="md:flex hidden items-center justify-center  gap-5 w-[140%] font-semibold text-lg">
+        <ul className="md:flex hidden items-center justify-center  gap-5 w-[170%] font-semibold text-lg">
           <NavLink
             to="/aboutus"
             className={
