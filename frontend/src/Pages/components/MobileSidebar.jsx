@@ -23,9 +23,9 @@ const MobileSidebar = () => {
           </SheetTitle>
           <SheetDescription>
             <ul className="text-white  text-2xl flex flex-col gap-6 mt-10">
-              <Link to="/aboutus">
+              {/* <Link to="/aboutus">
                 <li>About Us</li>
-              </Link>
+              </Link> */}
 
               <Link to="/products">
                 <li>Products</li>
