@@ -16,7 +16,7 @@ const ResourceSection = () => {
       </div>
       <div className="w-full md:h-[90vh] px-2">
         <ReactPlayer
-          url="https://www.youtube.com/watch?v=LXb3EKWsInQ"
+          url="https://youtu.be/6cDtHjgpCyE?si=ZJSmDCNT80mOSbPi"
           className=" w-full h-full"
           width="100%"
           height="100%"

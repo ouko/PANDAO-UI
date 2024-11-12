@@ -3,7 +3,7 @@ import ResourceSection from "./Resources/ResourcesSection";
 
 const Resource = () => {
     return (
-        <div className="bg-blue-50 ">
+        <div className="">
             <HomeSection/>
        <ResourceSection/>
            </div>
