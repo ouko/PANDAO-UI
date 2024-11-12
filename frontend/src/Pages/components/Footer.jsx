@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="flex items-center justify-center mx-auto border-t-2  bg-gradient-to-r from-[#375e91] from-0%  to-[#68237b] text-white">
-      <div className="w-full flex md:flex-row flex-col max-w-[1440px] p-5 items-center justify-between">
+    <div className="flex items-center justify-center mx-auto border-t-2  bg-gradient-to-l from-black/80 to-purple-900 text-white">
+      <div className="w-full grid md:grid-cols-2 grid-cols-1 p-5 md:gap-60 gap-5 md:h-[200px] mt-10">
         <div className="flex flex-col gap-2 w-full ">
           <img src="/logo.png" alt="Logo" className="h-16 w-44 aspect-square" />
           <div className="px-3">© 2024</div>
         </div>
-        <div className="grid md:grid-cols-4 grid-cols-2  gap-2 items-start w-full p-2 md:p-0  ">
+        <div className="grid md:grid-cols-3 grid-cols-2  gap-2 items-start w-full p-2 md:p-0  ">
           
           <div className="flex flex-col gap-2 mt-2 w-full  justify-start ">
             <div className="font-bold">Quick Link</div>

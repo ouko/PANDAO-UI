@@ -1,8 +1,11 @@
+import AnimatedGridPattern from "@/components/ui/myComponents/animated-grid";
+
 const Aboutus = () => {
-    return ( <div className="pt-20 bg-blue-50  text-black">
-        <div className="min-h-screen p-5 mx-auto max-w-[1440px]">
+    return ( <div className="pt-20 relative  text-black">
+      <AnimatedGridPattern />
+        <div className="min-h-screen flex flex-col items-center justify-center p-5 mx-auto max-w-[1440px]">
       
-          <h1 className="text-4xl font-bold mb-6">About Us</h1>
+          <h1 className="text-7xl font-bold mb-6">About Us</h1>
     
           {/* Company Overview */}
           <section>
@@ -29,7 +32,7 @@ const Aboutus = () => {
           {/* Co-founder Section */}
           <section className="flex flex-col items-center mt-6">
             <h2 className="text-3xl font-bold mb-2">Meet Our Founder</h2>
-            <img src="path_to_image.jpg" alt="Co-Founder Name" className="w-48 h-48 rounded-full mt-4 mb-2" />
+            <img src="https://avatars.githubusercontent.com/u/88244542?v=4" alt="Co-Founder Name" className="w-48 h-48 rounded-full mt-4 mb-2" />
             <p className="text-lg">
               <strong>Co-Founder Name</strong>
               <br />
