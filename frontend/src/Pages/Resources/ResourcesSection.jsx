@@ -36,12 +36,12 @@ const ResourceSection = () => {
           <ResourceCard key={index} title={blog.title} link={blog.link} />
         ))}
       </div>
-      <div className="flex flex-col  items-start  gap-5 justify-center w-full p-5 mt-6">
+      {/* <div className="flex flex-col  items-start  gap-5 justify-center w-full p-5 mt-6">
         <div className="text-4xl font-semibold">Get pdfs</div>
         <p className="md:w-2/3 font-thin">
           Don&apos;t know where to start?
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };

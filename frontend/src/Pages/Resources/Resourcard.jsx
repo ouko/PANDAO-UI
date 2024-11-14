@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const ResourceCard = ({title,link}) => {
     const navigate=useNavigate()
-    return ( <Card className="rounded-3xl shadow-sm hover:shadow-2xl" onClick={()=>navigate(link)} >
+    return ( <Card className="rounded-3xl shadow-sm hover:shadow-2xl cursor-pointer" onClick={()=>navigate(link)} >
         <div className="p-6 h-[120px] ">
         <div className="font-light">
             Guide

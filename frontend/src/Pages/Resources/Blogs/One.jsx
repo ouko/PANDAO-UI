@@ -1,4 +1,3 @@
-import React from 'react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -144,7 +143,7 @@ const One = () => {
 
             </div> */}
         <div className='min-h-screen md:py-28 md:px-10 w-2/3 pt-20 px-2 flex flex-col text-left items-start justify-center'>
-           <img src="https://fastly.picsum.photos/id/674/600/400.jpg?hmac=EmoD53Q0Yur53pcP9l0A7_hBwJz5YdEBbBlWlfl9FiU" alt="" className='bg-black w-full border-2 aspect-video mb-5'/>
+           <img src="/Pandao.png" alt="" className='bg-black w-full border-2 aspect-video mb-5'/>
            
             <Markdown 
                 remarkPlugins={[remarkGfm]}

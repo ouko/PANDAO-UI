@@ -1,7 +1,10 @@
+import AnimatedGridPattern from "@/components/ui/myComponents/animated-grid";
+
 const PrivacyPolicy = () => {
   return (
-    <div className="pt-20 bg-blue-50">
-      <div className="min-h-screen max-w-[1440px] mx-auto py-10">
+    <div className="pt-20 ">
+          <AnimatedGridPattern />
+      <div className="min-h-screen max-w-[1440px] mx-auto py-10 px-4">
         <div className="text-4xl font-bold mx-2 pb-5">Privacy Policy</div>
         <div className="px-2 flex flex-col gap-2 py-2">
           <p>

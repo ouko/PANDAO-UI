@@ -1,7 +1,10 @@
+import AnimatedGridPattern from "@/components/ui/myComponents/animated-grid";
+
 const Termsandconditon = () => {
   return (
-    <div className="pt-20 bg-blue-50">
-      <div className="min-h-screen max-w-[1440px] mx-auto py-10">
+    <div className="pt-20 relative">
+      <AnimatedGridPattern />
+      <div className="min-h-screen max-w-[1440px] mx-auto py-10 px-4">
         <div className="text-4xl font-bold mx-2 pb-5">Terms and Conditions</div>
         <div className="flex flex-col px-2 gap-2">
           <p>
