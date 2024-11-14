@@ -9,15 +9,15 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import useBluePrintSlugStore from '@/store/blueprintSlug'
 
 const Navbar = () => {
   const rdt = useRdt()
   const navigate = useNavigate()
   const params = useParams()
+  const { slug } = useBluePrintSlugStore()
 
   rdt.walletApi.provideConnectResponseCallback(async (result) => {
     if (result.isErr()) {
@@ -134,32 +134,64 @@ const Navbar = () => {
           <DropdownMenu>
             <DropdownMenuTrigger>More</DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>
-                <NavLink
-                  to={`/community/detail/${params.id}/bondissue`}
-                  className={({ isActive }) =>
-                    isActive
-                      ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                      : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
-                  }
-                  end
-                >
-                  <li>Bond Issue</li>
-                </NavLink>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <NavLink
-                  to={`/community/detail/${params.id}/bondissued`}
-                  className={({ isActive }) =>
-                    isActive
-                      ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                      : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
-                  }
-                  end
-                >
-                  <li>Bond Issued</li>
-                </NavLink>
-              </DropdownMenuItem>
+              {slug === 'ann' ? (
+                <DropdownMenuItem>
+                  <NavLink
+                    to={`/community/detail/${params.id}/annissue`}
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
+                        : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
+                    }
+                    end
+                  >
+                    <li>Issue ANN Token</li>
+                  </NavLink>
+                </DropdownMenuItem>
+              ) : (
+                <DropdownMenuItem>
+                  <NavLink
+                    to={`/community/detail/${params.id}/bondissue`}
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
+                        : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
+                    }
+                    end
+                  >
+                    <li>Bond Issue</li>
+                  </NavLink>
+                </DropdownMenuItem>
+              )}
+              {slug === 'ann' ? (
+                <DropdownMenuItem>
+                  <NavLink
+                    to={`/community/detail/${params.id}/annissued`}
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
+                        : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
+                    }
+                    end
+                  >
+                    <li> Issued ANN Tokens</li>
+                  </NavLink>
+                </DropdownMenuItem>
+              ) : (
+                <DropdownMenuItem>
+                  <NavLink
+                    to={`/community/detail/${params.id}/bondissued`}
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
+                        : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
+                    }
+                    end
+                  >
+                    <li>Bond Issued</li>
+                  </NavLink>
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </ul>

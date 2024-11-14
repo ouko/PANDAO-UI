@@ -28,6 +28,8 @@ import PrivacyPolicy from "./Pages/PrivacyPolicy";
 import Termsandconditon from "./Pages/TermsandConditions";
 import BondIssue from "./Pages/CommunityPage/BondIssues";
 import BondIssued from "./Pages/CommunityPage/BondIssued";
+import AnnIssue from "./Pages/CommunityPage/AnnIssue";
+import AnnIssued from "./Pages/CommunityPage/AnnIssued";
 
 function App() {
   return (
@@ -73,7 +75,9 @@ function App() {
           <Route path="proposals" element={<Proposals />} />
 
           <Route path="bondissue" element={<BondIssue />} />
+          <Route path="annissue" element={<AnnIssue />} />
           <Route path="bondissued" element={<BondIssued />} />
+          <Route path="annissued" element={<AnnIssued />} />
         </Route>
    
       </Routes>

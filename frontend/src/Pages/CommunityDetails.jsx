@@ -37,6 +37,7 @@ import useCustomAlertStore from '@/store/customAlertStore'
 import { CustomAlert } from './GlobalComponents/CustomAlert'
 import { formatStandardDateTime } from '@/utils/functions/convertActivityData'
 import { Badge } from '@/components/ui/badge'
+import useBluePrintSlugStore from '@/store/blueprintSlug'
 
 function removeNewLines(input) {
   return input.replace(/\n\s*/g, ' ')
@@ -47,6 +48,7 @@ const CommunityDetails = () => {
   const [openBuyModal, setBuyModal] = useState(false)
   const [openSellModal, setSellModal] = useState(false)
   const { setOpen, setText } = useCustomAlertStore()
+  const { setSlug } = useBluePrintSlugStore()
 
   const navigate = useNavigate()
   const params = useParams()
@@ -308,7 +310,13 @@ const CommunityDetails = () => {
       const res = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/community/detail/${params.id}`,
       )
-      setData(res.data)
+    
+      if(res.status==200){
+        console.log(res.data.blueprint_slug,"res")
+          setSlug(res.data.blueprint_slug)
+        setData(res.data)
+
+      }
     } catch (error) {
       console.error('Error fetching blueprint data:', error)
     }
@@ -451,8 +459,8 @@ const CommunityDetails = () => {
                       </div>
                   </div> */}
                   </div>
-                  <div className=" mt-4">
-                    <Alert>
+                  <div className=" mt-4 w-full space-y-2">
+                    <Alert className="w-full ">
                       <CircleAlert className="h-4 w-4" />
                       <AlertTitle>Proposal Rights</AlertTitle>
                       <AlertDescription>
@@ -480,7 +488,21 @@ const CommunityDetails = () => {
                         )}
                       </AlertDescription>
                     </Alert>
+                    <Alert className="w-full ">
+                      <CircleAlert className="h-4 w-4" />
+                      <AlertTitle>DAO TYPE</AlertTitle>
+                      <AlertDescription>
+                        {data.blueprint_slug === 'ann' ? (
+                          <div className="mt-2">
+                            <p>
+                              This is an ANN Organization
+                            </p>
+                          </div>
+                        ) : ( <div>Investment DAO</div> )}
+                      </AlertDescription>
+                    </Alert>
                   </div>
+                  
                 </div>
               </div>
             </Card>
