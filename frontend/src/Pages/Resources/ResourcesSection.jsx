@@ -5,11 +5,7 @@ const blogs = [
   {
     title: "What is Radix",
     link: "what-is-radix",
-  },
-  {
-    title: "How to create your first DAO",
-    link: "how-create-your-first-dao",
-  },
+  }
 ];
 const ResourceSection = () => {
   return (
