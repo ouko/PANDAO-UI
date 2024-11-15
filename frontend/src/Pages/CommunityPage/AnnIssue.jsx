@@ -84,7 +84,7 @@ const AnnIssue = () => {
   const sendTransaction = useSendTransaction()
   const { annuity, updateAnnuity } = useAnnFormStore((state) => state)
   const [isFormComplete, setIsFormComplete] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const handleformSubmit = async (e) => {
     e.preventDefault()
     setLoading(true) // Set loading to true at the start of the process
@@ -154,6 +154,7 @@ const AnnIssue = () => {
     updateAnnuity(e.target.name, e.target.value)
   }
   useEffect(() => {
+    console.log('Annuity:', annuity);
     const requiredFields = [
       'contract_type',
       'contract_role',
@@ -165,11 +166,10 @@ const AnnIssue = () => {
       'ann_position',
       'price',
       'number_of_ann',
-      'user_address',
-      'community_id',
     ]
 
     const allFieldsFilled = requiredFields.every((field) => annuity[field])
+    console.log('Form complete:', allFieldsFilled); 
     setIsFormComplete(allFieldsFilled)
   }, [annuity])
   if (!accounts || accounts.length === 0) {
@@ -290,7 +290,7 @@ const AnnIssue = () => {
                     </div>
                   </div>
                   <div className="flex items-center justify-end">
-                    <Button type="submit" disabled={!isFormComplete || loading}>
+                    <Button type="submit" disabled={!isFormComplete || loading }>
                       Submit
                     </Button>
                   </div>
