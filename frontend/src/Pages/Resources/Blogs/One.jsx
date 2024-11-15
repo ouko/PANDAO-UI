@@ -26,6 +26,7 @@ In the financial sector, AI is being used for fraud detection, risk management, 
 
 AI-driven educational tools provide personalized learning experiences, helping students learn at their own pace. AI can also assist teachers by automating administrative tasks and providing insights into student performance.
 
+![Pandao Image](/Pandao.png)
 ## The Future of AI
 
 The future of AI holds even more exciting possibilities. Here are a few potential developments:

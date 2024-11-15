@@ -3,8 +3,12 @@ import ResourceCard from "./Resourcard";
 
 const blogs = [
   {
-    title: "Starting out with radix blockchain and guide to it",
-    link: "1",
+    title: "What is Radix",
+    link: "what-is-radix",
+  },
+  {
+    title: "How to create your first DAO",
+    link: "how-create-your-first-dao",
   },
 ];
 const ResourceSection = () => {

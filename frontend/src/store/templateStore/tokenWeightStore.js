@@ -18,6 +18,7 @@ const useTokenWeightStore = create((set) => ({
     tags: [],
     proposal_right:'',
     proposal_minimum_token:0,
+    package_addr:''
  
   },
   formFields: {
@@ -36,6 +37,7 @@ const useTokenWeightStore = create((set) => ({
     tags: [], 
     proposal_right:'',
     proposal_minimum_token:0,
+      package_addr:''
   },
   setFormFields: (fields) => set((state) => ({
     formFields: {

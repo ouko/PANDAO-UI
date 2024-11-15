@@ -46,7 +46,7 @@ function App() {
           <Route path="explore" element={<ExploreAllDao />} />
           <Route path="blog" element={<Blog />} />
           <Route path="resources" element={<Resource />} />
-          <Route path="resources/1" element={<One />} />
+          <Route path="resources/what-is-radix" element={<One />} />
           <Route path="exploreDao/:slug" element={<DaoDetailsPage />} />
           <Route path="/exploreDao/:slug/deploy" element={<Deploy />} />
         </Route>

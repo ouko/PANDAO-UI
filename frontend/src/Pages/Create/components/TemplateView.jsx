@@ -1,46 +1,48 @@
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 
-import useViewStore from "@/store/view";
-import { Progress } from "@/components/ui/progress";
-import { useEffect, useState } from "react";
-import { useAccount } from "@/AccountContext";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import useViewStore from '@/store/view'
+import { Progress } from '@/components/ui/progress'
+import { useEffect, useState } from 'react'
+import { useAccount } from '@/AccountContext'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import useTokenWeightStore from '@/store/templateStore/tokenWeightStore'
 
 const TemplateView = () => {
-  const { setView } = useViewStore();
-  const navigate = useNavigate();
-  const { accounts } = useAccount();
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const handleViewChange=(project)=>{
-    if(project.slug==="FinancialDAO"){
-      setView("5")
-    }else{
-      setView("3")
-
+  const { setView } = useViewStore()
+  const navigate = useNavigate()
+  const { accounts } = useAccount()
+  const { setFormFields } = useTokenWeightStore()
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const handleViewChange = (project) => {
+    if (project.slug === 'FinancialDAO') {
+      setView('5')
+    } else {
+      setView('3')
     }
+    setFormFields({ package_addr: project.package_addr })
   }
   useEffect(() => {
     const fetchBluePrint = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/blueprint`
-        );
-        setData(res.data);
+          `${import.meta.env.VITE_BACKEND_URL}/blueprint`,
+        )
+        setData(res.data)
       } catch (error) {
-        console.error("Error fetching blueprint data:", error);
+        console.error('Error fetching blueprint data:', error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
-    fetchBluePrint();
-  }, []);
+    }
+    fetchBluePrint()
+  }, [])
 
   if (!accounts || accounts.length === 0 || !data) {
-    navigate("/");
-    return null;
+    navigate('/')
+    return null
   }
   return (
     <div className="max-w-[1000px] mx-auto mt-20">
@@ -80,7 +82,6 @@ const TemplateView = () => {
           data.map((project, index) => (
             <div
               key={index}
-             
               className="bg-white flex flex-col justify-between shadow-md rounded-lg p-6 hover:bg-slate-50 hover:shadow-lg cursor-pointer"
             >
               <h2 className="text-2xl font-bold mb-2">{project.slug}</h2>
@@ -88,21 +89,21 @@ const TemplateView = () => {
                 {project.description}
               </p>
               <div className="flex w-full gap-3 ">
-                <Button  onClick={() => {
-                navigate(`/exploreDao/${project.slug}`);
-              }}>
-                    Details
+                <Button
+                  onClick={() => {
+                    navigate(`/exploreDao/${project.slug}`)
+                  }}
+                >
+                  Details
                 </Button>
-                <Button onClick={()=>handleViewChange(project)}>
-                    Use
-                </Button>
+                <Button onClick={() => handleViewChange(project)}>Use</Button>
               </div>
             </div>
           ))
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TemplateView;
+export default TemplateView
