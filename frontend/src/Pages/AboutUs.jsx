@@ -1,49 +1,45 @@
-import AnimatedGridPattern from "@/components/ui/myComponents/animated-grid";
+import AnimatedGridPattern from '@/components/ui/myComponents/animated-grid';
 
 const Aboutus = () => {
-    return ( <div className="pt-20 relative  text-black">
+  return (
+    <div className="pt-20 relative text-black">
       <AnimatedGridPattern />
-        <div className="min-h-screen flex flex-col items-center justify-center p-5 mx-auto max-w-[1440px]">
-      
-          <h1 className="text-7xl font-bold mb-6">About Us</h1>
-    
-          {/* Company Overview */}
-          <section>
-            <h2 className="text-3xl font-bold mt-4 mb-2">Who We Are</h2>
-            <p className="mt-2">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non accumsan nunc. Mauris
-              sodales elit sapien, a facilisis enim congue vitae. Duis finibus in leo eget volutpat.
-              Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
-              Duis at consectetur lorem donec massa sapien, faucibus et molestie ac, convallis non ante.
-            </p>
-          </section>
-    
-          {/* Mission Statement */}
-          <section>
-            <h2 className="text-3xl font-bold mt-6 mb-2">Our Mission</h2>
-            <p className="mt-2">
-              Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
-              egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.
-              Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat
-              eleifend leo.
-            </p>
-          </section>
-    
-          {/* Co-founder Section */}
-          <section className="flex flex-col items-center mt-6">
-            <h2 className="text-3xl font-bold mb-2">Meet Our Founder</h2>
-            <img src="https://avatars.githubusercontent.com/u/88244542?v=4" alt="Co-Founder Name" className="w-48 h-48 rounded-full mt-4 mb-2" />
-            <p className="text-lg">
-              <strong>Co-Founder Name</strong>
-              <br />
-              Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed,
-              commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum,
-              eros ipsum rutrum orci, sagittis tempus lacus enim ac dui.
-            </p>
-          </section>
-        </div>
-      
-    </div> );
-}
- 
+      <div className="min-h-screen flex flex-col items-center justify-center p-5 mx-auto max-w-[1440px]">
+        <h1 className="text-7xl font-bold mb-6 text-center">Welcome to PanDao!</h1>
+
+        <section className="mt-6 text-center">
+          <p className="leading-relaxed text-lg">
+            At PanDao, we’re revolutionizing how communities collaborate and make decisions. Our platform empowers decentralized organizations (DAOs) 
+            with tools to operate inclusively, transparently, and efficiently. Whether you’re a developer, business leader, or simply curious about DAOs, 
+            PanDao offers the resources you need to build and participate in decentralized communities seamlessly. Join us as we shape the future of governance together.
+          </p>
+        </section>
+
+        <section className="mt-10 text-center">
+          <h2 className="text-4xl font-bold mb-4">Our Mission</h2>
+          <p className="leading-relaxed text-lg">
+            Our mission is to make DAO technology accessible and user-friendly for everyone. We aim to empower communities to unlock new opportunities, 
+            collaborate innovatively, and drive meaningful change worldwide.
+          </p>
+        </section>
+
+        <section className="flex flex-col items-center mt-12">
+          <h2 className="text-4xl font-bold mb-4">Meet Our Founder</h2>
+          <img
+            src="https://avatars.githubusercontent.com/u/88244542?v=4"
+            alt="Founder Name"
+            className="w-48 h-48 rounded-full mb-4 shadow-lg"
+          />
+          <p className="text-lg text-center max-w-lg">
+            <strong>Founder Name</strong>
+            <br />
+            With a passion for blockchain and a vision for decentralized governance, our founder leads PanDao toward creating 
+            inclusive, efficient, and transparent communities. Their expertise in technology and innovation has laid the groundwork for the next generation of organizational collaboration.
+          </p>
+        </section>
+      </div>
+    </div>
+  );
+};
+
 export default Aboutus;

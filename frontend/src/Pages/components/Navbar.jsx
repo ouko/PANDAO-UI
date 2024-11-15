@@ -84,7 +84,7 @@ const Navbar = () => {
           </Link>
         </div>
         <ul className="md:flex hidden items-center justify-center  gap-5 w-[170%] font-semibold text-lg">
-          {/* <NavLink
+          <NavLink
             to="/aboutus"
             className={
               ({ isActive }) =>
@@ -95,7 +95,7 @@ const Navbar = () => {
             end
           >
             <li>About Us</li>
-          </NavLink> */}
+          </NavLink>
 
           <NavLink
             to="/products"
