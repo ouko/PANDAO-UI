@@ -1,30 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { SkeletonCard } from "./GlobalComponents/Skeleton";
 import { Card } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Banknote, Users } from "lucide-react";
-import { useAccount } from "@/AccountContext";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+
 import { Skeleton } from "@/components/ui/skeleton";
 const Blog = () => {
   const navigate = useNavigate();
-  const { accounts } = useAccount();
-  const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {

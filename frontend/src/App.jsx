@@ -30,6 +30,7 @@ import BondIssue from "./Pages/CommunityPage/BondIssues";
 import BondIssued from "./Pages/CommunityPage/BondIssued";
 import AnnIssue from "./Pages/CommunityPage/AnnIssue";
 import AnnIssued from "./Pages/CommunityPage/AnnIssued";
+import BlogDetail from "./Pages/Resources/BlogDeatails";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
           <Route path="blog" element={<Blog />} />
           <Route path="resources" element={<Resource />} />
           <Route path="resources/what-is-radix" element={<One />} />
+          <Route path="/reasources/:id" element={<BlogDetail />} />
           <Route path="exploreDao/:slug" element={<DaoDetailsPage />} />
           <Route path="/exploreDao/:slug/deploy" element={<Deploy />} />
         </Route>
