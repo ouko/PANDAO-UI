@@ -492,7 +492,7 @@ const CommunityDetails = () => {
                       <CircleAlert className="h-4 w-4" />
                       <AlertTitle>DAO TYPE</AlertTitle>
                       <AlertDescription>
-                        {data.blueprint_slug === 'ann' ? (
+                        {data.blueprint_slug === 'Insurance' ? (
                           <div className="mt-2">
                             <p>
                               This is an ANN Organization

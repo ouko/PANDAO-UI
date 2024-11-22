@@ -134,7 +134,7 @@ const Navbar = () => {
           <DropdownMenu>
             <DropdownMenuTrigger>More</DropdownMenuTrigger>
             <DropdownMenuContent>
-              {slug === 'ann' ? (
+              {slug === 'Insurance' ? (
                 <DropdownMenuItem>
                   <NavLink
                     to={`/community/detail/${params.id}/annissue`}
@@ -163,7 +163,7 @@ const Navbar = () => {
                   </NavLink>
                 </DropdownMenuItem>
               )}
-              {slug === 'ann' ? (
+              {slug === 'Insurance' ? (
                 <DropdownMenuItem>
                   <NavLink
                     to={`/community/detail/${params.id}/annissued`}
