@@ -84,7 +84,7 @@ const BondIssue = () => {
   const sendTransaction = useSendTransaction()
   const { bond, updateBond,resetBond } = useBondFormStore((state) => state)
   const [isFormComplete, setIsFormComplete] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const handleformSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Set loading to true at the start of the process
