@@ -205,25 +205,29 @@ const AnnIssue = () => {
                       label="Community ID"
                       name="community_id"
                       value={params.id}
-                      disabled
+                      disabled="true"
+                      tooltipText="Unique identifier for the community"
                     />
                     <FormInput
                       label="Contract Type"
                       name="contract_type"
                       value={annuity.contract_type}
                       onChange={handleChange}
+                      tooltipText='Token Type'
                     />
                     <FormInput
                       label="Contract Role"
                       name="contract_role"
                       value={annuity.contract_role}
                       onChange={handleChange}
+                      tooltipText='Token Role'
                     />
                     <FormInput
                       label="Contract Identity"
                       name="contract_identity"
                       value={annuity.contract_identity}
                       onChange={handleChange}
+                      tooltipText='Identity Of Token'
                     />
                     <FormInput
                       label="Price"
@@ -231,6 +235,7 @@ const AnnIssue = () => {
                       name="price"
                       value={annuity.price}
                       onChange={handleChange}
+                      tooltipText="Currency type (e.g., XRD)"
                     />
                     <FormInput
                       label="Number of Ann"
@@ -238,6 +243,7 @@ const AnnIssue = () => {
                       name="number_of_ann"
                       value={annuity.number_of_ann}
                       onChange={handleChange}
+                      tooltipText='Total Number of ANN Token'
                     />
 
                   
@@ -249,6 +255,7 @@ const AnnIssue = () => {
                       name="nominal_interest_rate"
                       value={annuity.nominal_interest_rate}
                       onChange={handleChange}
+                      tooltipText='Normal Interest Rate of ANN Token'
                     />
                     <FormInput
                       label="Initial Exchange Date"
@@ -256,6 +263,7 @@ const AnnIssue = () => {
                       name="initial_exchange_date"
                       value={annuity.initial_exchange_date}
                       onChange={handleChange}
+                      tooltipText='Start date of Token exchange'
                     />
                     <FormInput
                       label="Maturity Date"
@@ -263,6 +271,7 @@ const AnnIssue = () => {
                       name="maturity_date"
                       value={annuity.maturity_date}
                       onChange={handleChange}
+                      tooltipText='Date the Token matures'
                     />
                     <FormInput
                       label="Notional Principal"
@@ -270,6 +279,7 @@ const AnnIssue = () => {
                       name="notional_principal"
                       value={annuity.notional_principal}
                       onChange={handleChange}
+                      tooltipText='Principal amount of the Token'
                     />
                  
                     <div>
