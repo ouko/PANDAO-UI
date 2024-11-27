@@ -11,6 +11,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { BookDownIcon } from 'lucide-react'
+import { useSendTransaction } from '@/hooks/useSendTransaction'
 
 const PurchasedBond = () => {
   const { accounts } = useAccount()
@@ -20,8 +21,12 @@ const PurchasedBond = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [sellBondId, setSellBondId] = useState('')
+  const [bondCreatorAddress,setBondCreatorAddress]=useState('')
   const [sellError, setSellError] = useState(null)
   const [selling, setSelling] = useState(false)
+  const [manifest,setManifest]=useState("")
+  const sendTransaction = useSendTransaction()
+
 
   const fetchPurchasedBond = async () => {
     try {
@@ -38,20 +43,46 @@ const PurchasedBond = () => {
   }
 
   const handleSellBond = async () => {
-    if (!sellBondId) {
+    if (!bondCreatorAddress) {
       setSellError('Please enter a valid bond ID to sell')
       return
     }
     setSellError(null)
     setSelling(true)
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/community/zcb/sell`,
-        { bondId: sellBondId, accountId: accounts[0]?.id }, // Assuming accounts[0] holds the current user's account
+     const response= await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/manifest/sell-bond`,
+        {
+          community_id: params.id,
+          bond_creator_address: bondCreatorAddress
+        }, 
       )
-      alert('Bond sold successfully!')
-      setSellBondId('')
-      fetchPurchasedBond() // Refresh the bond list
+      console.log(response.data);
+      setManifest(response.data)
+      const { receipt } = await sendTransaction(manifest).finally(() => {
+        setLoading(false)
+      })
+      let txId = receipt.transaction.intent_hash
+      if (txId) {
+        try {
+          const response = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+            {
+              tx_id: txId,
+              user_address: accounts[0].address,
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+          console.log(response.data)
+         
+        } catch (error) {
+       console.log(error)
+        }
+      }
     } catch (err) {
       console.error(err)
       setSellError('Failed to sell bond. Please try again.')
@@ -88,8 +119,8 @@ const PurchasedBond = () => {
                   <input
                     type="text"
                     placeholder="Enter Bond ID to sell"
-                    value={sellBondId}
-                    onChange={(e) => setSellBondId(e.target.value)}
+                    value={bondCreatorAddress}
+                    onChange={(e) => setBondCreatorAddress(e.target.value)}
                     className="w-full p-2 border border-gray-300 rounded"
                   />
                   <button
@@ -103,7 +134,7 @@ const PurchasedBond = () => {
                     <div className="mt-2 text-red-500 text-sm">{sellError}</div>
                   )}
                 </div>
-                {loading ? (
+                {/* {loading ? (
                   <div className="text-center">Loading...</div>
                 ) : error ? (
                   <div className="text-center text-red-500">{error}</div>
@@ -141,7 +172,7 @@ const PurchasedBond = () => {
                       </Card>
                     ))}
                   </div>
-                )}
+                )} */}
               </Card>
             </div>
           </div>
