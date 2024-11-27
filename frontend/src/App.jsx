@@ -31,6 +31,7 @@ import BondIssued from "./Pages/CommunityPage/BondIssued";
 import AnnIssue from "./Pages/CommunityPage/AnnIssue";
 import AnnIssued from "./Pages/CommunityPage/AnnIssued";
 import BlogDetail from "./Pages/Resources/BlogDeatails";
+import PurchasedBond from "./Pages/CommunityPage/PurchasedBond";
 
 function App() {
   return (
@@ -78,6 +79,7 @@ function App() {
 
           <Route path="bondissue" element={<BondIssue />} />
           <Route path="annissue" element={<AnnIssue />} />
+          <Route path="purchasedbond" element={<PurchasedBond />} />
           <Route path="bondissued" element={<BondIssued />} />
           <Route path="annissued" element={<AnnIssued />} />
         </Route>

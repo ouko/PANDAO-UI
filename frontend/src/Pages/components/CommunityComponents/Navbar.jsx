@@ -35,18 +35,6 @@ const Navbar = () => {
           navigate('/signup')
         } else {
           navigate('/userDashboard')
-          // try {
-          //   const loginResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/login`, {
-          //     public_address: result.value.accounts[0].address
-          //   });
-          //   console.log("Login successful", loginResponse.data);
-          //   if(loginResponse.status==200){
-
-          //   navigate("/userDashboard");
-          //   }
-          // } catch (loginError) {
-          //   console.log("Error during login API call", loginError);
-          // }
         }
       } catch (error) {
         console.log('Error in API call', error)
@@ -55,8 +43,8 @@ const Navbar = () => {
   })
 
   return (
-    <div className="z-50 p-4  w-full  rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-80  bg-purple-50  text-black fixed ">
-      <div className="max-w-[1440px] mx-auto flex  items-center justify-between h-10 md:px-10  ">
+    <div className="z-50 p-4 w-full rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-80 bg-purple-50 text-black fixed">
+      <div className="max-w-[1440px] mx-auto flex items-center justify-between h-10 md:px-10">
         <ul className="md:flex hidden items-center justify-start gap-5 w-full font-semibold text-lg">
           <NavLink
             to="/"
@@ -70,7 +58,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               isActive
                 ? 'bg-white text-blue-800 w-32 text-center py-2 px-4 rounded-lg font-semibold'
-                : 'bg-transparent text-black w-32 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
+                : 'bg-transparent text-black w-32 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
             }
             end
           >
@@ -81,7 +69,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               isActive
                 ? 'bg-white text-blue-800 w-32 text-center py-2 px-4 rounded-lg font-semibold'
-                : 'bg-transparent text-black w-32 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
+                : 'bg-transparent text-black w-32 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
             }
             end
           >
@@ -92,7 +80,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               isActive
                 ? 'bg-white text-blue-800 w-32 text-center py-2 px-4 rounded-lg font-semibold'
-                : 'bg-transparent text-black w-32 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
+                : 'bg-transparent text-black w-32 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
             }
             end
           >
@@ -103,7 +91,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               isActive
                 ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
+                : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
             }
             end
           >
@@ -114,7 +102,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               isActive
                 ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
+                : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
             }
             end
           >
@@ -125,7 +113,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               isActive
                 ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
+                : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
             }
             end
           >
@@ -141,7 +129,7 @@ const Navbar = () => {
                     className={({ isActive }) =>
                       isActive
                         ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                        : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
+                        : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
                     }
                     end
                   >
@@ -149,19 +137,34 @@ const Navbar = () => {
                   </NavLink>
                 </DropdownMenuItem>
               ) : (
-                <DropdownMenuItem>
-                  <NavLink
-                    to={`/community/detail/${params.id}/bondissue`}
-                    className={({ isActive }) =>
-                      isActive
-                        ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                        : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
-                    }
-                    end
-                  >
-                    <li>Bond Issue</li>
-                  </NavLink>
-                </DropdownMenuItem>
+                <>
+                  <DropdownMenuItem>
+                    <NavLink
+                      to={`/community/detail/${params.id}/bondissue`}
+                      className={({ isActive }) =>
+                        isActive
+                          ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
+                          : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
+                      }
+                      end
+                    >
+                      <li>Bond Issue</li>
+                    </NavLink>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <NavLink
+                      to={`/community/detail/${params.id}/purchased-bond`}
+                      className={({ isActive }) =>
+                        isActive
+                          ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
+                          : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
+                      }
+                      end
+                    >
+                      <li>Purchased Bond</li>
+                    </NavLink>
+                  </DropdownMenuItem>
+                </>
               )}
               {slug === 'Insurance' ? (
                 <DropdownMenuItem>
@@ -170,11 +173,11 @@ const Navbar = () => {
                     className={({ isActive }) =>
                       isActive
                         ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                        : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
+                        : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
                     }
                     end
                   >
-                    <li> Issued ANN Tokens</li>
+                    <li>Issued ANN Tokens</li>
                   </NavLink>
                 </DropdownMenuItem>
               ) : (
@@ -184,7 +187,7 @@ const Navbar = () => {
                     className={({ isActive }) =>
                       isActive
                         ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                        : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5] '
+                        : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
                     }
                     end
                   >
@@ -195,7 +198,7 @@ const Navbar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </ul>
-        <div className="w-full md:flex items-center justify-end gap-4 hidden ">
+        <div className="w-full md:flex items-center justify-end gap-4 hidden">
           <radix-connect-button />
         </div>
         <div className="md:hidden gap-3 flex items-center justify-between w-full">
@@ -214,6 +217,7 @@ const Navbar = () => {
 }
 
 export default Navbar
+
 //const image_url = "https://github.com/shadcn.png";
 //  public_address: result.value.accounts[0].address,
 //         name: result.value.persona.label,
