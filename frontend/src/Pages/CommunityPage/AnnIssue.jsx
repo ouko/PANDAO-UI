@@ -208,6 +208,20 @@ const AnnIssue = () => {
                       disabled="true"
                       tooltipText="Unique identifier for the community"
                     />
+                     <FormInput
+                      label="Discription"
+                      name="discrpition"
+                      onChange={handleChange}
+                      value={annuity.discrpition}
+                      tooltipText="Discription"
+                    />
+                     <FormInput
+                      label="Name"
+                      name="name"
+                      onChange={handleChange}
+                      value={annuity.name}
+                      tooltipText="Name"
+                    />
                     <FormInput
                       label="Contract Type"
                       name="contract_type"
