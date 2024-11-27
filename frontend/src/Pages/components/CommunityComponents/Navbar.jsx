@@ -153,7 +153,7 @@ const Navbar = () => {
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <NavLink
-                      to={`/community/detail/${params.id}/purchased-bond`}
+                      to={`/community/detail/${params.id}/purchasedbond`}
                       className={({ isActive }) =>
                         isActive
                           ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
