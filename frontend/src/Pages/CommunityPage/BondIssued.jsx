@@ -13,7 +13,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { BookDownIcon } from 'lucide-react'
 
-const BondIssued = () => {
+const BondIssued = (props) => {
   const { accounts } = useAccount()
   const params = useParams()
   const navigate = useNavigate()
@@ -54,7 +54,7 @@ const BondIssued = () => {
                     <BookDownIcon className=" text-blue-700" />
                   </div>
                 </div>
-                <div className="text-3xl font-semibold">Bond Issued</div>
+                <div className="text-3xl font-semibold">{props.heading? props.heading: 'Issued Bonds'}</div>
               </Card>
               <Card className="p-5">
                 {loading ? (

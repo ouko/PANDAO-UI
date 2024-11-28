@@ -13,7 +13,7 @@ const ResourceCard = ({ post }) => {
         {post.coverImage ? (
           <div className="relative h-full">
             <img
-              src="/api/placeholder/400/320"
+              src={post.coverImage.url}
               alt={post.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
