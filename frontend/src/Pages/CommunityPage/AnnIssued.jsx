@@ -23,7 +23,7 @@ const AnnIssued = () => {
   const fetchIssuedBond = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/zcb/all/${params.id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/community/ann/all/${params.id}`,
       )
       setIssuedBonds(res.data)
       setLoading(false)
@@ -67,7 +67,7 @@ const AnnIssued = () => {
                     {issuedBonds.map((bond) => (
                       <Card
                         key={bond.id}
-                        className="bg-white shadow-md rounded-lg p-4"
+                        className="bg-white shadow-md rounded-lg p-4 hover:scale-105 transition duration-300"
                       >
                         {/* <div className="flex flex-col justify-between items-center"> */}
                           <CardTitle className="text-xl font-semibold">
@@ -101,7 +101,7 @@ const AnnIssued = () => {
                             <strong>Discount:</strong> {bond.discount}
                           </p>
                           <p>
-                            <strong>Price:</strong>{' '}
+                            <strong>Ann Price:</strong>{' '}
                             {bond.price ? `$${bond.price}` : 'Not available'}
                           </p>
                           <p>
@@ -109,13 +109,16 @@ const AnnIssued = () => {
                             {bond.notional_principle}
                           </p>
                           <p>
-                            <strong>Bond Position:</strong> {bond.bond_position}
+                            <strong>Ann Position:</strong> {bond.ann_position}
                           </p>
                           <p>
                             <strong>Contract Type:</strong> {bond.contract_type}
                           </p>
                           <p>
                             <strong>Contract Role:</strong> {bond.contract_role}
+                          </p>
+                          <p>
+                            <strong>Creator address:</strong> {bond.creator ?bond.creator :'Not Specified' }
                           </p>
                         </div>
 
@@ -129,10 +132,6 @@ const AnnIssued = () => {
                           <p>
                             <strong>Maturity Date:</strong>{' '}
                             {new Date(bond.maturity_date).toLocaleDateString()}
-                          </p>
-                          <p>
-                            <strong>Created on Blockchain:</strong>{' '}
-                            {bond.created_on_blockchain ? 'Yes' : 'No'}
                           </p>
                         </div>
                       </Card>

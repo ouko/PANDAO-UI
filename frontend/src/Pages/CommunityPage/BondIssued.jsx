@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { toast } from 'sonner'
 
 import { useNavigate, useParams } from 'react-router-dom'
 
@@ -134,6 +135,19 @@ const BondIssued = () => {
                             <strong>Created on Blockchain:</strong>{' '}
                             {bond.created_on_blockchain ? 'Yes' : 'No'}
                           </p>
+                          <p className="truncate">
+                            <strong>Creator Address:</strong>{' '}
+                            <span
+                              className="cursor-pointer hover:underline"
+                              onClick={() => {
+                                navigator.clipboard.writeText(bond.creator);
+                                toast.success('copied address')
+                              }}
+                            >
+                              {bond.creator}
+                            </span>
+                          </p>
+                        
                         </div>
                       </Card>
                     ))}
