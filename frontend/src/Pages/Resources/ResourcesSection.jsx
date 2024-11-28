@@ -23,6 +23,7 @@ const ResourceSection = () => {
                     coverImage {
                       attribution
                       photographer
+                      url
                     }
                     readTimeInMinutes
                     slug
