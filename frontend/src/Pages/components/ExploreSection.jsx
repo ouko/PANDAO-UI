@@ -196,7 +196,7 @@ const ExploreSection = () => {
                   onClick={() => handleNavigation(`/community/detail/${dao.id}`)}
                   className="flex overflow-hidden flex-col items-start justify-between p-5 h-[180px] cursor-pointer hover:shadow-md"
                 >
-                  <div className="flex items-start gap-2">
+                  <div className="flex items-start gap-">
                     <Avatar className="h-14 w-14">
                       <AvatarImage src={dao.image} alt={dao.name || 'DAO'} />
                       <AvatarFallback>{dao.name?.[0] || '?'}</AvatarFallback>
@@ -207,34 +207,47 @@ const ExploreSection = () => {
                   </div>
                   <div className="line-clamp-2">{dao.description || 'No description available'}</div>
                   <div className="flex items-center justify-between w-full mt-1">
-                    <div className="flex items-center gap-2">
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <Users className="h-4 w-4" />
-                            <span>{dao.number_of_participants || 0}</span>
-                          </TooltipTrigger>
-                          <TooltipContent>Total Participants</TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <Banknote className="h-4 w-4" />
-                            <span>{dao.funds || 0}</span>
-                          </TooltipTrigger>
-                          <TooltipContent>Total Funds</TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                      <div className="flex items-center  gap-2 ">
+                        <div className="flex items-center gap-2 border-2 px-2 rounded-md shadow-sm ">
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger className="flex items-center gap-1">
+                                <Users className="h-4 w-4" />{' '}
+                                <p className="text-sm">
+                                  {' '}
+                                  {dao.number_of_participants}{' '}
+                                </p>{' '}
+                              </TooltipTrigger>
+                              <TooltipContent side="bottom">
+                                <p>Total Number of Participant</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </div>
+                        <div className="flex items-center gap-2   border-2 px-2 rounded-md shadow-sm ">
+                          {' '}
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger className="flex items-center gap-1">
+                                <Banknote className="h-4 w-4" />{' '}
+                                <p className="text-sm"> {dao.funds || 0} </p>{' '}
+                              </TooltipTrigger>
+                              <TooltipContent side="bottom">
+                                <p>Total Funds</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {dao.tags &&
+                          dao.tags.slice(0, 2).map((token, index) => (
+                            <Badge key={index} variant="outline">
+                              {token}{' '}
+                            </Badge>
+                          ))}
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1">
-                      {dao.tags?.slice(0, 2).map((tag, i) => (
-                        <Badge key={i} variant="outline">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
                 </Card>
               ))}
             </div>
