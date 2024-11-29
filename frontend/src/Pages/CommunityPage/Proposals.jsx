@@ -53,6 +53,7 @@ const Proposals = () => {
   const [loadingButton, setLoadingButton] = useState(false)
   const [form, setShowForm] = useState(true)
   const [bondIssuerAddress, setBondIssuerAddress] = useState('')
+  const [bondIssuerAddresses, setBondIssuerAddresses] = useState([])
   const [targetXrdAmount, setTargetXrdAmount] = useState('')
 
   const [startDate, setStartDate] = useState(new Date())
@@ -62,9 +63,10 @@ const Proposals = () => {
   const [comments, setComments] = useState([])
   const [minimumQuorum, setMinimumQuorum] = useState('')
   const [proposalText, setProposalText] = useState('')
-  const [voteType,setVoteType]=useState('')
+  const [voteType, setVoteType] = useState('')
   const [proposalDescription, setProposalDescription] = useState('')
   const [manifest, setManifest] = useState('')
+
   const [manifestForVoteAgainst, setManifestForVoteAgainst] = useState('')
   const [manifestForVoteFor, setManifestForVoteFor] = useState('')
   const sendTransaction = useSendTransaction()
@@ -101,8 +103,11 @@ const Proposals = () => {
       setComment('')
     }
   }
-  const handleVoteType= (value)=>{
-setVoteType(value)
+  const handleVoteType = (value) => {
+    setVoteType(value)
+  }
+  const handleBondAddress = (value) => {
+    setBondIssuerAddress(value)
   }
   const fetchProposals = async () => {
     try {
@@ -118,6 +123,19 @@ setVoteType(value)
       console.error('Error fetching blueprint data:', error)
     } finally {
       setLoading(false)
+    }
+  }
+  const fetchBondNames = async () => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/community/bonds-names/all/${
+          params.id
+        }`,
+      )
+      console.log(res.data, 'res.dataaaaaaaa')
+      setBondIssuerAddresses(res.data)
+    } catch (error) {
+      console.error('Error fetching blueprint data:', error)
     }
   }
   const fetchProposalsComments = async () => {
@@ -152,7 +170,8 @@ setVoteType(value)
       !bondIssuerAddress ||
       !targetXrdAmount ||
       !startTime ||
-      !endTime || !voteType
+      !endTime ||
+      !voteType
     ) {
       alert('Please fill out all fields.')
       return
@@ -181,7 +200,7 @@ setVoteType(value)
           description: proposalDescription,
           bond_issuer_address: bondIssuerAddress,
           target_xrd_amount: targetXrdAmount,
-          vote_type:voteType
+          vote_type: voteType,
         },
       )
 
@@ -414,6 +433,7 @@ setVoteType(value)
   }, [activeProposal])
   useEffect(() => {
     fetchProposals()
+    fetchBondNames()
   }, [params.id])
   useEffect(() => {
     fetchProposalsComments()
@@ -422,7 +442,6 @@ setVoteType(value)
     navigate('/')
     return null
   }
-  console.log(proposal.length)
   return (
     <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
       {form && !activeProposal ? (
@@ -853,11 +872,30 @@ setVoteType(value)
                 </div>
                 <div className="flex flex-col gap-2">
                   <Label className="text-2xl p-1">Bond Issuer Address</Label>
-                  <Input
+                  <Select onValueChange={handleBondAddress}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Bond Issuer Address" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {bondIssuerAddresses.length === 0 ? (
+                        <SelectItem value="No issued Bond">
+                          No Issued Bond
+                        </SelectItem>
+                      ) : (
+                        bondIssuerAddresses.map((bond, index) => (
+                          <SelectItem key={index} value={bond.creator_address}>
+                            {bond.bond_name} - {bond.creator_address}
+                          </SelectItem>
+                        ))
+                      )}
+                    </SelectContent>
+                  </Select>
+
+                  {/* <Input
                     placeholder="Enter Bond Issuer Address"
                     value={bondIssuerAddress}
                     onChange={(e) => setBondIssuerAddress(e.target.value)}
-                  />
+                  /> */}
                 </div>
 
                 <div className="flex flex-col gap-2">
