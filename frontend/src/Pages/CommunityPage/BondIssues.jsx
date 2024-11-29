@@ -32,6 +32,7 @@ const FormInput = ({
   onChange,
   tooltipText,
   disabled = false,
+  min,
 }) => {
   return (
     <div>
@@ -58,6 +59,7 @@ const FormInput = ({
         onChange={onChange}
         className="input"
         disabled={disabled}
+        min ={min}
       />
     </div>
   )
@@ -151,7 +153,12 @@ const BondIssue = () => {
 
   const handleChange = (e) => {
     updateBond(e.target.name, e.target.value)
+  if(e.target.name === 'bond_price'){
+    updateBond('notional_principal',e.target.value)
   }
+
+  }
+
   useEffect(() => {
     const requiredFields = [
       'bond_name',
@@ -167,7 +174,10 @@ const BondIssue = () => {
       'bond_price',
       'number_of_bonds',
       'description',
+      
     ]
+
+
 
     const allFieldsFilled = requiredFields.every((field) => bond[field])
     setIsFormComplete(allFieldsFilled)
@@ -249,10 +259,12 @@ const BondIssue = () => {
                     <FormInput
                       label="Initial Exchange Date"
                       type="date"
+                    
                       name="initial_exchange_date"
                       value={bond.initial_exchange_date}
                       onChange={handleChange}
                       tooltipText="Start date of bond exchange"
+                      min={new Date().toISOString().split('T')[0]}
                     />
                     <FormInput
                       label="Maturity Date"
@@ -263,13 +275,14 @@ const BondIssue = () => {
                       tooltipText="Date the bond matures"
                     />
                     <FormInput
-                      label="Notional Principal"
-                      type="number"
-                      name="notional_principal"
-                      value={bond.notional_principal}
-                      onChange={handleChange}
-                      tooltipText="Principal amount of the bond"
+                     label="Bond Price"
+                     type="number"
+                     name="bond_price"
+                     value={bond.bond_price}
+                     onChange={handleChange}
+                     tooltipText="Current price of the bond"
                     />
+
                     <FormInput
                       label="Discount"
                       type="number"
@@ -280,12 +293,13 @@ const BondIssue = () => {
                     />
 
                     <FormInput
-                      label="Bond Price"
+                      label="Notional Principal"
                       type="number"
-                      name="bond_price"
-                      value={bond.bond_price}
+                      disabled ="true"
+                      name="notional_principal"
+                      value={bond.notional_principal}
                       onChange={handleChange}
-                      tooltipText="Current price of the bond"
+                      tooltipText="Principal amount of the bond"
                     />
                     <FormInput
                       label="Number of Bonds"
