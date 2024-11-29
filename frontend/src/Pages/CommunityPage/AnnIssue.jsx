@@ -209,11 +209,11 @@ const AnnIssue = () => {
                       tooltipText="Unique identifier for the community"
                     />
                      <FormInput
-                      label="Discription"
-                      name="discrpition"
+                      label="Description"
+                      name="description"
                       onChange={handleChange}
-                      value={annuity.discrpition}
-                      tooltipText="Discription"
+                      value={annuity.description}
+                      tooltipText="Description"
                     />
                      <FormInput
                       label="Name"
