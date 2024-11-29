@@ -1,3 +1,4 @@
+import { Calendar } from 'lucide-react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,6 +35,14 @@ const ResourceCard = ({ post }) => {
           {post.title}
         </h3>
         <p className="text-gray-600 text-sm mb-3 line-clamp-2">{post.brief}</p>
+        <p className="text-gray-600 text-sm mb-3 line-clamp-2 flex items-center gap-1">
+          <Calendar className='h-3 w-3'/>
+  {new Date(post.publishedAt).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  })}
+</p>
         <div className="flex items-center justify-between text-sm text-gray-500">
           <span>{post.readTimeInMinutes} min read</span>
           <span className="text-blue-500 hover:underline">Read more →</span>

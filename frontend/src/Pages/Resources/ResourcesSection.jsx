@@ -20,6 +20,7 @@ const ResourceSection = () => {
                     title
                     brief
                     url
+                           publishedAt
                     coverImage {
                       attribution
                       photographer
@@ -81,7 +82,8 @@ const ResourceSection = () => {
       <div className="flex flex-col  items-start  gap-5 justify-center w-full p-5 mt-6">
         <div className="text-4xl font-semibold">Get Information</div>
         <p className="md:w-2/3 font-thin">
-     Don&apos;t know where to start? Explore insightful blogs about the PandaO platform and the AboutActus initiative
+          Don&apos;t know where to start? Explore insightful blogs about the
+          PandaO platform and the AboutActus initiative
         </p>
       </div>
       {loading && (
