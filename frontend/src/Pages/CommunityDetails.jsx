@@ -198,6 +198,7 @@ const CommunityDetails = () => {
 
           toast.success('Token Bought Successfully!')
           setText('Token Bought')
+          fetchDetails()
           setOpen(true)
           setBuyModal(false)
         } catch (submitError) {
