@@ -192,6 +192,7 @@ const UserDashboard = () => {
           </div>
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="activity">User Activity</TabsTrigger>
+          <TabsTrigger value="expenses">User Expenses</TabsTrigger>
         </TabsList>
         <TabsContent value="overview">
           {userData && (
@@ -392,49 +393,7 @@ const UserDashboard = () => {
                     <Timeline items={workData} />
                   </div>
                 </Card>
-                <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
-                  <div className="text-xl font-bold"> User Expenses</div>
-                  <div className="w-full mt-4 flex flex-col gap-2 h-full">
-                    {expneseData.length === 0 && (
-                      <div className="flex items-center justify-center text-center h-full">
-                        No expense
-                      </div>
-                    )}
-                    {expneseData.length > 0 &&
-                      expneseData.map((activity, index) => (
-                        <div
-                          key={index}
-                          className="p-4 border-2 rounded-lg group hover:shadow-md flex items-center space-x-4"
-                        >
-                          {/* Community Image */}
-                          <img
-                            src={activity.community_image}
-                            alt={`${activity.community_name} image`}
-                            className="w-16 h-16 rounded-full"
-                          />
-                          {/* Activity Details */}
-                          <div>
-                            <h3 className="text-lg font-semibold">
-                              {activity.community_name}
-                            </h3>
-                            <p className="text-sm text-gray-500">
-                              {activity.xrd_spent_on}
-                            </p>
-                            <p
-                className={`text-sm font-bold ${
-                  activity.xrd_spent < 0 ? "text-red-500" : "text-green-500"
-                }`}
-              >
-                Spent: {Math.abs(activity.xrd_spent)} XRD
-              </p>
-                            <p className="text-sm text-gray-400">
-                              Date: {new Date(activity.date).toLocaleString()}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                  </div>
-                </Card>
+
                 <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
                   <div className="text-xl font-bold">
                     {' '}
@@ -486,7 +445,6 @@ const UserDashboard = () => {
                       ))}
                   </div>
                 </Card>
-                
               </div>
             </div>
           )}
@@ -536,6 +494,53 @@ const UserDashboard = () => {
                 Next
               </Button>
             </div> */}
+          </Card>
+        </TabsContent>
+        <TabsContent value="expenses">
+          <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
+            <div className="text-xl font-bold"> User Expenses</div>
+            <div className="w-full mt-4 flex flex-col gap-2 h-full">
+              {expneseData.length === 0 && (
+                <div className="flex items-center justify-center text-center h-full">
+                  No expense
+                </div>
+              )}
+              {expneseData.length > 0 &&
+                expneseData.map((activity, index) => (
+                  <div
+                    key={index}
+                    className="p-4 border-2 rounded-lg group hover:shadow-md flex items-center space-x-4"
+                  >
+                    {/* Community Image */}
+                    <img
+                      src={activity.community_image}
+                      alt={`${activity.community_name} image`}
+                      className="w-16 h-16 rounded-full"
+                    />
+                    {/* Activity Details */}
+                    <div>
+                      <h3 className="text-lg font-semibold">
+                        {activity.community_name}
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        {activity.xrd_spent_on}
+                      </p>
+                      <p
+                        className={`text-sm font-bold ${
+                          activity.xrd_spent < 0
+                            ? 'text-red-500'
+                            : 'text-green-500'
+                        }`}
+                      >
+                        Spent: {Math.abs(activity.xrd_spent)} XRD
+                      </p>
+                      <p className="text-sm text-gray-400">
+                        Date: {new Date(activity.date).toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+            </div>
           </Card>
         </TabsContent>
       </Tabs>
