@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useAccount } from "@/AccountContext";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { useAccount } from '@/AccountContext'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 
 import {
   Activity,
@@ -15,59 +15,59 @@ import {
   Globe,
   SquareArrowOutDownLeft,
   SquareArrowOutUpRight,
-} from "lucide-react";
-import { FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
-import { clipAddress } from "@/utils/functions/ClipAddress";
-import { formatStandardDateTime } from "@/utils/functions/convertActivityData";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Timeline from "./UserDasboard/WorkTimeLine";
+} from 'lucide-react'
+import { FaLinkedinIn, FaXTwitter } from 'react-icons/fa6'
+import { clipAddress } from '@/utils/functions/ClipAddress'
+import { formatStandardDateTime } from '@/utils/functions/convertActivityData'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import Timeline from './UserDasboard/WorkTimeLine'
 
 const UserDashboard = () => {
-  const { accounts } = useAccount();
-  const navigate = useNavigate();
-  const [coverUrl, setCoverUrl] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  const [activityData, setActivityData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [totalPages, setTotalPages] = useState(1);
-  const [copied, setCopied] = useState(false);
-  const [data, setData] = useState([]);
-  const [dataAll, setDataAll] = useState([]);
-  const [workData, setWorkData] = useState([]);
-  const [userData, setUserData] = useState({});
-  const [createdComminities, setCreatedCommunities] = useState([]);
-  const [participatedComminities, setParticipatedCommunities] = useState([]);
+  const { accounts } = useAccount()
+  const navigate = useNavigate()
+  const [coverUrl, setCoverUrl] = useState('')
+  const [loading, setLoading] = useState(true)
+  const [expneseData, setExpenseData] = useState([])
+  const [activityData, setActivityData] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const [totalPages, setTotalPages] = useState(1)
+  const [copied, setCopied] = useState(false)
+  const [data, setData] = useState([])
+  const [dataAll, setDataAll] = useState([])
+  const [workData, setWorkData] = useState([])
+  const [userData, setUserData] = useState({})
+  const [createdComminities, setCreatedCommunities] = useState([])
+  const [participatedComminities, setParticipatedCommunities] = useState([])
 
   // const [edit, setEdit] = useState(false);
   // const [fileUrl, setFileUrl] = useState("");
-  const [about, setAbout] = useState("");
+  const [about, setAbout] = useState('')
   const [socialLinks, setSocialLinks] = useState({
-    x_url: "",
-    website_url: "",
-    linkedin: "",
-    tiktok: "",
-  });
+    x_url: '',
+    website_url: '',
+    linkedin: '',
+    tiktok: '',
+  })
 
   const handleCopy = (address) => {
-    navigator.clipboard.writeText(address);
-    setCopied(true);
+    navigator.clipboard.writeText(address)
+    setCopied(true)
     setTimeout(() => {
-      setCopied(false);
-    }, 1000);
-  };
+      setCopied(false)
+    }, 1000)
+  }
   useEffect(() => {
     const fetchBluePrint = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/community`
-        );
-        setData(res.data);
+          `${import.meta.env.VITE_BACKEND_URL}/community`,
+        )
+        setData(res.data)
       } catch (error) {
-        console.error("Error fetching blueprint data:", error);
+        console.error('Error fetching blueprint data:', error)
       }
-    };
+    }
     const fetchActivity = async (user_address, page, page_size) => {
       try {
         const res = await axios.get(
@@ -78,92 +78,108 @@ const UserDashboard = () => {
               page,
               page_size,
             },
-          }
-        );
-        setActivityData(res.data.data);
-        setTotalPages(res.data.page);
-        console.log(res.data, "data");
+          },
+        )
+        setActivityData(res.data.data)
+        setTotalPages(res.data.page)
+        console.log(res.data, 'data')
       } catch (error) {
-        console.error("Error fetching activity data:", error);
+        console.error('Error fetching activity data:', error)
       }
-    };
+    }
     const fetchAll = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/community/all`
-        );
-        setDataAll(res.data);
+          `${import.meta.env.VITE_BACKEND_URL}/community/all`,
+        )
+        setDataAll(res.data)
         console.log(res.data)
       } catch (error) {
-        console.error("Error fetching blueprint data:", error);
+        console.error('Error fetching blueprint data:', error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
+    const fetchUserExpense = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/user/expense/${
+            accounts[0].address
+          }`,
+        )
+        console.log(res.data, 'hi00000hi')
+        setExpenseData(res.data)
+      } catch (error) {
+        console.error('Error fetching blueprint data:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
     const fetchUserData = async () => {
       try {
         const res = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/user/details/${
             accounts[0].address
-          }`
-        );
+          }`,
+        )
         setWorkData(res.data.user_work)
-        setUserData(res.data);
-        setAbout(res.data.about);
-        setCoverUrl(res.data.usermetadata.cover_url);
+        setUserData(res.data)
+        setAbout(res.data.about)
+        setCoverUrl(res.data.usermetadata.cover_url)
         setSocialLinks({
-          x_url: res.data.usermetadata.x_url || "",
-          website_url: res.data.usermetadata.website_url || "",
-          linkedin: res.data.usermetadata.linkedin || "",
-        });
+          x_url: res.data.usermetadata.x_url || '',
+          website_url: res.data.usermetadata.website_url || '',
+          linkedin: res.data.usermetadata.linkedin || '',
+        })
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error('Error fetching user data:', error)
       }
-    };
+    }
     const fetchCreatedCommunity = async (user_address) => {
       try {
         const res = await axios.get(
           `${
             import.meta.env.VITE_BACKEND_URL
-          }/user/community/${user_address}?owner=true`
-        );
-        setCreatedCommunities(res.data);
+          }/user/community/${user_address}?owner=true`,
+        )
+        setCreatedCommunities(res.data)
       } catch (error) {
-        console.error("Error fetching activity data:", error);
+        console.error('Error fetching activity data:', error)
       }
-    };
+    }
     const fetchCreatedParticipated = async (user_address) => {
       try {
         const res = await axios.get(
           `${
             import.meta.env.VITE_BACKEND_URL
-          }/user/community/${user_address}?owner=false`
-        );
-        setParticipatedCommunities(res.data);
+          }/user/community/${user_address}?owner=false`,
+        )
+        setParticipatedCommunities(res.data)
       } catch (error) {
-        console.error("Error fetching activity data:", error);
+        console.error('Error fetching activity data:', error)
       }
-    };
-    if (accounts && accounts.length > 0 && accounts[0].address) {
-      fetchBluePrint();
-      fetchUserData();
-      fetchActivity(accounts[0].address, 1, 10);
-      fetchCreatedCommunity(accounts[0].address);
-      fetchCreatedParticipated(accounts[0].address);
-      fetchAll()
     }
-  }, [accounts, currentPage, pageSize]);
+    if (accounts && accounts.length > 0 && accounts[0].address) {
+      fetchBluePrint()
+      fetchUserData()
+      fetchActivity(accounts[0].address, 1, 10)
+      fetchCreatedCommunity(accounts[0].address)
+      fetchCreatedParticipated(accounts[0].address)
+      fetchAll()
+      fetchUserExpense()
+    }
+  }, [accounts, currentPage, pageSize])
 
   if (!accounts || accounts.length === 0) {
-    navigate("/");
-    return null;
+    navigate('/')
+    return null
   }
   // const handlePageChange = (newPage) => {
   //   if (newPage > 0 && newPage <= totalPages) {
   //     setCurrentPage(newPage);
   //   }
   // };
-console.log(workData)
+  console.log(workData)
   return (
     <div className=" relative flex items-start gap-3 justify-start min-h-screen bg-slate-100 text-black pb-7 pt-2 px-7">
       <Tabs defaultValue="overview" className="w-full  t ">
@@ -183,13 +199,13 @@ console.log(workData)
               <Card className="w-full flex md:flex-row flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm  text-black border-b-0 h-48">
                 {userData.usermetadata?.cover_url ? (
                   <img
-                    src={coverUrl || "/Pandao.png"}
+                    src={coverUrl || '/Pandao.png'}
                     alt="Cover"
                     className="aspect-video h-48 w-full object-cover"
                   />
-                ):(
+                ) : (
                   <img
-                    src= "/Pandao.png"
+                    src="/Pandao.png"
                     alt="Cover"
                     className="aspect-video h-48 w-full object-cover"
                   />
@@ -252,7 +268,7 @@ console.log(workData)
                           {socialLinks.linkedin}
                         </div>
                       </div>
-                    )}{" "}
+                    )}{' '}
                     {/* {socialLinks.tiktok && (
                   <div className="flex items-center w-full gap-2">
                     <FaTiktok className="text-black" />
@@ -264,7 +280,7 @@ console.log(workData)
                   </div>
 
                   <Button
-                    onClick={() => navigate("/userDashboard/edit")}
+                    onClick={() => navigate('/userDashboard/edit')}
                     className="bg-slate-700 border-2 absolute right-0 top-2"
                   >
                     Edit Profile
@@ -305,7 +321,7 @@ console.log(workData)
                             <div
                               onClick={() =>
                                 navigate(
-                                  `/community/detail/${activity.community_id}`
+                                  `/community/detail/${activity.community_id}`,
                                 )
                               }
                               className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
@@ -318,7 +334,10 @@ console.log(workData)
                   </div>
                 </Card>
                 <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
-                  <div className="text-xl font-bold"> Communities Participated</div>
+                  <div className="text-xl font-bold">
+                    {' '}
+                    Communities Participated
+                  </div>
                   <div className="w-full mt-4 flex flex-col gap-2 h-full">
                     {participatedComminities.length === 0 && (
                       <div className="flex items-center justify-center text-center h-full">
@@ -350,7 +369,7 @@ console.log(workData)
                             <div
                               onClick={() =>
                                 navigate(
-                                  `/community/detail/${activity.community_id}`
+                                  `/community/detail/${activity.community_id}`,
                                 )
                               }
                               className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
@@ -365,16 +384,62 @@ console.log(workData)
                 <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
                   <div className="text-xl font-bold"> Work History</div>
                   <div className="w-full mt-4 flex flex-col gap-2 h-full">
-                    {workData &&  workData.length === 0 && (
+                    {workData && workData.length === 0 && (
                       <div className="flex items-center justify-center text-center h-full">
                         Please Add Work Details
                       </div>
                     )}
-                <Timeline items={workData} />
+                    <Timeline items={workData} />
                   </div>
                 </Card>
                 <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
-                  <div className="text-xl font-bold"> Communities you might be interested In</div>
+                  <div className="text-xl font-bold"> User Expenses</div>
+                  <div className="w-full mt-4 flex flex-col gap-2 h-full">
+                    {expneseData.length === 0 && (
+                      <div className="flex items-center justify-center text-center h-full">
+                        No expense
+                      </div>
+                    )}
+                    {expneseData.length > 0 &&
+                      expneseData.map((activity, index) => (
+                        <div
+                          key={index}
+                          className="p-4 border-2 rounded-lg group hover:shadow-md flex items-center space-x-4"
+                        >
+                          {/* Community Image */}
+                          <img
+                            src={activity.community_image}
+                            alt={`${activity.community_name} image`}
+                            className="w-16 h-16 rounded-full"
+                          />
+                          {/* Activity Details */}
+                          <div>
+                            <h3 className="text-lg font-semibold">
+                              {activity.community_name}
+                            </h3>
+                            <p className="text-sm text-gray-500">
+                              {activity.xrd_spent_on}
+                            </p>
+                            <p
+                className={`text-sm font-bold ${
+                  activity.xrd_spent < 0 ? "text-red-500" : "text-green-500"
+                }`}
+              >
+                Spent: {Math.abs(activity.xrd_spent)} XRD
+              </p>
+                            <p className="text-sm text-gray-400">
+                              Date: {new Date(activity.date).toLocaleString()}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </Card>
+                <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
+                  <div className="text-xl font-bold">
+                    {' '}
+                    Communities you might be interested In
+                  </div>
                   <div className="w-full mt-4 flex flex-col gap-2 h-full">
                     {dataAll.length === 0 && (
                       <div className="flex items-center justify-center text-center h-full">
@@ -402,15 +467,15 @@ console.log(workData)
                                   <span>{activity.name}</span>
                                 </div>
                                 <div className="flex items-center gap-2 px-4">
-                                  <span className="line-clamp-2">{activity.description}</span>
+                                  <span className="line-clamp-2">
+                                    {activity.description}
+                                  </span>
                                 </div>
                               </div>
                             </div>
                             <div
                               onClick={() =>
-                                navigate(
-                                  `/community/detail/${activity.id}`
-                                )
+                                navigate(`/community/detail/${activity.id}`)
                               }
                               className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
                             >
@@ -421,6 +486,7 @@ console.log(workData)
                       ))}
                   </div>
                 </Card>
+                
               </div>
             </div>
           )}
@@ -446,10 +512,10 @@ console.log(workData)
                           <span>{activity.info}</span>
                         </div>
                         <div className="text-sm flex items-center gap-1 font-light">
-                          <ClockIcon className="h-3 w-3" />{" "}
+                          <ClockIcon className="h-3 w-3" />{' '}
                           <span>
                             {formatStandardDateTime(activity.created_at)}
-                          </span>{" "}
+                          </span>{' '}
                         </div>
                       </div>
                     </div>
@@ -474,7 +540,7 @@ console.log(workData)
         </TabsContent>
       </Tabs>
     </div>
-  );
-};
+  )
+}
 
-export default UserDashboard;
+export default UserDashboard

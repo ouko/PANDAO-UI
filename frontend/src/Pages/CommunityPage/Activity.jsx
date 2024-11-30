@@ -111,37 +111,49 @@ const Activity = () => {
                   </div>
                 </Card>
                 <div className="bg-transparent md:w-[70%] mx-auto md:p-4 p-4 space-y-2 flex items-center flex-col">
-                  <Card className="w-full p-3 mb-5">
-                    <div className="text-2xl font-semibold py-3">All Funds History</div>
+                <Card className="w-full p-3 mb-5">
+  <div className="text-2xl font-semibold py-3">All Funds History</div>
 
-                    {expenses.map((transaction) => (
-                      <Card
-                        key={transaction.id}
-                        className="w-full p-4 mb-4 overflow-hidden"
-                      >
-                        <div className="flex items-center">
-                          <img
-                            src={transaction.image_url}
-                            alt={transaction.user_name}
-                            className="w-16 h-16 rounded-full mr-4"
-                          />
-                          <div>
-                            <h3 className="font-bold text-lg">
-                              {transaction.user_name}
-                            </h3>
-                            <p className="text-sm text-gray-600">Date:{' '}
-                              {new Date(transaction.date).toLocaleString()}
-                            </p>
-                            <p className={`text-sm font-semibold ${transaction.xrd_added > 0 ? 'text-green-500' : 'text-red-500'}`}>XRD Added:{transaction.xrd_added}
-                            </p>
-                            <p className="text-sm text-gray-600">
-                              Transaction Hash: {transaction.tx_hash}
-                            </p>
-                          </div>
-                        </div>
-                      </Card>
-                    ))}
-                  </Card>
+  {expenses.length === 0 ? (
+    <div className="text-center text-gray-500 py-5">
+      No transactions found.
+    </div>
+  ) : (
+    expenses.map((transaction) => (
+      <Card
+        key={transaction.id}
+        className="w-full p-4 mb-4 overflow-hidden"
+      >
+        <div className="flex items-center">
+          <img
+            src={transaction.image_url}
+            alt={transaction.user_name}
+            className="w-16 h-16 rounded-full mr-4"
+          />
+          <div>
+            <h3 className="font-bold text-lg">
+              {transaction.user_name}
+            </h3>
+            <p className="text-sm text-gray-600">
+              Date: {new Date(transaction.date).toLocaleString()}
+            </p>
+            <p
+              className={`text-sm font-semibold ${
+                transaction.xrd_added > 0 ? 'text-green-500' : 'text-red-500'
+              }`}
+            >
+              XRD Added: {transaction.xrd_added}
+            </p>
+            <p className="text-sm text-gray-600">
+              Transaction Hash: {transaction.tx_hash}
+            </p>
+          </div>
+        </div>
+      </Card>
+    ))
+  )}
+</Card>
+
                 </div>
               </div>
             </div>
