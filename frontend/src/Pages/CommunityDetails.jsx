@@ -6,6 +6,7 @@ import AvatarCircles from '@/components/ui/myComponents/avatarCircle'
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
+
 import axios from 'axios'
 import {
   Bitcoin,
@@ -39,9 +40,16 @@ import { formatStandardDateTime } from '@/utils/functions/convertActivityData'
 import { Badge } from '@/components/ui/badge'
 import useBluePrintSlugStore from '@/store/blueprintSlug'
 
+import { Line } from 'react-chartjs-2'
+import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement, Title, Tooltip } from 'chart.js'
+import FundHistoryGraph from './CommunityPage/ChatHistory'
+
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Title, Tooltip)
+
 function removeNewLines(input) {
   return input.replace(/\n\s*/g, ' ')
 }
+
 
 const CommunityDetails = () => {
   const { accounts } = useAccount()
@@ -61,6 +69,7 @@ const CommunityDetails = () => {
   const [manifest, setManifest] = useState('')
   const [token, setToken] = useState(0)
   const [tokenToSell, setTokenToSell] = useState(0)
+  const [fundHistory, setFundHistory] = useState([]) // New state for fund history
   const handleCopy = (address) => {
     navigator.clipboard.writeText(address)
     setCopied(true)
@@ -68,6 +77,7 @@ const CommunityDetails = () => {
       setCopied(false)
     }, 1000)
   }
+
   const handleJoinCommunity = async () => {
     const data = {
       community_id: params.id,
@@ -222,7 +232,7 @@ const CommunityDetails = () => {
       setLoading(false)
     }
   }
-
+  
   const handleSellToken = async () => {
     const data = {
       community_id: params.id,
@@ -306,34 +316,40 @@ const CommunityDetails = () => {
     }
   }
 
+
   const fetchDetails = async () => {
     try {
       const res = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/community/detail/${params.id}`,
       )
-    
+
       if(res.status==200){
         console.log(res.data.blueprint_slug,"res")
-          setSlug(res.data.blueprint_slug)
+        setSlug(res.data.blueprint_slug)
         setData(res.data)
 
+        // Fetch fund history data
+        if (res.data.fund_history) {
+          setFundHistory(res.data.fund_history) // Populate fund history data
+        }
       }
     } catch (error) {
       console.error('Error fetching blueprint data:', error)
     }
   }
+
   const fetchParticipant = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/participant/${
-          params.id
-        }`,
+        `${import.meta.env.VITE_BACKEND_URL}/community/participant/
+        ${params.id}`,
       )
       setParticipants(res.data)
     } catch (error) {
       console.error('Error fetching blueprint data:', error)
     }
   }
+
   const fetchComments = async () => {
     try {
       const res = await axios.get(
@@ -344,6 +360,7 @@ const CommunityDetails = () => {
       console.error('Error fetching blueprint data:', error)
     }
   }
+
   useEffect(() => {
     fetchDetails()
     fetchParticipant()
@@ -354,9 +371,11 @@ const CommunityDetails = () => {
     navigate('/')
     return null
   }
+
   const isUserParticipant = participants.some(
     (participant) => participant.participant === accounts[0].address,
   )
+
   return (
     <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-50 to-purple-50 text-black px-2">
       <CustomAlert />
@@ -575,6 +594,8 @@ const CommunityDetails = () => {
                     </div>
                   )}
                 </Card>
+
+                <FundHistoryGraph/>
                 <div className="bg-transparent w-full mx-auto  flex items-center  ">
                   <Card
                     onClick={() =>
