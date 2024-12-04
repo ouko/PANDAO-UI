@@ -196,7 +196,7 @@ const ExploreSection = () => {
                   onClick={() => handleNavigation(`/community/detail/${dao.id}`)}
                   className="flex overflow-hidden flex-col items-start justify-between p-5 h-[180px] cursor-pointer hover:shadow-md"
                 >
-                  <div className="flex items-start gap-">
+                  <div className="flex items-start gap-2">
                     <Avatar className="h-14 w-14">
                       <AvatarImage src={dao.image} alt={dao.name || 'DAO'} />
                       <AvatarFallback>{dao.name?.[0] || '?'}</AvatarFallback>
