@@ -16,7 +16,8 @@ export const useBondFormStore = create((set) => ({
     bond_price: 0,
     number_of_bonds: 0,
     user_address: '',
-    description: ''
+    description: '',
+    nft:''
   },
   updateBond: (key, value) => set((state) => ({ bond: { ...state.bond, [key]: value } })),
   resetBond: () => set(() => ({
@@ -35,7 +36,8 @@ export const useBondFormStore = create((set) => ({
       bond_price: 0,
       number_of_bonds: 0,
       user_address: '',
-      description: ''
+      description: '',
+      nft:''
     }
   }))
 }));

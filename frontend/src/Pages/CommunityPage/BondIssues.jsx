@@ -59,7 +59,7 @@ const FormInput = ({
         onChange={onChange}
         className="input"
         disabled={disabled}
-        min ={min}
+        min={min}
       />
     </div>
   )
@@ -84,13 +84,14 @@ const BondIssue = () => {
   const navigate = useNavigate()
   const [manifest, setManifest] = useState('')
   const sendTransaction = useSendTransaction()
-  const { bond, updateBond,resetBond } = useBondFormStore((state) => state)
+  const { bond, updateBond, resetBond } = useBondFormStore((state) => state)
   const [isFormComplete, setIsFormComplete] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [nfts, setNfts] = useState([]) // State to store the NFTs array
   const handleformSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true); // Set loading to true at the start of the process
-    
+    e.preventDefault()
+    setLoading(true) // Set loading to true at the start of the process
+
     try {
       // Initial post request to submit the bond data
       const res = await axios.post(
@@ -99,22 +100,24 @@ const BondIssue = () => {
           ...bond,
           community_id: params.id,
           user_address: accounts[0].address,
-          initial_exchange_date: new Date(bond.initial_exchange_date).toISOString(),
+          initial_exchange_date: new Date(
+            bond.initial_exchange_date,
+          ).toISOString(),
           maturity_date: new Date(bond.maturity_date).toISOString(),
-        }
-      );
-  
+        },
+      )
+
       if (res.status === 200) {
-        setManifest(res.data);
-        console.log('Form submitted successfully', res.data);
-  
+        setManifest(res.data)
+        console.log('Form submitted successfully', res.data)
+
         // Wait for manifest to update before sending the transaction
-        const { receipt } = await sendTransaction(res.data); // Using res.data instead of manifest
-  
+        const { receipt } = await sendTransaction(res.data) // Using res.data instead of manifest
+
         // Transaction receipt handling
         if (receipt?.transaction?.intent_hash) {
-          let txId = receipt.transaction.intent_hash;
-  
+          let txId = receipt.transaction.intent_hash
+
           try {
             const response = await axios.post(
               `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
@@ -126,37 +129,59 @@ const BondIssue = () => {
                 headers: {
                   'Content-Type': 'application/json',
                 },
-              }
-            );
-            console.log(response.data);
-            toast.success('Bond Issued');
+              },
+            )
+            console.log(response.data)
+            toast.success('Bond Issued')
           } catch (error) {
-            console.error('Error in submit-tx:', error);
-            toast.error('Failed to submit transaction');
+            console.error('Error in submit-tx:', error)
+            toast.error('Failed to submit transaction')
             setLoading(false)
           }
         } else {
-          toast.error('Transaction hash missing');
+          toast.error('Transaction hash missing')
         }
       } else {
-        toast.error('Failed to create bond manifest');
+        toast.error('Failed to create bond manifest')
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
-      toast.error('Something went wrong');
-      setLoading(false);
+      console.error('Error submitting form:', error)
+      toast.error('Something went wrong')
+      setLoading(false)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
-  
+  }
+  const fetchNfts = async () => {
+    try {
+      const response = await axios.get(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/users/wallets/assets/account_tdx_2_12yjt4x4qxz886wr6lv6gmv8ukyzfj70y8fuzpdeddyw4mje9q2ux8h`,
+      )
 
+      const processedData = Array.from(
+        new Map(
+          response.data.flat().map((item) => [
+            item.address,
+            {
+              name: item.name || '',
+              icon_url: item.icon_url || '',
+              address: item.address,
+            },
+          ]),
+        ).values(),
+      )
+      setNfts(processedData)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const handleChange = (e) => {
     updateBond(e.target.name, e.target.value)
-  if(e.target.name === 'bond_price'){
-    updateBond('notional_principal',e.target.value)
-  }
-
+    if (e.target.name === 'bond_price') {
+      updateBond('notional_principal', e.target.value)
+    }
   }
 
   useEffect(() => {
@@ -174,18 +199,19 @@ const BondIssue = () => {
       'bond_price',
       'number_of_bonds',
       'description',
-      
     ]
-
-
 
     const allFieldsFilled = requiredFields.every((field) => bond[field])
     setIsFormComplete(allFieldsFilled)
   }, [bond])
+  useEffect(() => {
+    fetchNfts()
+  }, [])
   if (!accounts || accounts.length === 0) {
     navigate('/')
     return null
   }
+  console.log(nfts)
   return (
     <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
@@ -259,7 +285,6 @@ const BondIssue = () => {
                     <FormInput
                       label="Initial Exchange Date"
                       type="date"
-                    
                       name="initial_exchange_date"
                       value={bond.initial_exchange_date}
                       onChange={handleChange}
@@ -275,12 +300,12 @@ const BondIssue = () => {
                       tooltipText="Date the bond matures"
                     />
                     <FormInput
-                     label="Bond Price"
-                     type="number"
-                     name="bond_price"
-                     value={bond.bond_price}
-                     onChange={handleChange}
-                     tooltipText="Current price of the bond"
+                      label="Bond Price"
+                      type="number"
+                      name="bond_price"
+                      value={bond.bond_price}
+                      onChange={handleChange}
+                      tooltipText="Current price of the bond"
                     />
 
                     <FormInput
@@ -295,7 +320,7 @@ const BondIssue = () => {
                     <FormInput
                       label="Notional Principal"
                       type="number"
-                      disabled ="true"
+                      disabled="true"
                       name="notional_principal"
                       value={bond.notional_principal}
                       onChange={handleChange}
@@ -324,20 +349,50 @@ const BondIssue = () => {
                       onChange={handleChange}
                       tooltipText="Detailed description of the bond"
                     />
-                    <Select className="flex items-center justify-center" onValueChange={(value)=>
-                        updateBond("bond_position",value)
-                    }>
+                    <Select
+                      className="flex items-center justify-center"
+                      onValueChange={(value) =>
+                        updateBond('bond_position', value)
+                      }
+                    >
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select Position" />
+                        <SelectValue placeholder="Select Nft" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="long">Long</SelectItem>
                         <SelectItem value="short">Short</SelectItem>
                       </SelectContent>
                     </Select>
+                    <Select
+                      className="flex items-center justify-center"
+                      onValueChange={(value) => updateBond('nft', value)}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select Position" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {nfts.length > 0 ? (
+                          nfts.map((item, index) => (
+                            <SelectItem key={index} value={item.address}>
+                              {item.name || item.icon_url ? (
+                                <div className="flex items-center">
+                                  {item.name && <span>{item.name}</span>}
+                                </div>
+                              ) : (
+                                'Unnamed Item'
+                              )}
+                            </SelectItem>
+                          ))
+                        ) : (
+                          <div className="p-4 text-center text-gray-500">
+                            No NFTs available
+                          </div>
+                        )}
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="flex items-center justify-end">
-                    <Button type="submit" disabled={!isFormComplete || loading }>
+                    <Button type="submit" disabled={!isFormComplete || loading}>
                       Submit
                     </Button>
                   </div>
