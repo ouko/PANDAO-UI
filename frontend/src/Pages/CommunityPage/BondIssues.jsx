@@ -363,22 +363,31 @@ const BondIssue = () => {
                         <SelectItem value="short">Short</SelectItem>
                       </SelectContent>
                     </Select>
-                    <Select className="flex items-center justify-center">
+                    <Select
+                      className="flex items-center justify-center"
+                      onValueChange={(value) => updateBond('nft', value)}
+                    >
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select Position" />
                       </SelectTrigger>
                       <SelectContent>
-                        {nfts.map((item, index) => (
-                          <SelectItem key={index} value={item.address}>
-                            {item.name || item.icon_url ? (
-                              <div className="flex items-center">
-                                {item.name && <span>{item.name}</span>}
-                              </div>
-                            ) : (
-                              'Unnamed Item'
-                            )}
-                          </SelectItem>
-                        ))}
+                        {nfts.length > 0 ? (
+                          nfts.map((item, index) => (
+                            <SelectItem key={index} value={item.address}>
+                              {item.name || item.icon_url ? (
+                                <div className="flex items-center">
+                                  {item.name && <span>{item.name}</span>}
+                                </div>
+                              ) : (
+                                'Unnamed Item'
+                              )}
+                            </SelectItem>
+                          ))
+                        ) : (
+                          <div className="p-4 text-center text-gray-500">
+                            No NFTs available
+                          </div>
+                        )}
                       </SelectContent>
                     </Select>
                   </div>
