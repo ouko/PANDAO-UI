@@ -160,19 +160,19 @@ const BondIssue = () => {
         }/users/wallets/assets/account_tdx_2_12yjt4x4qxz886wr6lv6gmv8ukyzfj70y8fuzpdeddyw4mje9q2ux8h`,
       )
 
-      const processedData = Array.from(
-        new Map(
-          response.data.flat().map((item) => [
-            item.address,
-            {
-              name: item.name || '',
-              icon_url: item.icon_url || '',
-              address: item.address,
-            },
-          ]),
-        ).values(),
-      )
-      setNfts(processedData)
+      // const processedData = Array.from(
+      //   new Map(
+      //     response.data.flat().map((item) => [
+      //       item.address,
+      //       {
+      //         name: item.name || '',
+      //         icon_url: item.icon_url || '',
+      //         address: item.address,
+      //       },
+      //     ]),
+      //   ).values(),
+      // )
+      setNfts(response.data)
     } catch (error) {
       console.log(error)
     }
@@ -377,7 +377,7 @@ const BondIssue = () => {
                               {item.name || item.icon_url ? (
                                 <div className="flex items-center gap-2">
                                      <img
-                                  className='h-5 w-5'
+                                  className='h-5 w-5 rounded-full shadow-md'
                                   src={item.icon_url
                                   }
                                   />
