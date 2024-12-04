@@ -37,25 +37,43 @@ const FundHistoryGraph = () => {
       </Card>
     );
   }
-
+console.log(expenses)
   return (
     <Card className="w-full p-3 mb-5">
-      <div className="text-2xl font-semibold py-3">All Funds History</div>
+    <div className="text-2xl font-semibold py-3">All Funds History</div>
+    {expenses.length === 0 ? (
+      <div className="text-center text-gray-500">No data available</div>
+    ) : (
       <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={expenses}>
+        <LineChart data={[...expenses].reverse()}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-            dataKey="timestamp"
-            tickFormatter={(date) => new Date(date).toLocaleDateString()} // Format timestamp to a readable date
+          <XAxis 
+            dataKey="date" 
+            tickFormatter={(date) => new Date(date).toLocaleDateString()} 
           />
           <YAxis />
-          <Tooltip formatter={(value) => value.toLocaleString()} />
+          <Tooltip 
+            formatter={(value, name) => [`${value.toLocaleString()} XRD`, name]} 
+            labelFormatter={(label) => `Date: ${new Date(label).toLocaleDateString()}`} 
+          />
           <Legend />
-          <Line type="monotone" dataKey="xrd_added" stroke="#82ca9d" name="XRD Added" />
-          <Line type="monotone" dataKey="current_xrd" stroke="#8884d8" name="Current XRD" />
+          <Line 
+            type="monotone" 
+            dataKey="xrd_added" 
+            stroke="#82ca9d" 
+            name="XRD Added" 
+          />
+          <Line 
+            type="monotone" 
+            dataKey="current_xrd" 
+            stroke="#8884d8" 
+            name="Current XRD" 
+          />
         </LineChart>
       </ResponsiveContainer>
-    </Card>
+    )}
+  </Card>
+  
   );
 };
 
