@@ -37,7 +37,6 @@ const FundHistoryGraph = () => {
       </Card>
     );
   }
-console.log(expenses)
   return (
     <Card className="w-full p-3 mb-5">
     <div className="text-2xl font-semibold py-3">All Funds History</div>
