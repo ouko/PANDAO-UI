@@ -70,7 +70,7 @@ const ResourceSection = () => {
         <div className="text-4xl font-semibold">Video Guide</div>
         <p className="md:w-2/3 font-thin">Don&apos;t know where to start?</p>
       </div>
-      <div className="w-full md:h-[90vh] px-2">
+      <div className="w-full md:h-[60vh] px-2">
         <ReactPlayer
           url="https://youtu.be/6cDtHjgpCyE?si=ZJSmDCNT80mOSbPi"
           className=" w-full h-full"
