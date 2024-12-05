@@ -8,6 +8,7 @@ import { useAccount } from '@/AccountContext'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import useTokenWeightStore from '@/store/templateStore/tokenWeightStore'
+import { SkeletonCard } from "@/Pages/GlobalComponents/Skeleton"
 
 const TemplateView = () => {
   const { setView } = useViewStore()
@@ -28,7 +29,7 @@ const TemplateView = () => {
     const fetchBluePrint = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/blueprint`,
+        `${import.meta.env.VITE_BACKEND_URL}/blueprint`,
         )
         setData(res.data)
       } catch (error) {
@@ -48,7 +49,7 @@ const TemplateView = () => {
     <div className="max-w-[1000px] mx-auto mt-20">
       <Card className="bg-white relative z-30 text-black mt-10 p-12 flex flex-col gap-3 rounded-xl shadow-sm">
         <div className="mb-6 flex flex-col gap-2">
-          <div className="flex items-center justify-between ">
+        <div className="flex items-center justify-between ">
             <div>Create your DAO</div>
             <div>Step 1 of 3</div>
           </div>
@@ -61,7 +62,7 @@ const TemplateView = () => {
             Start simple and learn as you go. You can always evolve your DAO in
             the future.
           </span>
-          {/* <Button
+           {/* <Button
               onClick={() => setView("3")}
               className="w-full md:w-1/3 group"
               variant="radix"
@@ -71,13 +72,9 @@ const TemplateView = () => {
             </Button> */}
         </div>
       </Card>
-      <div className="max-w-[1000px] pt-4  relative z-30 grid md:grid-cols-3 grid-cols-1 mx-auto  gap-3">
+      <div className="max-w-[1000px] pt-4 relative z-30 grid md:grid-cols-3 grid-cols-1 mx-auto gap-3">
         {loading ? (
-          <>
-            <div className="flex items-center justify-center w-full h-52   col-span-3 rounded-md mt-4">
-              Loading..
-            </div>
-          </>
+          Array.from({ length: 3 }, (_, index) => <SkeletonCard key={index} />)
         ) : (
           data.map((project, index) => (
             <div
@@ -89,7 +86,7 @@ const TemplateView = () => {
                 {project.description}
               </p>
               <div className="flex w-full gap-3 ">
-                <Button
+              <Button
                   onClick={() => {
                     navigate(`/exploreDao/${project.slug}`)
                   }}
