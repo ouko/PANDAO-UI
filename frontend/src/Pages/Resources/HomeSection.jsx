@@ -15,7 +15,14 @@ const HomeSection = () => {
             </div>
             <p className="text-xl">
               Making Blockchain Accessible and DAO Governance Effortless.
+              
             </p>
+            <h3>This section includes a comprehensive collection of resources to get you 
+               started with building and running a DAO. This page contains references from 
+               demos to manuals, videos, and a support community on Discord, which will 
+               help you learn everything you need in the way you prefer. If you need 
+               tutorials and hands-on implementation, extensive documentation or 
+               conversations with peers and experts, everything you need is here.</h3>
           </div>
 
           {/* <ResourcesAnimation /> */}

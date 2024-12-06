@@ -13,8 +13,13 @@ const InstructionView = () => {
         <div className="text-4xl font-semibold ">Build your DAO</div>
         <div className="flex md:flex-row flex-col items-center justify-between gap-3">
           <span className="w-full">
-            Start simple and learn as you go. You can always evolve your DAO in
-            the future.
+            Welcome to the How to Build Your DAO hub. Here you can find a variety of
+            guides and resources to assist you in forming and operating your own
+            Decentralized Autonomous Organization . If you’re unfamiliar with what a
+            DAO is or an experienced builder interested in exploring the best practices,
+            we’ve compiled the ideal tutorials for you. Check our collection and get the
+            skills you need to create, launch, and regulate your DAO.
+
           </span>
           <Button
             onClick={() => setView("2")}
@@ -30,7 +35,7 @@ const InstructionView = () => {
         <StepsCard title="Select Template" step="Step 1" icon={CirclePlus} />
         <StepsCard title="Describe your DAO" step="Step 2" icon={Pen} />
         <StepsCard title="Deploy" step="Step 3" icon={ShieldCheck} />
-       
+
       </div>
     </div>
   );
