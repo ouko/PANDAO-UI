@@ -8,13 +8,8 @@ const Aboutus = () => {
         <h1 className="text-7xl font-bold mb-6 text-center">Welcome to PanDao!</h1>
 
         <section className="mt-6 text-center">
-          <p className="leading-relaxed text-lg">
-            Get to know our company and explore opportunities to engage with us
-            further. From job openings and career opportunities to our presence on
-            social media platforms, you'll find ways to connect with our team and stay
-            updated on our latest developments. Additionally, access important legal
-            documents such as our Terms of Service, Privacy Policy, Terms and
-            Conditions, and Disclaimer to understand our policies and commitments.
+          <p className="leading-relaxed text-base text-gray-700">
+            Discover the essence of our company and the expansive opportunities available for engagement. Whether you're interested in job openings, career prospects, or connecting with us on social media, we provide numerous avenues to interact with our team and stay informed about our latest advancements. Furthermore, you can review essential legal documents such as our Terms of Service, Privacy Policy, Terms and Conditions, and Disclaimer to gain a comprehensive understanding of our policies and commitments. We are committed to transparency and fostering meaningful relationships with our community.
           </p>
         </section>
 
