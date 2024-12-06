@@ -18,7 +18,7 @@ const HomeSection = () => {
             </p>
           </div>
 
-          <ResourcesAnimation />
+          {/* <ResourcesAnimation /> */}
         </div>
       </div>
     </>
