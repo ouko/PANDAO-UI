@@ -29,7 +29,7 @@ const TemplateView = () => {
     const fetchBluePrint = async () => {
       try {
         const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/blueprint`,
+          `${import.meta.env.VITE_BACKEND_URL}/blueprint`,
         )
         setData(res.data)
       } catch (error) {
@@ -49,7 +49,7 @@ const TemplateView = () => {
     <div className="max-w-[1000px] mx-auto mt-20">
       <Card className="bg-white relative z-30 text-black mt-10 p-12 flex flex-col gap-3 rounded-xl shadow-sm">
         <div className="mb-6 flex flex-col gap-2">
-        <div className="flex items-center justify-between ">
+          <div className="flex items-center justify-between ">
             <div>Create your DAO</div>
             <div>Step 1 of 3</div>
           </div>
@@ -59,10 +59,14 @@ const TemplateView = () => {
         <div className="text-4xl font-semibold">Select your template</div>
         <div className="flex md:flex-row flex-col items-center justify-between gap-3">
           <span className="w-full">
-            Start simple and learn as you go. You can always evolve your DAO in
-            the future.
+            Check out our various template models that you can use to make your
+            process of developing your DAO less bulky. Customize these models to use
+            as the basis to organize your stakeholders, defining different roles and
+            responsibilities, setting your governance policies, and more. Using a
+            template model can fasten your development process, so you should swiftly
+            get back to pushing for more adoptions and innovations
           </span>
-           {/* <Button
+          {/* <Button
               onClick={() => setView("3")}
               className="w-full md:w-1/3 group"
               variant="radix"
@@ -86,7 +90,7 @@ const TemplateView = () => {
                 {project.description}
               </p>
               <div className="flex w-full gap-3 ">
-              <Button
+                <Button
                   onClick={() => {
                     navigate(`/exploreDao/${project.slug}`)
                   }}
