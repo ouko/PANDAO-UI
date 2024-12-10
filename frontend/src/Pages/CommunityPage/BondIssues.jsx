@@ -205,8 +205,11 @@ const BondIssue = () => {
     setIsFormComplete(allFieldsFilled)
   }, [bond])
   useEffect(() => {
-    fetchNfts()
-  }, [params.id])
+    // Only fetch NFTs if accounts are available
+    if (accounts && accounts.length > 0) {
+      fetchNfts()
+    }
+  }, [accounts])
   if (!accounts || accounts.length === 0) {
     navigate('/')
     return null
