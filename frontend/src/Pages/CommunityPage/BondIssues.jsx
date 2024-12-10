@@ -206,7 +206,7 @@ const BondIssue = () => {
   }, [bond])
   useEffect(() => {
     fetchNfts()
-  }, [])
+  }, [params.id])
   if (!accounts || accounts.length === 0) {
     navigate('/')
     return null
