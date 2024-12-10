@@ -157,7 +157,7 @@ const BondIssue = () => {
       const response = await axios.get(
         `${
           import.meta.env.VITE_BACKEND_URL
-        }/users/wallets/assets/account_tdx_2_12yjt4x4qxz886wr6lv6gmv8ukyzfj70y8fuzpdeddyw4mje9q2ux8h`,
+        }/users/wallets/assets/${accounts[0].address}`,
       )
 
       // const processedData = Array.from(
