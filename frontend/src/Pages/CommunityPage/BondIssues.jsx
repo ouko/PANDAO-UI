@@ -377,8 +377,11 @@ const BondIssue = () => {
                       <SelectContent>
                         {nfts.length > 0 ? (
                           nfts.map((item, index) => (
-                            //this is  the 
-                            <SelectItem key={index} value={item.resource_address}> 
+
+               
+
+                            <SelectItem key={index} value={item.resource_address}>
+
                               {item.name || item.icon_url ? (
                                 <div className="flex items-center gap-2">
                                      <img
