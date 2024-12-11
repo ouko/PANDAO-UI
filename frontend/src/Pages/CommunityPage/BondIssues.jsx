@@ -372,11 +372,12 @@ const BondIssue = () => {
                     >
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select NFT" />
+                        
                       </SelectTrigger>
                       <SelectContent>
                         {nfts.length > 0 ? (
                           nfts.map((item, index) => (
-                            //this is  the resource address
+                            //this is  the 
                             <SelectItem key={index} value={item.resource_address}> 
                               {item.name || item.icon_url ? (
                                 <div className="flex items-center gap-2">
