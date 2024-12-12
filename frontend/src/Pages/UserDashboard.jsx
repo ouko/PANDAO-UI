@@ -91,13 +91,13 @@ const UserDashboard = () => {
         console.error('Error fetching activity data:', error)
       }
     }
-    const fetchAll = async () => {
+    const fetchAll = async (user_address) => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/community/all`,
+          `${import.meta.env.VITE_BACKEND_URL}/community/user/interest/user_add?user_addr=${user_address}`,
         )
         setDataAll(res.data)
-        console.log(res.data)
+        console.log(res.data,"hi faisal")
       } catch (error) {
         console.error('Error fetching blueprint data:', error)
       } finally {
@@ -198,7 +198,7 @@ const UserDashboard = () => {
       fetchCreatedParticipated(accounts[0].address)
       fetchCreatedBonds(accounts[0].address)
 
-      fetchAll()
+      fetchAll(accounts[0].address)
       fetchUserExpense()
       fetchFailedTransactions()
     }
@@ -435,7 +435,7 @@ const UserDashboard = () => {
                   <div className="w-full mt-4 flex flex-col gap-2 h-full">
                     {dataAll.length === 0 && (
                       <div className="flex items-center justify-center text-center h-full">
-                        No active comminities.
+                        No active communities.
                       </div>
                     )}
                     {dataAll.length > 0 &&
@@ -480,8 +480,8 @@ const UserDashboard = () => {
                 </Card>
                 <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
                   <div className="text-xl font-bold"> Created Bonds</div>
-                  {createdBonds.length===0 && <div className='flex items-center justify-center h-28'>
-                    No Bond Create
+                  {createdBonds.length===0 && <div className='flex items-center justify-center h-28 w-full'>
+                    No Bond Created
                   </div> }
                   {createdBonds.length>0 && createdBonds.map((bond, index) => (
     <div 
