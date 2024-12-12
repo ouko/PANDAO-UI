@@ -341,8 +341,8 @@ const CommunityDetails = () => {
   const fetchParticipant = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/participant/
-        ${params.id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/community/participant/${
+        params.id}`,
       )
       setParticipants(res.data)
     } catch (error) {
