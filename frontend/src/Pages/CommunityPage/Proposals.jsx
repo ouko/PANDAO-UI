@@ -818,34 +818,39 @@ const Proposals = () => {
               <div className="flex flex-col mt-3 gap-3 w-full ">
                 <div className="text-xl p-1">Proposal Timing</div>
                 <div className="flex items-center justify-between space-x-2">
-                  <div>To:</div>
-                  <label className=" flex items-center">
-                    <DatePicker
-                      selected={startDate}
-                      onChange={(date) => setStartDate(date)}
-                      customInput={<CustomDatePicker />}
-                    />
-                    <Input
-                      type="time"
-                      value={startTime}
-                      onChange={(e) => setStartTime(e.target.value)}
-                      className="ml-2 w-fit"
-                    />
-                  </label>
-                  <div>From:</div>
-                  <label className="flex items-center ">
-                    <DatePicker
-                      selected={endDate}
-                      onChange={(date) => setEndDate(date)}
-                      customInput={<CustomDatePicker />}
-                    />
-                    <Input
-                      type="time"
-                      value={endTime}
-                      onChange={(e) => setEndTime(e.target.value)}
-                      className="ml-2 w-fit"
-                    />
-                  </label>
+                <div>
+                    <div>From:</div>
+                    <label className="flex items-center ">
+                      <DatePicker
+                        selected={endDate}
+                        onChange={(date) => setEndDate(date)}
+                        customInput={<CustomDatePicker />}
+                      />
+                      <Input
+                        type="time"
+                        value={endTime}
+                        onChange={(e) => setEndTime(e.target.value)}
+                        className="ml-2 w-fit"
+                      />
+                    </label>
+                  </div>
+                  <div>
+                    <div>To:</div>
+                    <label className=" flex items-center">
+                      <DatePicker
+                        selected={startDate}
+                        onChange={(date) => setStartDate(date)}
+                        customInput={<CustomDatePicker />}
+                      />
+                      <Input
+                        type="time"
+                        value={startTime}
+                        onChange={(e) => setStartTime(e.target.value)}
+                        className="ml-2 w-fit"
+                      />
+                    </label>
+                  </div>
+                 
                 </div>
                 <div className="flex flex-col gap-2">
                   <Label className="text-2xl p-1">Minimum Quorum</Label>
