@@ -32,7 +32,7 @@ const FormInput = ({
   onChange,
   tooltipText,
   disabled = false,
-  min,
+  min=0,
 }) => {
   return (
     <div>
