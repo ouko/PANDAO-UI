@@ -40,6 +40,8 @@ const UserDashboard = () => {
   const [workData, setWorkData] = useState([])
   const [userData, setUserData] = useState({})
   const [createdComminities, setCreatedCommunities] = useState([])
+  const [createdBonds, setCreatedBonds] = useState([])
+
   const [participatedComminities, setParticipatedCommunities] = useState([])
 
   // const [edit, setEdit] = useState(false);
@@ -105,7 +107,9 @@ const UserDashboard = () => {
     const fetchUserExpense = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/expense/${accounts[0].address}`,
+          `${import.meta.env.VITE_BACKEND_URL}/user/expense/${
+            accounts[0].address
+          }`,
         )
         console.log(res.data, 'hi00000hi')
         setExpenseData(res.data)
@@ -118,7 +122,9 @@ const UserDashboard = () => {
     const fetchFailedTransactions = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/pending-transactions/${accounts[0].address}`,
+          `${import.meta.env.VITE_BACKEND_URL}/user/pending-transactions/${
+            accounts[0].address
+          }`,
         )
         console.log(res.data, 'hi00000hi')
         setFailedData(res.data)
@@ -160,6 +166,18 @@ const UserDashboard = () => {
         console.error('Error fetching activity data:', error)
       }
     }
+    const fetchCreatedBonds = async (user_address) => {
+      try {
+        const res = await axios.get(
+          `${
+            import.meta.env.VITE_BACKEND_URL
+          }/user/created-bonds/${user_address}`,
+        )
+        setCreatedBonds(res.data)
+      } catch (error) {
+        console.error('Error fetching activity data:', error)
+      }
+    }
     const fetchCreatedParticipated = async (user_address) => {
       try {
         const res = await axios.get(
@@ -178,6 +196,8 @@ const UserDashboard = () => {
       fetchActivity(accounts[0].address, 1, 10)
       fetchCreatedCommunity(accounts[0].address)
       fetchCreatedParticipated(accounts[0].address)
+      fetchCreatedBonds(accounts[0].address)
+
       fetchAll()
       fetchUserExpense()
       fetchFailedTransactions()
@@ -193,7 +213,6 @@ const UserDashboard = () => {
   //     setCurrentPage(newPage);
   //   }
   // };
-  console.log(workData)
   return (
     <div className=" relative flex items-start gap-3 justify-start min-h-screen bg-slate-100 text-black pb-7 pt-2 px-7">
       <Tabs defaultValue="overview" className="w-full  t ">
@@ -459,6 +478,43 @@ const UserDashboard = () => {
                       ))}
                   </div>
                 </Card>
+                <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
+                  <div className="text-xl font-bold"> Created Bonds</div>
+                  {createdBonds.length===0 && <div className='flex items-center justify-center h-28'>
+                    No Bond Create
+                  </div> }
+                  {createdBonds.length>0 && createdBonds.map((bond, index) => (
+    <div 
+      key={bond.bond_id} 
+      className="w-full bg-white shadow-sm rounded-md p-4 mt-4 flex flex-col md:flex-row justify-between items-start md:items-center"
+    >
+      <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
+        <img 
+          src={bond.community?.image || 'https://via.placeholder.com/150'} 
+          alt={bond.community?.name || 'Bond Image'} 
+          className="w-16 h-16 rounded-full object-cover"
+        />
+        <div>
+          <h2 className="text-lg font-bold">{bond.name || 'Unnamed Bond'}</h2>
+          <p className="text-sm text-gray-600">Community: {bond.community?.name || 'N/A'}</p>
+          <p className="text-sm text-gray-600">Description: {bond.description || 'No description provided'}</p>
+        </div>
+      </div>
+
+      <div className="mt-4 md:mt-0 flex flex-col items-start md:items-end">
+        <p className="text-sm text-gray-600">Price: {bond.price ? `$${bond.price}` : 'Not Available'}</p>
+        <p className="text-sm text-gray-600">Interest Rate: {bond.interest_rate ? `${bond.interest_rate}%` : 'N/A'}</p>
+        <p className="text-sm text-gray-600">
+  Maturity Date: 
+  {bond.maturity_date 
+    ? new Date(bond.maturity_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) 
+    : 'Not specified'}
+</p>
+
+      </div>
+    </div>
+  ))}
+                </Card>
               </div>
             </div>
           )}
@@ -511,7 +567,10 @@ const UserDashboard = () => {
           </Card>
         </TabsContent>
         <TabsContent value="expenses">
-        <UserTransaction expneseData={expneseData} failedTransaction={failedData}/>
+          <UserTransaction
+            expneseData={expneseData}
+            failedTransaction={failedData}
+          />
         </TabsContent>
       </Tabs>
     </div>
