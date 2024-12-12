@@ -85,7 +85,7 @@ const Navbar = () => {
         </div>
         <ul className="md:flex hidden items-center justify-center  gap-5 w-[200%] font-semibold text-lg">
           <NavLink
-            to="/OurStory "
+            to="/ourstory "
             className={
               ({ isActive }) =>
                 isActive
@@ -98,19 +98,7 @@ const Navbar = () => {
           </NavLink>
 
           <NavLink
-            to="/products"
-            className={
-              ({ isActive }) =>
-                isActive
-                  ? 'bg-purple-700/70 p-2 rounded-xl text-white font-semibold' // Active state with a darker purple background
-                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-white font-semibold' // Inactive state with a light purple hover effect
-            }
-            end
-          >
-            <li>Products</li>
-          </NavLink>
-          <NavLink
-            to="/CatalystSuite"
+            to="/catalystsuite"
             className={
               ({ isActive }) =>
                 isActive
@@ -120,6 +108,18 @@ const Navbar = () => {
             end
           >
             <li>Catalyst Suite</li>
+          </NavLink>
+          <NavLink
+            to="/resources"
+            className={
+              ({ isActive }) =>
+                isActive
+                  ? 'bg-purple-700/70 p-2 rounded-xl text-white font-semibold' // Active state with a darker purple background
+                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-white font-semibold' // Inactive state with a light purple hover effect
+            }
+            end
+          >
+            <li>Resources</li>
           </NavLink>
           {/* <NavLink
             to="/blog"

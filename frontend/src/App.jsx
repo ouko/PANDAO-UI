@@ -3,7 +3,6 @@ import "./App.css";
 import HomePage from "./Pages/HomePage";
 import Product from "./Pages/product";
 import OurStory  from "./Pages/OurStory";
-import CatalystSuite  from "./Pages/CatalystSuite";
 import UserDashboard from "./Pages/UserDashboard";
 import Deploy from "./Pages/Deploy";
 import DaoDetailsPage from "./Pages/DaoDetailsPage";
@@ -33,6 +32,7 @@ import AnnIssued from "./Pages/CommunityPage/AnnIssued";
 import BlogDetail from "./Pages/Resources/BlogDeatails";
 import PurchasedBond from "./Pages/CommunityPage/PurchasedBond";
 import Price from "./Pages/Price";
+import Resources from "./Pages/Resources";
 
 function App() {
   return (
@@ -40,16 +40,16 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePageLayout />}>
           <Route index element={<HomePage />} />
-          <Route path="OurStory" element={<OurStory  />} />
+          <Route path="ourstory" element={<OurStory  />} />
           <Route path="create" element={<Create/>} />
           <Route path="privacypolicy" element={<PrivacyPolicy/>} />
           <Route path="termsandcondition" element={<Termsandconditon/>} />
           <Route path="Price" element={<Price/>} />
 
-          <Route path="products" element={<Product />} />
+          <Route path="catalystsuite" element={<Product />} />
           <Route path="explore" element={<ExploreAllDao />} />
           <Route path="blog" element={<Blog />} />
-          <Route path="CatalystSuite" element={<CatalystSuite/>} />
+          <Route path="resources" element={<Resources/>} />
           <Route path="resources/what-is-radix" element={<One />} />
           <Route path="/reasources/:id" element={<BlogDetail />} />
           <Route path="exploreDao/:slug" element={<DaoDetailsPage />} />

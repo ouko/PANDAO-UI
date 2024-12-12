@@ -1,7 +1,7 @@
 import HomeSection from "./Resources/HomeSection";
 import ResourceSection from "./Resources/ResourcesSection";
 
-const CatalystSuite  = () => {
+const Resources  = () => {
     return (
         <div className="">
             <HomeSection/>
@@ -10,5 +10,5 @@ const CatalystSuite  = () => {
     );
   };
   
-  export default CatalystSuite ;
+  export default Resources ;
   
