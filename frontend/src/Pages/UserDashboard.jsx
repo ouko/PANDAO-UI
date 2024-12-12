@@ -22,6 +22,7 @@ import { formatStandardDateTime } from '@/utils/functions/convertActivityData'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Timeline from './UserDasboard/WorkTimeLine'
 import UserTransaction from './UserDasboard/UserTransactions/UserTransactions'
+import { Badge } from '@/components/ui/badge'
 
 const UserDashboard = () => {
   const { accounts } = useAccount()
@@ -94,10 +95,12 @@ const UserDashboard = () => {
     const fetchAll = async (user_address) => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/community/user/interest/user_add?user_addr=${user_address}`,
+          `${
+            import.meta.env.VITE_BACKEND_URL
+          }/community/user/interest/user_add?user_addr=${user_address}`,
         )
         setDataAll(res.data)
-        console.log(res.data,"hi faisal")
+        console.log(res.data, 'hi faisal')
       } catch (error) {
         console.error('Error fetching blueprint data:', error)
       } finally {
@@ -279,6 +282,7 @@ const UserDashboard = () => {
                         )}
                       </button>
                     </div>
+                    
                     {socialLinks.x_url && (
                       <div className="flex items-center w-full gap-2">
                         <FaXTwitter className="text-black" />
@@ -432,6 +436,15 @@ const UserDashboard = () => {
                     {' '}
                     Communities you might be interested In
                   </div>
+                  <div className="flex  py-2">
+                     
+                      {userData.interested_tag && userData.interested_tag.map((tag, index) => (
+                        <div key={index}>
+                          <Badge variant="outline">{tag}</Badge>
+
+                          </div>
+                      ))}
+                    </div>
                   <div className="w-full mt-4 flex flex-col gap-2 h-full">
                     {dataAll.length === 0 && (
                       <div className="flex items-center justify-center text-center h-full">
@@ -480,40 +493,67 @@ const UserDashboard = () => {
                 </Card>
                 <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
                   <div className="text-xl font-bold"> Created Bonds</div>
-                  {createdBonds.length===0 && <div className='flex items-center justify-center h-28 w-full'>
-                    No Bond Created
-                  </div> }
-                  {createdBonds.length>0 && createdBonds.map((bond, index) => (
-    <div 
-      key={bond.bond_id} 
-      className="w-full bg-white shadow-sm rounded-md p-4 mt-4 flex flex-col md:flex-row justify-between items-start md:items-center"
-    >
-      <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
-        <img 
-          src={bond.community?.image || 'https://via.placeholder.com/150'} 
-          alt={bond.community?.name || 'Bond Image'} 
-          className="w-16 h-16 rounded-full object-cover"
-        />
-        <div>
-          <h2 className="text-lg font-bold">{bond.name || 'Unnamed Bond'}</h2>
-          <p className="text-sm text-gray-600">Community: {bond.community?.name || 'N/A'}</p>
-          <p className="text-sm text-gray-600">Description: {bond.description || 'No description provided'}</p>
-        </div>
-      </div>
+                  {createdBonds.length === 0 && (
+                    <div className="flex items-center justify-center h-28 w-full">
+                      No Bond Created
+                    </div>
+                  )}
+                  {createdBonds.length > 0 &&
+                    createdBonds.map((bond) => (
+                      <div
+                        key={bond.bond_id}
+                        className="w-full bg-white shadow-sm rounded-md p-4 mt-4 flex flex-col md:flex-row justify-between items-start md:items-center"
+                      >
+                        <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
+                          <img
+                            src={
+                              bond.community?.image ||
+                              'https://via.placeholder.com/150'
+                            }
+                            alt={bond.community?.name || 'Bond Image'}
+                            className="w-16 h-16 rounded-full object-cover"
+                          />
+                          <div>
+                            <h2 className="text-lg font-bold">
+                              {bond.name || 'Unnamed Bond'}
+                            </h2>
+                            <p className="text-sm text-gray-600">
+                              Community: {bond.community?.name || 'N/A'}
+                            </p>
+                            <p className="text-sm text-gray-600">
+                              Description:{' '}
+                              {bond.description || 'No description provided'}
+                            </p>
+                          </div>
+                        </div>
 
-      <div className="mt-4 md:mt-0 flex flex-col items-start md:items-end">
-        <p className="text-sm text-gray-600">Price: {bond.price ? `$${bond.price}` : 'Not Available'}</p>
-        <p className="text-sm text-gray-600">Interest Rate: {bond.interest_rate ? `${bond.interest_rate}%` : 'N/A'}</p>
-        <p className="text-sm text-gray-600">
-  Maturity Date: 
-  {bond.maturity_date 
-    ? new Date(bond.maturity_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) 
-    : 'Not specified'}
-</p>
-
-      </div>
-    </div>
-  ))}
+                        <div className="mt-4 md:mt-0 flex flex-col items-start md:items-end">
+                          <p className="text-sm text-gray-600">
+                            Price:{' '}
+                            {bond.price ? `$${bond.price}` : 'Not Available'}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            Interest Rate:{' '}
+                            {bond.interest_rate
+                              ? `${bond.interest_rate}%`
+                              : 'N/A'}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            Maturity Date:
+                            {bond.maturity_date
+                              ? new Date(bond.maturity_date).toLocaleDateString(
+                                  'en-US',
+                                  {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                  },
+                                )
+                              : 'Not specified'}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
                 </Card>
               </div>
             </div>
