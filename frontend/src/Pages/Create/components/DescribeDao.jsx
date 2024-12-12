@@ -26,15 +26,16 @@ const DescribeView = () => {
   const { accounts } = useAccount()
   const { formFields, setFormFields } = useTokenWeightStore()
   const [data, setData] = useState([])
+  const [predefinedTags,setPreDefinedTags]=useState([])
 
-  const predefinedTags = [
-    { value: 'blockchain', label: 'Blockchain' },
-    { value: 'web3', label: 'Web3' },
-    { value: 'nft', label: 'NFT' },
-    { value: 'defi', label: 'DeFi' },
-    { value: 'community', label: 'Community' },
-    // Add more tags as needed
-  ]
+  // const predefinedTags = [
+  //   { value: 'blockchain', label: 'Blockchain' },
+  //   { value: 'web3', label: 'Web3' },
+  //   { value: 'nft', label: 'NFT' },
+  //   { value: 'defi', label: 'DeFi' },
+  //   { value: 'community', label: 'Community' },
+  //   // Add more tags as needed
+  // ]
 
   const handleUrlId = (id) => {
     const url = `https://ucarecdn.com/${id}/-/preview/1000x562/`
@@ -50,6 +51,21 @@ const DescribeView = () => {
     if (accounts && accounts.length > 0) {
       setFormFields({ userAddress: accounts[0].address }) // Set the userAddress
     }
+    const fetchTags= async()=>{
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/tags`,
+        ) 
+        const updatedData = res.data.map(item => ({
+          ...item,
+          label:item.name}))
+          console.log(updatedData,"hi pandao")
+          setPreDefinedTags(updatedData)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchTags()
   }, [accounts, setFormFields])
 
   const handleViewChange = () => {

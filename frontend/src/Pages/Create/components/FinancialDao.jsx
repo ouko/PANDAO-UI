@@ -37,7 +37,6 @@ const FinancialView = () => {
     { value: 'nft', label: 'NFT' },
     { value: 'defi', label: 'DeFi' },
     { value: 'community', label: 'Community' },
-    // Add more tags as needed
   ];
   
   const handleUrlId = (id) => {
