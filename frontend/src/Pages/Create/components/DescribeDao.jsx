@@ -59,7 +59,6 @@ const DescribeView = () => {
         const updatedData = res.data.map(item => ({
           ...item,
           label:item.name}))
-          console.log(updatedData,"hi pandao")
           setPreDefinedTags(updatedData)
       } catch (error) {
         console.log(error)
