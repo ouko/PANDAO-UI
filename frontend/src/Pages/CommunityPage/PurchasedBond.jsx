@@ -102,7 +102,7 @@ const PurchasedBond = () => {
   }
 
   return (
-    <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50 text-black px-2">
+    <div className=" pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50 text-black px-2">
       <BondIssue heading={'Bonds Purchased'}/>
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto">
         <div className="space-y-6 md:w-[100%]">

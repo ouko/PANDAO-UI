@@ -1,4 +1,5 @@
-import { Link, NavLink, useNavigate, useParams } from 'react-router-dom'
+import React, { useState } from 'react'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { Button } from '../../../components/ui/button'
 import MobileSidebar from '../MobileSidebar'
 import { ChevronLeft } from 'lucide-react'
@@ -18,6 +19,7 @@ const Navbar = () => {
   const navigate = useNavigate()
   const params = useParams()
   const { slug } = useBluePrintSlugStore()
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   rdt.walletApi.provideConnectResponseCallback(async (result) => {
     if (result.isErr()) {
@@ -41,6 +43,12 @@ const Navbar = () => {
       }
     }
   })
+  
+
+  const handleSelect = (callback) => {
+    setIsDropdownOpen(false) // Close dropdown
+    callback() // Perform any additional actions, like navigation
+  }
 
   return (
     <div className="z-50 p-4 w-full rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-80 bg-purple-50 text-black fixed">
@@ -119,80 +127,69 @@ const Navbar = () => {
           >
             <li>Proposals</li>
           </NavLink>
-          <DropdownMenu>
+          <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
             <DropdownMenuTrigger>More</DropdownMenuTrigger>
             <DropdownMenuContent>
               {slug === 'Insurance' ? (
-                <DropdownMenuItem>
-                  <NavLink
-                    to={`/community/detail/${params.id}/annissue`}
+                <DropdownMenuItem
+                 onSelect={() => handleSelect(() => navigate(`/community/detail/${params.id}/annissue`))}
+                  className={({ isActive }) =>
+                    isActive
+                      ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
+                      : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
+                  }
+                    end
+                >
+                 <li>Issue ANN Token</li>
+                </DropdownMenuItem>
+              ) : (
+                <>
+                  <DropdownMenuItem
+                    onSelect={() => handleSelect(() => navigate(`/community/detail/${params.id}/bondissue`))}
                     className={({ isActive }) =>
                       isActive
                         ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
                         : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
                     }
-                    end
+                      end
                   >
-                    <li>Issue ANN Token</li>
-                  </NavLink>
-                </DropdownMenuItem>
-              ) : (
-                <>
-                  <DropdownMenuItem>
-                    <NavLink
-                      to={`/community/detail/${params.id}/bondissue`}
-                      className={({ isActive }) =>
-                        isActive
-                          ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                          : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
-                      }
-                      end
-                    >
-                      <li>Bond Issue</li>
-                    </NavLink>
+                   <li>Bond Issue</li>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <NavLink
-                      to={`/community/detail/${params.id}/purchasedbond`}
-                      className={({ isActive }) =>
-                        isActive
-                          ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                          : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
-                      }
-                      end
-                    >
-                      <li>Purchased Bond</li>
-                    </NavLink>
+                  <DropdownMenuItem
+                    onSelect={() => handleSelect(() => navigate(`/community/detail/${params.id}/purchasedbond`))}
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
+                        : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
+                    }
+                  >
+                   <li>Purchased Bond</li>
                   </DropdownMenuItem>
                 </>
               )}
               {slug === 'Insurance' ? (
-                <DropdownMenuItem>
-                  <NavLink
-                    to={`/community/detail/${params.id}/annissued`}
-                    className={({ isActive }) =>
-                      isActive
-                        ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                        : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
-                    }
+                <DropdownMenuItem
+                  onSelect={() => handleSelect(() => navigate(`/community/detail/${params.id}/annissued`))}
+                  className={({ isActive }) =>
+                    isActive
+                      ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
+                      : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
+                  }
                     end
-                  >
-                    <li>Issued ANN Tokens</li>
-                  </NavLink>
+                >
+                  <li>Issued ANN Tokens</li>
                 </DropdownMenuItem>
               ) : (
-                <DropdownMenuItem>
-                  <NavLink
-                    to={`/community/detail/${params.id}/bondissued`}
-                    className={({ isActive }) =>
-                      isActive
-                        ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                        : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
-                    }
+                <DropdownMenuItem
+                  onSelect={() => handleSelect(() => navigate(`/community/detail/${params.id}/bondissued`))}
+                  className={({ isActive }) =>
+                    isActive
+                      ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
+                      : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
+                  }
                     end
-                  >
-                    <li>Bond Issued</li>
-                  </NavLink>
+                >
+                 <li>Bond Issued</li>
                 </DropdownMenuItem>
               )}
             </DropdownMenuContent>
