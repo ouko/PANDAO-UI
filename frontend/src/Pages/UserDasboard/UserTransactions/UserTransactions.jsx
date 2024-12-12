@@ -1,11 +1,12 @@
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 const UserTransaction = ({ expneseData, failedTransaction }) => {
-  console.log(failedTransaction, 'faisal')
+  console.log(expneseData, 'faisal')
   return (
     <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
       <Tabs defaultValue="account" className="w-full">
@@ -27,37 +28,55 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
               )}
               {expneseData.length > 0 &&
                 expneseData.map((activity, index) => (
-                  <div
-                    key={index}
-                    className="p-4 border-2 rounded-lg group hover:shadow-md flex items-center space-x-4"
-                  >
-                    {/* Community Image */}
-                    <img
-                      src={activity.community_image}
-                      alt={`${activity.community_name} image`}
-                      className="w-16 h-16 rounded-full"
-                    />
-                    {/* Activity Details */}
-                    <div>
-                      <h3 className="text-lg font-semibold">
-                        {activity.community_name}
-                      </h3>
-                      <p className="text-sm text-gray-500">
-                        {activity.xrd_spent_on}
-                      </p>
-                      <p
-                        className={`text-sm font-bold ${
-                          activity.xrd_spent < 0
-                            ? 'text-red-500'
-                            : 'text-green-500'
-                        }`}
-                      >
-                        Spent: {Math.abs(activity.xrd_spent)} XRD
-                      </p>
-                      <p className="text-sm text-gray-400">
-                        Date: {new Date(activity.date).toLocaleString()}
-                      </p>
+                  <div key={index} className='flex flex-col p-4 border-2 rounded-lg group hover:shadow-md'>
+                    <div className=" flex items-center space-x-4 mb-4">
+                      {/* Community Image */}
+                      <img
+                        src={activity.community_image}
+                        alt={`${activity.community_name} image`}
+                        className="w-16 h-16 rounded-full"
+                      />
+                      {/* Activity Details */}
+                      <div>
+                        <h3 className="text-lg font-semibold">
+                          {activity.community_name}
+                        </h3>
+                        <p className="text-sm text-gray-500">
+                          {activity.xrd_spent_on}
+                        </p>
+                        <p
+                          className={`text-sm font-bold ${
+                            activity.xrd_spent < 0
+                              ? 'text-red-500'
+                              : 'text-green-500'
+                          }`}
+                        >
+                          Spent: {Math.abs(activity.xrd_spent)} XRD
+                        </p>
+                        <p className="text-sm text-gray-400">
+                          Date: {new Date(activity.date).toLocaleString()}
+                        </p>
+                      </div>
+                     
                     </div>
+                    <Separator/>
+                    <div className='mt-4'>
+                        <Button >
+                          <Link
+                            to={`/community/detail/${activity.community_id}`}
+                          >
+                            View Community
+                          </Link>
+                        </Button>{' '}
+                        <Button >
+                          <Link
+                            to={`https://stokenet-dashboard.radixdlt.com/transaction/${activity.tx_hash}/summary`}
+                            target='_blank'
+                          >
+                            View Transaction
+                          </Link>
+                        </Button>
+                      </div>
                   </div>
                 ))}
             </div>
