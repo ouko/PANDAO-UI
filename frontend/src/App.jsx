@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import HomePage from "./Pages/HomePage";
 import Product from "./Pages/product";
-import Aboutus from "./Pages/AboutUs";
-import Resource from "./Pages/resources";
+import OurStory  from "./Pages/OurStory";
+import CatalystSuite  from "./Pages/CatalystSuite";
 import UserDashboard from "./Pages/UserDashboard";
 import Deploy from "./Pages/Deploy";
 import DaoDetailsPage from "./Pages/DaoDetailsPage";
@@ -32,6 +32,7 @@ import AnnIssue from "./Pages/CommunityPage/AnnIssue";
 import AnnIssued from "./Pages/CommunityPage/AnnIssued";
 import BlogDetail from "./Pages/Resources/BlogDeatails";
 import PurchasedBond from "./Pages/CommunityPage/PurchasedBond";
+import Price from "./Pages/Price";
 
 function App() {
   return (
@@ -39,15 +40,16 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePageLayout />}>
           <Route index element={<HomePage />} />
-          <Route path="aboutus" element={<Aboutus />} />
+          <Route path="OurStory" element={<OurStory  />} />
           <Route path="create" element={<Create/>} />
           <Route path="privacypolicy" element={<PrivacyPolicy/>} />
           <Route path="termsandcondition" element={<Termsandconditon/>} />
+          <Route path="Price" element={<Price/>} />
 
           <Route path="products" element={<Product />} />
           <Route path="explore" element={<ExploreAllDao />} />
           <Route path="blog" element={<Blog />} />
-          <Route path="resources" element={<Resource />} />
+          <Route path="CatalystSuite" element={<CatalystSuite/>} />
           <Route path="resources/what-is-radix" element={<One />} />
           <Route path="/reasources/:id" element={<BlogDetail />} />
           <Route path="exploreDao/:slug" element={<DaoDetailsPage />} />
