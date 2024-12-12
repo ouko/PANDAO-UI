@@ -8,7 +8,8 @@ const OurStory = () => {
       <section className="bg-gray-50 py-16">
       <div className="container mx-auto px-6 md:px-12 lg:px-16">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold text-gray-900">Our Story</h1>
+        <h1 className="text-6xl text-center leading-[80px] font-bold">
+        Our Story</h1>
           <p className="mt-4 text-lg text-gray-600">
             Welcome to PANDAO, where innovation meets collaboration in the world of decentralized autonomous organizations (DAOs).
           </p>
