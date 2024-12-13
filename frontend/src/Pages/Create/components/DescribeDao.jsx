@@ -26,7 +26,7 @@ const DescribeView = () => {
   const { accounts } = useAccount()
   const { formFields, setFormFields } = useTokenWeightStore()
   const [data, setData] = useState([])
-  const [predefinedTags,setPreDefinedTags]=useState([])
+   const [predefinedTags,setPreDefinedTags]=useState([])
 
   // const predefinedTags = [
   //   { value: 'blockchain', label: 'Blockchain' },
@@ -34,7 +34,6 @@ const DescribeView = () => {
   //   { value: 'nft', label: 'NFT' },
   //   { value: 'defi', label: 'DeFi' },
   //   { value: 'community', label: 'Community' },
-  //   // Add more tags as needed
   // ]
 
   const handleUrlId = (id) => {
@@ -56,8 +55,10 @@ const DescribeView = () => {
         const res = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/tags`,
         ) 
+        console.log(res.data)
         const updatedData = res.data.map(item => ({
           ...item,
+          value:item.name,
           label:item.name}))
           setPreDefinedTags(updatedData)
       } catch (error) {
@@ -122,7 +123,7 @@ const DescribeView = () => {
   }
   const handleTagsChange = (selectedTags) => {
     const labels = selectedTags.map((tag) => tag.label)
-    // console.log(labels);
+    console.log(labels,"asdasd");
     setFormFields({ tags: labels })
   }
   const selectedTags = formFields.tags
@@ -130,6 +131,7 @@ const DescribeView = () => {
         .map((label) => predefinedTags.find((tag) => tag.label === label))
         .filter((tag) => tag)
     : []
+    console.log(predefinedTags)
   return (
     <div className="max-w-[1000px] mx-auto mt-20">
       <Card className="bg-white relative z-40 text-black mt-10 p-12 flex flex-col gap-3 rounded-xl shadow-sm">
