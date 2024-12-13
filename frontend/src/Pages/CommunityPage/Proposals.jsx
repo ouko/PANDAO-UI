@@ -864,6 +864,7 @@ const Proposals = () => {
                     type="number"
                     value={minimumQuorum}
                     onChange={(e) => setMinimumQuorum(e.target.value)}
+                    min="0"
                   />
                 </div>
                 <div className="flex flex-col gap-2">
