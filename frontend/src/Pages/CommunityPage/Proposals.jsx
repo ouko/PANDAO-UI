@@ -822,7 +822,7 @@ const Proposals = () => {
               <div className="flex flex-col mt-3 gap-3 w-full ">
                 <div className="text-xl p-1">Proposal Timing</div>
                 <div className="flex items-center justify-between space-x-2">
-                <div>
+                <div className='flex items-center'>
                     <div>From:</div>
                     <label className="flex items-center ">
                       <DatePicker
@@ -839,7 +839,7 @@ const Proposals = () => {
                       />
                     </label>
                   </div>
-                  <div>
+                  <div className='flex items-center'>
                     <div>To:</div>
                     <label className=" flex items-center">
                       <DatePicker
