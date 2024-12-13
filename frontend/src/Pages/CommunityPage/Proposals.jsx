@@ -232,6 +232,7 @@ const Proposals = () => {
           console.log(response.data)
           toast.success('Proposal Submitted')
           setLoadingButton(false)
+          location.reload();
         } catch (error) {
           toast.error('Something went wrong')
           setLoadingButton(false)
