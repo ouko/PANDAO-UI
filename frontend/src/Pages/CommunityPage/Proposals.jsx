@@ -6,6 +6,8 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import axios from 'axios'
+import 'react-datepicker/dist/react-datepicker.css';
+
 import { ChevronLeft, HandHelping } from 'lucide-react'
 import {
   Select,
@@ -25,6 +27,7 @@ import { toast } from 'sonner'
 import { convertUnixTimestamp } from '@/utils/functions/ConvertDate'
 import { formatStandardDateTime } from '@/utils/functions/convertActivityData'
 import { Badge } from '@/components/ui/badge'
+
 const formatTime = (duration) => {
   const hours = Math.floor(
     (duration % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
@@ -825,6 +828,7 @@ const Proposals = () => {
                         selected={endDate}
                         onChange={(date) => setEndDate(date)}
                         customInput={<CustomDatePicker />}
+                        minDate={new Date()}
                       />
                       <Input
                         type="time"
@@ -841,6 +845,7 @@ const Proposals = () => {
                         selected={startDate}
                         onChange={(date) => setStartDate(date)}
                         customInput={<CustomDatePicker />}
+                        minDate={new Date()}
                       />
                       <Input
                         type="time"
@@ -910,6 +915,7 @@ const Proposals = () => {
                     type="number"
                     value={targetXrdAmount}
                     onChange={(e) => setTargetXrdAmount(e.target.value)}
+                     min="0"
                   />
                 </div>
               </div>
