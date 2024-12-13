@@ -33,6 +33,9 @@ import BlogDetail from "./Pages/Resources/BlogDeatails";
 import PurchasedBond from "./Pages/CommunityPage/PurchasedBond";
 import Price from "./Pages/Price";
 import Resources from "./Pages/Resources";
+import Support from "./Pages/Support";
+import Community from "./Pages/Community";
+import Roadmap from "./Pages/Roadmap";
 
 function App() {
   return (
@@ -46,6 +49,10 @@ function App() {
           <Route path="termsandcondition" element={<Termsandconditon/>} />
           <Route path="Price" element={<Price/>} />
 
+          <Route path="support" element={<Support/>} />
+          <Route path="community" element={<Community/>} />
+          <Route path="roadmap" element={<Roadmap/>} />
+         
           <Route path="catalystsuite" element={<Product />} />
           <Route path="explore" element={<ExploreAllDao />} />
           <Route path="blog" element={<Blog />} />
