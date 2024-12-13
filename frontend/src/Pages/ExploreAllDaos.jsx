@@ -13,18 +13,92 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Banknote, Users } from "lucide-react";
 import { useAccount } from "@/AccountContext";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+const debounce = (func, delay) => {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => func(...args), delay);
+  };
+};
+
 const ExploreAllDao = () => {
   const navigate = useNavigate();
   const { accounts } = useAccount();
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
+  const [tags,setTags]=useState([])
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeTag, setActiveTag] = useState(null);
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  }
+  const handleTagClick = async (tag) => {
+    console.log(tag,"hihihi")
+    if (tag.label === activeTag) {
+      setActiveTag(null); // Deselect tag
+      fetchBluePrint();
+    } else {
+      setActiveTag(tag.label);
+      fetchCommunitiesByTag(tag.label);
+    }
+  };
+  const fetchCommunitiesByTag = async (tagId) => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/community/all`, {
+        params: { tags: tagId }
+      });
+      setData(res.data);
+    } catch (error) {
+      console.error("Error fetching communities by tag:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchBluePrint = async () => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/community/all`
+      );
+      setData(res.data);
+    } catch (error) {
+      console.error("Error fetching blueprint data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+  
+    const fetchTags = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/tags`
+        );
+        const tagOptions = response.data.map((tag) => ({
+          value: tag.id,
+          label: tag.name,
+        }));
+        setTags(tagOptions);
+      } catch (error) {
+        console.error("Failed to fetch tags:", error);
+      }
+    };
+
+    fetchTags();
+    fetchBluePrint();
+  }, []);
   useEffect(() => {
     const fetchBluePrint = async () => {
+      setLoading(true);
       try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/community/all`
-        );
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/community/all`, {
+          params: { name: searchQuery }
+        });
+        console.log(res.data)
         setData(res.data);
       } catch (error) {
         console.error("Error fetching blueprint data:", error);
@@ -32,8 +106,11 @@ const ExploreAllDao = () => {
         setLoading(false);
       }
     };
-    fetchBluePrint();
-  }, []);
+
+    // Call the debounced function
+    const debouncedFetch = debounce(fetchBluePrint, 500); // 500ms delay
+    debouncedFetch();
+  }, [searchQuery]);
   const handleNavigation = (path) => {
     if (accounts && accounts.length > 0) {
       navigate(path);
@@ -57,7 +134,41 @@ const ExploreAllDao = () => {
       </Dialog>
 
       <div className="min-h-screen pt-20 max-w-[1200px] mx-auto ">
+        <div className="flex items-center w-full justify-between pr-3">
         <div className="px-2 mt-2 text-3xl font-semibold">Explore all DAOs</div>
+        <div>
+          <Input
+          type="text" 
+          placeholder="Search for a DAO..." 
+          value={searchQuery} 
+          onChange={handleSearchChange} 
+          />
+        </div>
+        </div>
+        <div className="mt-4 flex gap-3 px-2 flex-wrap">
+          {tags.map((tag) => (
+            <button
+              key={tag.label}
+              className={`px-4 py-2 text-sm rounded-md ${
+                activeTag === tag.label ? "bg-purple-600 text-white" : "bg-gray-200 text-black"
+              }`}
+              onClick={() => handleTagClick(tag)}
+            >
+              {tag.label}
+            </button>
+          ))}
+          {activeTag && (
+            <button
+              className="px-4 py-2 text-sm bg-red-500 text-white rounded-md"
+              onClick={() =>{
+                setActiveTag(null)
+                fetchBluePrint()
+              } }
+            >
+              Clear Filter
+            </button>
+          )}
+        </div>
         {!loading && data.length === 0 && (
           <div className="flex items-center justify-center bg-white mt-3 h-32 rounded-lg shadow-xl">
             No Deployed DAOs

@@ -133,6 +133,7 @@ const BondIssue = () => {
             )
             console.log(response.data)
             toast.success('Bond Issued')
+            navigate(`/community/detail/${params.id}`)
           } catch (error) {
             console.error('Error in submit-tx:', error)
             toast.error('Failed to submit transaction')
