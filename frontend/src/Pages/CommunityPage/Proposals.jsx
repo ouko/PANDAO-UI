@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import axios from 'axios'
-import 'react-datepicker/dist/react-datepicker.css';
+import 'react-datepicker/dist/react-datepicker.css'
 
 import { ChevronLeft, HandHelping } from 'lucide-react'
 import {
@@ -232,7 +232,7 @@ const Proposals = () => {
           console.log(response.data)
           toast.success('Proposal Submitted')
           setLoadingButton(false)
-          location.reload();
+          location.reload()
         } catch (error) {
           toast.error('Something went wrong')
           setLoadingButton(false)
@@ -417,6 +417,24 @@ const Proposals = () => {
       setExecute(false)
     }
   }
+  const handleStartDateChange = (date) => {
+    setStartDate(date);
+    // Ensure endDate is not before startDate
+    if (date > endDate) {
+      setEndDate(date);
+    }
+  };
+
+  const handleEndDateChange = (date) => {
+    // Ensure endDate is not before startDate
+    if (date >= startDate) {
+      setEndDate(date);
+    } else {
+     
+      toast.error('End date cannot be before start date')
+    }
+  };
+
   useEffect(() => {
     if (activeProposal) {
       const intervalId = setInterval(() => {
@@ -822,29 +840,12 @@ const Proposals = () => {
               <div className="flex flex-col mt-3 gap-3 w-full ">
                 <div className="text-xl p-1">Proposal Timing</div>
                 <div className="flex items-center justify-between space-x-2">
-                <div className='flex items-center'>
+                  <div className="flex items-center">
                     <div>From:</div>
-                    <label className="flex items-center ">
-                      <DatePicker
-                        selected={endDate}
-                        onChange={(date) => setEndDate(date)}
-                        customInput={<CustomDatePicker />}
-                        minDate={new Date()}
-                      />
-                      <Input
-                        type="time"
-                        value={endTime}
-                        onChange={(e) => setEndTime(e.target.value)}
-                        className="ml-2 w-fit"
-                      />
-                    </label>
-                  </div>
-                  <div className='flex items-center'>
-                    <div>To:</div>
                     <label className=" flex items-center">
                       <DatePicker
                         selected={startDate}
-                        onChange={(date) => setStartDate(date)}
+                        onChange={handleStartDateChange}
                         customInput={<CustomDatePicker />}
                         minDate={new Date()}
                       />
@@ -856,7 +857,23 @@ const Proposals = () => {
                       />
                     </label>
                   </div>
-                 
+                  <div className="flex items-center">
+                    <div>To:</div>
+                    <label className="flex items-center ">
+                      <DatePicker
+                        selected={endDate}
+                        onChange={handleEndDateChange}
+                        customInput={<CustomDatePicker />}
+                        minDate={new Date()}
+                      />
+                      <Input
+                        type="time"
+                        value={endTime}
+                        onChange={(e) => setEndTime(e.target.value)}
+                        className="ml-2 w-fit"
+                      />
+                    </label>
+                  </div>
                 </div>
                 <div className="flex flex-col gap-2">
                   <Label className="text-2xl p-1">Minimum Quorum</Label>
@@ -917,7 +934,7 @@ const Proposals = () => {
                     type="number"
                     value={targetXrdAmount}
                     onChange={(e) => setTargetXrdAmount(e.target.value)}
-                     min="0"
+                    min="0"
                   />
                 </div>
               </div>
