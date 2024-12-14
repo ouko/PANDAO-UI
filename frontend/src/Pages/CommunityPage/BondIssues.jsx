@@ -34,6 +34,7 @@ const FormInput = ({
   disabled = false,
   min=0,
 }) => {
+  const today = new Date().toISOString().split('T')[0];
   return (
     <div>
       <div className="flex items-center justify-between pr-1">
@@ -59,7 +60,7 @@ const FormInput = ({
         onChange={onChange}
         className="input"
         disabled={disabled}
-        min={min}
+        min={type === 'date' ? today : min}
       />
     </div>
   )
@@ -178,13 +179,40 @@ const BondIssue = () => {
       console.log(error)
     }
   }
-  const handleChange = (e) => {
-    updateBond(e.target.name, e.target.value)
-    if (e.target.name === 'bond_price') {
-      updateBond('notional_principal', e.target.value)
+// Function to handle change in form inputs
+const handleChange = (e) => {
+  const { name, value } = e.target;
+
+  // If the field is "maturity_date", ensure it is not less than "initial_exchange_date"
+  if (name === 'maturity_date') {
+    const initialDate = new Date(bond.initial_exchange_date);
+    const maturityDate = new Date(value);
+
+    if (maturityDate < initialDate) {
+      toast.error('Maturity date cannot be earlier than Initial Exchange Date.');
+      return; 
     }
   }
 
+  // Update the bond state
+  updateBond(name, value);
+
+  if (name === 'bond_price') {
+    updateBond('notional_principal', value);
+  }
+
+  if (name === 'initial_exchange_date') {
+    const currentMaturityDate = new Date(bond.maturity_date);
+    const newInitialDate = new Date(value);
+
+    if (currentMaturityDate < newInitialDate) {
+      toast.error('Maturity date cannot be earlier than Initial Exchange Date.');
+      updateBond('maturity_date', value);
+    }
+  }
+};
+
+  
   useEffect(() => {
     const requiredFields = [
       'bond_name',
@@ -302,6 +330,7 @@ const BondIssue = () => {
                       value={bond.maturity_date}
                       onChange={handleChange}
                       tooltipText="Date the bond matures"
+                      min={bond.initial_exchange_date || ''} 
                     />
                     <FormInput
                       label="Bond Price"
