@@ -190,26 +190,24 @@ const handleChange = (e) => {
 
     if (maturityDate < initialDate) {
       toast.error('Maturity date cannot be earlier than Initial Exchange Date.');
-      return; // Prevent updating the date
+      return; 
     }
   }
 
   // Update the bond state
   updateBond(name, value);
 
-  // If the field is "bond_price", update "notional_principal" as well
   if (name === 'bond_price') {
     updateBond('notional_principal', value);
   }
 
-  // If the field is "initial_exchange_date", ensure "maturity_date" is valid
   if (name === 'initial_exchange_date') {
     const currentMaturityDate = new Date(bond.maturity_date);
     const newInitialDate = new Date(value);
 
     if (currentMaturityDate < newInitialDate) {
       toast.error('Maturity date cannot be earlier than Initial Exchange Date.');
-      updateBond('maturity_date', value); // Reset maturity date to the new initial date
+      updateBond('maturity_date', value);
     }
   }
 };
