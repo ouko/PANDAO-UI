@@ -447,7 +447,7 @@ const Proposals = () => {
     if (date >= startDate) {
       setEndDate(date);
     } else {
-     
+
       toast.error('End date cannot be before start date')
     }
   };
@@ -535,7 +535,7 @@ const Proposals = () => {
                               proposalItem.is_active
                                 ? 'bg-green-600 text-white'
                                 : ''
-                            } `}
+                              } `}
                           >
                             {proposalItem.is_active ? 'Pending' : 'Executed'}
                           </Badge>
@@ -728,8 +728,8 @@ const Proposals = () => {
                           {execute
                             ? 'Executing....'
                             : activeProposal.is_active === false
-                            ? 'Already Executed'
-                            : 'Execute Proposal'}
+                              ? 'Already Executed'
+                              : 'Execute Proposal'}
                         </Button>
                       </div>
                     </div>
@@ -821,125 +821,120 @@ const Proposals = () => {
                 </div>
               </div>
             </div>
-            <div className="col-span-1 bg-white shadow-sm flex items-center justify-center p-2 rounded-md">
-           { issuedBond &&  <Card
-                                     className="bg-white shadow-lg rounded-lg p-6 transition-transform transform hover:scale-105 hover:shadow-xl"
-                                   >
-                                     {/* Bond Title */}
-                                     <CardTitle className="text-2xl font-bold text-blue-800">
-                                       {issuedBond.name}
-                                     </CardTitle>
-             
-                                     {/* Bond Image */}
-                                     {issuedBond.asset_url && (
-                                       <div className="mb-4">
-                                         <img
-                                           src={issuedBond.asset_url}
-                                           alt={issuedBond.asset_name || 'Asset'}
-                                           className="w-full h-48 object-cover rounded-md"
-                                         />
-                                       </div>
-                                     )}
-             
-                                     <p>
-                                       <strong>Asset Name:</strong>{' '}
-                                       {issuedBond.asset_name || 'N/A'}
-                                     </p>
-             
-                                     {/* Bond Description */}
-                                     <CardDescription className="text-gray-600 mb-4">
-                                    
-                                         <div>
-                                       
-                                             {issuedBond.description}
-                                           </div>
-                                   
-                                     
-                                     </CardDescription>
-             
-                                     {/* Bond Details */}
-                                     <div className="space-y-2 text-sm text-gray-700">
-                                       <p>
-                                         <strong>Contract Identity:</strong>{' '}
-                                         {issuedBond.contract_identity || 'N/A'}
-                                       </p>
-                                       <p>
-                                         <strong>Number of Bonds:</strong>{' '}
-                                         {issuedBond.number_of_bonds}
-                                       </p>
-                                       <p>
-                                         <strong>Currency:</strong> {issuedBond.currency}
-                                       </p>
-                                       <p>
-                                         <strong>Interest Rate:</strong> {issuedBond.interest_rate}%
-                                       </p>
-                                       <p>
-                                         <strong>Discount:</strong> {issuedBond.discount}
-                                       </p>
-                                       <p>
-                                         <strong>Price:</strong>{' '}
-                                         {issuedBond.price ? (
-                                           <>
-                                             {issuedBond.price} <strong>XRD</strong>
-                                           </>
-                                         ) : (
-                                           'Not available'
-                                         )}
-                                       </p>
-                                       <p>
-                                         <strong>Notional Principle:</strong>{' '}
-                                         {issuedBond.notional_principle}
-                                       </p>
-                                       <p>
-                                         <strong>Bond Position:</strong> {issuedBond.bond_position}
-                                       </p>
-                                       <p>
-                                         <strong>Contract Type:</strong> {issuedBond.contract_type}
-                                       </p>
-                                       <p>
-                                         <strong>Contract Role:</strong> {issuedBond.contract_role}
-                                       </p>
-                                     </div>
-             
-                                     {/* Dates and Blockchain Details */}
-                                     <div className="mt-4 space-y-2 text-sm text-gray-500">
-                                       <p
-                                         className={
-                                           new Date(issuedBond.initial_exchange_date) < new Date()
-                                             ? 'text-red-500'
-                                             : ''
-                                         }
-                                       >
-                                         <strong>Initial Exchange Date:</strong>{' '}
-                                         {new Date(
-                                           issuedBond.initial_exchange_date,
-                                         ).toLocaleDateString()}
-                                       </p>
-                                       <p>
-                                         <strong>Maturity Date:</strong>{' '}
-                                         {new Date(
-                                           issuedBond.maturity_date,
-                                         ).toLocaleDateString()}
-                                       </p>
-                                       <p>
-                                         <strong>Created on Blockchain:</strong>{' '}
-                                         {issuedBond.created_on_blockchain ? 'Yes' : 'No'}
-                                       </p>
-                                       <p className="truncate">
-                                         <strong>Creator Address:</strong>{' '}
-                                         <span
-                                           className="cursor-pointer hover:underline"
-                                           onClick={() => {
-                                             navigator.clipboard.writeText(issuedBond.creator)
-                                             toast.success('Copied address')
-                                           }}
-                                         >
-                                           {issuedBond.creator}
-                                         </span>
-                                       </p>
-                                     </div>
-                                   </Card>}
+            <div className="col-span-1 bg-white shadow-sm flex items-center justify-center p-4 rounded-md">
+              {issuedBond && (
+                <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-lg transition-transform transform hover:scale-105 hover:shadow-xl">
+                  {/* Bond Title */}
+                  <div className="text-2xl font-bold text-blue-800 mb-4 text-center">
+                    {issuedBond.name}
+                  </div>
+
+                  {/* Bond Image */}
+                  {issuedBond.asset_url && (
+                    <div className="mb-4">
+                      <img
+                        src={issuedBond.asset_url}
+                        alt={issuedBond.asset_name || 'Asset'}
+                        className="w-full h-48 object-cover rounded-md"
+                      />
+                    </div>
+                  )}
+
+                  <p>
+                    <strong>Asset Name:</strong>
+                    {issuedBond.asset_name || 'N/A'}
+                  </p>
+
+                  {/* Bond Description */}
+                  <div className="mb-4 text-gray-700">
+                    <strong>Description:</strong>
+                    <p>{issuedBond.description}</p>
+                  </div>
+                  {/* Bond Details */}
+                  <div className="space-y-2 text-sm text-gray-700">
+                    <p>
+                      <strong>Contract Identity:</strong>{' '}
+                      {issuedBond.contract_identity || 'N/A'}
+                    </p>
+                    <p>
+                      <strong>Number of Bonds:</strong>{' '}
+                      {issuedBond.number_of_bonds}
+                    </p>
+                    <p>
+                      <strong>Currency:</strong> {issuedBond.currency}
+                    </p>
+                    <p>
+                      <strong>Interest Rate:</strong> {issuedBond.interest_rate}%
+                    </p>
+                    <p>
+                      <strong>Discount:</strong> {issuedBond.discount}
+                    </p>
+                    <p>
+                      <strong>Price:</strong>{' '}
+                      {issuedBond.price ? (
+                        <>
+                          {issuedBond.price} <strong>XRD</strong>
+                        </>
+                      ) : (
+                        'Not available'
+                      )}
+                    </p>
+                    <p>
+                      <strong>Notional Principle:</strong>{' '}
+                      {issuedBond.notional_principle}
+                    </p>
+                    <p>
+                      <strong>Bond Position:</strong> {issuedBond.bond_position}
+                    </p>
+                    <p>
+                      <strong>Contract Type:</strong> {issuedBond.contract_type}
+                    </p>
+                    <p>
+                      <strong>Contract Role:</strong> {issuedBond.contract_role}
+                    </p>
+                  </div>
+
+                  {/* Dates and Blockchain Details */}
+                  <div className="mt-4 space-y-2 text-sm text-gray-500">
+                    <p
+                      className={
+                        new Date(issuedBond.initial_exchange_date) < new Date()
+                          ? 'text-red-500'
+                          : ''
+                      }
+                    >
+                      <strong>Initial Exchange Date:</strong>{' '}
+                      {new Date(
+                        issuedBond.initial_exchange_date,
+                      ).toLocaleDateString()}
+                    </p>
+                    <p>
+                      <strong>Maturity Date:</strong>{' '}
+                      {new Date(
+                        issuedBond.maturity_date,
+                      ).toLocaleDateString()}
+                    </p>
+                    <p>
+                      <strong>Created on Blockchain:</strong>{' '}
+                      {issuedBond.created_on_blockchain ? 'Yes' : 'No'}
+                    </p>
+                    <p className="truncate">
+                      <strong>Creator Address:</strong>{' '}
+                      <span
+                        className="cursor-pointer hover:underline"
+                        onClick={() => {
+                          navigator.clipboard.writeText(issuedBond.creator)
+                          toast.success('Copied address')
+                        }}
+                      >
+                        {issuedBond.creator}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
+
           </div>
         </div>
       ) : (
