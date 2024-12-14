@@ -482,7 +482,6 @@ const Proposals = () => {
     navigate('/')
     return null
   }
-  console.log(issuedBond,"hihihihiihih")
   return (
     <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
       {form && !activeProposal ? (
@@ -823,7 +822,7 @@ const Proposals = () => {
               </div>
             </div>
             <div className="col-span-1 bg-white shadow-sm flex items-center justify-center p-2 rounded-md">
-             <Card
+           { issuedBond &&  <Card
                                      className="bg-white shadow-lg rounded-lg p-6 transition-transform transform hover:scale-105 hover:shadow-xl"
                                    >
                                      {/* Bond Title */}
@@ -939,7 +938,7 @@ const Proposals = () => {
                                          </span>
                                        </p>
                                      </div>
-                                   </Card>
+                                   </Card>}
             </div>
           </div>
         </div>
