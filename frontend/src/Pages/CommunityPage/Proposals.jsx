@@ -69,7 +69,7 @@ const Proposals = () => {
   const [voteType, setVoteType] = useState('')
   const [proposalDescription, setProposalDescription] = useState('')
   const [manifest, setManifest] = useState('')
-  const [issuedBond,setIssuedBond]=useState(null)
+  const [issuedBond, setIssuedBond] = useState(null)
 
   const [manifestForVoteAgainst, setManifestForVoteAgainst] = useState('')
   const [manifestForVoteFor, setManifestForVoteFor] = useState('')
@@ -435,22 +435,21 @@ const Proposals = () => {
     }
   }
   const handleStartDateChange = (date) => {
-    setStartDate(date);
+    setStartDate(date)
     // Ensure endDate is not before startDate
     if (date > endDate) {
-      setEndDate(date);
+      setEndDate(date)
     }
-  };
+  }
 
   const handleEndDateChange = (date) => {
     // Ensure endDate is not before startDate
     if (date >= startDate) {
-      setEndDate(date);
+      setEndDate(date)
     } else {
-
       toast.error('End date cannot be before start date')
     }
-  };
+  }
 
   useEffect(() => {
     if (activeProposal) {
@@ -535,7 +534,7 @@ const Proposals = () => {
                               proposalItem.is_active
                                 ? 'bg-green-600 text-white'
                                 : ''
-                              } `}
+                            } `}
                           >
                             {proposalItem.is_active ? 'Pending' : 'Executed'}
                           </Badge>
@@ -716,21 +715,24 @@ const Proposals = () => {
                         )}
                       </div>
                       <div>
-                        <Button
-                          onClick={handleExecuteActiveProposal}
-                          disabled={
-                            execute ||
-                            activeProposal.is_active === false ||
-                            timeLeft !== 'Time is up!'
-                          }
-                          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500 to-blue-700 hover:to-blue-800"
-                        >
-                          {execute
-                            ? 'Executing....'
-                            : activeProposal.is_active === false
+                        {(activeProposal.minimum_quorum <=
+                          activeProposal.number_of_people_voted) ?  (
+                          <Button
+                            onClick={handleExecuteActiveProposal}
+                            disabled={
+                              execute ||
+                              activeProposal.is_active === false ||
+                              timeLeft !== 'Time is up!'
+                            }
+                            className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500 to-blue-700 hover:to-blue-800"
+                          >
+                            {execute
+                              ? 'Executing....'
+                              : activeProposal.is_active === false
                               ? 'Already Executed'
                               : 'Execute Proposal'}
-                        </Button>
+                          </Button>
+                        ) : ( <Button disabled>Less number of people participated</Button> )}
                       </div>
                     </div>
 
@@ -864,7 +866,8 @@ const Proposals = () => {
                       <strong>Currency:</strong> {issuedBond.currency}
                     </p>
                     <p>
-                      <strong>Interest Rate:</strong> {issuedBond.interest_rate}%
+                      <strong>Interest Rate:</strong> {issuedBond.interest_rate}
+                      %
                     </p>
                     <p>
                       <strong>Discount:</strong> {issuedBond.discount}
@@ -910,9 +913,7 @@ const Proposals = () => {
                     </p>
                     <p>
                       <strong>Maturity Date:</strong>{' '}
-                      {new Date(
-                        issuedBond.maturity_date,
-                      ).toLocaleDateString()}
+                      {new Date(issuedBond.maturity_date).toLocaleDateString()}
                     </p>
                     <p>
                       <strong>Created on Blockchain:</strong>{' '}
@@ -934,7 +935,6 @@ const Proposals = () => {
                 </div>
               )}
             </div>
-
           </div>
         </div>
       ) : (
