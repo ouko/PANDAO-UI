@@ -42,6 +42,7 @@ const Proposals = () => {
   const [execute, setExecute] = useState(false)
   const [activeProposal, setActiveProposal] = useState(null)
   const [vote, setVote] = useState(Boolean)
+  const [voted,setVoted]=useState(false)
   const navigate = useNavigate()
   const params = useParams()
   const [proposal, setProposal] = useState('')
@@ -113,6 +114,21 @@ const Proposals = () => {
   const handleBondAddress = (value) => {
     setBondIssuerAddress(value)
   }
+  const fetchVoted= async()=>{
+    try {
+      const res2 = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/community/proposal/is-voted?proposal_id=${activeProposal.id}&user_address=${accounts[0]?.address}`
+      );
+ 
+      if(res2.status == 200){
+     
+        console.log(res2, "faisalasasa");
+        setVoted(res2.data.voted)
+      }
+    } catch (error) {
+      console.log(error,"erorro")
+    }
+  }
   const fetchProposals = async () => {
     try {
       const res = await axios.get(
@@ -160,6 +176,7 @@ const Proposals = () => {
       console.error('Error fetching blueprint data:', error)
     }
   }
+  
   const fetchProposalsBonds = async () => {
     if (!activeProposal || !activeProposal.id) {
       console.error('Proposal not available for fetching comments.')
@@ -270,47 +287,52 @@ const Proposals = () => {
     setLoadingButtonAgainst(true)
 
     try {
-      // First, post the vote
-      const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/manifest/proposal/vote`,
-        {
-          proposal_address: activeProposal.proposal_address,
-          userAddress: accounts[0].address,
-          vote_against: vote,
-        },
-      )
-
-      console.log('Vote submitted successfully:', res.data)
-      setManifestForVoteAgainst(res.data) // Store vote data for further use
-
-      // Send the transaction
-      const { receipt } = await sendTransaction(res.data) // Use the response data for the transaction
-      let txId = receipt.transaction.intent_hash
-
-      if (txId) {
-        try {
-          // Post transaction ID to backend
-          const response = await axios.post(
-            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
-            {
-              tx_id: txId,
-              user_address: accounts[0].address,
-            },
-            {
-              headers: {
-                'Content-Type': 'application/json',
+      
+      if(!voted){
+        const res = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/manifest/proposal/vote`,
+          {
+            proposal_address: activeProposal.proposal_address,
+            userAddress: accounts[0].address,
+            vote_against: vote,
+          },
+        )
+  
+        console.log('Vote submitted successfully:', res.data)
+        setManifestForVoteAgainst(res.data) // Store vote data for further use
+  
+        // Send the transaction
+        const { receipt } = await sendTransaction(res.data) // Use the response data for the transaction
+        let txId = receipt.transaction.intent_hash
+  
+        if (txId) {
+          try {
+            // Post transaction ID to backend
+            const response = await axios.post(
+              `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+              {
+                tx_id: txId,
+                user_address: accounts[0].address,
               },
-            },
-          )
-
-          console.log(response.data)
-          toast.success('Vote Submitted')
-          fetchProposals()
-        } catch (error) {
-          toast.error('Something went wrong while submitting the transaction')
-          console.error(error)
+              {
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              },
+            )
+  
+            console.log(response.data)
+            toast.success('Vote Submitted')
+            fetchProposals()
+          } catch (error) {
+            toast.error('Something went wrong while submitting the transaction')
+            console.error(error)
+          }
         }
+      }else{
+        toast.error('You already Voted')
       }
+    
     } catch (error) {
       if (error.response.data.detail.error === 'does not hold any token') {
         toast.error('Please buy some token first before voting')
@@ -329,47 +351,52 @@ const Proposals = () => {
     setLoadingButtonFor(true)
 
     try {
-      // First, post the vote
-      const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/manifest/proposal/vote`,
-        {
-          proposal_address: activeProposal.proposal_address,
-          userAddress: accounts[0].address,
-          vote_against: vote,
-        },
-      )
 
-      console.log('Vote submitted successfully:', res.data)
-      setManifestForVoteFor(res.data) // Store vote data for further use
-
-      // Send the transaction
-      const { receipt } = await sendTransaction(res.data) // Use the response data for the transaction
-      let txId = receipt.transaction.intent_hash
-
-      if (txId) {
-        try {
-          // Post transaction ID to backend
-          const response = await axios.post(
-            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
-            {
-              tx_id: txId,
-              user_address: accounts[0].address,
-            },
-            {
-              headers: {
-                'Content-Type': 'application/json',
+      if(!voted) {
+        const res = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/manifest/proposal/vote`,
+          {
+            proposal_address: activeProposal.proposal_address,
+            userAddress: accounts[0].address,
+            vote_against: vote,
+          },
+        )
+  
+        console.log('Vote submitted successfully:', res.data)
+        setManifestForVoteFor(res.data) // Store vote data for further use
+  
+        // Send the transaction
+        const { receipt } = await sendTransaction(res.data) // Use the response data for the transaction
+        let txId = receipt.transaction.intent_hash
+  
+        if (txId) {
+          try {
+            // Post transaction ID to backend
+            const response = await axios.post(
+              `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+              {
+                tx_id: txId,
+                user_address: accounts[0].address,
               },
-            },
-          )
-
-          console.log(response.data)
-          toast.success('Vote Submitted')
-          fetchProposals()
-        } catch (error) {
-          toast.error('Something went wrong while submitting the transaction')
-          console.error(error)
+              {
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              },
+            )
+  
+            console.log(response.data)
+            toast.success('Vote Submitted')
+            fetchProposals()
+          } catch (error) {
+            toast.error('Something went wrong while submitting the transaction')
+            console.error(error)
+          }
         }
+      }else{
+        toast.error('You have already voted')
       }
+     
     } catch (error) {
       if (error.response.data.detail.error === 'does not hold any token') {
         toast.error('Please buy some token first before voting')
@@ -468,6 +495,7 @@ const Proposals = () => {
 
       return () => clearInterval(intervalId)
     }
+
   }, [activeProposal])
   useEffect(() => {
     fetchProposals()
@@ -476,6 +504,7 @@ const Proposals = () => {
   useEffect(() => {
     fetchProposalsComments()
     fetchProposalsBonds()
+    fetchVoted()
   }, [activeProposal])
   if (!accounts || accounts.length === 0) {
     navigate('/')
@@ -675,45 +704,56 @@ const Proposals = () => {
 
                     {/* Voting buttons (commented out) */}
                     <div className="flex items-center justify-between w-full">
-                      <div className="flex items-center gap-3 ">
-                        {loadingButtonFor ? (
-                          <Button
-                            size="sm"
-                            disabled
-                            className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800 "
-                          >
-                            Voting...
-                          </Button>
-                        ) : (
-                          <Button
-                            size="sm"
-                            onClick={handleFor}
-                            className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800 "
-                          >
-                            <span>Voted For :</span>
-                            <span>{activeProposal.voted_for}</span>
-                          </Button>
-                        )}
+                   <div className="flex flex-col items-center gap-3">
+  {voted ? (
+    <Button disabled variant="outline">
+      You have already voted.
+    </Button>
+  ) : (
+    <div className='flex items-center gap-3'>
+      {loadingButtonFor ? (
+        <Button
+          size="sm"
+          disabled
+          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800"
+        >
+          Voting...
+        </Button>
+      ) : (
+        <Button
+          size="sm"
+          onClick={handleFor}
+          disabled={activeProposal.is_active === false || timeLeft === 'Time is up!' || voted === true}
+          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800"
+        >
+          <span>Voted For :</span>
+          <span>{activeProposal.voted_for}</span>
+        </Button>
+      )}
 
-                        {loadingButtonAgainst ? (
-                          <Button
-                            size="sm"
-                            disabled
-                            className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
-                          >
-                            Voting..
-                          </Button>
-                        ) : (
-                          <Button
-                            size="sm"
-                            onClick={handleAgainst}
-                            className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
-                          >
-                            <span>Voted Against : </span>
-                            <span> {activeProposal.voted_against} </span>
-                          </Button>
-                        )}
-                      </div>
+      {loadingButtonAgainst ? (
+        <Button
+          size="sm"
+          disabled
+          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
+        >
+          Voting...
+        </Button>
+      ) : (
+        <Button
+          size="sm"
+          onClick={handleAgainst}
+          disabled={activeProposal.is_active === false || timeLeft === 'Time is up!'}
+          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
+        >
+          <span>Voted Against :</span>
+          <span>{activeProposal.voted_against}</span>
+        </Button>
+      )}
+    </div>
+  )}
+</div>
+
                       <div>
                         {(activeProposal.minimum_quorum <=
                           activeProposal.number_of_people_voted) ?  (
@@ -732,7 +772,7 @@ const Proposals = () => {
                               ? 'Already Executed'
                               : 'Execute Proposal'}
                           </Button>
-                        ) : ( <Button disabled>Less number of people participated</Button> )}
+                        ) : ( <Button disabled>Cannot be executed due to minimum quorum does not meet</Button> )}
                       </div>
                     </div>
 
