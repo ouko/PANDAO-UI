@@ -322,6 +322,7 @@ const Proposals = () => {
             )
   
             console.log(response.data)
+            setActiveProposal(null)
             toast.success('Vote Submitted')
             fetchProposals()
           } catch (error) {
@@ -386,6 +387,7 @@ const Proposals = () => {
             )
   
             console.log(response.data)
+            setActiveProposal(null)
             toast.success('Vote Submitted')
             fetchProposals()
           } catch (error) {
