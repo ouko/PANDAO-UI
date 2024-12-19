@@ -373,9 +373,8 @@ const CommunityDetails = () => {
   }
 
   const isUserParticipant = participants.some(
-    (participant) => participant.participant === accounts[0].address,
+    (participant) => participant.public_address  === accounts[0].address,
   )
-
   return (
     <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-50 to-purple-50 text-black px-2">
       <CustomAlert />
