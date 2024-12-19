@@ -16,6 +16,8 @@ import {
   SquareArrowOutDownLeft,
   SquareArrowOutUpRight,
 } from 'lucide-react'
+import { Switch } from "@/components/ui/switch"
+
 import { FaLinkedinIn, FaXTwitter } from 'react-icons/fa6'
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import { formatStandardDateTime } from '@/utils/functions/convertActivityData'
@@ -40,6 +42,7 @@ const UserDashboard = () => {
   const [dataAll, setDataAll] = useState([])
   const [workData, setWorkData] = useState([])
   const [userData, setUserData] = useState({})
+  const [check, setCheck] = useState(false)
   const [createdComminities, setCreatedCommunities] = useState([])
   const [createdBonds, setCreatedBonds] = useState([])
 
@@ -61,6 +64,18 @@ const UserDashboard = () => {
     setTimeout(() => {
       setCopied(false)
     }, 1000)
+  }
+  const fetchCreatedBonds = async (user_address) => {
+    try {
+      const res = await axios.get(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/user/created-bonds/${user_address}?is_accepted=${check}`,
+      )
+      setCreatedBonds(res.data)
+    } catch (error) {
+      console.error('Error fetching activity data:', error)
+    }
   }
   useEffect(() => {
     const fetchBluePrint = async () => {
@@ -169,18 +184,7 @@ const UserDashboard = () => {
         console.error('Error fetching activity data:', error)
       }
     }
-    const fetchCreatedBonds = async (user_address) => {
-      try {
-        const res = await axios.get(
-          `${
-            import.meta.env.VITE_BACKEND_URL
-          }/user/created-bonds/${user_address}`,
-        )
-        setCreatedBonds(res.data)
-      } catch (error) {
-        console.error('Error fetching activity data:', error)
-      }
-    }
+
     const fetchCreatedParticipated = async (user_address) => {
       try {
         const res = await axios.get(
@@ -207,6 +211,10 @@ const UserDashboard = () => {
     }
   }, [accounts, currentPage, pageSize])
 
+
+  useEffect(()=>{
+    fetchCreatedBonds(accounts[0].address)
+  },[check])
   if (!accounts || accounts.length === 0) {
     navigate('/')
     return null
@@ -492,7 +500,14 @@ const UserDashboard = () => {
                   </div>
                 </Card>
                 <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
-                  <div className="text-xl font-bold"> Created Bonds</div>
+                  <div className='flex items-center justify-between w-full'>
+                  <div className="text-xl font-bold"> Created Bonds </div>
+                  <Switch checked={check} onCheckedChange={()=>{
+                    setCheck(!check)
+                  }}/>
+
+                  </div>
+                 
                   {createdBonds.length === 0 && (
                     <div className="flex items-center justify-center h-28 w-full">
                       No Bond Created
