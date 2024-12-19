@@ -545,7 +545,7 @@ const UserDashboard = () => {
                         <div className="mt-4 md:mt-0 flex flex-col items-start md:items-end">
                           <p className="text-sm text-gray-600">
                             Price:{' '}
-                            {bond.price ? `$${bond.price}` : 'Not Available'}
+                            {bond.price ? `${bond.price}XRD` : 'Not Available'}
                           </p>
                           <p className="text-sm text-gray-600">
                             Interest Rate:{' '}
