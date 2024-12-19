@@ -645,6 +645,7 @@ const CommunityDetails = () => {
                                         setTokenToSell(e.target.value)
                                       }
                                       required
+                                      min={0}
                                     />
                                   </div>
                                 </div>
@@ -695,6 +696,7 @@ const CommunityDetails = () => {
                                       type="number"
                                       onChange={(e) => setToken(e.target.value)}
                                       required
+                                      min={0}
                                     />
                                   </div>
                                 </div>
