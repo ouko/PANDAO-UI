@@ -213,7 +213,7 @@ const UserDashboard = () => {
 
 
   useEffect(()=>{
-    fetchCreatedBonds(accounts[0].address)
+    fetchCreatedBonds("account_tdx_2_12xzluwp8mes7dt67zvdvaz0hn6gtvdspmv9xrknq0wt2r766uxd8p4")
   },[check])
   if (!accounts || accounts.length === 0) {
     navigate('/')
@@ -342,7 +342,7 @@ const UserDashboard = () => {
                         No comminities created
                       </div>
                     )}
-                    {createdComminities.length > 0 &&
+                    {createdComminities && createdComminities.length > 0 &&
                       createdComminities.map((activity, index) => (
                         <div
                           key={index}
