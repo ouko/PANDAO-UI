@@ -294,7 +294,10 @@ const UserDashboard = () => {
   }, [accounts, currentPage, pageSize])
 
   useEffect(() => {
-    fetchCreatedBonds(accounts[0].address)
+    if(accounts && accounts.length > 0 && accounts[0].address){
+      fetchCreatedBonds(accounts[0].address)
+
+    }
   }, [check])
   if (!accounts || accounts.length === 0) {
     navigate('/')
