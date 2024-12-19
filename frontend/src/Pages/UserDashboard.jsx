@@ -128,7 +128,7 @@ const UserDashboard = () => {
 
           console.log('Submit Transaction Response:', submitResponse.data)
 
-          toast.success('Token Bought Successfully!')
+          toast.success('Withdraw Successfully!')
         
         } catch (submitError) {
           console.error('Error submitting transaction:', submitError)
@@ -139,9 +139,9 @@ const UserDashboard = () => {
         toast.error('Transaction failed. Please try again.')
       }
     } catch (error) {
-      console.error('Error buying token:', error.response.data.detail)
+      console.error('Error Withdraw token:', error.response.data.detail)
       
-      toast.error('Something went wrong while buying tokens.')
+      toast.error('Something went wrong while Withdrawing.')
     } finally {
       // Ensure loading is stopped regardless of success or failure
       setLoading2(false)
