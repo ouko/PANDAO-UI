@@ -360,6 +360,9 @@ const UserDashboard = () => {
                     <div className="text-black font-light text-base text-left px-0">
                       {userData.usermetadata?.about}
                     </div>
+                    <div className="text-black font-light text-base text-left px-0">
+                      {userData.usermetadata?.bio}
+                    </div>
                     <div className="py-1 w-[300px]  rounded-sm flex flex-wrap text-ellipsis overflow-hidden relative group">
                       {clipAddress(accounts[0].address)}
                       <button
