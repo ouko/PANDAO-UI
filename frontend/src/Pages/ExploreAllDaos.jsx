@@ -14,6 +14,7 @@ import { Banknote, Users } from "lucide-react";
 import { useAccount } from "@/AccountContext";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 const debounce = (func, delay) => {
   let timer;
   return (...args) => {
@@ -185,42 +186,31 @@ const ExploreAllDao = () => {
             {data.length > 0 &&
               data.map((dao, index) => (
                 <Card
-                  key={index}
-                  onClick={() => {
-                    handleNavigation(`/community/detail/${dao.id}`);
-                  }}
-                  className="flex overflow-hidden flex-col items-start justify-between p-5 h-[180px] cursor-pointer hover:shadow-md ga "
-                >
-                  <div className="flex items-start gap-">
-                    <div className="h-16 w-16">
-                      <Avatar className="h-14 w-14">
-                        <AvatarImage
-                          src={dao.image}
-                          alt="@shadcn"
-                          className="h-14 w-14"
-                        />
-                        <AvatarFallback className="h-14 w-14">
-                          CN
-                        </AvatarFallback>
-                      </Avatar>
-                    </div>
-                    <div>
-                      <div className="text-xl font-semibold">{dao.name}</div>
-                      {/* <div className="text-sm font-semibold">{dao.owner.name}</div> */}
-                    </div>
+                key={index}
+                onClick={() => handleNavigation(`/community/detail/${dao.id}`)}
+                className="flex overflow-hidden flex-col items-start justify-between p-5 h-[180px] cursor-pointer hover:shadow-md"
+              >
+                <div className="flex items-start gap-2">
+                  <Avatar className="h-14 w-14">
+                    <AvatarImage src={dao.image} alt={dao.name || 'DAO'} />
+                    <AvatarFallback>{dao.name?.[0] || '?'}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <div className="text-xl font-semibold">{dao.name}</div>
                   </div>
-                  <div className="line-clamp-2">{dao.description}</div>
-                  <div className="flex items-center justify-start w-full mt-1">
+                </div>
+                <div className="line-clamp-2">{dao.description || 'No description available'}</div>
+                <div className="flex items-center justify-between w-full mt-1">
                     <div className="flex items-center  gap-2 ">
                       <div className="flex items-center gap-2 border-2 px-2 rounded-md shadow-sm ">
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger className="flex items-center gap-1">
-                              <Users className="h-4 w-4" />{" "}
+                              <Users className="h-4 w-4" />{' '}
                               <p className="text-sm">
-                                {" "}
-                                {dao.number_of_participants}{" "}
-                              </p>{" "}
+                                {' '}
+                                {dao.number_of_participants}{' '}
+                              </p>{' '}
                             </TooltipTrigger>
                             <TooltipContent side="bottom">
                               <p>Total Number of Participant</p>
@@ -229,12 +219,12 @@ const ExploreAllDao = () => {
                         </TooltipProvider>
                       </div>
                       <div className="flex items-center gap-2   border-2 px-2 rounded-md shadow-sm ">
-                        {" "}
+                        {' '}
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger className="flex items-center gap-1">
-                              <Banknote className="h-4 w-4" />{" "}
-                              <p className="text-sm"> {dao.funds || 0} </p>{" "}
+                              <Banknote className="h-4 w-4" />{' '}
+                              <p className="text-sm"> {dao.funds || 0} </p>{' '}
                             </TooltipTrigger>
                             <TooltipContent side="bottom">
                               <p>Total Funds</p>
@@ -243,8 +233,16 @@ const ExploreAllDao = () => {
                         </TooltipProvider>
                       </div>
                     </div>
+                    <div className="flex items-center gap-1">
+                      {dao.tags &&
+                        dao.tags.slice(0, 2).map((token, index) => (
+                          <Badge key={index} variant="outline">
+                            {token}{' '}
+                          </Badge>
+                        ))}
+                    </div>
                   </div>
-                </Card>
+              </Card>
               ))}
           </div>
         )}
