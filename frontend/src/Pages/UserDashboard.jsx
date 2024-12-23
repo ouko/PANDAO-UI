@@ -16,11 +16,17 @@ import {
   SquareArrowOutDownLeft,
   SquareArrowOutUpRight,
 } from 'lucide-react'
+import { Switch } from '@/components/ui/switch'
+
 import { FaLinkedinIn, FaXTwitter } from 'react-icons/fa6'
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import { formatStandardDateTime } from '@/utils/functions/convertActivityData'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Timeline from './UserDasboard/WorkTimeLine'
+import UserTransaction from './UserDasboard/UserTransactions/UserTransactions'
+import { Badge } from '@/components/ui/badge'
+import { useSendTransaction } from '@/hooks/useSendTransaction'
+import { toast } from 'sonner'
 
 const UserDashboard = () => {
   const { accounts } = useAccount()
@@ -28,6 +34,7 @@ const UserDashboard = () => {
   const [coverUrl, setCoverUrl] = useState('')
   const [loading, setLoading] = useState(true)
   const [expneseData, setExpenseData] = useState([])
+  const [failedData, setFailedData] = useState([])
   const [activityData, setActivityData] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -37,7 +44,14 @@ const UserDashboard = () => {
   const [dataAll, setDataAll] = useState([])
   const [workData, setWorkData] = useState([])
   const [userData, setUserData] = useState({})
+  const [check, setCheck] = useState(false)
   const [createdComminities, setCreatedCommunities] = useState([])
+  const [createdBonds, setCreatedBonds] = useState([])
+    const sendTransaction = useSendTransaction()
+    const [loading2, setLoading2] = useState(false)
+    const [manifest, setManifest] = useState('')
+    const [selectedBond, setSelectedBond] = useState(null)
+
   const [participatedComminities, setParticipatedCommunities] = useState([])
 
   // const [edit, setEdit] = useState(false);
@@ -56,6 +70,94 @@ const UserDashboard = () => {
     setTimeout(() => {
       setCopied(false)
     }, 1000)
+  }
+  // const handleRetreiveBond=()=>{
+  //  try {
+  //    console.log('hi')
+  //  } catch (error) {
+  //   console.error('Error fetching activity data:', error)
+  //  }
+  // }
+  const handleRetreiveBond = async (bond) => {
+    const data = {
+      bond_id: bond.bond_id,
+      user_address: accounts[0].address,
+    }
+    setLoading2(true)
+
+    try {
+      const response = await axios.post(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/manifest/zcb/withdraw-all`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+
+      const responseData =
+        typeof response.data === 'string'
+          ? response.data.trim()
+          : JSON.stringify(response.data)
+
+      console.log('Response:', responseData)
+
+      setManifest(responseData)
+
+      const { receipt } = await sendTransaction(responseData)
+
+      const txId = receipt?.transaction?.intent_hash
+
+      if (txId) {
+        try {
+          const submitResponse = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+            {
+              tx_id: txId,
+              user_address: accounts[0].address,
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+
+          console.log('Submit Transaction Response:', submitResponse.data)
+
+          toast.success('Withdraw Successfully!')
+        
+        } catch (submitError) {
+          console.error('Error submitting transaction:', submitError)
+          toast.error('Failed to submit transaction.')
+        }
+      } else {
+        console.error('Transaction ID not found in receipt:', receipt)
+        toast.error('Transaction failed. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error Withdraw token:', error.response.data.detail)
+      
+      toast.error('Something went wrong while Withdrawing.')
+    } finally {
+      // Ensure loading is stopped regardless of success or failure
+      setLoading2(false)
+    }
+  }
+  const fetchCreatedBonds = async (user_address) => {
+    try {
+      const res = await axios.get(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/user/created-bonds/${user_address}?is_accepted=${check}`,
+      )
+      setCreatedBonds(res.data)
+    } catch (error) {
+      console.error('Error fetching activity data:', error)
+    }
   }
   useEffect(() => {
     const fetchBluePrint = async () => {
@@ -87,13 +189,15 @@ const UserDashboard = () => {
         console.error('Error fetching activity data:', error)
       }
     }
-    const fetchAll = async () => {
+    const fetchAll = async (user_address) => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/community/all`,
+          `${
+            import.meta.env.VITE_BACKEND_URL
+          }/community/user/interest/user_add?user_addr=${user_address}`,
         )
         setDataAll(res.data)
-        console.log(res.data)
+        console.log(res.data, 'hi faisal')
       } catch (error) {
         console.error('Error fetching blueprint data:', error)
       } finally {
@@ -109,6 +213,21 @@ const UserDashboard = () => {
         )
         console.log(res.data, 'hi00000hi')
         setExpenseData(res.data)
+      } catch (error) {
+        console.error('Error fetching blueprint data:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    const fetchFailedTransactions = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/user/pending-transactions/${
+            accounts[0].address
+          }`,
+        )
+        console.log(res.data, 'hi00000hi')
+        setFailedData(res.data)
       } catch (error) {
         console.error('Error fetching blueprint data:', error)
       } finally {
@@ -147,6 +266,7 @@ const UserDashboard = () => {
         console.error('Error fetching activity data:', error)
       }
     }
+
     const fetchCreatedParticipated = async (user_address) => {
       try {
         const res = await axios.get(
@@ -165,11 +285,20 @@ const UserDashboard = () => {
       fetchActivity(accounts[0].address, 1, 10)
       fetchCreatedCommunity(accounts[0].address)
       fetchCreatedParticipated(accounts[0].address)
-      fetchAll()
+      fetchCreatedBonds(accounts[0].address)
+
+      fetchAll(accounts[0].address)
       fetchUserExpense()
+      fetchFailedTransactions()
     }
   }, [accounts, currentPage, pageSize])
 
+  useEffect(() => {
+    if(accounts && accounts.length > 0 && accounts[0].address){
+      fetchCreatedBonds(accounts[0].address)
+
+    }
+  }, [check])
   if (!accounts || accounts.length === 0) {
     navigate('/')
     return null
@@ -179,7 +308,6 @@ const UserDashboard = () => {
   //     setCurrentPage(newPage);
   //   }
   // };
-  console.log(workData)
   return (
     <div className=" relative flex items-start gap-3 justify-start min-h-screen bg-slate-100 text-black pb-7 pt-2 px-7">
       <Tabs defaultValue="overview" className="w-full  t ">
@@ -192,7 +320,7 @@ const UserDashboard = () => {
           </div>
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="activity">User Activity</TabsTrigger>
-          <TabsTrigger value="expenses">User Expenses</TabsTrigger>
+          <TabsTrigger value="expenses">User Transaction</TabsTrigger>
         </TabsList>
         <TabsContent value="overview">
           {userData && (
@@ -231,6 +359,9 @@ const UserDashboard = () => {
                     </div>
                     <div className="text-black font-light text-base text-left px-0">
                       {userData.usermetadata?.about}
+                    </div>
+                    <div className="text-black font-light text-base text-left px-0">
+                      {userData.usermetadata?.bio}
                     </div>
                     <div className="py-1 w-[300px]  rounded-sm flex flex-wrap text-ellipsis overflow-hidden relative group">
                       {clipAddress(accounts[0].address)}
@@ -297,7 +428,8 @@ const UserDashboard = () => {
                         No comminities created
                       </div>
                     )}
-                    {createdComminities.length > 0 &&
+                    {createdComminities &&
+                      createdComminities.length > 0 &&
                       createdComminities.map((activity, index) => (
                         <div
                           key={index}
@@ -399,10 +531,18 @@ const UserDashboard = () => {
                     {' '}
                     Communities you might be interested In
                   </div>
+                  <div className="flex  py-2">
+                    {userData.interested_tag &&
+                      userData.interested_tag.map((tag, index) => (
+                        <div key={index}>
+                          <Badge variant="outline">{tag}</Badge>
+                        </div>
+                      ))}
+                  </div>
                   <div className="w-full mt-4 flex flex-col gap-2 h-full">
                     {dataAll.length === 0 && (
                       <div className="flex items-center justify-center text-center h-full">
-                        No active comminities.
+                        No active communities.
                       </div>
                     )}
                     {dataAll.length > 0 &&
@@ -444,6 +584,87 @@ const UserDashboard = () => {
                         </div>
                       ))}
                   </div>
+                </Card>
+                <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
+                  <div className="flex items-center justify-between w-full">
+                    <div className="text-xl font-bold"> Created Bonds </div>
+                    <div className="flex items-center gap-2"> 
+
+                    <Switch
+                      checked={check}
+                      onCheckedChange={() => {
+                        setCheck(!check)
+                      }}
+                    />
+                  <div>
+                    Purchased Bonds
+                  </div>
+                    </div>
+                    
+                  </div>
+
+                  {createdBonds.length === 0 && (
+                    <div className="flex items-center justify-center h-28 w-full">
+                      No Bond Created
+                    </div>
+                  )}
+                  {createdBonds.length > 0 &&
+                    createdBonds.map((bond) => (
+                      <div
+                        key={bond.bond_id}
+                        className="w-full bg-white shadow-sm rounded-md p-4 mt-4 flex flex-col md:flex-row justify-between items-start md:items-center"
+                      >
+                        <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
+                          <img
+                            src={
+                              bond.community?.image ||
+                              'https://via.placeholder.com/150'
+                            }
+                            alt={bond.community?.name || 'Bond Image'}
+                            className="w-16 h-16 rounded-full object-cover"
+                          />
+                          <div>
+                            <h2 className="text-lg font-bold">
+                              {bond.name || 'Unnamed Bond'}
+                            </h2>
+                            <p className="text-sm text-gray-600">
+                              Community: {bond.community?.name || 'N/A'}
+                            </p>
+                            <p className="text-sm text-gray-600">
+                              Description:{' '}
+                              {bond.description || 'No description provided'}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="mt-4 md:mt-0 flex flex-col space-y-1 items-start md:items-end">
+                          <p className="text-sm text-gray-600">
+                            Price:{' '}
+                            {bond.price ? `${bond.price}XRD` : 'Not Available'}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            Interest Rate:{' '}
+                            {bond.interest_rate
+                              ? `${bond.interest_rate}%`
+                              : 'N/A'}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            Maturity Date:
+                            {bond.maturity_date
+                              ? new Date(bond.maturity_date).toLocaleDateString(
+                                  'en-US',
+                                  {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                  },
+                                )
+                              : 'Not specified'}
+                          </p>
+                          {check && <Button disabled={loading2} className="mt-3" onClick={()=>handleRetreiveBond(bond)}>Withdraw</Button>}
+                        </div>
+                      </div>
+                    ))}
                 </Card>
               </div>
             </div>
@@ -497,51 +718,10 @@ const UserDashboard = () => {
           </Card>
         </TabsContent>
         <TabsContent value="expenses">
-          <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
-            <div className="text-xl font-bold"> User Expenses</div>
-            <div className="w-full mt-4 flex flex-col gap-2 h-full">
-              {expneseData.length === 0 && (
-                <div className="flex items-center justify-center text-center h-full">
-                  No expense
-                </div>
-              )}
-              {expneseData.length > 0 &&
-                expneseData.map((activity, index) => (
-                  <div
-                    key={index}
-                    className="p-4 border-2 rounded-lg group hover:shadow-md flex items-center space-x-4"
-                  >
-                    {/* Community Image */}
-                    <img
-                      src={activity.community_image}
-                      alt={`${activity.community_name} image`}
-                      className="w-16 h-16 rounded-full"
-                    />
-                    {/* Activity Details */}
-                    <div>
-                      <h3 className="text-lg font-semibold">
-                        {activity.community_name}
-                      </h3>
-                      <p className="text-sm text-gray-500">
-                        {activity.xrd_spent_on}
-                      </p>
-                      <p
-                        className={`text-sm font-bold ${
-                          activity.xrd_spent < 0
-                            ? 'text-red-500'
-                            : 'text-green-500'
-                        }`}
-                      >
-                        Spent: {Math.abs(activity.xrd_spent)} XRD
-                      </p>
-                      <p className="text-sm text-gray-400">
-                        Date: {new Date(activity.date).toLocaleString()}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-            </div>
-          </Card>
+          <UserTransaction
+            expneseData={expneseData}
+            failedTransaction={failedData}
+          />
         </TabsContent>
       </Tabs>
     </div>

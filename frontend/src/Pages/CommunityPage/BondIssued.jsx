@@ -23,7 +23,7 @@ const BondIssued = (props) => {
   const fetchIssuedBond = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/zcb/all/${params.id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/community/zcb/all/${params.id}?purchased=false`,
       )
       setIssuedBonds(res.data)
       setLoading(false)

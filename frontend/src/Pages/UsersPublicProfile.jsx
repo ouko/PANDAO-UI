@@ -115,11 +115,13 @@ const UserPublicProfile = () => {
         console.error("Error fetching blueprint data:", error);
       }
     };
-    const fetchAll = async () => {
+    const fetchAll = async (user_address) => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/community/all`
-        );
+          `${
+            import.meta.env.VITE_BACKEND_URL
+          }/community/user/interest/user_add?user_addr=${user_address}`,
+        )
         setDataAll(res.data);
         console.log(res.data)
       } catch (error) {
@@ -149,7 +151,7 @@ const UserPublicProfile = () => {
     if (accounts && accounts.length > 0 && accounts[0].address) {
       fetchBluePrint();
       fetchUserData();
-      fetchAll()
+      fetchAll(accounts[0].address)
     }
   }, [accounts, params.id]);
   useEffect(() => {

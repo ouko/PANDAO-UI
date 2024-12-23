@@ -1,64 +1,76 @@
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { useEffect, useState } from "react";
-import { useAccount } from "@/AccountContext";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { Input } from "@/components/ui/input";
-import useTokenWeightStore from "@/store/templateStore/tokenWeightStore";
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Progress } from '@/components/ui/progress'
+import { useEffect, useState } from 'react'
+import { useAccount } from '@/AccountContext'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { Input } from '@/components/ui/input'
+import useTokenWeightStore from '@/store/templateStore/tokenWeightStore'
 
-import extractTransactionsData from "@/utils/TranscationsRecipt";
-import { useSendTransaction } from "@/hooks/useSendTransaction";
-import useModalStore from "@/store/modal";
-import ReceiptModal from "@/Pages/components/ReceiptModal";
+import extractTransactionsData from '@/utils/TranscationsRecipt'
+import { useSendTransaction } from '@/hooks/useSendTransaction'
+import useModalStore from '@/store/modal'
+import ReceiptModal from '@/Pages/components/ReceiptModal'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 const DeployView = () => {
-  const navigate = useNavigate();
-  const { accounts } = useAccount();
-  const { formFields, setFormFields, resetFormFields } = useTokenWeightStore();
-  const [Recipt, setRecipt] = useState(null);
-  const sendTransaction = useSendTransaction();
-  const [manifest,setManifest]=useState("")
-  const { successOpen,setSuccessOpen } = useModalStore();
+  const navigate = useNavigate()
+  const { accounts } = useAccount()
+  const { formFields, setFormFields, resetFormFields } = useTokenWeightStore()
+  const [Recipt, setRecipt] = useState(null)
+  const sendTransaction = useSendTransaction()
+  const [manifest, setManifest] = useState('')
+  const { successOpen, setSuccessOpen } = useModalStore()
+  const [open, setOpen] = useState(false)
 
+  const [loading, setLoading] = useState(false)
 
-  const [loading, setLoading] = useState(false);
-
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([])
 
   useEffect(() => {
     if (accounts && accounts.length > 0) {
-      setFormFields({ userAddress: accounts[0].address }); // Set the userAddress
+      setFormFields({ userAddress: accounts[0].address }) // Set the userAddress
     }
-  }, [accounts, setFormFields]);
+  }, [accounts, setFormFields])
   const handleClaimToken = async () => {
-    console.log("selectedAccount:", accounts[0].address);
-  
+    console.log('selectedAccount:', accounts[0].address)
+
     if (!accounts[0].address) {
-      alert("Please select an account first.");
-      return;
+      alert('Please select an account first.')
+      return
     }
-  
-    setLoading(true);
-  
+
+    setLoading(true)
+
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/manifest/build/deploy_token_weighted_dao`,
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/manifest/build/deploy_token_weighted_dao`,
         formFields,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        }
-      );
-  
-      console.log(response.data);
-      setManifest(response.data);
-  
-      const { receipt } = await sendTransaction(response.data).finally(() => setLoading(false));
-      
-      let txId = receipt.transaction.intent_hash;
-      
+        },
+      )
+
+      console.log(response.data)
+      setManifest(response.data)
+
+      const { receipt } = await sendTransaction(response.data).finally(() =>
+        setLoading(false),
+      )
+
+      let txId = receipt.transaction.intent_hash
+
       if (txId) {
         const response = await axios.post(
           `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
@@ -68,21 +80,21 @@ const DeployView = () => {
           },
           {
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
-          }
-        );
-  
-        console.log(response.data);
-  
+          },
+        )
+
+        console.log(response.data)
+
         // Step 4: Extract transaction data
-        const recipt = await extractTransactionsData(txId);
-        console.log(recipt);
-        setRecipt(() => recipt);
-  
+        const recipt = await extractTransactionsData(txId)
+        console.log(recipt)
+        setRecipt(() => recipt)
+
         // Step 5: Open success modal
-        setSuccessOpen(true);
-  
+        setSuccessOpen(true)
+
         // Optional: Community registration code can be included here if needed
         /*
         let communityPostBody = {
@@ -104,143 +116,230 @@ const DeployView = () => {
   
         console.log(communityResponse.data);
         */
-  
       } else {
-        throw new Error("Transaction ID not found");
+        throw new Error('Transaction ID not found')
       }
-  
     } catch (error) {
-      console.error("Error occurred:", error);
-      window.alert(error.message || "An error occurred. Please try again.");
+      console.error('Error occurred:', error)
+      window.alert(error.message || 'An error occurred. Please try again.')
     } finally {
-      setLoading(false); // Ensure loading state is reset
+      setLoading(false) // Ensure loading state is reset
     }
-  };
-  
+  }
 
   const handleDeploy = () => {
     console.log(formFields)
-resetFormFields()
-navigate("/");
-  };
+    resetFormFields()
+    navigate('/')
+  }
 
   useEffect(() => {
     const fetchBluePrint = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/blueprint`
-        );
-        setData(res.data);
+          `${import.meta.env.VITE_BACKEND_URL}/blueprint`,
+        )
+        setData(res.data)
       } catch (error) {
-        console.error("Error fetching blueprint data:", error);
+        console.error('Error fetching blueprint data:', error)
       }
-    };
-    fetchBluePrint();
-  }, []);
+    }
+    fetchBluePrint()
+  }, [])
 
   if (!accounts || accounts.length === 0 || !data) {
-    navigate("/");
-    return null;
+    navigate('/')
+    return null
   }
 
   const allFieldsFilled = () => {
     return (
-      formFields.communityName.trim() !== "" &&
-      formFields.description.trim() !== "" &&
-      formFields.communityImage.trim() !== "" &&
-      formFields.tokenImage.trim() !== "" &&
+      formFields.communityName.trim() !== '' &&
+      formFields.description.trim() !== '' &&
+      formFields.communityImage.trim() !== '' &&
+      formFields.tokenImage.trim() !== '' &&
       formFields.tokenSupply > 0 &&
       formFields.tokenPrice > 0 &&
       formFields.tokenWithDrawPrice > 0
-    );
-  };
+    )
+  }
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormFields({ [name]: value });
-  };
+    const { name, value } = e.target
+    setFormFields({ [name]: value })
+  }
 
   return (
-
-    <>    
-     <ReceiptModal>
-    {Recipt ? (
-      <div className="w-full ">
-        <Recipt className="w-full relative bg-red-500" />
-      </div>
-    ) : (
-      ""
-    )}
-  </ReceiptModal>
-  <div className="max-w-[1000px] mx-auto mt-20">
-      <Card className="bg-white relative z-40 text-black mt-10 p-12 flex flex-col gap-3 rounded-xl shadow-sm">
-        <div className="mb-6 flex flex-col gap-2">
-          <div className="flex items-center justify-between">
-            <div>Deploy DAO</div>
-            <div>Step 3 of 3</div>
+    <>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger></DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            {/* <DialogTitle>This is all info?</DialogTitle> */}
+          </DialogHeader>
+          {/* Displaying the current form fields with images */}
+          <div className="space-y-2">
+            <div>
+              <strong>Community Name:</strong> {formFields.communityName}
+            </div>
+            <div>
+              <strong>Description:</strong> {formFields.description}
+            </div>
+            <div className="flex items-center justify-between gap-2">
+            <div>
+              <strong>Community Image</strong>
+              {formFields.communityImage && (
+                <img
+                  src={formFields.communityImage}
+                  alt="Community Image"
+                  className="size-52  object-cover"
+                />
+              )}
+            </div>
+            <div>
+              <strong>Token Image</strong>
+              {formFields.tokenImage && (
+                <img
+                  src={formFields.tokenImage}
+                  alt="Token Image"
+                  className="size-52 object-cover"
+                />
+              )}
+            </div>
+            </div>
+          
+            <div>
+              <strong>Token Supply:</strong> {formFields.tokenSupply} XRD
+            </div>
+            <div>
+              <strong>Token Price:</strong> {formFields.tokenPrice} XRD
+            </div>
+            <div>
+              <strong>Who can Vote:</strong> {formFields.proposal_right} 
+            </div>
+            <div className='capitalize'>
+              <strong>Purpose:</strong> {formFields.purpose} 
+            </div>
+            <div>
+              <strong>Token Withdraw Price:</strong>{' '}
+              {formFields.tokenWithDrawPrice}
+            </div>
+            <div>
+              {formFields.tags.length > 0 && (
+                <div>
+                  <strong>Tags:</strong>{' '}
+                  {formFields.tags.map((tag) => (
+                    <span key={tag} className="px-2 py-1 bg-gray-200 mr-2">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-          <Progress value={100} className="rounded-sm" />
-        </div>
+          {loading ? (
+            <Button variant="radix" className="w-full" disabled>
+              Deploying....
+            </Button>
+          ) : (
+            <Button
+              variant="radix"
+              className="w-full"
+              disabled={!allFieldsFilled()}
+              onClick={handleClaimToken}
+            >
+              Deploy
+            </Button>
+          )}
+        </DialogContent>
+      </Dialog>
 
-        <div className="text-4xl font-semibold">Deploy your Community</div>
-        <div className="flex md:flex-row flex-col items-center justify-between gap-3">
-          <span className="w-full">
-            Start simple and learn as you go. You can always evolve your DAO in the future.
-          </span>
-        </div>
-      </Card>
-      <div className="max-w-[600px] mx-auto mt-5 flex flex-col gap-3 bg-white p-5 rounded-xl relative z-30">
-     
-        <div className="flex flex-col gap-1">
-          <span className="font-medium text-lg px-1">Token Supply</span>
-          <Input
-            type="number"
-            name="tokenSupply"
-            className="border-slate-300 focus:ring-1 focus:ring-purple-400"
-            placeholder="Enter Token Supply"
-            value={formFields.tokenSupply}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="flex flex-col gap-1">
-          <span className="font-medium text-lg px-1">Token Price</span>
-          <Input
-            type="number"
-            name="tokenPrice"
-            className="border-slate-300 focus:ring-1 focus:ring-purple-400"
-            placeholder="Enter Token Price"
-            value={formFields.tokenPrice}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="flex flex-col gap-1">
-          <span className="font-medium text-lg px-1">Token Withdraw Price</span>
-          <Input
-            type="number"
-            name="tokenWithDrawPrice"
-            className="border-slate-300 focus:ring-1 focus:ring-purple-400"
-            placeholder="Enter Token Withdraw Price"
-            value={formFields.tokenWithDrawPrice}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="flex items-center justify-between">
-          {loading ?(<Button variant="radix" className="w-full" disabled>
-            Deploying....
-          </Button>) :( <Button variant="radix" className="w-full" disabled={!allFieldsFilled()} onClick={handleClaimToken}>
-            Deploy
-          </Button>)}
-         
+      <ReceiptModal>
+        {Recipt ? (
+          <div className="w-full ">
+            <Recipt className="w-full relative bg-red-500" />
+          </div>
+        ) : (
+          ''
+        )}
+      </ReceiptModal>
+      <div className="max-w-[1000px] mx-auto mt-20">
+        <Card className="bg-white relative z-40 text-black mt-10 p-12 flex flex-col gap-3 rounded-xl shadow-sm">
+          <div className="mb-6 flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <div>Deploy DAO</div>
+              <div>Step 3 of 3</div>
+            </div>
+            <Progress value={100} className="rounded-sm" />
+          </div>
+
+          <div className="text-4xl font-semibold">Deploy your Community</div>
+          <div className="flex md:flex-row flex-col items-center justify-between gap-3">
+            <span className="w-full">
+              Start simple and learn as you go. You can always evolve your DAO
+              in the future.
+            </span>
+          </div>
+        </Card>
+        <div className="max-w-[600px] mx-auto mt-5 flex flex-col gap-3 bg-white p-5 rounded-xl relative z-30">
+          <div className="flex flex-col gap-1">
+            <span className="font-medium text-lg px-1">Token Supply</span>
+            <Input
+              type="number"
+              name="tokenSupply"
+              className="border-slate-300 focus:ring-1 focus:ring-purple-400"
+              placeholder="Enter Token Supply"
+              value={formFields.tokenSupply}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="font-medium text-lg px-1">Token Price</span>
+            <Input
+              type="number"
+              name="tokenPrice"
+              className="border-slate-300 focus:ring-1 focus:ring-purple-400"
+              placeholder="Enter Token Price"
+              value={formFields.tokenPrice}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="font-medium text-lg px-1">
+              Token Withdraw Price
+            </span>
+            <Input
+              type="number"
+              name="tokenWithDrawPrice"
+              className="border-slate-300 focus:ring-1 focus:ring-purple-400"
+              placeholder="Enter Token Withdraw Price"
+              value={formFields.tokenWithDrawPrice}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            {loading ? (
+              <Button variant="radix" className="w-full" disabled>
+                Deploying....
+              </Button>
+            ) : (
+              <Button
+                variant="radix"
+                className="w-full"
+                disabled={!allFieldsFilled()}
+                onClick={() => setOpen(true)}
+              >
+                Deploy
+              </Button>
+            )}
+          </div>
         </div>
       </div>
-    </div>
-
     </>
- 
-  );
-};
+  )
+}
 
-export default DeployView;
+export default DeployView

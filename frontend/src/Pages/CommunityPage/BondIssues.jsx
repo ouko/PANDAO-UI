@@ -444,6 +444,173 @@ const handleChange = (e) => {
                     </SelectContent>
                   </Select>
                 </div>
+=======
+                    <FormInput
+                      label="Community ID"
+                      name="community_id"
+                      value={params.id}
+                      disabled="true"
+                      onChange={handleChange}
+                      tooltipText="Unique identifier for the community"
+                    />
+                    <FormInput
+                      label="Bond Name"
+                      name="bond_name"
+                      value={bond.bond_name}
+                      onChange={handleChange}
+                      tooltipText="Name of the bond"
+                    />
+                    <FormInput
+                      label="Bond Symbol"
+                      name="bond_symbol"
+                      value={bond.bond_symbol}
+                      onChange={handleChange}
+                      tooltipText="Symbol for the bond"
+                    />
+                    <FormInput
+                      label="Bond Identity"
+                      name="bond_identity"
+                      value={bond.bond_identity}
+                      onChange={handleChange}
+                      tooltipText="Identity of the bond"
+                    />
+                    <FormInput
+                      label="Nominal Interest Rate"
+                      type="number"
+                      name="nominal_interest_rate"
+                      value={bond.nominal_interest_rate}
+                      onChange={handleChange}
+                      tooltipText="Interest rate of the bond"
+                    />
+                    <FormInput
+                      label="Currency"
+                      name="currency"
+                      value={bond.currency}
+                      onChange={handleChange}
+                      disabled="true"
+                      tooltipText="Currency type (e.g., XRD)"
+                    />
+                    <FormInput
+                      label="Initial Exchange Date"
+                      type="date"
+                      name="initial_exchange_date"
+                      value={bond.initial_exchange_date}
+                      onChange={handleChange}
+                      tooltipText="Start date of bond exchange"
+                      min={new Date().toISOString().split('T')[0]}
+                    />
+                    <FormInput
+                      label="Maturity Date"
+                      type="date"
+                      name="maturity_date"
+                      value={bond.maturity_date}
+                      onChange={handleChange}
+                      tooltipText="Date the bond matures"
+                      min={bond.initial_exchange_date || ''} 
+                    />
+                    <FormInput
+                      label="Bond Price"
+                      type="number"
+                      name="bond_price"
+                      value={bond.bond_price}
+                      onChange={handleChange}
+                      tooltipText="Current price of the bond"
+                    />
+
+                    <FormInput
+                      label="Discount"
+                      type="number"
+                      name="discount"
+                      value={bond.discount}
+                      onChange={handleChange}
+                      tooltipText="Discount applied to bond"
+                    />
+
+                    <FormInput
+                      label="Notional Principal"
+                      type="number"
+                      disabled="true"
+                      name="notional_principal"
+                      value={bond.notional_principal}
+                      onChange={handleChange}
+                      tooltipText="Principal amount of the bond"
+                    />
+                    <FormInput
+                      label="Number of Bonds"
+                      type="number"
+                      name="number_of_bonds"
+                      value={bond.number_of_bonds}
+                      onChange={handleChange}
+                      tooltipText="Total quantity of bonds"
+                    />
+                    <FormInput
+                      label="User Address"
+                      name="user_address"
+                      value={accounts[0].address}
+                      disabled="true"
+                      onChange={handleChange}
+                      tooltipText="Address associated with the bond"
+                    />
+                    <FormInput
+                      label="Description"
+                      name="description"
+                      value={bond.description}
+                      onChange={handleChange}
+                      tooltipText="Detailed description of the bond"
+                    />
+                    <Select
+                      className="flex items-center justify-center"
+                      onValueChange={(value) =>
+                        updateBond('bond_position', value)
+                      }
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select Position" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="long">Long</SelectItem>
+                        <SelectItem value="short">Short</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Select
+                      className="flex items-center justify-center"
+                      onValueChange={(value) => updateBond('nft', value)}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select NFT" />
+                        
+                      </SelectTrigger>
+                      <SelectContent>
+                        {nfts.length > 0 ? (
+                          nfts.map((item, index) => (
+
+               
+
+                            <SelectItem key={index} value={item.resource_address}>
+
+                              {item.name || item.icon_url ? (
+                                <div className="flex items-center gap-2">
+                                     <img
+                                  className='h-5 w-5 rounded-full shadow-md'
+                                  src={item.icon_url
+                                  }
+                                  />
+                                  {item.name && <span>{item.name}</span>}
+                               
+                                </div>
+                              ) : (
+                                'Unnamed Item'
+                              )}
+                            </SelectItem>
+                          ))
+                        ) : (
+                          <div className="p-4 text-center text-gray-500">
+                            No NFTs available
+                          </div>
+                        )}
+                      </SelectContent>
+                    </Select>
+                  </div
                   <div className="flex items-center justify-end">
                   <Button onClick={()=>setOpen(!open)} disabled={!isFormComplete}>
                     Submit

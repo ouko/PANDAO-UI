@@ -72,7 +72,7 @@ const Navbar = () => {
   }, [])
   console.log(scrolled, 'scrolled')
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center ">
       <div
         className={`mx-auto flex  bg-gradient-to-t from-black/80 to-purple-900 text-white fixed w-full  z-50 transition-all duration-300  items-center justify-center h-14 p-5  ${
           scrolled ? 'top-6 max-w-[1200px] rounded-3xl ' : 'top-0 max-w-full '
@@ -83,9 +83,9 @@ const Navbar = () => {
             <img src="/logo.png" alt="Logo" className=" h-12 " />
           </Link>
         </div>
-        <ul className="md:flex hidden items-center justify-center  gap-5 w-[170%] font-semibold text-lg">
+        <ul className="md:flex hidden items-center justify-center  gap-5 w-[200%] font-semibold text-lg">
           <NavLink
-            to="/aboutus"
+            to="/ourstory "
             className={
               ({ isActive }) =>
                 isActive
@@ -94,11 +94,11 @@ const Navbar = () => {
             }
             end
           >
-            <li>About Us</li>
+            <li>Our Story </li>
           </NavLink>
 
           <NavLink
-            to="/products"
+            to="/catalystsuite"
             className={
               ({ isActive }) =>
                 isActive
@@ -107,7 +107,7 @@ const Navbar = () => {
             }
             end
           >
-            <li>Products</li>
+            <li>Catalyst Suite</li>
           </NavLink>
           <NavLink
             to="/resources"
@@ -131,8 +131,20 @@ const Navbar = () => {
             }
             end
           >
-            <li>Blogs</li>
+            <li>Blog</li>
           </NavLink> */}
+          <NavLink
+            to="/price"
+            className={
+              ({ isActive }) =>
+                isActive
+                  ? 'bg-purple-700/70 p-2 rounded-xl text-white font-semibold' // Active state with a darker purple background
+                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-white font-semibold' // Inactive state with a light purple hover effect
+            }
+            end
+          >
+            <li>Pricing</li>
+          </NavLink> 
           <NavLink
             to="/explore"
             className={
