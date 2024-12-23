@@ -684,7 +684,15 @@ const Proposals = () => {
                     {/* <div className="capitalize font-semibold text-xl">
                       {activeProposal.proposal}
                     </div> */}
+{activeProposal.result && <div>
+  <strong>
+    Result :
+  </strong>
+  <span className='capitalize pl-2'>
+  {activeProposal.result}
 
+  </span>
+</div> }
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
                         <span>Start Time :</span>
