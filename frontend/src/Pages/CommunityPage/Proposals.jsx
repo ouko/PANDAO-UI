@@ -55,7 +55,7 @@ const Proposals = () => {
   const [loadingButtonAgainst, setLoadingButtonAgainst] = useState(false)
   const [loadingButtonFor, setLoadingButtonFor] = useState(false)
   const [loadingButton, setLoadingButton] = useState(false)
-  const [form, setShowForm] = useState(true)
+  const [form, setShowForm] = useState(false)
   const [bondIssuerAddress, setBondIssuerAddress] = useState('')
   const [bondIssuerAddresses, setBondIssuerAddresses] = useState([])
   const [targetXrdAmount, setTargetXrdAmount] = useState('')
@@ -523,7 +523,7 @@ const Proposals = () => {
                     <Button
                       onClick={() => {
                         setActiveProposal(null)
-                        setShowForm(!form)
+                        setShowForm(true);
                       }}
                       variant="radix"
                     >
@@ -990,7 +990,10 @@ const Proposals = () => {
         ) : (
           <div className="flex flex-col items-center justify-center max-w-[1440px] mx-auto my-6 p-2">
             <div
-              onClick={() => setShowForm(!form)}
+               onClick={() => {
+                setShowForm(false); // Hide the form and return to the list
+                setActiveProposal(null); // Ensure no proposal is active
+              }}
               className="w-full cursor-pointer flex items-start m-2"
             >
               <ChevronLeft /> <span>Back</span>
