@@ -22,8 +22,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+
 import { useSendTransaction } from '@/hooks/useSendTransaction'
-import Modal  from '@/Pages/GlobalComponents/Model'
 const FormInput = ({
   label,
   type = 'text',
@@ -83,6 +91,7 @@ const BondIssue = () => {
   const { accounts } = useAccount()
   const params = useParams()
   const navigate = useNavigate()
+  const [open, setOpen] = useState(false)
   const [manifest, setManifest] = useState('')
   const sendTransaction = useSendTransaction()
   const { bond, updateBond, resetBond } = useBondFormStore((state) => state)
@@ -275,8 +284,7 @@ const handleChange = (e) => {
               <div className="text-3xl font-semibold text-center">Create Bond</div>
             </Card>
               <Card className="p-5">
-                <form
-                  onSubmit={handleformSubmit}
+                <div
                   className="flex flex-col w-full space-y-4"
                 >
                   <div className="grid grid-cols-2 gap-5">
@@ -437,24 +445,23 @@ const handleChange = (e) => {
                   </Select>
                 </div>
                   <div className="flex items-center justify-end">
-                  <Button type="submit" disabled={!isFormComplete || loading}>
+                  <Button onClick={()=>setOpen(!open)} disabled={!isFormComplete}>
                     Submit
                   </Button>
                   </div>
-                </form>
+                </div>
               </Card>
             </div>
           </div>
         </div>
-        {/* Modal for Loading */}
-        {loading && (
-  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-    <div className="bg-white p-6 rounded-lg shadow-lg text-center space-y-4 max-w-2xl">
+        <Dialog open={open} onOpenChange={setOpen}>
+  <DialogTrigger></DialogTrigger>
+  <DialogContent className="max-w-2xl ">
       <h2 className="text-xl font-bold">Confirm Submission</h2>
       <p>Review the details below before submitting:</p>
 
       {/* Display the submitted data */}
-      <div className="bg-gray-100 p-4 rounded-lg text-left max-h-96 overflow-y-auto">
+      <div className="bg-gray-100 p-4 rounded-lg text-left max-h-96 overflow-auto">
         <ul className="space-y-2">
           <li><strong>Community ID:</strong> {params.id}</li>
           <li><strong>Bond Name:</strong> {bond.bond_name}</li>
@@ -485,25 +492,20 @@ const handleChange = (e) => {
         </ul>
       </div>
 
-      <div className="flex items-center justify-center space-x-4">
+      <div className="flex items-center justify-end space-x-4">
         <Button
-          onSelect={() => {
-            setShowConfirmationModal(false);
-            handleFormSubmit(); // Ensure this submits the data
-          }}
+        variant="radix"
+        disabled={loading}
+          onClick={
+            handleformSubmit}
         >
           Confirm
         </Button>
-        <Button
-          onSelect={() => setShowConfirmationModal(false)}
-          variant="secondary"
-        >
-          Cancel
-        </Button>
+     
       </div>
-    </div>
-  </div>
-)}
+  </DialogContent>
+</Dialog>
+
 
 
       </div>
