@@ -514,622 +514,622 @@ const Proposals = () => {
   }
   return (
     <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
-      {form && !activeProposal ? (
-        <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
-          <div className="space-y-6 md:w-[100%] ">
-            <div className="flex md:flex-row flex-col md:w-[100%] mx-auto gap-2">
-              <div className="md:w-[100%] space-y-2  ">
-                <div className="w-full  flex items-end justify-end">
-                  <Button
-                    onClick={() => {
-                      setActiveProposal(null)
-                      setShowForm(!form)
-                    }}
-                    variant="radix"
-                  >
-                    Create Proposal
-                  </Button>
-                </div>
-
-                <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
-                  <div className="p-2 border-b-2 -translate-x-2">
-                    All Proposals.
+        {!form && !activeProposal ? (
+          <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
+            <div className="space-y-6 md:w-[100%] ">
+              <div className="flex md:flex-row flex-col md:w-[100%] mx-auto gap-2">
+                <div className="md:w-[100%] space-y-2  ">
+                  <div className="w-full  flex items-end justify-end">
+                    <Button
+                      onClick={() => {
+                        setActiveProposal(null)
+                        setShowForm(!form)
+                      }}
+                      variant="radix"
+                    >
+                      Create Proposal
+                    </Button>
                   </div>
-                  {!loading && (
-                    <div className="space-y-4">
-                      {!proposal.length > 0 && (
-                        <div className="flex items-center justify-center h-10">
-                          No Active Proposal
-                        </div>
-                      )}
+
+                  <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
+                    <div className="p-2 border-b-2 -translate-x-2">
+                      All Proposals.
                     </div>
-                  )}
-                  {!loading && proposal && (
-                    <div className=" grid md:grid-cols-3 grid-cols-1 gap-5 mt-3">
-                      {proposal.map((proposalItem, index) => (
-                        <Card
-                          key={index}
-                          onClick={() => {
-                            setActiveProposal(proposalItem)
-                            setShowForm(null)
-                          }}
-                          className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-2 bg-white border-b-2 rounded-none p-3 text-black relative"
-                        >
-                          <Badge
-                            variant={
-                              proposalItem.is_active
-                                ? ' success'
-                                : 'destructive'
-                            }
-                            className={`absolute right-2 ${
-                              proposalItem.is_active
-                                ? 'bg-green-600 text-white'
-                                : ''
-                            } `}
+                    {!loading && (
+                      <div className="space-y-4">
+                        {!proposal.length > 0 && (
+                          <div className="flex items-center justify-center h-10">
+                            No Active Proposal
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    {!loading && proposal && (
+                      <div className=" grid md:grid-cols-3 grid-cols-1 gap-5 mt-3">
+                        {proposal.map((proposalItem, index) => (
+                          <Card
+                            key={index}
+                            onClick={() => {
+                              setActiveProposal(proposalItem)
+                              setShowForm(null)
+                            }}
+                            className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-2 bg-white border-b-2 rounded-none p-3 text-black relative"
                           >
-                            {proposalItem.is_active ? 'Pending' : 'Executed'}
-                          </Badge>
+                            <Badge
+                              variant={
+                                proposalItem.is_active
+                                  ? ' success'
+                                  : 'destructive'
+                              }
+                              className={`absolute right-2 ${
+                                proposalItem.is_active
+                                  ? 'bg-green-600 text-white'
+                                  : ''
+                              } `}
+                            >
+                              {proposalItem.is_active ? 'Pending' : 'Executed'}
+                            </Badge>
 
-                          <div className="capitalize font-semibold text-xl">
-                            {proposalItem.proposal}
-                          </div>
-                          <div className="capitalize font-semibold text-md">
-                            {proposalItem.description}
-                          </div>
-                          <div className="flex flex-col items-center gap-3">
-                            <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
-                              <span>Start Time :</span>
-                              <span className="font-semibold">
-                                {convertUnixTimestamp(proposalItem.start_time)}
+                            <div className="capitalize font-semibold text-xl">
+                              {proposalItem.proposal}
+                            </div>
+                            <div className="capitalize font-semibold text-md">
+                              {proposalItem.description}
+                            </div>
+                            <div className="flex flex-col items-center gap-3">
+                              <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
+                                <span>Start Time :</span>
+                                <span className="font-semibold">
+                                  {convertUnixTimestamp(proposalItem.start_time)}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
+                                <span>End Time :</span>
+                                <span className="font-semibold">
+                                  {convertUnixTimestamp(proposalItem.ends_time)}
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Voting buttons (commented out) */}
+                            {/* <div className="flex items-center gap-3 ">
+            {loadingButtonFor ? (
+              <Button
+                size="sm"
+                disabled
+                className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800 "
+              >
+                Voting...
+              </Button>
+            ) : (
+              <Button
+                size="sm"
+                onClick={handleFor}
+                className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800 "
+              >
+                <span>Voted For :</span>
+                <span>{proposalItem.voted_for}</span>
+              </Button>
+            )}
+
+            {loadingButtonAgainst ? (
+              <Button
+                size="sm"
+                disabled
+                className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
+              >
+                Voting..
+              </Button>
+            ) : (
+              <Button
+                size="sm"
+                onClick={handleAgainst}
+                className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
+              >
+                <span>Voted Against : </span>
+                <span> {proposalItem.voted_against} </span>
+              </Button>
+            )}
+          </div> */}
+
+                            <div className="text-xs">
+                              Published by{' '}
+                              <span className="text-purple-700">
+                                {clipAddress(proposalItem.id)}
                               </span>
                             </div>
-                            <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
-                              <span>End Time :</span>
-                              <span className="font-semibold">
-                                {convertUnixTimestamp(proposalItem.ends_time)}
-                              </span>
-                            </div>
-                          </div>
+                          </Card>
+                        ))}
+                      </div>
+                    )}
 
-                          {/* Voting buttons (commented out) */}
-                          {/* <div className="flex items-center gap-3 ">
-          {loadingButtonFor ? (
-            <Button
-              size="sm"
-              disabled
-              className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800 "
+                    {loading && (
+                      <div className="flex h-[200px] items-center justify-center text-center  mt-5 ">
+                        <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
+                      </div>
+                    )}
+                  </Card>
+                </div>
+              </div>
+            </div>
+          </div>
+          ) : activeProposal  ? (
+          <div className="flex  flex-col  px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
+            <div
+              onClick={() => {
+                setActiveProposal(null) // Reset active proposal
+                setShowForm(false) // Ensure the form is hidden
+              }}
+              className="w-full cursor-pointer flex items-start m-2"
             >
-              Voting...
-            </Button>
-          ) : (
-            <Button
-              size="sm"
-              onClick={handleFor}
-              className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800 "
-            >
-              <span>Voted For :</span>
-              <span>{proposalItem.voted_for}</span>
-            </Button>
-          )}
-
-          {loadingButtonAgainst ? (
-            <Button
-              size="sm"
-              disabled
-              className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
-            >
-              Voting..
-            </Button>
-          ) : (
-            <Button
-              size="sm"
-              onClick={handleAgainst}
-              className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
-            >
-              <span>Voted Against : </span>
-              <span> {proposalItem.voted_against} </span>
-            </Button>
-          )}
-        </div> */}
-
-                          <div className="text-xs">
-                            Published by{' '}
-                            <span className="text-purple-700">
-                              {clipAddress(proposalItem.id)}
-                            </span>
-                          </div>
-                        </Card>
-                      ))}
+              <ChevronLeft /> <span>Back</span>
+            </div>
+            <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
+              <div className="p-2 border-b-2 -translate-x-2 font-bold capitalize text-4xl">
+                {activeProposal.proposal}
+              </div>
+              {!loading && (
+                <div className="space-y-4">
+                  {!proposal && (
+                    <div className="flex items-center justify-center h-10">
+                      No Active Proposal
                     </div>
                   )}
+                </div>
+              )}
+              {!loading && activeProposal && (
+                <div className="  gap-5 mt-3">
+                  {activeProposal && (
+                    <div className="flex flex-col  items-start gap-4 bg-white  rounded-none p-3 text-black">
+                      {/* <div className="capitalize font-semibold text-xl">
+                        {activeProposal.proposal}
+                      </div> */}
+  {activeProposal.result && <div>
+    <strong>
+      Result :
+    </strong>
+    <span className='capitalize pl-2'>
+    {activeProposal.result}
 
-                  {loading && (
+    </span>
+  </div> }
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
+                          <span>Start Time :</span>
+                          <span className="font-semibold">
+                            {convertUnixTimestamp(activeProposal.start_time)}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
+                          <span>End Time :</span>
+                          <span className="font-semibold">
+                            {convertUnixTimestamp(activeProposal.ends_time)}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
+                          <span>Time Left:</span>
+                          <span className="font-semibold">{timeLeft}</span>
+                        </div>
+                      </div>
+
+                      {/* Voting buttons (commented out) */}
+                      <div className="flex items-center justify-between w-full">
+                    <div className="flex flex-col items-center gap-3">
+    {voted ? (
+      <Button disabled variant="outline">
+        You have already voted.
+      </Button>
+    ) : (
+      <div className='flex items-center gap-3'>
+        {loadingButtonFor ? (
+          <Button
+            size="sm"
+            disabled
+            className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800"
+          >
+            Voting...
+          </Button>
+        ) : (
+          <Button
+            size="sm"
+            onClick={handleFor}
+            disabled={activeProposal.is_active === false || timeLeft === 'Time is up!' || voted === true}
+            className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800"
+          >
+            <span>Voted For :</span>
+            <span>{activeProposal.voted_for}</span>
+          </Button>
+        )}
+
+        {loadingButtonAgainst ? (
+          <Button
+            size="sm"
+            disabled
+            className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
+          >
+            Voting...
+          </Button>
+        ) : (
+          <Button
+            size="sm"
+            onClick={handleAgainst}
+            disabled={activeProposal.is_active === false || timeLeft === 'Time is up!'}
+            className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
+          >
+            <span>Voted Against :</span>
+            <span>{activeProposal.voted_against}</span>
+          </Button>
+        )}
+      </div>
+    )}
+  </div>
+
+                        <div>
+                          {(activeProposal.minimum_quorum <=
+                            activeProposal.number_of_people_voted) ?  (
+                            <Button
+                              onClick={handleExecuteActiveProposal}
+                              disabled={
+                                execute ||
+                                activeProposal.is_active === false ||
+                                timeLeft !== 'Time is up!'
+                              }
+                              className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500 to-blue-700 hover:to-blue-800"
+                            >
+                              {execute
+                                ? 'Executing....'
+                                : activeProposal.is_active === false
+                                ? 'Already Executed'
+                                : 'Execute Proposal'}
+                            </Button>
+                          ) : ( <Button disabled>Cannot be executed due to minimum quorum does not meet</Button> )}
+                        </div>
+                      </div>
+
+                      <div className="text-xs">
+                        Published by{' '}
+                        <span className="text-purple-700">
+                          {clipAddress(activeProposal.id)}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {loading && (
+                <div className="flex h-[200px] items-center justify-center text-center  mt-5 ">
+                  <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
+                </div>
+              )}
+            </Card>
+            <div className="grid mt-3  md:grid-cols-3 grid-cols-1 gap-3 px-1">
+              <div className="bg-white col-span-2 rounded-md p-2">
+                <div>
+                  {loadingCommnets && proposal ? (
                     <div className="flex h-[200px] items-center justify-center text-center  mt-5 ">
                       <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
                     </div>
-                  )}
-                </Card>
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : activeProposal && !form ? (
-        <div className="flex  flex-col  px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
-          <div
-            onClick={() => {
-              setActiveProposal(null) // Reset active proposal
-              setShowForm(false) // Ensure the form is hidden
-            }}
-            className="w-full cursor-pointer flex items-start m-2"
-          >
-            <ChevronLeft /> <span>Back</span>
-          </div>
-          <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
-            <div className="p-2 border-b-2 -translate-x-2 font-bold capitalize text-4xl">
-              {activeProposal.proposal}
-            </div>
-            {!loading && (
-              <div className="space-y-4">
-                {!proposal && (
-                  <div className="flex items-center justify-center h-10">
-                    No Active Proposal
-                  </div>
-                )}
-              </div>
-            )}
-            {!loading && activeProposal && (
-              <div className="  gap-5 mt-3">
-                {activeProposal && (
-                  <div className="flex flex-col  items-start gap-4 bg-white  rounded-none p-3 text-black">
-                    {/* <div className="capitalize font-semibold text-xl">
-                      {activeProposal.proposal}
-                    </div> */}
-{activeProposal.result && <div>
-  <strong>
-    Result :
-  </strong>
-  <span className='capitalize pl-2'>
-  {activeProposal.result}
-
-  </span>
-</div> }
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
-                        <span>Start Time :</span>
-                        <span className="font-semibold">
-                          {convertUnixTimestamp(activeProposal.start_time)}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
-                        <span>End Time :</span>
-                        <span className="font-semibold">
-                          {convertUnixTimestamp(activeProposal.ends_time)}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
-                        <span>Time Left:</span>
-                        <span className="font-semibold">{timeLeft}</span>
-                      </div>
-                    </div>
-
-                    {/* Voting buttons (commented out) */}
-                    <div className="flex items-center justify-between w-full">
-                   <div className="flex flex-col items-center gap-3">
-  {voted ? (
-    <Button disabled variant="outline">
-      You have already voted.
-    </Button>
-  ) : (
-    <div className='flex items-center gap-3'>
-      {loadingButtonFor ? (
-        <Button
-          size="sm"
-          disabled
-          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800"
-        >
-          Voting...
-        </Button>
-      ) : (
-        <Button
-          size="sm"
-          onClick={handleFor}
-          disabled={activeProposal.is_active === false || timeLeft === 'Time is up!' || voted === true}
-          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800"
-        >
-          <span>Voted For :</span>
-          <span>{activeProposal.voted_for}</span>
-        </Button>
-      )}
-
-      {loadingButtonAgainst ? (
-        <Button
-          size="sm"
-          disabled
-          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
-        >
-          Voting...
-        </Button>
-      ) : (
-        <Button
-          size="sm"
-          onClick={handleAgainst}
-          disabled={activeProposal.is_active === false || timeLeft === 'Time is up!'}
-          className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
-        >
-          <span>Voted Against :</span>
-          <span>{activeProposal.voted_against}</span>
-        </Button>
-      )}
-    </div>
-  )}
-</div>
-
-                      <div>
-                        {(activeProposal.minimum_quorum <=
-                          activeProposal.number_of_people_voted) ?  (
-                          <Button
-                            onClick={handleExecuteActiveProposal}
-                            disabled={
-                              execute ||
-                              activeProposal.is_active === false ||
-                              timeLeft !== 'Time is up!'
-                            }
-                            className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500 to-blue-700 hover:to-blue-800"
+                  ) : (
+                    <>
+                      {comments &&
+                        comments.map((comment, index) => (
+                          <div
+                            key={index}
+                            className="flex items-start gap-4 bg-white border-b-2 rounded-none p-3  text-black"
                           >
-                            {execute
-                              ? 'Executing....'
-                              : activeProposal.is_active === false
-                              ? 'Already Executed'
-                              : 'Execute Proposal'}
-                          </Button>
-                        ) : ( <Button disabled>Cannot be executed due to minimum quorum does not meet</Button> )}
-                      </div>
-                    </div>
-
-                    <div className="text-xs">
-                      Published by{' '}
-                      <span className="text-purple-700">
-                        {clipAddress(activeProposal.id)}
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {loading && (
-              <div className="flex h-[200px] items-center justify-center text-center  mt-5 ">
-                <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
-              </div>
-            )}
-          </Card>
-          <div className="grid mt-3  md:grid-cols-3 grid-cols-1 gap-3 px-1">
-            <div className="bg-white col-span-2 rounded-md p-2">
-              <div>
-                {loadingCommnets && proposal ? (
-                  <div className="flex h-[200px] items-center justify-center text-center  mt-5 ">
-                    <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
-                  </div>
-                ) : (
-                  <>
-                    {comments &&
-                      comments.map((comment, index) => (
-                        <div
-                          key={index}
-                          className="flex items-start gap-4 bg-white border-b-2 rounded-none p-3  text-black"
-                        >
-                          <Avatar className="shrink-0 object-cover">
-                            <img src={comment.image_url} alt="Avatar" />
-                            <AvatarFallback>JD</AvatarFallback>
-                          </Avatar>
-                          <div className="flex-1 space-y-2">
-                            <div className="flex items-center justify-between">
-                              <div
-                                className="group"
-                                onClick={() =>
-                                  navigate(
-                                    `/userDashboard/userProfile/${comment.public_address}`,
-                                  )
-                                }
-                              >
-                                <div className="font-medium group-hover:underline cursor-pointer">
-                                  {comment.user_name}
+                            <Avatar className="shrink-0 object-cover">
+                              <img src={comment.image_url} alt="Avatar" />
+                              <AvatarFallback>JD</AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1 space-y-2">
+                              <div className="flex items-center justify-between">
+                                <div
+                                  className="group"
+                                  onClick={() =>
+                                    navigate(
+                                      `/userDashboard/userProfile/${comment.public_address}`,
+                                    )
+                                  }
+                                >
+                                  <div className="font-medium group-hover:underline cursor-pointer">
+                                    {comment.user_name}
+                                  </div>
+                                  <div className="font-light group-hover:underline cursor-pointer">
+                                    {clipAddress(comment.public_address)}
+                                  </div>
                                 </div>
-                                <div className="font-light group-hover:underline cursor-pointer">
-                                  {clipAddress(comment.public_address)}
+                                <div className="text-xs text-gray-700 dark:text-gray-700">
+                                  2 days ago
                                 </div>
                               </div>
-                              <div className="text-xs text-gray-700 dark:text-gray-700">
-                                2 days ago
+                              <p className="text-gray-800 dark:text-gray-400 font-medium">
+                                {comment.comment}
+                              </p>
+                              <div>
+                                {formatStandardDateTime(comment.timestamp)}
                               </div>
-                            </div>
-                            <p className="text-gray-800 dark:text-gray-400 font-medium">
-                              {comment.comment}
-                            </p>
-                            <div>
-                              {formatStandardDateTime(comment.timestamp)}
                             </div>
                           </div>
-                        </div>
-                      ))}
-                  </>
-                )}
-
-                <div className="flex flex-col items-end gap-2 mt-1">
-                  <Textarea
-                    placeholder="Add a new comment..."
-                    className="flex-1 text-black"
-                    value={comment}
-                    required
-                    onChange={(e) => setComment(e.target.value)}
-                  />
-                  <Button
-                    onClick={handleAddComment}
-                    variant="radix"
-                    disabled={loadingCom}
-                  >
-                    {loadingCom ? 'Submiting...' : ' Submit'}
-                  </Button>
-                </div>
-              </div>
-            </div>
-            <div className="col-span-1 bg-white shadow-sm flex items-center justify-center p-4 rounded-md">
-              {issuedBond && (
-                <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-lg transition-transform transform hover:scale-105 hover:shadow-xl">
-                  {/* Bond Title */}
-                  <div className="text-2xl font-bold text-blue-800 mb-4 text-center">
-                    {issuedBond.name}
-                  </div>
-
-                  {/* Bond Image */}
-                  {issuedBond.asset_url && (
-                    <div className="mb-4">
-                      <img
-                        src={issuedBond.asset_url}
-                        alt={issuedBond.asset_name || 'Asset'}
-                        className="w-full h-48 object-cover rounded-md"
-                      />
-                    </div>
+                        ))}
+                    </>
                   )}
 
-                  <p>
-                    <strong>Asset Name:</strong>
-                    {issuedBond.asset_name || 'N/A'}
-                  </p>
-
-                  {/* Bond Description */}
-                  <div className="mb-4 text-gray-700">
-                    <strong>Description:</strong>
-                    <p>{issuedBond.description}</p>
-                  </div>
-                  {/* Bond Details */}
-                  <div className="space-y-2 text-sm text-gray-700">
-                    <p>
-                      <strong>Contract Identity:</strong>{' '}
-                      {issuedBond.contract_identity || 'N/A'}
-                    </p>
-                    <p>
-                      <strong>Number of Bonds:</strong>{' '}
-                      {issuedBond.number_of_bonds}
-                    </p>
-                    <p>
-                      <strong>Currency:</strong> {issuedBond.currency}
-                    </p>
-                    <p>
-                      <strong>Interest Rate:</strong> {issuedBond.interest_rate}
-                      %
-                    </p>
-                    <p>
-                      <strong>Discount:</strong> {issuedBond.discount}
-                    </p>
-                    <p>
-                      <strong>Price:</strong>{' '}
-                      {issuedBond.price ? (
-                        <>
-                          {issuedBond.price} <strong>XRD</strong>
-                        </>
-                      ) : (
-                        'Not available'
-                      )}
-                    </p>
-                    <p>
-                      <strong>Notional Principle:</strong>{' '}
-                      {issuedBond.notional_principle}
-                    </p>
-                    <p>
-                      <strong>Bond Position:</strong> {issuedBond.bond_position}
-                    </p>
-                    <p>
-                      <strong>Contract Type:</strong> {issuedBond.contract_type}
-                    </p>
-                    <p>
-                      <strong>Contract Role:</strong> {issuedBond.contract_role}
-                    </p>
-                  </div>
-
-                  {/* Dates and Blockchain Details */}
-                  <div className="mt-4 space-y-2 text-sm text-gray-500">
-                    <p
-                      className={
-                        new Date(issuedBond.initial_exchange_date) < new Date()
-                          ? 'text-red-500'
-                          : ''
-                      }
+                  <div className="flex flex-col items-end gap-2 mt-1">
+                    <Textarea
+                      placeholder="Add a new comment..."
+                      className="flex-1 text-black"
+                      value={comment}
+                      required
+                      onChange={(e) => setComment(e.target.value)}
+                    />
+                    <Button
+                      onClick={handleAddComment}
+                      variant="radix"
+                      disabled={loadingCom}
                     >
-                      <strong>Initial Exchange Date:</strong>{' '}
-                      {new Date(
-                        issuedBond.initial_exchange_date,
-                      ).toLocaleDateString()}
-                    </p>
-                    <p>
-                      <strong>Maturity Date:</strong>{' '}
-                      {new Date(issuedBond.maturity_date).toLocaleDateString()}
-                    </p>
-                    <p>
-                      <strong>Created on Blockchain:</strong>{' '}
-                      {issuedBond.created_on_blockchain ? 'Yes' : 'No'}
-                    </p>
-                    <p className="truncate">
-                      <strong>Creator Address:</strong>{' '}
-                      <span
-                        className="cursor-pointer hover:underline"
-                        onClick={() => {
-                          navigator.clipboard.writeText(issuedBond.creator)
-                          toast.success('Copied address')
-                        }}
-                      >
-                        {issuedBond.creator}
-                      </span>
-                    </p>
+                      {loadingCom ? 'Submiting...' : ' Submit'}
+                    </Button>
                   </div>
                 </div>
-              )}
+              </div>
+              <div className="col-span-1 bg-white shadow-sm flex items-center justify-center p-4 rounded-md">
+                {issuedBond && (
+                  <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-lg transition-transform transform hover:scale-105 hover:shadow-xl">
+                    {/* Bond Title */}
+                    <div className="text-2xl font-bold text-blue-800 mb-4 text-center">
+                      {issuedBond.name}
+                    </div>
+
+                    {/* Bond Image */}
+                    {issuedBond.asset_url && (
+                      <div className="mb-4">
+                        <img
+                          src={issuedBond.asset_url}
+                          alt={issuedBond.asset_name || 'Asset'}
+                          className="w-full h-48 object-cover rounded-md"
+                        />
+                      </div>
+                    )}
+
+                    <p>
+                      <strong>Asset Name:</strong>
+                      {issuedBond.asset_name || 'N/A'}
+                    </p>
+
+                    {/* Bond Description */}
+                    <div className="mb-4 text-gray-700">
+                      <strong>Description:</strong>
+                      <p>{issuedBond.description}</p>
+                    </div>
+                    {/* Bond Details */}
+                    <div className="space-y-2 text-sm text-gray-700">
+                      <p>
+                        <strong>Contract Identity:</strong>{' '}
+                        {issuedBond.contract_identity || 'N/A'}
+                      </p>
+                      <p>
+                        <strong>Number of Bonds:</strong>{' '}
+                        {issuedBond.number_of_bonds}
+                      </p>
+                      <p>
+                        <strong>Currency:</strong> {issuedBond.currency}
+                      </p>
+                      <p>
+                        <strong>Interest Rate:</strong> {issuedBond.interest_rate}
+                        %
+                      </p>
+                      <p>
+                        <strong>Discount:</strong> {issuedBond.discount}
+                      </p>
+                      <p>
+                        <strong>Price:</strong>{' '}
+                        {issuedBond.price ? (
+                          <>
+                            {issuedBond.price} <strong>XRD</strong>
+                          </>
+                        ) : (
+                          'Not available'
+                        )}
+                      </p>
+                      <p>
+                        <strong>Notional Principle:</strong>{' '}
+                        {issuedBond.notional_principle}
+                      </p>
+                      <p>
+                        <strong>Bond Position:</strong> {issuedBond.bond_position}
+                      </p>
+                      <p>
+                        <strong>Contract Type:</strong> {issuedBond.contract_type}
+                      </p>
+                      <p>
+                        <strong>Contract Role:</strong> {issuedBond.contract_role}
+                      </p>
+                    </div>
+
+                    {/* Dates and Blockchain Details */}
+                    <div className="mt-4 space-y-2 text-sm text-gray-500">
+                      <p
+                        className={
+                          new Date(issuedBond.initial_exchange_date) < new Date()
+                            ? 'text-red-500'
+                            : ''
+                        }
+                      >
+                        <strong>Initial Exchange Date:</strong>{' '}
+                        {new Date(
+                          issuedBond.initial_exchange_date,
+                        ).toLocaleDateString()}
+                      </p>
+                      <p>
+                        <strong>Maturity Date:</strong>{' '}
+                        {new Date(issuedBond.maturity_date).toLocaleDateString()}
+                      </p>
+                      <p>
+                        <strong>Created on Blockchain:</strong>{' '}
+                        {issuedBond.created_on_blockchain ? 'Yes' : 'No'}
+                      </p>
+                      <p className="truncate">
+                        <strong>Creator Address:</strong>{' '}
+                        <span
+                          className="cursor-pointer hover:underline"
+                          onClick={() => {
+                            navigator.clipboard.writeText(issuedBond.creator)
+                            toast.success('Copied address')
+                          }}
+                        >
+                          {issuedBond.creator}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      ) : (
-        <div className="flex flex-col items-center justify-center max-w-[1440px] mx-auto my-6 p-2">
-          <div
-            onClick={() => setShowForm(!form)}
-            className="w-full cursor-pointer flex items-start m-2"
-          >
-            <ChevronLeft /> <span>Back</span>
-          </div>
-          <div className="text-4xl font-semibold p-4  bg-white w-full text-center">
-            Proposal Form
-          </div>
-          <div className="flex items-center justify-center p-2 w-full mx-auto">
-            <form className="w-1/2 flex flex-col gap-2" onSubmit={handleSubmit}>
-              <div className="flex flex-col gap-2">
-                <Label className="text-2xl p-1">Proposal</Label>
-                <Textarea
-                  placeholder="Type your proposal here ..."
-                  value={proposalText}
-                  onChange={(e) => setProposalText(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <Label className="text-lg p-1">Proposal Description</Label>
-                <Textarea
-                  placeholder="Type your proposal description ..."
-                  value={proposalDescription}
-                  onChange={(e) => setProposalDescription(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col mt-3 gap-3 w-full ">
-                <div className="text-xl p-1">Proposal Timing</div>
-                <div className="flex items-center justify-between space-x-2">
-                  <div className="flex items-center">
-                    <div>From:</div>
-                    <label className=" flex items-center">
-                      <DatePicker
-                        selected={startDate}
-                        onChange={handleStartDateChange}
-                        customInput={<CustomDatePicker />}
-                        minDate={new Date()}
-                      />
-                      <Input
-                        type="time"
-                        value={startTime}
-                        onChange={(e) => setStartTime(e.target.value)}
-                        className="ml-2 w-fit"
-                      />
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <div>To:</div>
-                    <label className="flex items-center ">
-                      <DatePicker
-                        selected={endDate}
-                        onChange={handleEndDateChange}
-                        customInput={<CustomDatePicker />}
-                        minDate={new Date()}
-                      />
-                      <Input
-                        type="time"
-                        value={endTime}
-                        onChange={(e) => setEndTime(e.target.value)}
-                        className="ml-2 w-fit"
-                      />
-                    </label>
-                  </div>
-                </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center max-w-[1440px] mx-auto my-6 p-2">
+            <div
+              onClick={() => setShowForm(!form)}
+              className="w-full cursor-pointer flex items-start m-2"
+            >
+              <ChevronLeft /> <span>Back</span>
+            </div>
+            <div className="text-4xl font-semibold p-4  bg-white w-full text-center">
+              Proposal Form
+            </div>
+            <div className="flex items-center justify-center p-2 w-full mx-auto">
+              <form className="w-1/2 flex flex-col gap-2" onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-2">
-                  <Label className="text-2xl p-1">Minimum Quorum</Label>
-                  <Input
-                    placeholder="Enter Minimum quorum"
-                    type="number"
-                    value={minimumQuorum}
-                    onChange={(e) => setMinimumQuorum(e.target.value)}
-                    min="0"
+                  <Label className="text-2xl p-1">Proposal</Label>
+                  <Textarea
+                    placeholder="Type your proposal here ..."
+                    value={proposalText}
+                    onChange={(e) => setProposalText(e.target.value)}
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label className="text-2xl p-1">Vote Type</Label>
-                  <Select onValueChange={handleVoteType}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select Vote Type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Equality">Equality</SelectItem>
-                      <SelectItem value="ResourceOwned">
-                        Resource Owned
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Label className="text-lg p-1">Proposal Description</Label>
+                  <Textarea
+                    placeholder="Type your proposal description ..."
+                    value={proposalDescription}
+                    onChange={(e) => setProposalDescription(e.target.value)}
+                  />
                 </div>
-                <div className="flex flex-col gap-2">
-                  <Label className="text-2xl p-1">Bond Issuer Address</Label>
-                  <Select onValueChange={handleBondAddress}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select Bond Issuer Address" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {bondIssuerAddresses.length === 0 ? (
-                        <SelectItem value="No issued Bond">
-                          No Issued Bond
+                <div className="flex flex-col mt-3 gap-3 w-full ">
+                  <div className="text-xl p-1">Proposal Timing</div>
+                  <div className="flex items-center justify-between space-x-2">
+                    <div className="flex items-center">
+                      <div>From:</div>
+                      <label className=" flex items-center">
+                        <DatePicker
+                          selected={startDate}
+                          onChange={handleStartDateChange}
+                          customInput={<CustomDatePicker />}
+                          minDate={new Date()}
+                        />
+                        <Input
+                          type="time"
+                          value={startTime}
+                          onChange={(e) => setStartTime(e.target.value)}
+                          className="ml-2 w-fit"
+                        />
+                      </label>
+                    </div>
+                    <div className="flex items-center">
+                      <div>To:</div>
+                      <label className="flex items-center ">
+                        <DatePicker
+                          selected={endDate}
+                          onChange={handleEndDateChange}
+                          customInput={<CustomDatePicker />}
+                          minDate={new Date()}
+                        />
+                        <Input
+                          type="time"
+                          value={endTime}
+                          onChange={(e) => setEndTime(e.target.value)}
+                          className="ml-2 w-fit"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <Label className="text-2xl p-1">Minimum Quorum</Label>
+                    <Input
+                      placeholder="Enter Minimum quorum"
+                      type="number"
+                      value={minimumQuorum}
+                      onChange={(e) => setMinimumQuorum(e.target.value)}
+                      min="0"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <Label className="text-2xl p-1">Vote Type</Label>
+                    <Select onValueChange={handleVoteType}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select Vote Type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Equality">Equality</SelectItem>
+                        <SelectItem value="ResourceOwned">
+                          Resource Owned
                         </SelectItem>
-                      ) : (
-                        bondIssuerAddresses.map((bond, index) => (
-                          <SelectItem key={index} value={bond.creator_address}>
-                            {bond.bond_name} - {bond.creator_address}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <Label className="text-2xl p-1">Bond Issuer Address</Label>
+                    <Select onValueChange={handleBondAddress}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select Bond Issuer Address" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {bondIssuerAddresses.length === 0 ? (
+                          <SelectItem value="No issued Bond">
+                            No Issued Bond
                           </SelectItem>
-                        ))
-                      )}
-                    </SelectContent>
-                  </Select>
+                        ) : (
+                          bondIssuerAddresses.map((bond, index) => (
+                            <SelectItem key={index} value={bond.creator_address}>
+                              {bond.bond_name} - {bond.creator_address}
+                            </SelectItem>
+                          ))
+                        )}
+                      </SelectContent>
+                    </Select>
 
-                  {/* <Input
-                    placeholder="Enter Bond Issuer Address"
-                    value={bondIssuerAddress}
-                    onChange={(e) => setBondIssuerAddress(e.target.value)}
-                  /> */}
-                </div>
+                    {/* <Input
+                      placeholder="Enter Bond Issuer Address"
+                      value={bondIssuerAddress}
+                      onChange={(e) => setBondIssuerAddress(e.target.value)}
+                    /> */}
+                  </div>
 
-                <div className="flex flex-col gap-2">
-                  <Label className="text-2xl p-1">Target XRD Amount</Label>
-                  <Input
-                    placeholder="Enter Target XRD Amount"
-                    type="number"
-                    value={targetXrdAmount}
-                    onChange={(e) => setTargetXrdAmount(e.target.value)}
-                    min="0"
-                  />
+                  <div className="flex flex-col gap-2">
+                    <Label className="text-2xl p-1">Target XRD Amount</Label>
+                    <Input
+                      placeholder="Enter Target XRD Amount"
+                      type="number"
+                      value={targetXrdAmount}
+                      onChange={(e) => setTargetXrdAmount(e.target.value)}
+                      min="0"
+                    />
+                  </div>
                 </div>
-              </div>
-              {loadingButton ? (
-                <Button variant="radix" disabled className="w-full mt-2">
-                  Submitting....
-                </Button>
-              ) : (
-                <Button variant="radix" className="w-full mt-2">
-                  Submit Proposal
-                </Button>
-              )}
-            </form>
+                {loadingButton ? (
+                  <Button variant="radix" disabled className="w-full mt-2">
+                    Submitting....
+                  </Button>
+                ) : (
+                  <Button variant="radix" className="w-full mt-2">
+                    Submit Proposal
+                  </Button>
+                )}
+              </form>
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </div>
   )
 }
