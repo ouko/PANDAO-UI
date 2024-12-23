@@ -20,6 +20,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { toast } from 'sonner'
 const DeployView = () => {
   const navigate = useNavigate()
   const { accounts } = useAccount()
@@ -166,6 +167,25 @@ const DeployView = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
+    const numericValue = parseFloat(value)
+    
+    if (name === 'tokenWithDrawPrice') {
+      if (numericValue > parseFloat(formFields.tokenPrice)) {
+        toast.error('Token Withdraw Price cannot be greater than Token Price')
+        return
+      }
+    }
+    
+    if (name === 'tokenPrice') {
+      if (parseFloat(formFields.tokenWithDrawPrice) > numericValue) {
+        setFormFields({ 
+          [name]: value,
+          tokenWithDrawPrice: value
+        })
+        return
+      }
+    }
+    
     setFormFields({ [name]: value })
   }
 
