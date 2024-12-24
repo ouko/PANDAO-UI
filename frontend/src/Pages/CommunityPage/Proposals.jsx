@@ -113,6 +113,10 @@ const Proposals = () => {
     setVoteType(value)
   }
   const handleBondAddress = (value) => {
+    const selectedBond = bondIssuerAddresses.find(
+      (newValue) => newValue.creator_address === value,
+    )
+    setTargetXrdAmount(selectedBond.price)
     setBondIssuerAddress(value)
   }
   const fetchVoted = async () => {
@@ -1127,6 +1131,7 @@ const Proposals = () => {
                     value={targetXrdAmount}
                     onChange={(e) => setTargetXrdAmount(e.target.value)}
                     min="0"
+                    disabled
                   />
                 </div>
               </div>
@@ -1135,7 +1140,7 @@ const Proposals = () => {
                   Submitting....
                 </Button>
               ) : (
-                <Button variant="radix" className="w-full mt-2">
+                <Button variant="radix" className="w-full mt-2" disabled={!targetXrdAmount || !minimumQuorum || !bondIssuerAddress || !voteType || !proposalText || !proposalDescription || !startTime || !endTime}>
                   Submit Proposal
                 </Button>
               )}
