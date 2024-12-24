@@ -917,9 +917,9 @@ fetchProposals()
                                   {clipAddress(comment.public_address)}
                                 </div>
                               </div>
-                              <div className="text-xs text-gray-700 dark:text-gray-700">
+                              {/* <div className="text-xs text-gray-700 dark:text-gray-700">
                                 2 days ago
-                              </div>
+                              </div> */}
                             </div>
                             <p className="text-gray-800 dark:text-gray-400 font-medium">
                               {comment.comment}
