@@ -42,7 +42,7 @@ const Proposals = () => {
   const { accounts } = useAccount()
   const [timeLeft, setTimeLeft] = useState('')
   const [execute, setExecute] = useState(false)
-  const [activeTab, setActiveTab] = useState("PENDING");
+  const [activeTab, setActiveTab] = useState('PENDING')
   const [activeProposal, setActiveProposal] = useState(null)
   const [vote, setVote] = useState(Boolean)
   const [voted, setVoted] = useState(false)
@@ -513,9 +513,9 @@ const Proposals = () => {
     fetchProposalsBonds()
     fetchVoted()
   }, [activeProposal])
-  useEffect(()=>{
-fetchProposals()
-  },[activeTab])
+  useEffect(() => {
+    fetchProposals()
+  }, [activeTab])
   if (!accounts || accounts.length === 0) {
     navigate('/')
     return null
@@ -538,7 +538,11 @@ fetchProposals()
                     Create Proposal
                   </Button>
                 </div>
-                <Tabs defaultValue="PENDING" className="w-full" onValueChange={setActiveTab}>
+                <Tabs
+                  defaultValue="PENDING"
+                  className="w-full"
+                  onValueChange={setActiveTab}
+                >
                   <TabsList>
                     <TabsTrigger value="PENDING">Pending</TabsTrigger>
                     <TabsTrigger value="EXECUTED">Executed</TabsTrigger>
@@ -610,7 +614,6 @@ fetchProposals()
                                 </div>
                               </div>
 
-
                               <div className="text-xs">
                                 Published by{' '}
                                 <span className="text-purple-700">
@@ -630,7 +633,7 @@ fetchProposals()
                     </Card>
                   </TabsContent>
                   <TabsContent value="EXECUTED">
-                  <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
+                    <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
                       <div className="p-2 border-b-2 -translate-x-2">
                         All Proposals.
                       </div>
@@ -695,7 +698,6 @@ fetchProposals()
                                   </span>
                                 </div>
                               </div>
-
 
                               <div className="text-xs">
                                 Published by{' '}
@@ -781,6 +783,12 @@ fetchProposals()
                     {/* Voting buttons (commented out) */}
                     <div className="flex items-center justify-between w-full">
                       <div className="flex flex-col items-center gap-3">
+                        {voted && (
+                          <div className='flex items-center gap-2 '>
+                            <Badge className="bg-green-600"> Total Vote For : {activeProposal.voted_for}</Badge>
+                            <Badge variant={"destructive"}>Total Vote Against : {activeProposal.voted_against}</Badge>
+                          </div>
+                        )}
                         {voted ? (
                           <Button disabled variant="outline">
                             You have already voted.
