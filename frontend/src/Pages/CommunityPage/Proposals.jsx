@@ -28,6 +28,7 @@ import { convertUnixTimestamp } from '@/utils/functions/ConvertDate'
 import { formatStandardDateTime } from '@/utils/functions/convertActivityData'
 import { Badge } from '@/components/ui/badge'
 import { ProposalTypes } from '@/utils/data/proposalType'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 const formatTime = (duration) => {
   const hours = Math.floor(
@@ -41,6 +42,7 @@ const Proposals = () => {
   const { accounts } = useAccount()
   const [timeLeft, setTimeLeft] = useState('')
   const [execute, setExecute] = useState(false)
+  const [activeTab, setActiveTab] = useState("PENDING");
   const [activeProposal, setActiveProposal] = useState(null)
   const [vote, setVote] = useState(Boolean)
   const [voted, setVoted] = useState(false)
@@ -142,7 +144,7 @@ const Proposals = () => {
       const res = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/community/proposal/all/${
           params.id
-        }`,
+        }?status=${activeTab}`,
       )
       console.log(res.data, 'res.data')
       setProposal(res.data)
@@ -511,6 +513,9 @@ const Proposals = () => {
     fetchProposalsBonds()
     fetchVoted()
   }, [activeProposal])
+  useEffect(()=>{
+fetchProposals()
+  },[activeTab])
   if (!accounts || accounts.length === 0) {
     navigate('/')
     return null
@@ -533,125 +538,184 @@ const Proposals = () => {
                     Create Proposal
                   </Button>
                 </div>
-
-                <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
-                  <div className="p-2 border-b-2 -translate-x-2">
-                    All Proposals.
-                  </div>
-                  {!loading && (
-                    <div className="space-y-4">
-                      {!proposal.length > 0 && (
-                        <div className="flex items-center justify-center h-10">
-                          No Active Proposal
+                <Tabs defaultValue="PENDING" className="w-full" onValueChange={setActiveTab}>
+                  <TabsList>
+                    <TabsTrigger value="PENDING">Pending</TabsTrigger>
+                    <TabsTrigger value="EXECUTED">Executed</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="PENDING">
+                    <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
+                      <div className="p-2 border-b-2 -translate-x-2">
+                        All Proposals.
+                      </div>
+                      {!loading && (
+                        <div className="space-y-4">
+                          {!proposal.length > 0 && (
+                            <div className="flex items-center justify-center h-10">
+                              No Pending Proposal
+                            </div>
+                          )}
                         </div>
                       )}
-                    </div>
-                  )}
-                  {!loading && proposal && (
-                    <div className=" grid md:grid-cols-3 grid-cols-1 gap-5 mt-3">
-                      {proposal.map((proposalItem, index) => (
-                        <Card
-                          key={index}
-                          onClick={() => {
-                            setActiveProposal(proposalItem)
-                            setShowForm(null)
-                          }}
-                          className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-2 bg-white border-b-2 rounded-none p-3 text-black relative"
-                        >
-                          <Badge
-                            variant={
-                              proposalItem.is_active
-                                ? ' success'
-                                : 'destructive'
-                            }
-                            className={`absolute right-2 ${
-                              proposalItem.is_active
-                                ? 'bg-green-600 text-white'
-                                : ''
-                            } `}
-                          >
-                            {proposalItem.is_active ? 'Pending' : 'Executed'}
-                          </Badge>
+                      {!loading && proposal && (
+                        <div className=" grid md:grid-cols-3 grid-cols-1 gap-5 mt-3">
+                          {proposal.map((proposalItem, index) => (
+                            <Card
+                              key={index}
+                              onClick={() => {
+                                setActiveProposal(proposalItem)
+                                setShowForm(null)
+                              }}
+                              className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-2 bg-white border-b-2 rounded-none p-3 text-black relative"
+                            >
+                              <Badge
+                                variant={
+                                  proposalItem.is_active
+                                    ? ' success'
+                                    : 'destructive'
+                                }
+                                className={`absolute right-2 ${
+                                  proposalItem.is_active
+                                    ? 'bg-green-600 text-white'
+                                    : ''
+                                } `}
+                              >
+                                {proposalItem.is_active
+                                  ? 'Pending'
+                                  : 'Executed'}
+                              </Badge>
 
-                          <div className="capitalize font-semibold text-xl">
-                            {proposalItem.proposal}
-                          </div>
-                          <div className="capitalize font-semibold text-md">
-                            {proposalItem.description}
-                          </div>
-                          <div className="flex flex-col items-center gap-3">
-                            <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
-                              <span>Start Time :</span>
-                              <span className="font-semibold">
-                                {convertUnixTimestamp(proposalItem.start_time)}
-                              </span>
+                              <div className="capitalize font-semibold text-xl">
+                                {proposalItem.proposal}
+                              </div>
+                              <div className="capitalize font-semibold text-md">
+                                {proposalItem.description}
+                              </div>
+                              <div className="flex flex-col items-center gap-3">
+                                <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
+                                  <span>Start Time :</span>
+                                  <span className="font-semibold">
+                                    {convertUnixTimestamp(
+                                      proposalItem.start_time,
+                                    )}
+                                  </span>
+                                </div>
+                                <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
+                                  <span>End Time :</span>
+                                  <span className="font-semibold">
+                                    {convertUnixTimestamp(
+                                      proposalItem.ends_time,
+                                    )}
+                                  </span>
+                                </div>
+                              </div>
+
+
+                              <div className="text-xs">
+                                Published by{' '}
+                                <span className="text-purple-700">
+                                  {clipAddress(proposalItem.id)}
+                                </span>
+                              </div>
+                            </Card>
+                          ))}
+                        </div>
+                      )}
+
+                      {loading && (
+                        <div className="flex h-[200px] items-center justify-center text-center  mt-5 ">
+                          <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
+                        </div>
+                      )}
+                    </Card>
+                  </TabsContent>
+                  <TabsContent value="EXECUTED">
+                  <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
+                      <div className="p-2 border-b-2 -translate-x-2">
+                        All Proposals.
+                      </div>
+                      {!loading && (
+                        <div className="space-y-4">
+                          {!proposal.length > 0 && (
+                            <div className="flex items-center justify-center h-10">
+                              No Executed Proposal
                             </div>
-                            <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
-                              <span>End Time :</span>
-                              <span className="font-semibold">
-                                {convertUnixTimestamp(proposalItem.ends_time)}
-                              </span>
-                            </div>
-                          </div>
+                          )}
+                        </div>
+                      )}
+                      {!loading && proposal && (
+                        <div className=" grid md:grid-cols-3 grid-cols-1 gap-5 mt-3">
+                          {proposal.map((proposalItem, index) => (
+                            <Card
+                              key={index}
+                              onClick={() => {
+                                setActiveProposal(proposalItem)
+                                setShowForm(null)
+                              }}
+                              className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-2 bg-white border-b-2 rounded-none p-3 text-black relative"
+                            >
+                              <Badge
+                                variant={
+                                  proposalItem.is_active
+                                    ? ' success'
+                                    : 'destructive'
+                                }
+                                className={`absolute right-2 ${
+                                  proposalItem.is_active
+                                    ? 'bg-green-600 text-white'
+                                    : ''
+                                } `}
+                              >
+                                {proposalItem.is_active
+                                  ? 'Pending'
+                                  : 'Executed'}
+                              </Badge>
 
-                          {/* Voting buttons (commented out) */}
-                          {/* <div className="flex items-center gap-3 ">
-            {loadingButtonFor ? (
-              <Button
-                size="sm"
-                disabled
-                className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800 "
-              >
-                Voting...
-              </Button>
-            ) : (
-              <Button
-                size="sm"
-                onClick={handleFor}
-                className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800 "
-              >
-                <span>Voted For :</span>
-                <span>{proposalItem.voted_for}</span>
-              </Button>
-            )}
+                              <div className="capitalize font-semibold text-xl">
+                                {proposalItem.proposal}
+                              </div>
+                              <div className="capitalize font-semibold text-md">
+                                {proposalItem.description}
+                              </div>
+                              <div className="flex flex-col items-center gap-3">
+                                <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
+                                  <span>Start Time :</span>
+                                  <span className="font-semibold">
+                                    {convertUnixTimestamp(
+                                      proposalItem.start_time,
+                                    )}
+                                  </span>
+                                </div>
+                                <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
+                                  <span>End Time :</span>
+                                  <span className="font-semibold">
+                                    {convertUnixTimestamp(
+                                      proposalItem.ends_time,
+                                    )}
+                                  </span>
+                                </div>
+                              </div>
 
-            {loadingButtonAgainst ? (
-              <Button
-                size="sm"
-                disabled
-                className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
-              >
-                Voting..
-              </Button>
-            ) : (
-              <Button
-                size="sm"
-                onClick={handleAgainst}
-                className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
-              >
-                <span>Voted Against : </span>
-                <span> {proposalItem.voted_against} </span>
-              </Button>
-            )}
-          </div> */}
 
-                          <div className="text-xs">
-                            Published by{' '}
-                            <span className="text-purple-700">
-                              {clipAddress(proposalItem.id)}
-                            </span>
-                          </div>
-                        </Card>
-                      ))}
-                    </div>
-                  )}
+                              <div className="text-xs">
+                                Published by{' '}
+                                <span className="text-purple-700">
+                                  {clipAddress(proposalItem.id)}
+                                </span>
+                              </div>
+                            </Card>
+                          ))}
+                        </div>
+                      )}
 
-                  {loading && (
-                    <div className="flex h-[200px] items-center justify-center text-center  mt-5 ">
-                      <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
-                    </div>
-                  )}
-                </Card>
+                      {loading && (
+                        <div className="flex h-[200px] items-center justify-center text-center  mt-5 ">
+                          <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
+                        </div>
+                      )}
+                    </Card>
+                  </TabsContent>
+                </Tabs>
               </div>
             </div>
           </div>
@@ -1140,7 +1204,20 @@ const Proposals = () => {
                   Submitting....
                 </Button>
               ) : (
-                <Button variant="radix" className="w-full mt-2" disabled={!targetXrdAmount || !minimumQuorum || !bondIssuerAddress || !voteType || !proposalText || !proposalDescription || !startTime || !endTime}>
+                <Button
+                  variant="radix"
+                  className="w-full mt-2"
+                  disabled={
+                    !targetXrdAmount ||
+                    !minimumQuorum ||
+                    !bondIssuerAddress ||
+                    !voteType ||
+                    !proposalText ||
+                    !proposalDescription ||
+                    !startTime ||
+                    !endTime
+                  }
+                >
                   Submit Proposal
                 </Button>
               )}
