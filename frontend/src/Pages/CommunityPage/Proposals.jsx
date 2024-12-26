@@ -46,6 +46,8 @@ const Proposals = () => {
   const [activeProposal, setActiveProposal] = useState(null)
   const [vote, setVote] = useState(Boolean)
   const [voted, setVoted] = useState(false)
+  const [participants, setParticipants] = useState([])
+
   const navigate = useNavigate()
   const params = useParams()
   const [proposal, setProposal] = useState('')
@@ -485,6 +487,18 @@ const Proposals = () => {
       toast.error('End date cannot be before start date')
     }
   }
+  const fetchParticipant = async () => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/community/participant/${
+          params.id
+        }`,
+      )
+      setParticipants(res.data)
+    } catch (error) {
+      console.error('Error fetching blueprint data:', error)
+    }
+  }
 
   useEffect(() => {
     if (activeProposal) {
@@ -507,6 +521,7 @@ const Proposals = () => {
   useEffect(() => {
     fetchProposals()
     fetchBondNames()
+    fetchParticipant()
   }, [params.id])
   useEffect(() => {
     fetchProposalsComments()
@@ -1149,8 +1164,16 @@ const Proposals = () => {
                     placeholder="Enter Minimum quorum"
                     type="number"
                     value={minimumQuorum}
-                    onChange={(e) => setMinimumQuorum(e.target.value)}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value, 10);
+                      if (value > participants.length) {
+                        toast.error(`The minimum quorum cannot exceed ${participants.length}.`);
+                        return;
+                      }
+                      setMinimumQuorum(value);
+                    }}
                     min="0"
+                    max={participants.length}
                   />
                 </div>
                 <div className="flex flex-col gap-2">
