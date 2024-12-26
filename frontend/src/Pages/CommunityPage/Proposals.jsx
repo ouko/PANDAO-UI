@@ -847,7 +847,7 @@ const Proposals = () => {
 
                       <div>
                         {activeProposal.minimum_quorum <=
-                        activeProposal.number_of_people_voted ? (
+                        activeProposal.number_of_people_voted > 0 ? (
                           <Button
                             onClick={handleExecuteActiveProposal}
                             disabled={
