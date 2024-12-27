@@ -40,7 +40,7 @@ import { Input } from '@/components/ui/input'
 const UserDashboard = () => {
   const { accounts } = useAccount()
   const [openPay, setOpenPay] = useState(false)
-  const [xrdToPay,setXrdToPay]=useState(0)
+  const [xrdToPay, setXrdToPay] = useState(0)
   const navigate = useNavigate()
   const [coverUrl, setCoverUrl] = useState('')
   const [loading, setLoading] = useState(true)
@@ -60,6 +60,8 @@ const UserDashboard = () => {
   const [createdBonds, setCreatedBonds] = useState([])
   const sendTransaction = useSendTransaction()
   const [loading2, setLoading2] = useState(false)
+  const [loading3, setLoading3] = useState(false)
+
   const [manifest, setManifest] = useState('')
   const [selectedBond, setSelectedBond] = useState(null)
 
@@ -153,6 +155,73 @@ const UserDashboard = () => {
     } finally {
       // Ensure loading is stopped regardless of success or failure
       setLoading2(false)
+    }
+  }
+  const handleDeposit = async (bond) => {
+    const data = {
+      bond_id: bond.bond_id,
+      user_address: accounts[0].address,
+      xrd_to_add: xrdToPay,
+    }
+    setLoading3(true)
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/manifest/zcb/add-xrds`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+
+      const responseData =
+        typeof response.data === 'string'
+          ? response.data.trim()
+          : JSON.stringify(response.data)
+
+      console.log('Response:', responseData)
+
+      setManifest(responseData)
+
+      const { receipt } = await sendTransaction(responseData)
+
+      const txId = receipt?.transaction?.intent_hash
+
+      if (txId) {
+        try {
+          const submitResponse = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+            {
+              tx_id: txId,
+              user_address: accounts[0].address,
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+
+          console.log('Submit Transaction Response:', submitResponse.data)
+
+          toast.success('Deposit Successfully!')
+        } catch (submitError) {
+          console.error('Error submitting transaction:', submitError)
+          toast.error('Failed to submit transaction.')
+        }
+      } else {
+        console.error('Transaction ID not found in receipt:', receipt)
+        toast.error('Transaction failed. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error Depositing token:', error.response.data.detail)
+
+      toast.error('Something went wrong while Depositing.')
+    } finally {
+      // Ensure loading is stopped regardless of success or failure
+      setLoading3(false)
     }
   }
   const fetchCreatedBonds = async (user_address) => {
@@ -679,7 +748,10 @@ const UserDashboard = () => {
                               <Button
                                 disabled={loading2}
                                 className="mt-3"
-                                onClick={() => setOpenPay(true)}
+                                onClick={() => {
+                                  setOpenPay(true)
+                                  setSelectedBond(bond)
+                                }}
                               >
                                 Deposit
                               </Button>
@@ -753,14 +825,20 @@ const UserDashboard = () => {
               <DialogTitle>How much amount do you want deposit?</DialogTitle>
               <DialogDescription className="flex flex-col gap-4">
                 <p> Please enter the amount you want to deposit </p>
-                <Input 
-                value={xrdToPay}
-                onChange={(e)=>setXrdToPay(e.target.value)}
-                type="number"
-                min="0"
+                <Input
+                  value={xrdToPay}
+                  onChange={(e) => setXrdToPay(e.target.value)}
+                  type="number"
+                  min="0"
                 />
-                <div className='flex items-center justify-end w-full'>
-                  <Button variant="radix" onClick={()=>console.log("Pandao")}  >Deposit</Button>
+                <div className="flex items-center justify-end w-full">
+                  <Button
+                    variant="radix"
+                    onClick={() => handleDeposit(selectedBond)}
+                    disabled={loading3}
+                  >
+                {loading3 ? "Depositing..." :"Deposit"}    
+                  </Button>
                 </div>
               </DialogDescription>
             </DialogHeader>
