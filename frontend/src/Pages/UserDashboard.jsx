@@ -681,7 +681,7 @@ const UserDashboard = () => {
                                 className="mt-3"
                                 onClick={() => setOpenPay(true)}
                               >
-                                Pay
+                                Deposit
                               </Button>
                             )}
                           </div>
