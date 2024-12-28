@@ -63,6 +63,21 @@ const [checked, setChecked] = useState(false);
     console.log("Received file URL:", fileUrl);
   };
 
+  const handleSendEmail = async () => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/email-verification?user_email=${formData.email}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("API Response:", response.data);
+    } catch (error) {
+      console.error("Error in API call:", error);
+    }
+  }
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -332,7 +347,12 @@ const [checked, setChecked] = useState(false);
                 <Button
                   className="w-full"
                   variant="radix"
-                  onClick={() => setSignUpView(2)}
+                  onClick={() =>
+                  {
+                    handleSendEmail()
+                    setSignUpView(2)
+                  }
+                  }
                   disabled={!formData.bio || !formData.display_image}
                 >
                   Next
