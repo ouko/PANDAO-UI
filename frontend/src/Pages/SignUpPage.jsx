@@ -32,12 +32,14 @@ const SignupPage = () => {
   const [viewSignUp, setSignUpView] = useState(1);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
-
+const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
   const [isFormValid, setIsFormValid] = useState(false);
   const [formData, setFormData] = useState({
     public_address: accounts?.[0]?.address || "",
     username: accounts[0].label || "",
+    email:"",
+    newletterOpted:false,
     bio: "",
     display_image: null,
     work_history: [
@@ -235,19 +237,64 @@ const SignupPage = () => {
                         disabled
                         value={accounts[0].address}
                       />
+                       <div className="flex items-center justify-end gap-2 w-full invisible ">
+                        <div className="flex items-end justify-end gap-2">
+                        <Checkbox checked={true}  />
+                        <Label htmlFor="" className="">
+                          I accept to get newsletter.
+                        </Label>
+                        </div>
+                     
+                      </div>
                     </div>
                     <div className="grid gap-2">
                       <Label htmlFor="username" className="text-xl font-bold">
-                        User Name
+                        What should we call you?
                       </Label>
                       <Input
                         id="username"
                         name="username"
                         placeholder="Robinson"
                         required
-                        disabled
-                        value={accounts[0].label}
+                        disabled= {checked}
+                        value={checked ? accounts[0].label : formData.username}
+                        onChange={handleChange}
                       />
+                      <div className="flex items-center justify-end gap-2 w-full ">
+                        <div className="flex items-end justify-end gap-2">
+                        <Checkbox checked={checked} onCheckedChange={setChecked} />
+                        <Label htmlFor="username" className="">
+                          Same as your wallet name?
+                        </Label>
+                        </div>
+                     
+                      </div>
+                  
+
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="username" className="text-xl font-bold">
+                        Email
+                      </Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        placeholder="something@domain.com"
+                        required
+                        value={ formData.email}
+                        onChange={handleChange}
+                      />
+                      <div className="flex items-center justify-end gap-2 w-full ">
+                        <div className="flex items-end justify-end gap-2">
+                        <Checkbox checked={true}  />
+                        <Label htmlFor="" className="">
+                          I accept to get newsletter.
+                        </Label>
+                        </div>
+                     
+                      </div>
+                  
+
                     </div>
                   </div>
                   <div className="grid gap-2">
@@ -262,7 +309,7 @@ const SignupPage = () => {
                       maxlength="150"
                     />
                   </div>
-                  <div className=" flex items-center justify-center">
+                  <div className=" flex flex-col gap-3 items-center justify-center">
                     {/* {imagePreview && (
                   <img src={imagePreview} alt="Preview" className="mt-2 aspect-square h-32 w-32  rounded-full" />
                 )}
@@ -274,6 +321,11 @@ const SignupPage = () => {
                   required
                   onChange={handleFileChange}
                 /> */}
+                <div>
+                  <Label htmlFor="display_image" className="text-xl font-bold">
+                    Display Image
+                  </Label>
+                </div>
                     <ImageUpload onUploadSuccess={handleFileId} />
                   </div>
                 </form>
