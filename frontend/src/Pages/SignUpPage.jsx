@@ -262,7 +262,7 @@ const SignupPage = () => {
                       maxlength="150"
                     />
                   </div>
-                  <div className="grid gap-2">
+                  <div className=" flex items-center justify-center">
                     {/* {imagePreview && (
                   <img src={imagePreview} alt="Preview" className="mt-2 aspect-square h-32 w-32  rounded-full" />
                 )}
