@@ -51,15 +51,7 @@ const SignupPage = () => {
     otp: '',
     display_image: null,
     work_history: [
-      {
-        company_name: '',
-        start_date: '',
-        end_date: '',
-        designation: '',
-        description: '',
-        current: false,
-      },
-    ],
+      ],
   })
 
   const handleFileId = (id) => {
@@ -483,13 +475,7 @@ const SignupPage = () => {
                           >
                             <Trash2 className="h-5 w-5" />
                           </Button>
-                          <Button
-                            variant="radix"
-                            className="rounded-sm"
-                            onClick={addWorkHistory}
-                          >
-                            <Plus className="h-5 w-5" />
-                          </Button>
+                        
                         </div>
                       </div>
                     </div>
@@ -499,7 +485,17 @@ const SignupPage = () => {
                   <Button variant="outline" onClick={() => setSignUpView(3)}>
                     Skip
                   </Button>
+                  <div className='flex items-center gap-3'>
+                  <Button
+                            variant="radix"
+                            className="rounded-sm"
+                            onClick={addWorkHistory}
+                          >
+                            <Plus className="h-5 w-5" />
+                          </Button>
                   <Button onClick={() => setSignUpView(3)}>Next</Button>
+                  </div>
+               
                 </div>
               </CardContent>
             </Card>
