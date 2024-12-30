@@ -1,147 +1,157 @@
-import React, { useEffect, useState } from "react";
-import { useAccount } from "@/AccountContext";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { useAccount } from '@/AccountContext'
+import { motion } from 'framer-motion'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { useNavigate } from 'react-router-dom'
 // import axios from 'axios';
-import ImageUpload from "./components/ImageUpload";
-import axios from "axios";
-import GridPattern from "@/components/ui/myComponents/grid-bg";
-import { Checkbox } from "@/components/ui/checkbox";
-import Select from "react-select";
-import StepIndicator from "./SignUpPageComponents/StepIndicator";
-import { CircleHelp, FileQuestion, Plus, Trash2 } from "lucide-react";
+import ImageUpload from './components/ImageUpload'
+import axios from 'axios'
+import GridPattern from '@/components/ui/myComponents/grid-bg'
+import { Checkbox } from '@/components/ui/checkbox'
+import Select from 'react-select'
+import StepIndicator from './SignUpPageComponents/StepIndicator'
+import { CircleHelp, FileQuestion, Plus, Trash2 } from 'lucide-react'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from '@/components/ui/tooltip'
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from '@/components/ui/input-otp'
 
 const SignupPage = () => {
   const steps = [
-    { label: "Basic Info" },
-    { label: "Work History" },
-    { label: "Select Tags" },
-  ];
-  const { accounts } = useAccount();
-  const [viewSignUp, setSignUpView] = useState(1);
-  const [tags, setTags] = useState([]);
-  const [selectedTags, setSelectedTags] = useState([]);
-const [checked, setChecked] = useState(false);
-  const navigate = useNavigate();
-  const [isFormValid, setIsFormValid] = useState(false);
+    { label: 'Basic Info' },
+    { label: 'Work History' },
+    { label: 'Select Tags' },
+    { label: 'OTP' },
+  ]
+  const { accounts } = useAccount()
+  const [viewSignUp, setSignUpView] = useState(1)
+  const [tags, setTags] = useState([])
+  const [selectedTags, setSelectedTags] = useState([])
+  const [checked, setChecked] = useState(false)
+  const navigate = useNavigate()
+  const [isFormValid, setIsFormValid] = useState(false)
   const [formData, setFormData] = useState({
-    public_address: accounts?.[0]?.address || "",
-    username: accounts[0].label || "",
-    email:"",
-    newletterOpted:false,
-    bio: "",
+    public_address: accounts?.[0]?.address || '',
+    username: accounts[0].label || '',
+    email: '',
+    newletterOpted: false,
+    bio: '',
+    otp: '',
     display_image: null,
     work_history: [
       {
-        company_name: "",
-        start_date: "",
-        end_date: "",
-        designation: "",
-        description: "",
+        company_name: '',
+        start_date: '',
+        end_date: '',
+        designation: '',
+        description: '',
         current: false,
       },
     ],
-  });
+  })
 
   const handleFileId = (id) => {
-    const fileUrl = `https://ucarecdn.com/${id}/-/preview/1000x562/`;
+    const fileUrl = `https://ucarecdn.com/${id}/-/preview/1000x562/`
     setFormData((prevState) => ({
       ...prevState,
       display_image: fileUrl,
-    }));
-    console.log("Received file URL:", fileUrl);
-  };
+    }))
+    console.log('Received file URL:', fileUrl)
+  }
 
   const handleSendEmail = async () => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/email-verification?user_email=${formData.email}`,
+        `${import.meta.env.VITE_BACKEND_URL}/email-verification?user_email=${
+          formData.email
+        }`,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        }
-      );
-      console.log("API Response:", response.data);
+        },
+      )
+      console.log('API Response:', response.data)
     } catch (error) {
-      console.error("Error in API call:", error);
+      console.error('Error in API call:', error)
     }
   }
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData({
       ...formData,
       [name]: value,
-    });
-  };
+    })
+  }
   const handleWorkHistoryChange = (index, field, value) => {
-    const newHistory = [...formData.work_history];
-    newHistory[index] = { ...newHistory[index], [field]: value };
+    const newHistory = [...formData.work_history]
+    newHistory[index] = { ...newHistory[index], [field]: value }
     setFormData((prevState) => ({
       ...prevState,
       work_history: newHistory,
-    }));
-  };
+    }))
+  }
 
   const handleCurrentChange = (index, checked) => {
-    console.log("Current checkbox for index", index, "is", checked); // Log for debugging
+    console.log('Current checkbox for index', index, 'is', checked) // Log for debugging
     const newHistory = formData.work_history.map((item, i) => {
       if (i === index) {
         return {
           ...item,
           current: checked,
           end_date: checked ? null : item.end_date,
-        }; // Clear end_date if currently working
+        } // Clear end_date if currently working
       }
-      return item;
-    });
+      return item
+    })
     setFormData((prevState) => ({
       ...prevState,
       work_history: newHistory,
-    }));
-  };
+    }))
+  }
   const addWorkHistory = () => {
     setFormData((prevState) => ({
       ...prevState,
       work_history: [
         ...prevState.work_history,
         {
-          company_name: "",
-          start_date: "",
-          end_date: "",
-          designation: "",
-          description: "",
+          company_name: '',
+          start_date: '',
+          end_date: '',
+          designation: '',
+          description: '',
           current: false,
         },
       ],
-    }));
-  };
+    }))
+  }
 
   const removeWorkHistory = (index) => {
-    const filteredHistory = formData.work_history.filter((_, i) => i !== index);
+    const filteredHistory = formData.work_history.filter((_, i) => i !== index)
     setFormData((prevState) => ({
       ...prevState,
       work_history: filteredHistory,
-    }));
-  };
+    }))
+  }
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     const submitData = {
       ...formData,
       tags: selectedTags.map((tag) => tag.label), // assuming the backend needs tag IDs
-    };
+    }
 
     try {
       const response = await axios.post(
@@ -149,20 +159,20 @@ const [checked, setChecked] = useState(false);
         submitData,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        }
-      );
-      console.log("API Response:", response.data);
-      navigate("/userDashboard");
+        },
+      )
+      console.log('API Response:', response.data)
+      navigate('/userDashboard')
     } catch (error) {
-      console.error("Error in API call:", error);
+      console.error('Error in API call:', error)
     }
-  };
+  }
 
   const handleSelectChange = (selectedOptions) => {
-    setSelectedTags(selectedOptions);
-  };
+    setSelectedTags(selectedOptions)
+  }
 
   useEffect(() => {
     const checkFormValidity = () => {
@@ -171,36 +181,36 @@ const [checked, setChecked] = useState(false);
         formData.bio &&
         formData.display_image &&
         selectedTags.length >= 3 &&
-        selectedTags.length <= 5;
+        selectedTags.length <= 5
 
-      setIsFormValid(isValid);
-    };
+      setIsFormValid(isValid)
+    }
 
-    checkFormValidity();
-  }, [formData, selectedTags]);
+    checkFormValidity()
+  }, [formData, selectedTags])
 
   useEffect(() => {
     const fetchTags = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/tags`
-        );
+          `${import.meta.env.VITE_BACKEND_URL}/tags`,
+        )
         const tagOptions = response.data.map((tag) => ({
           value: tag.id,
           label: tag.name,
-        }));
-        setTags(tagOptions);
+        }))
+        setTags(tagOptions)
       } catch (error) {
-        console.error("Failed to fetch tags:", error);
+        console.error('Failed to fetch tags:', error)
       }
-    };
+    }
 
-    fetchTags();
-  }, []);
+    fetchTags()
+  }, [])
 
   if (!accounts || accounts.length === 0) {
-    navigate("/");
-    return null;
+    navigate('/')
+    return null
   }
   return (
     <div className="pt-10 pb-10 items-center  gap-3 justify-center min-h-screen bg-purple-50 text-black px-2 ">
@@ -252,14 +262,13 @@ const [checked, setChecked] = useState(false);
                         disabled
                         value={accounts[0].address}
                       />
-                       <div className="flex items-center justify-end gap-2 w-full invisible ">
+                      <div className="flex items-center justify-end gap-2 w-full invisible ">
                         <div className="flex items-end justify-end gap-2">
-                        <Checkbox checked={true}  />
-                        <Label htmlFor="" className="">
-                          I accept to get newsletter.
-                        </Label>
+                          <Checkbox checked={true} />
+                          <Label htmlFor="" className="">
+                            I accept to get newsletter.
+                          </Label>
                         </div>
-                     
                       </div>
                     </div>
                     <div className="grid gap-2">
@@ -271,21 +280,21 @@ const [checked, setChecked] = useState(false);
                         name="username"
                         placeholder="Robinson"
                         required
-                        disabled= {checked}
+                        disabled={checked}
                         value={checked ? accounts[0].label : formData.username}
                         onChange={handleChange}
                       />
                       <div className="flex items-center justify-end gap-2 w-full ">
                         <div className="flex items-end justify-end gap-2">
-                        <Checkbox checked={checked} onCheckedChange={setChecked} />
-                        <Label htmlFor="username" className="">
-                          Same as your wallet name?
-                        </Label>
+                          <Checkbox
+                            checked={checked}
+                            onCheckedChange={setChecked}
+                          />
+                          <Label htmlFor="username" className="">
+                            Same as your wallet name?
+                          </Label>
                         </div>
-                     
                       </div>
-                  
-
                     </div>
                     <div className="grid gap-2">
                       <Label htmlFor="username" className="text-xl font-bold">
@@ -296,20 +305,17 @@ const [checked, setChecked] = useState(false);
                         name="email"
                         placeholder="something@domain.com"
                         required
-                        value={ formData.email}
+                        value={formData.email}
                         onChange={handleChange}
                       />
                       <div className="flex items-center justify-end gap-2 w-full ">
                         <div className="flex items-end justify-end gap-2">
-                        <Checkbox checked={true}  />
-                        <Label htmlFor="" className="">
-                          I accept to get newsletter.
-                        </Label>
+                          <Checkbox checked={true} />
+                          <Label htmlFor="" className="">
+                            I accept to get newsletter.
+                          </Label>
                         </div>
-                     
                       </div>
-                  
-
                     </div>
                   </div>
                   <div className="grid gap-2">
@@ -336,23 +342,24 @@ const [checked, setChecked] = useState(false);
                   required
                   onChange={handleFileChange}
                 /> */}
-                <div>
-                  <Label htmlFor="display_image" className="text-xl font-bold">
-                    Display Image
-                  </Label>
-                </div>
+                    <div>
+                      <Label
+                        htmlFor="display_image"
+                        className="text-xl font-bold"
+                      >
+                        Display Image
+                      </Label>
+                    </div>
                     <ImageUpload onUploadSuccess={handleFileId} />
                   </div>
                 </form>
                 <Button
                   className="w-full"
                   variant="radix"
-                  onClick={() =>
-                  {
+                  onClick={() => {
                     handleSendEmail()
                     setSignUpView(2)
-                  }
-                  }
+                  }}
                   disabled={!formData.bio || !formData.display_image}
                 >
                   Next
@@ -370,16 +377,15 @@ const [checked, setChecked] = useState(false);
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger className="flex items-center gap-2">
-                        <span> Why PANDAO need your employment details  </span>
-                     
-                      <CircleHelp className="h-4 w-4" />
+                        <span> Why PANDAO need your employment details </span>
+
+                        <CircleHelp className="h-4 w-4" />
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>Reason</p>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
-                
                 </div>
               </div>
               <CardContent>
@@ -393,8 +399,8 @@ const [checked, setChecked] = useState(false);
                         onChange={(e) =>
                           handleWorkHistoryChange(
                             index,
-                            "company_name",
-                            e.target.value
+                            'company_name',
+                            e.target.value,
                           )
                         }
                       />
@@ -408,8 +414,8 @@ const [checked, setChecked] = useState(false);
                             onChange={(e) =>
                               handleWorkHistoryChange(
                                 index,
-                                "start_date",
-                                e.target.value
+                                'start_date',
+                                e.target.value,
                               )
                             }
                           />
@@ -427,8 +433,8 @@ const [checked, setChecked] = useState(false);
                               onChange={(e) =>
                                 handleWorkHistoryChange(
                                   index,
-                                  "end_date",
-                                  e.target.value
+                                  'end_date',
+                                  e.target.value,
                                 )
                               }
                             />
@@ -451,8 +457,8 @@ const [checked, setChecked] = useState(false);
                         onChange={(e) =>
                           handleWorkHistoryChange(
                             index,
-                            "designation",
-                            e.target.value
+                            'designation',
+                            e.target.value,
                           )
                         }
                       />
@@ -463,8 +469,8 @@ const [checked, setChecked] = useState(false);
                         onChange={(e) =>
                           handleWorkHistoryChange(
                             index,
-                            "description",
-                            e.target.value
+                            'description',
+                            e.target.value,
                           )
                         }
                       />
@@ -475,14 +481,14 @@ const [checked, setChecked] = useState(false);
                             className="rounded-sm"
                             onClick={() => removeWorkHistory(index)}
                           >
-                            <Trash2 className="h-5 w-5"/>
+                            <Trash2 className="h-5 w-5" />
                           </Button>
                           <Button
                             variant="radix"
                             className="rounded-sm"
                             onClick={addWorkHistory}
                           >
-                            <Plus className="h-5 w-5"/>
+                            <Plus className="h-5 w-5" />
                           </Button>
                         </div>
                       </div>
@@ -516,20 +522,61 @@ const [checked, setChecked] = useState(false);
                   classNamePrefix="select"
                 />
                 <Button
-                  onClick={handleSubmit}
+                  onClick={() => {
+                    setSignUpView(4)
+                  }}
                   disabled={!isFormValid}
                   variant="radix"
                   className="mt-4 w-[100%] "
                 >
-                  Submit
+                  Next
                 </Button>
               </CardContent>
+            </Card>
+          )}
+          {viewSignUp === 4 && (
+            <Card className="container shadow-xl bg-white z-30">
+              <CardHeader className="flex flex-col items-center gap-1">
+                <CardTitle className="text-4xl font-semibold w-full text-center">
+                  Please Enter the OTP send on your Email
+                </CardTitle>
+                <div>Please dont reload the page</div>
+              </CardHeader>
+              <CardContent className="flex flex-col items-center justify-center">
+                <InputOTP
+                  maxLength={6}
+                  value={formData.otp}
+                  onChange={(value) =>
+                    setFormData((prev) => ({ ...prev, otp: value }))
+                  }
+                >
+                  <InputOTPGroup>
+                    <InputOTPSlot index={0} />
+                    <InputOTPSlot index={1} />
+                    <InputOTPSlot index={2} />
+                  </InputOTPGroup>
+                  <InputOTPSeparator />
+                  <InputOTPGroup>
+                    <InputOTPSlot index={3} />
+                    <InputOTPSlot index={4} />
+                    <InputOTPSlot index={5} />
+                  </InputOTPGroup>
+                </InputOTP>
+              </CardContent>
+              <Button
+                onClick={handleSubmit}
+                disabled={!isFormValid}
+                variant="radix"
+                className="mt-4 w-[100%] "
+              >
+                Submit
+              </Button>
             </Card>
           )}
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default SignupPage;
+export default SignupPage

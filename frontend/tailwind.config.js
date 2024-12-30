@@ -58,6 +58,10 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        "caret-blink": {
+          "0%,70%,100%": { opacity: "1" },
+          "20%,50%": { opacity: "0" },
+        },
         orbit: {
           "0%": {
               transform: "rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg)",
@@ -85,6 +89,8 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
         orbit: "orbit calc(var(--duration)*1s) linear infinite",
         "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
+        "caret-blink": "caret-blink 1.25s ease-out infinite",
+
       },
     },
   },
