@@ -599,7 +599,10 @@ const UserDashboard = () => {
                           Please Add Work Details
                         </div>
                       )}
+                      {workData && workData.length > 0 &&  ( 
                       <Timeline items={workData} />
+
+                      )}
                     </div>
                   </Card>
 
