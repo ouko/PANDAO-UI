@@ -528,7 +528,7 @@ const CommunityDetails = () => {
             <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
               <div className="md:w-[60%] space-y-3">
                 <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg flex items-center justify-between ">
-                  <div>Total Proposals</div>
+                <div className='font-semibold tracking-wide'>Total Proposals</div>
                   <div className="flex items-center gap-2">
                     <div
                       onClick={() =>
@@ -541,7 +541,7 @@ const CommunityDetails = () => {
                   </div>
                 </Card>
                 <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg flex items-center justify-between ">
-                  <div>Total Funds</div>
+                <div className='font-semibold tracking-wide'>Total Funds</div>
                   <div className="flex items-center gap-2">
                     <div className="bg-purple-600 shadow-lg min-w-28 flex items-center justify-center rounded-lg text-white p-1">
                       {Math.round(data.funds_in_usd * 10000) / 10000} $
@@ -553,6 +553,9 @@ const CommunityDetails = () => {
                 </Card>
 
                 <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg ">
+                  <h1 className='font-semibold tracking-wide'>
+                    Discussions
+                  </h1>
                   {communities.length === 0 && (
                     <div className="flex items-center justify-center">
                       No active discussions
