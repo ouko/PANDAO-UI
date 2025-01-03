@@ -55,7 +55,7 @@ const UserDashboard = () => {
   const [dataAll, setDataAll] = useState([])
   const [workData, setWorkData] = useState([])
   const [userData, setUserData] = useState({})
-  const [check, setCheck] = useState(false)
+  const [check, setCheck] = useState(true)
   const [createdComminities, setCreatedCommunities] = useState([])
   const [createdBonds, setCreatedBonds] = useState([])
   const sendTransaction = useSendTransaction()
