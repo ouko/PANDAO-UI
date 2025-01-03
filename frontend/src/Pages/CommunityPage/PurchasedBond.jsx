@@ -171,7 +171,7 @@ const PurchasedBond = (props) => {
                             <strong>Contract Role:</strong> {bond.contract_role}
                           </p>
                           <p>
-                            <strong>Amount Owned:</strong> {bond.amount_own}
+                            <span className="font-semibold text-xl">Expected Return:</span> {bond.amount_own} XRD
                           </p>
                         </div>
 
