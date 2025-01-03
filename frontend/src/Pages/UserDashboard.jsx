@@ -230,8 +230,7 @@ const UserDashboard = () => {
   const fetchCreatedBonds = async (user_address) => {
     try {
       const res = await axios.get(
-        `${
-          import.meta.env.VITE_BACKEND_URL
+        `${import.meta.env.VITE_BACKEND_URL
         }/user/created-bonds/${user_address}?is_accepted=${check}`,
       )
       setCreatedBonds(res.data)
@@ -272,8 +271,7 @@ const UserDashboard = () => {
     const fetchAll = async (user_address) => {
       try {
         const res = await axios.get(
-          `${
-            import.meta.env.VITE_BACKEND_URL
+          `${import.meta.env.VITE_BACKEND_URL
           }/community/user/interest/user_add?user_addr=${user_address}`,
         )
         setDataAll(res.data)
@@ -287,8 +285,7 @@ const UserDashboard = () => {
     const fetchUserExpense = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/expense/${
-            accounts[0].address
+          `${import.meta.env.VITE_BACKEND_URL}/user/expense/${accounts[0].address
           }`,
         )
         console.log(res.data, 'hi00000hi')
@@ -302,8 +299,7 @@ const UserDashboard = () => {
     const fetchFailedTransactions = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/pending-transactions/${
-            accounts[0].address
+          `${import.meta.env.VITE_BACKEND_URL}/user/pending-transactions/${accounts[0].address
           }`,
         )
         console.log(res.data, 'hi00000hi')
@@ -317,8 +313,7 @@ const UserDashboard = () => {
     const fetchUserData = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/details/${
-            accounts[0].address
+          `${import.meta.env.VITE_BACKEND_URL}/user/details/${accounts[0].address
           }`,
         )
         setWorkData(res.data.user_work)
@@ -337,8 +332,7 @@ const UserDashboard = () => {
     const fetchCreatedCommunity = async (user_address) => {
       try {
         const res = await axios.get(
-          `${
-            import.meta.env.VITE_BACKEND_URL
+          `${import.meta.env.VITE_BACKEND_URL
           }/user/community/${user_address}?owner=true`,
         )
         setCreatedCommunities(res.data)
@@ -350,8 +344,7 @@ const UserDashboard = () => {
     const fetchCreatedParticipated = async (user_address) => {
       try {
         const res = await axios.get(
-          `${
-            import.meta.env.VITE_BACKEND_URL
+          `${import.meta.env.VITE_BACKEND_URL
           }/user/community/${user_address}?owner=false`,
         )
         setParticipatedCommunities(res.data)
@@ -692,17 +685,16 @@ const UserDashboard = () => {
                       createdBonds.map((bond) => (
                         <div
                           key={bond.bond_id}
-                          className={`w-full  shadow-sm rounded-md p-4 mt-4 flex flex-col md:flex-row justify-between items-start md:items-center ${
-                            check &&
-                            bond.maturity_date &&
-                            new Date(bond.maturity_date) < new Date()
+                          className={`w-full  shadow-sm rounded-md p-4 mt-4 flex flex-col md:flex-row justify-between items-start md:items-center ${check &&
+                              bond.maturity_date &&
+                              new Date(bond.maturity_date) < new Date()
                               ? 'ring-2 ring-red-300'
                               : check &&
                                 bond.maturity_date &&
                                 new Date(bond.maturity_date) > new Date()
-                              ? 'ring-2 ring-green-300'
-                              : ''
-                          }`}
+                                ? 'ring-2 ring-green-300'
+                                : ''
+                            }`}
                         >
                           <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
                             <img
@@ -744,12 +736,12 @@ const UserDashboard = () => {
                               Maturity Date:
                               {bond.maturity_date
                                 ? new Date(
-                                    bond.maturity_date,
-                                  ).toLocaleDateString('en-US', {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                  })
+                                  bond.maturity_date,
+                                ).toLocaleDateString('en-US', {
+                                  year: 'numeric',
+                                  month: 'long',
+                                  day: 'numeric',
+                                })
                                 : 'Not specified'}
                             </p>
                             <div className="flex items-center gap-3">
@@ -799,10 +791,10 @@ const UserDashboard = () => {
                   <DialogTrigger></DialogTrigger>
 
                   <DialogContent className="max-w-5xl">
-                    {selectedInfo &&   <Card className="w-full max-w-5xl">
+                    {selectedInfo && <Card className="w-full max-w-5xl">
                       <CardHeader>
                         <h2 className="text-2xl font-bold">
-                       {selectedInfo.name}
+                          {selectedInfo.name}
                         </h2>
                       </CardHeader>
                       <CardContent>
@@ -814,22 +806,18 @@ const UserDashboard = () => {
                               </h3>
                               <div className="mt-2 space-y-2">
                                 <p>
-                                  <span className="font-medium">Bond ID:</span>{' '}
-                                  e7414938-c968-4d71-930c-04a2f9610156
+                                  <span className="font-medium">Bond ID:</span> {selectedInfo.bond_id}
                                 </p>
                                 <p>
-                                  <span className="font-medium">Name:</span>{' '}
-                                  apple
+                                  <span className="font-medium">Name:</span> {selectedInfo.name || "N/A"}
                                 </p>
                                 <p>
-                                  <span className="font-medium">
-                                    Contract Type:
-                                  </span>{' '}
-                                  apple
+                                  <span className="font-medium">Contract Type:</span>{" "}
+                                  {selectedInfo.contract_type || "N/A"}
                                 </p>
                                 <p>
-                                  <span className="font-medium">Currency:</span>{' '}
-                                  XRD
+                                  <span className="font-medium">Currency:</span>{" "}
+                                  {selectedInfo.currency.toUpperCase()}
                                 </p>
                               </div>
                             </div>
@@ -840,34 +828,27 @@ const UserDashboard = () => {
                               </h3>
                               <div className="mt-2 space-y-2">
                                 <p>
-                                  <span className="font-medium">
-                                    Interest Rate:
-                                  </span>{' '}
-                                  1.0%
+                                  <span className="font-medium">Interest Rate:</span>{" "}
+                                  {selectedInfo.interest_rate}%
                                 </p>
                                 <p>
-                                  <span className="font-medium">
-                                    Notional Principle:
-                                  </span>{' '}
-                                  1.0
+                                  <span className="font-medium">Notional Principle:</span>{" "}
+                                  {selectedInfo.notional_principle}
                                 </p>
                                 <p>
-                                  <span className="font-medium">Price:</span>{' '}
-                                  1.0
+                                  <span className="font-medium">Price:</span> {selectedInfo.price}
                                 </p>
                                 <p>
-                                  <span className="font-medium">
-                                    Number of Bonds:
-                                  </span>{' '}
-                                  1.0
+                                  <span className="font-medium">Number of Bonds:</span>{" "}
+                                  {selectedInfo.number_of_bonds}
                                 </p>
                                 <p>
-                                  <span className="font-medium">Discount:</span>{' '}
-                                  1
+                                  <span className="font-medium">Discount:</span> {selectedInfo.discount}
                                 </p>
                                 <p>
-                                  <span className="font-medium">Position:</span>{' '}
-                                  Short
+                                  <span className="font-medium">Position:</span>{" "}
+                                  {selectedInfo.bond_position.charAt(0).toUpperCase() +
+                                    selectedInfo.bond_position.slice(1)}
                                 </p>
                               </div>
                             </div>
@@ -880,14 +861,12 @@ const UserDashboard = () => {
                               </h3>
                               <div className="mt-2 space-y-2">
                                 <p>
-                                  <span className="font-medium">
-                                    Initial Exchange:
-                                  </span>{' '}
-                                  {formatDate('2024-12-31')}
+                                  <span className="font-medium">Initial Exchange:</span>{" "}
+                                  {formatDate(selectedInfo.initial_exchange_date)}
                                 </p>
                                 <p>
-                                  <span className="font-medium">Maturity:</span>{' '}
-                                  {formatDate('2024-12-31')}
+                                  <span className="font-medium">Maturity:</span>{" "}
+                                  {formatDate(selectedInfo.maturity_date)}
                                 </p>
                               </div>
                             </div>
@@ -898,22 +877,16 @@ const UserDashboard = () => {
                               </h3>
                               <div className="mt-2 space-y-2">
                                 <p>
-                                  <span className="font-medium">
-                                    Asset Name:
-                                  </span>{' '}
-                                  Zeroooo Coupooon tribe voting share
+                                  <span className="font-medium">Asset Name:</span>{" "}
+                                  {selectedInfo.asset_name}
                                 </p>
                                 <p>
-                                  <span className="font-medium">
-                                    Amount Stored:
-                                  </span>{' '}
-                                  0.0
+                                  <span className="font-medium">Amount Stored:</span>{" "}
+                                  {selectedInfo.amount_stored || "N/A"}
                                 </p>
                                 <p>
-                                  <span className="font-medium">
-                                    Created on Blockchain:
-                                  </span>{' '}
-                                  Yes
+                                  <span className="font-medium">Created on Blockchain:</span>{" "}
+                                  {selectedInfo.created_on_blockchain ? "Yes" : "No"}
                                 </p>
                               </div>
                             </div>
@@ -924,34 +897,27 @@ const UserDashboard = () => {
                               </h3>
                               <div className="mt-2 space-y-2">
                                 <p>
-                                  <span className="font-medium">
-                                    Community Name:
-                                  </span>{' '}
-                                  real elon
+                                  <span className="font-medium">Community Name:</span>{" "}
+                                  {selectedInfo.community.name}
                                 </p>
                                 <p>
-                                  <span className="font-medium">
-                                    Total Tokens:
-                                  </span>{' '}
-                                  10,000
+                                  <span className="font-medium">Total Tokens:</span>{" "}
+                                  {selectedInfo.community.total_token}
                                 </p>
                                 <p>
-                                  <span className="font-medium">
-                                    Tokens Bought:
-                                  </span>{' '}
-                                  110
+                                  <span className="font-medium">Tokens Bought:</span>{" "}
+                                  {selectedInfo.community.token_bought}
                                 </p>
                                 <p>
-                                  <span className="font-medium">Funds:</span>{' '}
-                                  549.0
+                                  <span className="font-medium">Funds:</span> {selectedInfo.community.funds}
                                 </p>
                               </div>
                             </div>
                           </div>
                         </div>
                       </CardContent>
-                    </Card> }
-                  
+                    </Card>}
+
                   </DialogContent>
                 </Dialog>
               </div>
