@@ -36,8 +36,45 @@ import Resources from "./Pages/Resources";
 import Support from "./Pages/Support";
 import Community from "./Pages/Community";
 import Roadmap from "./Pages/Roadmap";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIfMobile = () => {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      const isMobileDevice =
+        /android|iphone|ipad|ipod|opera mini|blackberry|mobile/i.test(userAgent);
+      setIsMobile(isMobileDevice);
+    };
+
+    checkIfMobile();
+  }, []);
+  if (isMobile) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          textAlign: "center",
+          backgroundColor: "#f8f8f8",
+          color: "#333",
+          fontFamily: "Arial, sans-serif",
+        }}
+      >
+        <div>
+          <h1 className="font-bold text-2xl my-2">Desktop Only Application</h1>
+          <p className="text-balance">
+            This application is designed to work on desktop devices only. 
+            Please access it from a desktop browser.
+          </p>
+        </div>
+      </div>
+    );
+  }
   return (
     <Router>
       <Routes>
