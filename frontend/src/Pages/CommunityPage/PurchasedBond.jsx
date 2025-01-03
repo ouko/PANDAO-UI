@@ -81,10 +81,10 @@ const PurchasedBond = (props) => {
                     {issuedBonds.map((bond) => (
                       <Card
                         key={bond.id}
-                        className="bg-white shadow-lg rounded-lg p-6 transition-transform transform hover:scale-105 hover:shadow-xl"
+                        className="bg-green-100/50 shadow-lg rounded-lg p-6  hover:shadow-xl ring-2 ring-emerald-600"
                       >
                         {/* Bond Title */}
-                        <CardTitle className="text-2xl font-bold text-blue-800">
+                        <CardTitle className="text-2xl font-bold text-blue-800 capitalize py-2">
                           {bond.name}
                         </CardTitle>
 
@@ -94,7 +94,7 @@ const PurchasedBond = (props) => {
                             <img
                               src={bond.asset_url}
                               alt={bond.asset_name || 'Asset'}
-                              className="w-full h-48 object-cover rounded-md"
+                              className="w-full h-48 object-cover rounded-md ring-2 ring-purple-400"
                             />
                           </div>
                         )}
@@ -114,14 +114,14 @@ const PurchasedBond = (props) => {
                               >
                                 {bond.description}
                               </div>
-                              <button
+                              {/* <button
                                 className="mt-2 text-blue-500 hover:text-blue-700"
                                 onClick={() => toggleDescription(bond.id)}
                               >
                                 {expandedBonds[bond.id]
                                   ? 'Show less'
                                   : 'Show more'}
-                              </button>
+                              </button> */}
                             </div>
                           ) : (
                             <p>No description provided</p>
@@ -169,6 +169,9 @@ const PurchasedBond = (props) => {
                           </p>
                           <p>
                             <strong>Contract Role:</strong> {bond.contract_role}
+                          </p>
+                          <p>
+                            <strong>Amount Owned:</strong> {bond.amount_own}
                           </p>
                         </div>
 
