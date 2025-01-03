@@ -375,6 +375,7 @@ const CommunityDetails = () => {
   const isUserParticipant = participants.some(
     (participant) => participant.public_address  === accounts[0].address,
   )
+  console.log(participants,"hey")
   return (
     <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-50 to-purple-50 text-black px-2">
       <CustomAlert />
@@ -808,7 +809,7 @@ const CommunityDetails = () => {
                         key={index}
                         onClick={() =>
                           navigate(
-                            `/userDashboard/userProfile/${participant.participant}`,
+                            `/userDashboard/userProfile/${participant.public_address}`,
                           )
                         }
                         className="bg-white flex items-center gap-2 md:w-[100%] mx-auto  p-2 border-none shadow-none"
