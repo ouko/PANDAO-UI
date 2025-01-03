@@ -36,9 +36,12 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
+import { formatDate } from '@/utils/functions/ConvertDate'
 
 const UserDashboard = () => {
   const { accounts } = useAccount()
+  const [showInfo, setShowInfo] = useState(false)
+  const [selectedInfo, setSelectedInfo] = useState(null)
   const [openPay, setOpenPay] = useState(false)
   const [xrdToPay, setXrdToPay] = useState(0)
   const navigate = useNavigate()
@@ -372,7 +375,9 @@ const UserDashboard = () => {
 
   useEffect(() => {
     if (accounts && accounts.length > 0 && accounts[0].address) {
-      fetchCreatedBonds(accounts[0].address)
+      fetchCreatedBonds(
+        'account_tdx_2_12xzluwp8mes7dt67zvdvaz0hn6gtvdspmv9xrknq0wt2r766uxd8p4',
+      )
     }
   }, [check])
   if (!accounts || accounts.length === 0) {
@@ -599,9 +604,8 @@ const UserDashboard = () => {
                           Please Add Work Details
                         </div>
                       )}
-                      {workData && workData.length > 0 &&  ( 
-                      <Timeline items={workData} />
-
+                      {workData && workData.length > 0 && (
+                        <Timeline items={workData} />
                       )}
                     </div>
                   </Card>
@@ -688,7 +692,17 @@ const UserDashboard = () => {
                       createdBonds.map((bond) => (
                         <div
                           key={bond.bond_id}
-                          className="w-full bg-white shadow-sm rounded-md p-4 mt-4 flex flex-col md:flex-row justify-between items-start md:items-center"
+                          className={`w-full  shadow-sm rounded-md p-4 mt-4 flex flex-col md:flex-row justify-between items-start md:items-center ${
+                            check &&
+                            bond.maturity_date &&
+                            new Date(bond.maturity_date) < new Date()
+                              ? 'ring-2 ring-red-300'
+                              : check &&
+                                bond.maturity_date &&
+                                new Date(bond.maturity_date) > new Date()
+                              ? 'ring-2 ring-green-300'
+                              : ''
+                          }`}
                         >
                           <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
                             <img
@@ -717,7 +731,7 @@ const UserDashboard = () => {
                             <p className="text-sm text-gray-600">
                               Price:{' '}
                               {bond.price
-                                ? `${bond.price}XRD`
+                                ? `${bond.price} XRD`
                                 : 'Not Available'}
                             </p>
                             <p className="text-sm text-gray-600">
@@ -738,32 +752,208 @@ const UserDashboard = () => {
                                   })
                                 : 'Not specified'}
                             </p>
-                            {check && !bond.has_withdrawn && (
-                              <Button
-                                disabled={loading2}
-                                className="mt-3"
-                                onClick={() => handleRetreiveBond(bond)}
-                              >
-                                Withdraw
-                              </Button>
-                            )}
-                            {check && bond.has_withdrawn && (
-                              <Button
-                                disabled={loading2}
-                                className="mt-3"
-                                onClick={() => {
-                                  setOpenPay(true)
-                                  setSelectedBond(bond)
-                                }}
-                              >
-                                Deposit
-                              </Button>
-                            )}
+                            <div className="flex items-center gap-3">
+                              {check && (
+                                <Button
+                                  className="mt-3"
+                                  variant="secondary"
+                                  onClick={() => {
+                                    setSelectedInfo(bond)
+                                    setShowInfo(true)
+                                  }}
+                                >
+                                  Show Info
+                                </Button>
+                              )}
+                              {check &&
+                                !bond.has_withdrawn &&
+                                bond.maturity_date > Date.now() && (
+                                  <Button
+                                    disabled={loading2}
+                                    className="mt-3"
+                                    onClick={() => handleRetreiveBond(bond)}
+                                  >
+                                    Withdraw
+                                  </Button>
+                                )}
+
+                              {check && bond.has_withdrawn && (
+                                <Button
+                                  disabled={loading2}
+                                  className="mt-3"
+                                  onClick={() => {
+                                    setOpenPay(true)
+                                    setSelectedBond(bond)
+                                  }}
+                                >
+                                  Deposit
+                                </Button>
+                              )}
+                            </div>
                           </div>
                         </div>
                       ))}
                   </Card>
                 </div>
+                <Dialog open={showInfo} onOpenChange={setShowInfo}>
+                  <DialogTrigger></DialogTrigger>
+
+                  <DialogContent className="max-w-5xl">
+                    {selectedInfo &&   <Card className="w-full max-w-5xl">
+                      <CardHeader>
+                        <h2 className="text-2xl font-bold">
+                       {selectedInfo.name}
+                        </h2>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="space-y-4">
+                            <div>
+                              <h3 className="text-sm font-medium text-gray-500">
+                                Basic Information
+                              </h3>
+                              <div className="mt-2 space-y-2">
+                                <p>
+                                  <span className="font-medium">Bond ID:</span>{' '}
+                                  e7414938-c968-4d71-930c-04a2f9610156
+                                </p>
+                                <p>
+                                  <span className="font-medium">Name:</span>{' '}
+                                  apple
+                                </p>
+                                <p>
+                                  <span className="font-medium">
+                                    Contract Type:
+                                  </span>{' '}
+                                  apple
+                                </p>
+                                <p>
+                                  <span className="font-medium">Currency:</span>{' '}
+                                  XRD
+                                </p>
+                              </div>
+                            </div>
+
+                            <div>
+                              <h3 className="text-sm font-medium text-gray-500">
+                                Financial Terms
+                              </h3>
+                              <div className="mt-2 space-y-2">
+                                <p>
+                                  <span className="font-medium">
+                                    Interest Rate:
+                                  </span>{' '}
+                                  1.0%
+                                </p>
+                                <p>
+                                  <span className="font-medium">
+                                    Notional Principle:
+                                  </span>{' '}
+                                  1.0
+                                </p>
+                                <p>
+                                  <span className="font-medium">Price:</span>{' '}
+                                  1.0
+                                </p>
+                                <p>
+                                  <span className="font-medium">
+                                    Number of Bonds:
+                                  </span>{' '}
+                                  1.0
+                                </p>
+                                <p>
+                                  <span className="font-medium">Discount:</span>{' '}
+                                  1
+                                </p>
+                                <p>
+                                  <span className="font-medium">Position:</span>{' '}
+                                  Short
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="space-y-4">
+                            <div>
+                              <h3 className="text-sm font-medium text-gray-500">
+                                Important Dates
+                              </h3>
+                              <div className="mt-2 space-y-2">
+                                <p>
+                                  <span className="font-medium">
+                                    Initial Exchange:
+                                  </span>{' '}
+                                  {formatDate('2024-12-31')}
+                                </p>
+                                <p>
+                                  <span className="font-medium">Maturity:</span>{' '}
+                                  {formatDate('2024-12-31')}
+                                </p>
+                              </div>
+                            </div>
+
+                            <div>
+                              <h3 className="text-sm font-medium text-gray-500">
+                                Asset Information
+                              </h3>
+                              <div className="mt-2 space-y-2">
+                                <p>
+                                  <span className="font-medium">
+                                    Asset Name:
+                                  </span>{' '}
+                                  Zeroooo Coupooon tribe voting share
+                                </p>
+                                <p>
+                                  <span className="font-medium">
+                                    Amount Stored:
+                                  </span>{' '}
+                                  0.0
+                                </p>
+                                <p>
+                                  <span className="font-medium">
+                                    Created on Blockchain:
+                                  </span>{' '}
+                                  Yes
+                                </p>
+                              </div>
+                            </div>
+
+                            <div>
+                              <h3 className="text-sm font-medium text-gray-500">
+                                Community Details
+                              </h3>
+                              <div className="mt-2 space-y-2">
+                                <p>
+                                  <span className="font-medium">
+                                    Community Name:
+                                  </span>{' '}
+                                  real elon
+                                </p>
+                                <p>
+                                  <span className="font-medium">
+                                    Total Tokens:
+                                  </span>{' '}
+                                  10,000
+                                </p>
+                                <p>
+                                  <span className="font-medium">
+                                    Tokens Bought:
+                                  </span>{' '}
+                                  110
+                                </p>
+                                <p>
+                                  <span className="font-medium">Funds:</span>{' '}
+                                  549.0
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card> }
+                  
+                  </DialogContent>
+                </Dialog>
               </div>
             )}
           </TabsContent>
@@ -840,7 +1030,7 @@ const UserDashboard = () => {
                     onClick={() => handleDeposit(selectedBond)}
                     disabled={loading3}
                   >
-                {loading3 ? "Depositing..." :"Deposit"}    
+                    {loading3 ? 'Depositing...' : 'Deposit'}
                   </Button>
                 </div>
               </DialogDescription>
