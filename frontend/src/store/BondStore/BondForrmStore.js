@@ -14,7 +14,7 @@ export const useBondFormStore = create((set) => ({
     discount: 0,
     bond_position: '',
     bond_price: 0,
-    number_of_bonds: 0,
+    number_of_bonds: 1,
     user_address: '',
     description: '',
     nft:''

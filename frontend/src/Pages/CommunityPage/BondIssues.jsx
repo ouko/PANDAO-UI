@@ -264,7 +264,6 @@ const BondIssue = () => {
     navigate('/')
     return null
   }
-  console.log(nfts, 'nfy')
   return (
     <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
@@ -390,6 +389,7 @@ const BondIssue = () => {
                       value={bond.number_of_bonds}
                       onChange={handleChange}
                       tooltipText="Total quantity of bonds"
+                      disabled="true"
                     />
                     <FormInput
                       label={<span className="font-bold">User Address</span>}
