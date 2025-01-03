@@ -10,20 +10,26 @@ import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { BookDownIcon } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { useSendTransaction } from '@/hooks/useSendTransaction'
 
 const PurchasedBond = (props) => {
   const { accounts } = useAccount()
+  const [loading2, setLoading2] = useState(false)
+  const sendTransaction = useSendTransaction()
   const params = useParams()
   const navigate = useNavigate()
   const [issuedBonds, setIssuedBonds] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [expandedBonds, setExpandedBonds] = useState({}) // Track expanded descriptions
-
+  const [manifest, setManifest] = useState('')
   const fetchIssuedBond = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/zcb/all/${params.id}?purchased=true`,
+        `${import.meta.env.VITE_BACKEND_URL}/community/zcb/all/${
+          params.id
+        }?purchased=true`,
       )
       setIssuedBonds(res.data)
       setLoading(false)
@@ -33,7 +39,72 @@ const PurchasedBond = (props) => {
       setLoading(false)
     }
   }
+  const handleClaim = async (bond) => {
+    const data = {
+      bond_id: bond.id,
+      community_id: bond.community_id,
+    }
+    setLoading2(true)
 
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/manifest/zcb/claim`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+
+      const responseData =
+        typeof response.data === 'string'
+          ? response.data.trim()
+          : JSON.stringify(response.data)
+
+      console.log('Response:', responseData)
+
+      setManifest(responseData)
+
+      const { receipt } = await sendTransaction(responseData)
+
+      const txId = receipt?.transaction?.intent_hash
+
+      if (txId) {
+        try {
+          const submitResponse = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+            {
+              tx_id: txId,
+              user_address: accounts[0].address,
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+
+          console.log('Submit Transaction Response:', submitResponse.data)
+
+          toast.success('Withdraw Successfully!')
+        } catch (submitError) {
+          console.error('Error submitting transaction:', submitError)
+          toast.error('Failed to submit transaction.')
+        }
+      } else {
+        console.error('Transaction ID not found in receipt:', receipt)
+        toast.error('Transaction failed. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error Withdraw token:', error.response.data.detail)
+
+      toast.error('Something went wrong while Withdrawing.')
+    } finally {
+      // Ensure loading is stopped regardless of success or failure
+      setLoading2(false)
+    }
+  }
   useEffect(() => {
     fetchIssuedBond()
   }, [])
@@ -63,9 +134,7 @@ const PurchasedBond = (props) => {
                     <BookDownIcon className="text-blue-700" />
                   </div>
                 </div>
-                <div className="text-3xl font-semibold">
-                Purchased Bonds
-                </div>
+                <div className="text-3xl font-semibold">Purchased Bonds</div>
               </Card>
 
               {/* Issued Bonds Section */}
@@ -109,8 +178,9 @@ const PurchasedBond = (props) => {
                           {bond.description ? (
                             <div>
                               <div
-                                className={`${expandedBonds[bond.id] ? '' : 'line-clamp-3'
-                                  }`}
+                                className={`${
+                                  expandedBonds[bond.id] ? '' : 'line-clamp-3'
+                                }`}
                               >
                                 {bond.description}
                               </div>
@@ -142,7 +212,8 @@ const PurchasedBond = (props) => {
                             <strong>Currency:</strong> {bond.currency}
                           </p>
                           <p>
-                            <strong>Interest Rate:</strong> {bond.interest_rate}%
+                            <strong>Interest Rate:</strong> {bond.interest_rate}
+                            %
                           </p>
                           <p>
                             <strong>Discount:</strong> {bond.discount}
@@ -171,7 +242,10 @@ const PurchasedBond = (props) => {
                             <strong>Contract Role:</strong> {bond.contract_role}
                           </p>
                           <p>
-                            <span className="font-semibold text-xl">Expected Return:</span> {bond.amount_own} XRD
+                            <span className="font-semibold text-xl">
+                              Expected Return:
+                            </span>{' '}
+                            {bond.amount_own} XRD
                           </p>
                         </div>
 
@@ -191,9 +265,7 @@ const PurchasedBond = (props) => {
                           </p>
                           <p>
                             <strong>Maturity Date:</strong>{' '}
-                            {new Date(
-                              bond.maturity_date,
-                            ).toLocaleDateString()}
+                            {new Date(bond.maturity_date).toLocaleDateString()}
                           </p>
                           <p>
                             <strong>Created on Blockchain:</strong>{' '}
@@ -212,6 +284,10 @@ const PurchasedBond = (props) => {
                             </span>
                           </p>
                         </div>
+                        {bond.maturity_date &&
+                          new Date(bond.maturity_date) < new Date() && bond.claimed === false && (
+                            <Button disabled={loading2} onClick={()=>handleClaim(bond)} className="w-full mt-3">Claim</Button>
+                          )}
                       </Card>
                     ))}
                   </div>
