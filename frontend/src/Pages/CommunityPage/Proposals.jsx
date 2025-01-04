@@ -29,6 +29,7 @@ import { formatStandardDateTime } from '@/utils/functions/convertActivityData'
 import { Badge } from '@/components/ui/badge'
 import { ProposalTypes } from '@/utils/data/proposalType'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { SkeletonCard } from '../GlobalComponents/Skeleton'
 
 const formatTime = (duration) => {
   const hours = Math.floor(
@@ -641,9 +642,9 @@ const Proposals = () => {
                       )}
 
                       {loading && (
-                        <div className="flex h-[200px] items-center justify-center text-center  mt-5 ">
-                          <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
-                        </div>
+                        <div className="flex flex-col h-[200px] items-center justify-center text-center  mt-5  ">
+                                              <SkeletonCard />
+                                            </div>
                       )}
                     </Card>
                   </TabsContent>
@@ -726,9 +727,9 @@ const Proposals = () => {
                       )}
 
                       {loading && (
-                        <div className="flex h-[200px] items-center justify-center text-center  mt-5 ">
-                          <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
-                        </div>
+                       <div className="flex flex-col h-[200px] items-center justify-center text-center  mt-5  ">
+                                             <SkeletonCard />
+                                           </div>
                       )}
                     </Card>
                   </TabsContent>
@@ -899,18 +900,18 @@ const Proposals = () => {
             )}
 
             {loading && (
-              <div className="flex h-[200px] items-center justify-center text-center  mt-5 ">
-                <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
-              </div>
+              <div className="flex flex-col h-[200px] items-center justify-center text-center  mt-5  ">
+                                    <SkeletonCard />
+                                  </div>
             )}
           </Card>
           <div className="grid mt-3  md:grid-cols-3 grid-cols-1 gap-3 px-1">
             <div className="bg-white col-span-2 rounded-md p-2">
               <div>
                 {loadingCommnets && proposal ? (
-                  <div className="flex h-[200px] items-center justify-center text-center  mt-5 ">
-                    <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
-                  </div>
+                 <div className="flex flex-col h-[200px] items-center justify-center text-center  mt-5  ">
+                                       <SkeletonCard />
+                                     </div>
                 ) : (
                   <>
                     {comments &&
