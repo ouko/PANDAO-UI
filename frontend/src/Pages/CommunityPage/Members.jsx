@@ -134,9 +134,7 @@ const Members = () => {
                               </div>
                             </DialogTrigger>
                             <DialogContent className="max-w-[800px] ">
-                             
-                        
-
+                              
                                 <DialogDescription>
                                   <div className="">
                                     <div className="flex items-center gap-3">
