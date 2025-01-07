@@ -769,7 +769,7 @@ const UserDashboard = () => {
                                   </Button>
                                 )}
 
-                              {check && bond.has_withdrawn && (
+                              {check && bond.has_withdrawn && bond.maturity_date > Date.now()  && (
                                 <Button
                                   disabled={loading2}
                                   className="mt-3"
