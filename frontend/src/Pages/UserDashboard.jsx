@@ -1061,7 +1061,7 @@ const UserDashboard = () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>How much amount do you want deposit?</DialogTitle>
-              <DialogDescription className="flex flex-col gap-4">
+              {selectedBond &&        <DialogDescription className="flex flex-col gap-4">
                 <p> Please enter the amount you want to deposit </p>
                 <Input
                   value={xrdToPay}
@@ -1092,7 +1092,8 @@ const UserDashboard = () => {
                     {loading3 ? 'Depositing...' : 'Deposit'}
                   </Button>
                 </div>
-              </DialogDescription>
+              </DialogDescription> }
+       
             </DialogHeader>
           </DialogContent>
         </Dialog>
