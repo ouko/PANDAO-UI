@@ -885,6 +885,10 @@ const UserDashboard = () => {
                                   {selectedInfo.amount_stored || "N/A"}
                                 </p>
                                 <p>
+                                  <span className="font-medium">Amount Owned:</span>{" "}
+                                  {selectedInfo.amount_owned || "N/A"}
+                                </p>
+                                <p>
                                   <span className="font-medium">Created on Blockchain:</span>{" "}
                                   {selectedInfo.created_on_blockchain ? "Yes" : "No"}
                                 </p>
