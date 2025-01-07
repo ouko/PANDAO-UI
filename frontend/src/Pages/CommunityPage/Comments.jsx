@@ -19,6 +19,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import ImageUpdater from "../components/ImageUpdater";
 import CommnetImageUpdater from "../components/CommentImageUpdater";
+import { SkeletonCard } from "../GlobalComponents/Skeleton";
 
 const Comments = () => {
   const { accounts } = useAccount();
@@ -228,9 +229,9 @@ const Comments = () => {
                     </div>
                   )}
                   {loading && (
-                    <div className="flex h-[200px] items-center justify-center text-center mt-5">
-                      <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
-                    </div>
+                   <div className="flex flex-col h-[200px] items-center justify-center text-center  mt-5  ">
+                                         <SkeletonCard />
+                                       </div>
                   )}
                 </Card>
               )}
