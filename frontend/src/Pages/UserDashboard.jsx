@@ -1065,12 +1065,24 @@ const UserDashboard = () => {
                 <p> Please enter the amount you want to deposit </p>
                 <Input
                   value={xrdToPay}
-                  onChange={(e) => setXrdToPay(e.target.value)}
+                  onChange={(e) => {
+                    const value = Number(e.target.value)
+                    const maxAllowed =
+                      selectedBond.amount_owned - selectedBond.amount_stored
+
+                    if (value > maxAllowed) {
+                      toast.error(
+                        `Value cannot exceed ${maxAllowed}. Please enter a valid amount.`,
+                      ) 
+                    } else {
+                      setXrdToPay(value)
+                    }
+                  }}
                   type="number"
                   min="0"
-                  max={selectedBond.amount_owned -
-                    selectedBond.amount_stored}
+                  max={selectedBond.amount_owned - selectedBond.amount_stored}
                 />
+
                 <div className="flex items-center justify-end w-full">
                   <Button
                     variant="radix"
