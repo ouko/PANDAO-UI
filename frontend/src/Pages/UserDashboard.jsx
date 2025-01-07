@@ -1068,6 +1068,8 @@ const UserDashboard = () => {
                   onChange={(e) => setXrdToPay(e.target.value)}
                   type="number"
                   min="0"
+                  max={selectedBond.amount_owned -
+                    selectedBond.amount_stored}
                 />
                 <div className="flex items-center justify-end w-full">
                   <Button
