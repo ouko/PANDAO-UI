@@ -353,7 +353,7 @@ const UserDashboard = () => {
         const res = await axios.get(
           `${
             import.meta.env.VITE_BACKEND_URL
-          }/user/community/account_tdx_2_128utduk6z7xg9meehvf6sfq5f5xe44kgn6mde5g4cf24vh00vuk3ay?owner=false`,
+          }/user/community/${user_address}?owner=false`,
         )
         setParticipatedCommunities(res.data)
       } catch (error) {
