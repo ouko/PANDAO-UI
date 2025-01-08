@@ -118,6 +118,10 @@ const Proposals = () => {
     setVoteType(value)
   }
   const handleBondAddress = (value) => {
+    if(value === "No issued Bond"){
+      toast.error("Please buy a bond first.")
+      return
+    }
     const selectedBond = bondIssuerAddresses.find(
       (newValue) => newValue.creator_address === value,
     )
