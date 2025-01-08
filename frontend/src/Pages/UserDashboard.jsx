@@ -37,6 +37,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { formatDate } from '@/utils/functions/ConvertDate'
+import { Separator } from '@/components/ui/separator'
 
 const UserDashboard = () => {
   const { accounts } = useAccount()
@@ -392,21 +393,51 @@ const UserDashboard = () => {
   return (
     <>
       <div className=" relative flex items-start gap-3 justify-start min-h-screen bg-slate-100 text-black pb-7 pt-2 px-7">
-        <Tabs defaultValue="overview" className="w-full  t ">
-          <TabsList className=" w-full flex  items-center justify-start  max-w-[1400px] mx-auto  ">
-            <div
-              onClick={() => navigate(-1)}
-              className="bg-white rounded-md p-1 flex items-center justify-center mr-2"
-            >
-              <ChevronLeft />
+        <Tabs defaultValue="overview" className="w-full flex gap-2 ">
+          <TabsList className="  flex  items-start justify-start   mx-auto  bg-white shadow-lg border-2 w-60 h-screen mt-2 sticky top-4 ">
+            <div className="flex flex-col w-full  h-full">
+              <div
+                onClick={() => navigate(-1)}
+                className="bg-white rounded-xl absolute bottom-5  p-2 flex items-start justify-start mr-2 cursor-pointer hover:text-gray-600"
+              >
+                <ChevronLeft /> <span>Back </span>
+              </div>
+              <div className="flex items-center justify-center font-bold text-2xl p-3">
+                Pandao
+              </div>
+              <Separator />
+              <div className="flex flex-col items-start mt-2 w-full space-y-2">
+                <TabsTrigger value="overview" asChild className="w-full p-0">
+                  <Button
+                    variant="ghost"
+                    className="w-full data-[state=active]:bg-gradient-to-b from-[#c4b5fd]  to-[#8b5cf6] data-[state=active]:text-white"
+                  >
+                    Overview
+                  </Button>
+                </TabsTrigger>
+                <TabsTrigger value="activity" asChild className="w-full p-0">
+                  <Button
+                    variant="ghost"
+                    className="w-full data-[state=active]:bg-gradient-to-b from-[#c4b5fd]  to-[#8b5cf6] data-[state=active]:text-white"
+                  >
+                    User Activity
+                  </Button>
+                </TabsTrigger>
+                <TabsTrigger value="expenses" asChild className="w-full p-0">
+                  <Button
+                    variant="ghost"
+                    className="w-full data-[state=active]:bg-gradient-to-b from-[#c4b5fd]  to-[#8b5cf6] data-[state=active]:text-white"
+                  >
+                    User Trasaction
+                  </Button>
+                </TabsTrigger>
+              </div>
             </div>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="activity">User Activity</TabsTrigger>
-            <TabsTrigger value="expenses">User Transaction</TabsTrigger>
           </TabsList>
-          <TabsContent value="overview">
+
+          <TabsContent value="overview" className="w-full ">
             {userData && (
-              <div className="flex flex-col w-full">
+              <div className="flex flex-col w-full ">
                 <Card className="w-full flex md:flex-row flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm  text-black border-b-0 h-48">
                   {userData.usermetadata?.cover_url ? (
                     <img
@@ -424,11 +455,11 @@ const UserDashboard = () => {
                 </Card>
                 <Card className="w-full rounded-t-none border-t-0 flex md:flex-row flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black ">
                   <CardHeader className="p-0 -translate-y-32 ">
-                    <Avatar className="h-72 w-72 border-[5px] border-purple-400">
+                    <Avatar className="size-48 border-[5px] border-purple-400">
                       {userData.usermetadata?.image_url && (
                         <AvatarImage
                           src={userData.usermetadata.image_url}
-                          className="h-72 w-72 object-cover"
+                          className="size-48 object-cover"
                         />
                       )}
                       <AvatarFallback>CN</AvatarFallback>
@@ -548,7 +579,7 @@ const UserDashboard = () => {
                         ))}
                     </div>
                   </Card>
-                  <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
+                  <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black col-span-2  ">
                     <div className="text-xl font-bold">
                       {' '}
                       Communities Participated
@@ -596,79 +627,7 @@ const UserDashboard = () => {
                         ))}
                     </div>
                   </Card>
-                  <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
-                    <div className="text-xl font-bold"> Work History</div>
-                    <div className="w-full mt-4 flex flex-col gap-2 h-full">
-                      {workData && workData.length === 0 && (
-                        <div className="flex items-center justify-center text-center h-full">
-                          Please Add Work Details
-                        </div>
-                      )}
-                      {workData && workData.length > 0 && (
-                        <Timeline items={workData} />
-                      )}
-                    </div>
-                  </Card>
 
-                  <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
-                    <div className="text-xl font-bold">
-                      {' '}
-                      Communities you might be interested In
-                    </div>
-                    <div className="flex  py-2">
-                      {userData.interested_tag &&
-                        userData.interested_tag.map((tag, index) => (
-                          <div key={index}>
-                            <Badge variant="outline">{tag}</Badge>
-                          </div>
-                        ))}
-                    </div>
-                    <div className="w-full mt-4 flex flex-col gap-2 h-full">
-                      {dataAll.length === 0 && (
-                        <div className="flex items-center justify-center text-center h-full">
-                          No active communities.
-                        </div>
-                      )}
-                      {dataAll.length > 0 &&
-                        dataAll.map((activity, index) => (
-                          <div
-                            key={index}
-                            className="p-4 border-2 rounded-lg group hover:shadow-md "
-                          >
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <Avatar className="h-12 w-12 mt-1">
-                                  <AvatarImage
-                                    src={activity.image}
-                                    className="h-12 w-12 object-cover"
-                                  />
-
-                                  <AvatarFallback>CN</AvatarFallback>
-                                </Avatar>
-                                <div>
-                                  <div className="flex items-center gap-2 text-xl px-4">
-                                    <span>{activity.name}</span>
-                                  </div>
-                                  <div className="flex items-center gap-2 px-4">
-                                    <span className="line-clamp-2">
-                                      {activity.description}
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                onClick={() =>
-                                  navigate(`/community/detail/${activity.id}`)
-                                }
-                                className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
-                              >
-                                <SquareArrowOutUpRight className="h-4 w-4" />
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                    </div>
-                  </Card>
                   <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
                     <div className="flex items-center justify-between w-full">
                       <div className="text-xl font-bold"> Created Bonds </div>
@@ -1002,8 +961,8 @@ const UserDashboard = () => {
               </div>
             )}
           </TabsContent>
-          <TabsContent value="activity">
-            <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
+          <TabsContent value="activity" className="w-full  ">
+            <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black min-h-screen  ">
               <div className="text-xl font-bold">User Activity</div>
               <div className="w-full mt-4 flex flex-col gap-2 ">
                 {activityData.map((activity, index) => (
@@ -1049,51 +1008,126 @@ const UserDashboard = () => {
             </div> */}
             </Card>
           </TabsContent>
-          <TabsContent value="expenses">
+          <TabsContent value="expenses" className="w-full ">
             <UserTransaction
               expneseData={expneseData}
               failedTransaction={failedData}
             />
           </TabsContent>
+          <div className="  flex flex-col  items-start justify-start   mx-auto   shadow-lg border-2 max-w-[600px] h-screen mt-2 sticky top-4 p-0 ">
+            <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black m-0  ">
+              <div className="text-xl font-bold">
+                {' '}
+                Communities you might be interested In
+              </div>
+              <div className="flex  py-2">
+                {userData.interested_tag &&
+                  userData.interested_tag.map((tag, index) => (
+                    <div key={index}>
+                      <Badge variant="outline">{tag}</Badge>
+                    </div>
+                  ))}
+              </div>
+              <div className="w-full mt-4 flex flex-col gap-2 h-full">
+                {dataAll.length === 0 && (
+                  <div className="flex items-center justify-center text-center h-full">
+                    No active communities.
+                  </div>
+                )}
+                {dataAll.length > 0 &&
+                  dataAll.map((activity, index) => (
+                    <div
+                      key={index}
+                      className="p-4 border-2 rounded-lg group hover:shadow-md "
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Avatar className="h-12 w-12 mt-1">
+                            <AvatarImage
+                              src={activity.image}
+                              className="h-12 w-12 object-cover"
+                            />
+
+                            <AvatarFallback>CN</AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <div className="flex items-center gap-2 text-xl px-4">
+                              <span>{activity.name}</span>
+                            </div>
+                            <div className="flex items-center gap-2 px-4">
+                              <span className="line-clamp-2">
+                                {activity.description}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          onClick={() =>
+                            navigate(`/community/detail/${activity.id}`)
+                          }
+                          className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
+                        >
+                          <SquareArrowOutUpRight className="h-4 w-4" />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </Card>
+            <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
+              <div className="text-xl font-bold"> Work History</div>
+              <div className="w-full mt-4 flex flex-col gap-2 h-full">
+                {workData && workData.length === 0 && (
+                  <div className="flex items-center justify-center text-center h-full">
+                    Please Add Work Details
+                  </div>
+                )}
+                {workData && workData.length > 0 && (
+                  <Timeline items={workData} />
+                )}
+              </div>
+            </Card>
+          </div>
         </Tabs>
         <Dialog open={openPay} onOpenChange={setOpenPay}>
           <DialogTrigger></DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>How much amount do you want deposit?</DialogTitle>
-              {selectedBond &&        <DialogDescription className="flex flex-col gap-4">
-                <p> Please enter the amount you want to deposit </p>
-                <Input
-                  value={xrdToPay}
-                  onChange={(e) => {
-                    const value = Number(e.target.value)
-                    const maxAllowed =
-                      selectedBond.amount_owned - selectedBond.amount_stored
+              {selectedBond && (
+                <DialogDescription className="flex flex-col gap-4">
+                  <p> Please enter the amount you want to deposit </p>
+                  <Input
+                    value={xrdToPay}
+                    onChange={(e) => {
+                      const value = Number(e.target.value)
+                      const maxAllowed =
+                        selectedBond.amount_owned - selectedBond.amount_stored
 
-                    if (value > maxAllowed) {
-                      toast.error(
-                        `Value cannot exceed ${maxAllowed}. Please enter a valid amount.`,
-                      ) 
-                    } else {
-                      setXrdToPay(value)
-                    }
-                  }}
-                  type="number"
-                  min="0"
-                  max={selectedBond.amount_owned - selectedBond.amount_stored}
-                />
+                      if (value > maxAllowed) {
+                        toast.error(
+                          `Value cannot exceed ${maxAllowed}. Please enter a valid amount.`,
+                        )
+                      } else {
+                        setXrdToPay(value)
+                      }
+                    }}
+                    type="number"
+                    min="0"
+                    max={selectedBond.amount_owned - selectedBond.amount_stored}
+                  />
 
-                <div className="flex items-center justify-end w-full">
-                  <Button
-                    variant="radix"
-                    onClick={() => handleDeposit(selectedBond)}
-                    disabled={loading3}
-                  >
-                    {loading3 ? 'Depositing...' : 'Deposit'}
-                  </Button>
-                </div>
-              </DialogDescription> }
-       
+                  <div className="flex items-center justify-end w-full">
+                    <Button
+                      variant="radix"
+                      onClick={() => handleDeposit(selectedBond)}
+                      disabled={loading3}
+                    >
+                      {loading3 ? 'Depositing...' : 'Deposit'}
+                    </Button>
+                  </div>
+                </DialogDescription>
+              )}
             </DialogHeader>
           </DialogContent>
         </Dialog>

@@ -15,7 +15,7 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
           <TabsTrigger value="password">Pending</TabsTrigger>
         </TabsList>
         <TabsContent value="account">
-          <div className="  ">
+          <div className=" min-h-screen  ">
             <div className="text-xl font-bold pl-2 pt-3">
               {' '}
               Successfull Transaction
@@ -83,7 +83,7 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
           </div>
         </TabsContent>
         <TabsContent value="password">
-          <div className="  ">
+          <div className="min-h-screen  ">
             <div className="text-xl font-bold pl-2 pt-3">
               {' '}
               Pending Transactions
