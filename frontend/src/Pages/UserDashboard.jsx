@@ -353,7 +353,7 @@ const UserDashboard = () => {
         const res = await axios.get(
           `${
             import.meta.env.VITE_BACKEND_URL
-          }/user/community/${user_address}?owner=false`,
+          }/user/community/account_tdx_2_128utduk6z7xg9meehvf6sfq5f5xe44kgn6mde5g4cf24vh00vuk3ay?owner=false`,
         )
         setParticipatedCommunities(res.data)
       } catch (error) {
@@ -394,7 +394,7 @@ const UserDashboard = () => {
     <>
       <div className=" relative flex items-start gap-3 justify-start min-h-screen bg-slate-100 text-black pb-7 pt-2 px-7">
         <Tabs defaultValue="overview" className="w-full flex gap-2 ">
-          <TabsList className="  flex  items-start justify-start   mx-auto  bg-white shadow-lg border-2 w-60 h-screen mt-2 sticky top-4 ">
+          <TabsList className="  flex  items-start justify-start   mx-auto  bg-white shadow-lg border-2 w-72 h-screen mt-2 sticky top-4 ">
             <div className="flex flex-col w-full  h-full">
               <div
                 onClick={() => navigate(-1)}
@@ -429,6 +429,18 @@ const UserDashboard = () => {
                     className="w-full data-[state=active]:bg-gradient-to-b from-[#c4b5fd]  to-[#8b5cf6] data-[state=active]:text-white"
                   >
                     User Trasaction
+                  </Button>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="participated"
+                  asChild
+                  className="w-full p-0"
+                >
+                  <Button
+                    variant="ghost"
+                    className="w-full data-[state=active]:bg-gradient-to-b from-[#c4b5fd]  to-[#8b5cf6] data-[state=active]:text-white"
+                  >
+                    Community Participated
                   </Button>
                 </TabsTrigger>
               </div>
@@ -591,40 +603,42 @@ const UserDashboard = () => {
                         </div>
                       )}
                       {participatedComminities.length > 0 &&
-                        participatedComminities.map((activity, index) => (
-                          <div
-                            key={index}
-                            className="p-4 border-2 rounded-lg group hover:shadow-md "
-                          >
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <Avatar className="h-12 w-12 mt-1">
-                                  <AvatarImage
-                                    src={activity.community_image}
-                                    className="h-12 w-12 object-cover"
-                                  />
+                        participatedComminities
+                          .slice(0, 3)
+                          .map((activity, index) => (
+                            <div
+                              key={index}
+                              className="p-4 border-2 rounded-lg group hover:shadow-md "
+                            >
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                  <Avatar className="h-12 w-12 mt-1">
+                                    <AvatarImage
+                                      src={activity.community_image}
+                                      className="h-12 w-12 object-cover"
+                                    />
 
-                                  <AvatarFallback>CN</AvatarFallback>
-                                </Avatar>
-                                <div>
-                                  <div className="flex items-center gap-2">
-                                    <span>{activity.community_name}</span>
+                                    <AvatarFallback>CN</AvatarFallback>
+                                  </Avatar>
+                                  <div>
+                                    <div className="flex items-center gap-2">
+                                      <span>{activity.community_name}</span>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div
-                                onClick={() =>
-                                  navigate(
-                                    `/community/detail/${activity.community_id}`,
-                                  )
-                                }
-                                className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
-                              >
-                                <SquareArrowOutUpRight className="h-4 w-4" />
+                                <div
+                                  onClick={() =>
+                                    navigate(
+                                      `/community/detail/${activity.community_id}`,
+                                    )
+                                  }
+                                  className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
+                                >
+                                  <SquareArrowOutUpRight className="h-4 w-4" />
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
                     </div>
                   </Card>
 
@@ -1013,6 +1027,53 @@ const UserDashboard = () => {
               expneseData={expneseData}
               failedTransaction={failedData}
             />
+          </TabsContent>
+          <TabsContent value="participated" className="w-full ">
+            <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black col-span-2  min-h-screen ">
+              <div className="text-xl font-bold"> Communities Participated</div>
+              <div className="w-full mt-4 flex flex-col gap-2 h-full">
+                {participatedComminities.length === 0 && (
+                  <div className="flex items-center justify-center text-center h-full">
+                    No participated comminities.
+                  </div>
+                )}
+                {participatedComminities.length > 0 &&
+                  participatedComminities.map((activity, index) => (
+                    <div
+                      key={index}
+                      className="p-4 border-2 rounded-lg group hover:shadow-md "
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Avatar className="h-12 w-12 mt-1">
+                            <AvatarImage
+                              src={activity.community_image}
+                              className="h-12 w-12 object-cover"
+                            />
+
+                            <AvatarFallback>CN</AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span>{activity.community_name}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          onClick={() =>
+                            navigate(
+                              `/community/detail/${activity.community_id}`,
+                            )
+                          }
+                          className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
+                        >
+                          <SquareArrowOutUpRight className="h-4 w-4" />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </Card>
           </TabsContent>
           <div className="  flex flex-col  items-start justify-start   mx-auto   shadow-lg border-2 max-w-[600px] h-screen mt-2 sticky top-4 p-0 ">
             <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black m-0  ">
