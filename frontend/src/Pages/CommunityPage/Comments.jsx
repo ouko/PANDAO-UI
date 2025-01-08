@@ -183,57 +183,62 @@ const Comments = () => {
               </Card>
               {!selectedDiscussion && (
                 <Card className="bg-white md:w-[80%] mx-auto md:p-4 p-4 space-y-2">
-                  <div className="p-2 border-b-2 -translate-x-2">
-                    Discussions
-                  </div>
-                  {!loading && (
-                    <div className="space-y-4">
+                <div className="p-2 border-b-2 -translate-x-2">
+                  Discussions
+                </div>
+                {!loading && (
+                  <div className="space-y-4">
                       {communities.length === 0 && <div className="flex items-center justify-center h-20">
                         No Active Discussion
                       </div> }
-                      {communities.length > 0 && (
-                        <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
-                          {communities.map((community, index) => (
-                            <Card
-                              key={index}
-                              className="p-4 flex flex-col gap-2 hover:shadow-lg shadow-md cursor-pointer"
-                              onClick={() =>
+                    {communities.length > 0 && (
+                      <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
+                        {communities.map((community, index) => (
+                          <Card
+                            key={index}
+                            className="p-4 flex flex-col gap-2 hover:shadow-lg shadow-md cursor-pointer"
+                            onClick={() =>
                                 fetchDiscussionComments(
                                   community.id,
                                   community.title
                                 )
-                              }
-                            >
+                            }
+                          >
                               <div className="text-lg font-semibold">
                                 {community.title}
                               </div>
-                              <div className="text-sm flex items-center gap-2">
-                                <div>Started By - </div>
-                                <div className="flex items-center gap-1">
+                            <div className="text-sm flex items-center gap-2">
+                              <div>Started By - </div>
+                              <div className="flex items-center gap-1">
                                   <div>
-                                    <Avatar className="h-6 w-6">
-                                      <AvatarImage src={community.user_image} />
-                                      <AvatarFallback>CN</AvatarFallback>
-                                    </Avatar>
+                                <Avatar className="h-6 w-6">
+                                  <AvatarImage src={community.user_image} />
+                                  <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
                                   </div>
-                                  <div>{community.user_name}</div>
-                                </div>
+                                <div>{community.user_name}</div>
                               </div>
-                              <div className="w-full border-t-2 pt-2">
-                                {formatStandardDateTime(community.created_at)}
-                              </div>
-                            </Card>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {loading && (
-                   <div className="flex flex-col h-[200px] items-center justify-center text-center  mt-5  ">
-                                         <SkeletonCard />
-                                       </div>
-                  )}
-                </Card>
+                            </div>
+                            <div className="w-full border-t-2 pt-2">
+                              {formatStandardDateTime(community.created_at)}
+                            </div>
+                          </Card>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+                {loading && (
+                  <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-5">
+                    {[...Array(4)].map((_, index) => (
+                      <SkeletonCard
+                        key={index}
+                        className="p-4 h-[150px] bg-gray-200 rounded shadow-md"
+                      />
+                    ))}
+                  </div>
+                )}
+              </Card>
               )}
               {selectedDiscussion && (
                 <Card className="bg-white md:w-[80%] mx-auto md:p-4 p-4 space-y-2 mt-4">

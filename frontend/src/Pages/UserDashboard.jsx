@@ -384,9 +384,9 @@ const UserDashboard = () => {
   // };
   return (
     <>
-      <div className=" relative flex items-start gap-3 justify-start min-h-screen bg-slate-100 text-black pb-7 pt-2 px-7">
+      <div className=" relative flex items-start gap-3 justify-start min-h-screen  text-black pb-7 pt-2 px-1">
         <Tabs defaultValue="overview" className="w-full  t ">
-          <TabsList className=" w-full flex  items-center justify-start  max-w-[1400px] mx-auto  ">
+          <TabsList className=" w-full flex top-0 sticky z-50 items-center shadow-lg justify-start  max-w-[1400px] mx-auto  ">
             <div
               onClick={() => navigate(-1)}
               className="bg-white rounded-md p-1 flex items-center justify-center mr-2"
@@ -400,7 +400,7 @@ const UserDashboard = () => {
           <TabsContent value="overview">
             {userData && (
               <div className="flex flex-col w-full">
-                <Card className="w-full flex md:flex-row flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm  text-black border-b-0 h-48">
+                <Card className="w-full flex md:flex-row flex-col shadow-md items-center  md:items-start max-w-[1400px] mx-auto rounded-sm  text-black border-b-0 h-48">
                   {userData.usermetadata?.cover_url ? (
                     <img
                       src={coverUrl || '/Pandao.png'}
@@ -415,9 +415,9 @@ const UserDashboard = () => {
                     />
                   )}
                 </Card>
-                <Card className="w-full rounded-t-none border-t-0 flex md:flex-row flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black ">
+                <Card className="w-full rounded-t-none border-t-0 flex  md:flex-row flex-col  shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-1 text-black ">
                   <CardHeader className="p-0 -translate-y-32 ">
-                    <Avatar className="h-72 w-72 border-[5px] border-purple-400">
+                    <Avatar className="h-72 w-72 border-[5px] border-purple-100 glow-border hover:scale-105 transition-all duration-300 ease-in-out">
                       {userData.usermetadata?.image_url && (
                         <AvatarImage
                           src={userData.usermetadata.image_url}
@@ -488,183 +488,18 @@ const UserDashboard = () => {
 
                     <Button
                       onClick={() => navigate('/userDashboard/edit')}
-                      className="bg-slate-700 border-2 absolute right-0 top-2"
+                      className="bg-transparent border-2  absolute right-0 top-2 p-3 rounded-full hover:bg-slate-700 transition-all duration-300"
                     >
-                      Edit Profile
+                      <img src="/edit.png" alt="Edit" className="h-8 w-8" />
                     </Button>
+
                   </CardContent>
                 </Card>
-                <div className="grid md:grid-cols-3 grid-cols-1 w-full max-w-[1400px] mx-auto">
-                  <Card className="md:col-span-1 flex mt-1  flex-col shadow-md items-center md:items-start w-full mx-auto rounded-sm p-5 text-black  ">
-                    <div className="text-xl font-bold">Created Communities</div>
-                    <div className="w-full mt-4 flex flex-col gap-2 h-full ">
-                      {createdComminities.length === 0 && (
-                        <div className="flex items-center justify-center text-center h-full ">
-                          No comminities created
-                        </div>
-                      )}
-                      {createdComminities &&
-                        createdComminities.length > 0 &&
-                        createdComminities.map((activity, index) => (
-                          <div
-                            key={index}
-                            className="p-4 border-2 rounded-lg group hover:shadow-md "
-                          >
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <Avatar className="h-12 w-12 mt-1">
-                                  <AvatarImage
-                                    src={activity.community_image}
-                                    className="h-12 w-12 object-cover"
-                                  />
 
-                                  <AvatarFallback>CN</AvatarFallback>
-                                </Avatar>
-                                <div>
-                                  <div className="flex items-center gap-2">
-                                    <span>{activity.community_name}</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                onClick={() =>
-                                  navigate(
-                                    `/community/detail/${activity.community_id}`,
-                                  )
-                                }
-                                className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
-                              >
-                                <SquareArrowOutUpRight className="h-4 w-4" />
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                    </div>
-                  </Card>
-                  <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
-                    <div className="text-xl font-bold">
-                      {' '}
-                      Communities Participated
-                    </div>
-                    <div className="w-full mt-4 flex flex-col gap-2 h-full">
-                      {participatedComminities.length === 0 && (
-                        <div className="flex items-center justify-center text-center h-full">
-                          No participated comminities.
-                        </div>
-                      )}
-                      {participatedComminities.length > 0 &&
-                        participatedComminities.map((activity, index) => (
-                          <div
-                            key={index}
-                            className="p-4 border-2 rounded-lg group hover:shadow-md "
-                          >
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <Avatar className="h-12 w-12 mt-1">
-                                  <AvatarImage
-                                    src={activity.community_image}
-                                    className="h-12 w-12 object-cover"
-                                  />
-
-                                  <AvatarFallback>CN</AvatarFallback>
-                                </Avatar>
-                                <div>
-                                  <div className="flex items-center gap-2">
-                                    <span>{activity.community_name}</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                onClick={() =>
-                                  navigate(
-                                    `/community/detail/${activity.community_id}`,
-                                  )
-                                }
-                                className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
-                              >
-                                <SquareArrowOutUpRight className="h-4 w-4" />
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                    </div>
-                  </Card>
-                  <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
-                    <div className="text-xl font-bold"> Work History</div>
-                    <div className="w-full mt-4 flex flex-col gap-2 h-full">
-                      {workData && workData.length === 0 && (
-                        <div className="flex items-center justify-center text-center h-full">
-                          Please Add Work Details
-                        </div>
-                      )}
-                      {workData && workData.length > 0 && (
-                        <Timeline items={workData} />
-                      )}
-                    </div>
-                  </Card>
-
-                  <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
-                    <div className="text-xl font-bold">
-                      {' '}
-                      Communities you might be interested In
-                    </div>
-                    <div className="flex  py-2">
-                      {userData.interested_tag &&
-                        userData.interested_tag.map((tag, index) => (
-                          <div key={index}>
-                            <Badge variant="outline">{tag}</Badge>
-                          </div>
-                        ))}
-                    </div>
-                    <div className="w-full mt-4 flex flex-col gap-2 h-full">
-                      {dataAll.length === 0 && (
-                        <div className="flex items-center justify-center text-center h-full">
-                          No active communities.
-                        </div>
-                      )}
-                      {dataAll.length > 0 &&
-                        dataAll.map((activity, index) => (
-                          <div
-                            key={index}
-                            className="p-4 border-2 rounded-lg group hover:shadow-md "
-                          >
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <Avatar className="h-12 w-12 mt-1">
-                                  <AvatarImage
-                                    src={activity.image}
-                                    className="h-12 w-12 object-cover"
-                                  />
-
-                                  <AvatarFallback>CN</AvatarFallback>
-                                </Avatar>
-                                <div>
-                                  <div className="flex items-center gap-2 text-xl px-4">
-                                    <span>{activity.name}</span>
-                                  </div>
-                                  <div className="flex items-center gap-2 px-4">
-                                    <span className="line-clamp-2">
-                                      {activity.description}
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                onClick={() =>
-                                  navigate(`/community/detail/${activity.id}`)
-                                }
-                                className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
-                              >
-                                <SquareArrowOutUpRight className="h-4 w-4" />
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                    </div>
-                  </Card>
-                  <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
+                <div className="grid md:grid-cols-2 grid-cols-1 gap-1 w-full max-w-[1400px] mx-auto">
+                  <Card className="w-full flex mt-1 flex-col shadow-md items-center md:items-start rounded-xl p-6 text-black bg-gradient-to-t from-purple-300">
                     <div className="flex items-center justify-between w-full">
-                      <div className="text-xl font-bold"> Created Bonds </div>
+                      <div className="text-xl font-bold">Created Bonds</div>
                       <div className="flex items-center gap-2">
                         <Switch
                           checked={check}
@@ -677,7 +512,7 @@ const UserDashboard = () => {
                     </div>
 
                     {createdBonds.length === 0 && (
-                      <div className="flex items-center justify-center h-28 w-full">
+                      <div className="flex items-center justify-center h-28 w-full text-center text-gray-400">
                         No Bond Created
                       </div>
                     )}
@@ -685,16 +520,16 @@ const UserDashboard = () => {
                       createdBonds.map((bond) => (
                         <div
                           key={bond.bond_id}
-                          className={`w-full  shadow-sm rounded-md p-4 mt-4 flex flex-col md:flex-row justify-between items-start md:items-center ${check &&
+                          className={`w-full shadow-sm rounded-md p-6 mt-6 flex flex-col md:flex-row justify-between items-start md:items-center ${check &&
+                            bond.maturity_date &&
+                            new Date(bond.maturity_date) < new Date()
+                            ? 'bg-red-300'
+                            : check &&
                               bond.maturity_date &&
-                              new Date(bond.maturity_date) < new Date()
-                              ? 'ring-2 ring-red-300'
-                              : check &&
-                                bond.maturity_date &&
-                                new Date(bond.maturity_date) > new Date()
-                                ? 'ring-2 ring-green-300'
-                                : ''
-                            }`}
+                              new Date(bond.maturity_date) > new Date()
+                              ? 'bg-green-300'
+                              : ''
+                            } border-0 border-b-4 border-t-4 border-transparent bg-gradient-to-r from-purple-200 to-purple-900 transition-all duration-1000`}
                         >
                           <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
                             <img
@@ -703,37 +538,37 @@ const UserDashboard = () => {
                                 'https://via.placeholder.com/150'
                               }
                               alt={bond.community?.name || 'Bond Image'}
-                              className="w-16 h-16 rounded-full object-cover"
+                              className="w-16 h-16 rounded-full object-cover shadow-lg"
                             />
                             <div>
-                              <h2 className="text-lg font-bold">
+                              <h2 className="text-2xl font-semibold">
                                 {bond.name || 'Unnamed Bond'}
                               </h2>
-                              <p className="text-sm text-gray-600">
+                              <p className="text-sm text-gray-100">
                                 Community: {bond.community?.name || 'N/A'}
                               </p>
-                              <p className="text-sm text-gray-600">
-                                Description:{' '}
+                              <p className="text-sm text-gray-100">
+                                Description:
                                 {bond.description || 'No description provided'}
                               </p>
                             </div>
                           </div>
 
-                          <div className="mt-4 md:mt-0 flex flex-col space-y-1 items-start md:items-end">
-                            <p className="text-sm text-gray-600">
+                          <div className="mt-4 md:mt-0 flex flex-col space-y-2 items-start md:items-end">
+                            <p className="text-sm text-gray-100">
                               Price:{' '}
                               {bond.price
                                 ? `${bond.price} XRD`
                                 : 'Not Available'}
                             </p>
-                            <p className="text-sm text-gray-600">
+                            <p className="text-sm text-gray-100">
                               Interest Rate:{' '}
                               {bond.interest_rate
                                 ? `${bond.interest_rate}%`
                                 : 'N/A'}
                             </p>
-                            <p className="text-sm text-gray-600">
-                              Maturity Date:
+                            <p className="text-sm text-gray-100">
+                              Maturity Date:{" "}
                               {bond.maturity_date
                                 ? new Date(
                                   bond.maturity_date,
@@ -744,10 +579,11 @@ const UserDashboard = () => {
                                 })
                                 : 'Not specified'}
                             </p>
-                            <div className="flex items-center gap-3">
+
+                            <div className="flex items-center gap-3 mt-3">
                               {check && (
                                 <Button
-                                  className="mt-3"
+                                  className="mt-2"
                                   variant="secondary"
                                   onClick={() => {
                                     setSelectedInfo(bond)
@@ -762,7 +598,7 @@ const UserDashboard = () => {
                                 bond.maturity_date > Date.now() && (
                                   <Button
                                     disabled={loading2}
-                                    className="mt-3"
+                                    className="mt-2"
                                     onClick={() => handleRetreiveBond(bond)}
                                   >
                                     Withdraw
@@ -772,7 +608,7 @@ const UserDashboard = () => {
                               {check && bond.has_withdrawn && (
                                 <Button
                                   disabled={loading2}
-                                  className="mt-3"
+                                  className="mt-2"
                                   onClick={() => {
                                     setOpenPay(true)
                                     setSelectedBond(bond)
@@ -786,7 +622,201 @@ const UserDashboard = () => {
                         </div>
                       ))}
                   </Card>
+
+
+                  <Card className="w-full flex mt-1 flex-col shadow-lg items-center md:items-start max-w-[1400px] mx-auto rounded-md p-5 text-black bg-gradient-to-t from-purple-900  transition-all duration-300 ease-in-out hover:shadow-xl">
+                    <div className="text-2xl font-semibold text-black">Communities Participated</div>
+                    <div className="w-full mt-6 flex flex-col gap-4 h-full">
+                      {participatedComminities.length === 0 && (
+                        <div className="flex items-center justify-center text-center h-full text-black text-lg">
+                          No participated communities.
+                        </div>
+                      )}
+                      {participatedComminities.length > 0 &&
+                        participatedComminities.map((activity, index) => (
+                          <div
+                            key={index}
+                            className="p-4 border-0 rounded-lg group hover:shadow-lg transition-shadow duration-300 ease-in-out bg-gray-50 hover:bg-gradient-to-r from-purple-100  to-purple-900"
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-4">
+                                <Avatar className="h-12 w-12">
+                                  <AvatarImage
+                                    src={activity.community_image}
+                                    className="h-12 w-12 object-cover rounded-full border"
+                                  />
+                                  <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                                <div>
+                                  <div className="text-lg font-medium text-gray-800 group-hover:text-white">
+                                    <span>{activity.community_name}</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                onClick={() =>
+                                  navigate(
+                                    `/community/detail/${activity.community_id}`,
+                                  )
+                                }
+                                className="border-2 rounded-full p-2 text-gray-700 group-hover:text-black group-hover:border-white cursor-pointer transition-all duration-300 ease-in-out hover:rotate-45 hover:bg-purple-600"
+                              >
+                                <SquareArrowOutUpRight className="h-4 w-4" />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </Card>
+
                 </div>
+
+                <div className="grid md:grid-cols-2 grid-cols-1 gap-1 w-full max-w-[1400px] mx-auto">
+                  <Card className="md:col-span-1 flex md:grid-cols-2 mt-1 flex-col shadow-md items-center md:items-start w-full mx-auto rounded-sm p-5 text-black transition-all duration-300 ease-in-out hover:shadow-lg">
+                    <div className="text-xl font-bold">Created Communities</div>
+                    <div className="w-full mt-4 flex flex-col gap-2 h-full">
+                      {createdComminities.length === 0 && (
+                        <div className="flex items-center justify-center text-center h-full text-gray-500">
+                          No communities created
+                        </div>
+                      )}
+                      {createdComminities &&
+                        createdComminities.length > 0 &&
+                        createdComminities.map((activity, index) => (
+                          <div
+                            key={index}
+                            className="p-4 border-2 rounded-lg group hover:shadow-md transition-shadow duration-300 ease-in-out bg-gray-50 hover:bg-purple-50"
+                          >
+                            <div className="flex items-center  justify-between">
+                              <div className="flex items-center  gap-2">
+                                <Avatar className="h-12 w-12 mt-1">
+                                  <AvatarImage
+                                    src={activity.community_image}
+                                    className="h-12 w-12 object-cover hover:bg-gradient-to-r from-purple-100  to-purple-900 "
+                                  />
+                                  <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                                <div>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-gray-700 group-hover:text-purple-700">
+                                      {activity.community_name}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                onClick={() =>
+                                  navigate(`/community/detail/${activity.community_id}`)
+                                }
+                                className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer transition-all duration-300 ease-in-out hover:rotate-45"
+                              >
+                                <SquareArrowOutUpRight className="h-4 w-4" />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </Card>
+
+                  <Card className="w-full flex mt-1 flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black bg-gradient-to-br from-gray-200 via-purple-200 to-gray-300 transition-all duration-300 ease-in-out hover:shadow-xl">
+                    <div className="text-xl font-bold">Work History</div>
+                    <div className="w-full mt-4 flex flex-col gap-2 h-full">
+                      {workData && workData.length === 0 && (
+                        <div className="flex flex-col items-center justify-center text-center h-full text-gray-500">
+
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-12 w-12 mb-2 text-gray-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M9 12h6m-6 4h6m2 8H7a2 2 0 01-2-2V4a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414A1 1 0 0114.414 4H17a2 2 0 012 2v16a2 2 0 01-2 2z"
+                            />
+                          </svg>
+                          Please Add Work Details
+                        </div>
+                      )}
+                      {workData && workData.length > 0 && (
+                        <Timeline items={workData} />
+                      )}
+                    </div>
+                  </Card>
+
+
+                </div>
+
+                <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md bg-gradient-to-t from-purple-900 items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black">
+                  <div className="text-xl font-bold">
+                    {' '}
+                    Communities you might be interested In
+                  </div>
+                  <div className="flex flex-wrap py-2 gap-2 ">
+                    {userData.interested_tag &&
+                      userData.interested_tag.map((tag, index) => (
+                        <div key={index}>
+                          <Badge
+            variant="outline"
+            className="cursor-pointer border border-gray-300 hover:bg-purple-900 hover:text-white hover:border-purple-900 transition duration-200"
+          >
+            {tag}
+          </Badge>
+                        </div>
+                      ))}
+                  </div>
+                  <div className="w-full mt-4 flex flex-col gap-2 h-full">
+                    {dataAll.length === 0 && (
+                      <div className="flex items-center justify-center text-center h-full">
+                        No active communities.
+                      </div>
+                    )}
+                    {dataAll.length > 0 &&
+                      dataAll.map((activity, index) => (
+                        <div
+                          key={index}
+                          className="p-4 border-2 rounded-lg group hover:shadow-md "
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <Avatar className="h-12 w-12 mt-1">
+                                <AvatarImage
+                                  src={activity.image}
+                                  className="h-12 w-12 object-cover"
+                                />
+
+                                <AvatarFallback>CN</AvatarFallback>
+                              </Avatar>
+                              <div>
+                                <div className="flex items-center gap-2 text-xl px-4">
+                                  <span>{activity.name}</span>
+                                </div>
+                                <div className="flex items-center gap-2 px-4">
+                                  <span className="line-clamp-2">
+                                    {activity.description}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              onClick={() =>
+                                navigate(`/community/detail/${activity.id}`)
+                              }
+                              className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
+                            >
+                              <SquareArrowOutUpRight className="h-4 w-4" />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </Card>
+
+
+
                 <Dialog open={showInfo} onOpenChange={setShowInfo}>
                   <DialogTrigger></DialogTrigger>
 
@@ -928,7 +958,10 @@ const UserDashboard = () => {
               <div className="text-xl font-bold">User Activity</div>
               <div className="w-full mt-4 flex flex-col gap-2 ">
                 {activityData.map((activity, index) => (
-                  <div key={index} className="p-4 border-2 rounded-lg group ">
+                  <div
+                  key={index}
+                  className="p-4 border-2 rounded-lg group transition-all duration-300 hover:bg-gradient-to-r from-purple-100 to-purple-900"
+                >
                     <div className="flex items-center justify-between">
                       <div className="flex items-start gap-2">
                         <Avatar className="h-8 w-8 mt-1">
@@ -952,8 +985,8 @@ const UserDashboard = () => {
                         </div>
                       </div>
 
-                      <div className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600">
-                        <Activity className="h-4 w-4" />
+                      <div className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-800">
+                      <Activity className="h-4 w-4" />
                       </div>
                     </div>
                   </div>

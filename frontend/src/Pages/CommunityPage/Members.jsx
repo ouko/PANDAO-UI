@@ -99,9 +99,11 @@ const Members = () => {
               <Card className="bg-white md:w-[70%] mx-auto md:p-4 p-4 space-y-2">
                 <div className="p-2 border-b-2 -translate-x-2">Members</div>
                 {loading ? (
-                  <div className="flex flex-col h-[200px] items-center justify-center text-center mt-5">
-                    <SkeletonCard />
-                  </div>
+                  <div className="flex flex-col h-auto items-center justify-center text-center mt-5">
+                  {[...Array(4)].map((_, i) => (
+                    <SkeletonCard key={i} />
+                  ))}
+                </div>
                 ) : participants.length === 0 ? (
                   <div className="flex items-center justify-center h-20">
                     Be the first one to join the community
