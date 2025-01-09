@@ -21,6 +21,7 @@ import { clipAddress } from "@/utils/functions/ClipAddress";
 import { Button } from "@/components/ui/button";
 import { formatStandardDateTime } from "@/utils/functions/convertActivityData";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Separator } from "@radix-ui/react-dropdown-menu";
 
 const UserPublicProfile = () => {
   const { accounts } = useAccount();
@@ -83,8 +84,7 @@ const UserPublicProfile = () => {
   const fetchCreatedCommunity = async (user_address) => {
     try {
       const res = await axios.get(
-        `${
-          import.meta.env.VITE_BACKEND_URL
+        `${import.meta.env.VITE_BACKEND_URL
         }/user/community/${user_address}?owner=true`
       );
       setCreatedCommunities(res.data);
@@ -95,8 +95,7 @@ const UserPublicProfile = () => {
   const fetchCreatedParticipated = async (user_address) => {
     try {
       const res = await axios.get(
-        `${
-          import.meta.env.VITE_BACKEND_URL
+        `${import.meta.env.VITE_BACKEND_URL
         }/user/community/${user_address}?owner=false`
       );
       setParticipatedCommunities(res.data);
@@ -118,8 +117,7 @@ const UserPublicProfile = () => {
     const fetchAll = async (user_address) => {
       try {
         const res = await axios.get(
-          `${
-            import.meta.env.VITE_BACKEND_URL
+          `${import.meta.env.VITE_BACKEND_URL
           }/community/user/interest/user_add?user_addr=${user_address}`,
         )
         setDataAll(res.data);
@@ -191,23 +189,59 @@ const UserPublicProfile = () => {
   }
 
   return (
-    <div className=" relative flex items-start gap-3 justify-start min-h-screen bg-blue-50 pb-7 pt-2 px-7">
-      <Tabs defaultValue="overview" className="w-full  t ">
-        <TabsList className=" w-full flex  items-center justify-start  max-w-[1400px] mx-auto  ">
-          <div
-            onClick={() => navigate(-1)}
-            className="bg-white rounded-md p-1 flex items-center justify-center mr-2"
-          >
-            <ChevronLeft />
+    <div className="relative flex items-start gap-3 justify-start min-h-screen bg-slate-100 text-black pb-7 pt-2 px-7">
+      <Tabs defaultValue="overview" className="w-full flex gap-2 ">
+        <TabsList className="  flex  items-start justify-start   mx-auto  bg-white shadow-lg border-2 w-72 h-screen mt-2 sticky top-4  ">
+          <div className="flex flex-col w-full  h-full">
+            <div
+              onClick={() => navigate(-1)}
+              className="bg-white rounded-xl absolute bottom-5  p-2 flex items-start justify-start mr-2 cursor-pointer hover:text-gray-600"
+            >
+              <ChevronLeft /> <span>Back </span>
+            </div>
+            <div className="flex items-center justify-center font-bold text-2xl p-3">
+                Pandao
+              </div>
+            <Separator />
+            <div className="flex flex-col items-start mt-2 w-full space-y-2">
+              <TabsTrigger value="overview" asChild className="w-full p-0">
+                <Button
+                  variant="ghost"
+                  className="w-full data-[state=active]:bg-gradient-to-b from-[#c4b5fd]  to-[#8b5cf6] data-[state=active]:text-white"
+                >
+                  Overview
+                </Button>
+              </TabsTrigger>
+              <TabsTrigger value="activity" asChild className="w-full p-0">
+                <Button
+                  variant="ghost"
+                  className="w-full data-[state=active]:bg-gradient-to-b from-[#c4b5fd]  to-[#8b5cf6] data-[state=active]:text-white"
+                >
+                  User Activity
+                </Button>
+              </TabsTrigger>
+              <TabsTrigger
+                value="participated"
+                asChild
+                className="w-full p-0"
+              >
+                <Button
+                  variant="ghost"
+                  className="w-full data-[state=active]:bg-gradient-to-b from-[#c4b5fd]  to-[#8b5cf6] data-[state=active]:text-white"
+                >
+                  Community Participated
+                </Button>
+              </TabsTrigger>
+
+
+            </div>
           </div>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="activity">User Activity</TabsTrigger>
         </TabsList>
-        <TabsContent value="overview">
+        <TabsContent value="overview" className="w-full ">
           {userData && (
-            <div className="flex flex-col w-full">
-        
-              <Card className="w-full flex md:flex-row flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm  text-black border-b-0 h-48">
+            <div className="flex flex-col w-half">
+
+              <Card className="w-full grid md:grid-row grid-col-2 shadow-md  md:items-start max-w-[1400px] mx-auto rounded-sm  text-black border-b-0 h-48">
                 <img
                   src={userData.usermetadata?.cover_url || "/Pandao.png"}
                   alt="Cover"
@@ -216,11 +250,11 @@ const UserPublicProfile = () => {
               </Card>
               <Card className="w-full rounded-t-none border-t-0 flex md:flex-row flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black ">
                 <CardHeader className="p-0 -translate-y-32 ">
-                  <Avatar className="h-72 w-72 border-[5px] border-purple-400">
+                  <Avatar className="size-48 border-[5px] border-purple-400">
                     {userData.usermetadata?.image_url && (
                       <AvatarImage
                         src={userData.usermetadata.image_url}
-                        className="h-72 w-72 object-cover"
+                        className="size-48 object-cover"
                       />
                     )}
                     <AvatarFallback>CN</AvatarFallback>
@@ -283,7 +317,7 @@ const UserPublicProfile = () => {
                   </div>
                 </CardContent>
               </Card>
-              <div className="grid  md:grid-cols-3 grid-cols-1 w-full max-w-[1400px] mx-auto">
+              <div className="grid  md:grid-cols-4 grid-cols-1.5 w-full max-w-[1400px] mx-auto">
                 <Card className="md:col-span-2 flex mt-1  flex-col shadow-md items-center md:items-start w-full mx-auto rounded-sm p-5 text-black  ">
                   <div className="text-xl font-bold">Created Communities</div>
                   <div className="w-full mt-4 flex flex-col gap-2 h-full ">
@@ -329,7 +363,7 @@ const UserPublicProfile = () => {
                       ))}
                   </div>
                 </Card>
-                <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
+                <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black col-span-2  ">
                   <div className="text-xl font-bold"> Communities Participated</div>
                   <div className="w-full mt-4 flex flex-col gap-2 h-full">
                     {participatedComminities.length === 0 && (
@@ -338,11 +372,13 @@ const UserPublicProfile = () => {
                       </div>
                     )}
                     {participatedComminities.length > 0 &&
-                      participatedComminities.map((activity, index) => (
-                        <div
-                          key={index}
-                          className="p-4 border-2 rounded-lg group hover:shadow-md "
-                        >
+                        participatedComminities
+                          .slice(0, 3)
+                          .map((activity, index) => (
+                            <div
+                              key={index}
+                              className="p-4 border-2 rounded-lg group hover:shadow-md "
+                            >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                               <Avatar className="h-12 w-12 mt-1">
@@ -426,7 +462,7 @@ const UserPublicProfile = () => {
             </div>
           )}
         </TabsContent>
-        <TabsContent value="activity">
+        <TabsContent value="activity" className="w-full"  >
           <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
             <div className="text-xl font-bold">User Activity</div>
             <div className="w-full mt-4 flex flex-col gap-2 ">
@@ -473,6 +509,53 @@ const UserPublicProfile = () => {
             </div> */}
           </Card>
         </TabsContent>
+        <TabsContent value="participated" className="w-full ">
+            <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black col-span-2  min-h-screen ">
+              <div className="text-xl font-bold"> Communities Participated</div>
+              <div className="w-full mt-4 flex flex-col gap-2 h-full">
+                {participatedComminities.length === 0 && (
+                  <div className="flex items-center justify-center text-center h-full">
+                    No participated comminities.
+                  </div>
+                )}
+                {participatedComminities.length > 0 &&
+                  participatedComminities.map((activity, index) => (
+                    <div
+                      key={index}
+                      className="p-4 border-2 rounded-lg group hover:shadow-md "
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Avatar className="h-12 w-12 mt-1">
+                            <AvatarImage
+                              src={activity.community_image}
+                              className="h-12 w-12 object-cover"
+                            />
+
+                            <AvatarFallback>CN</AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span>{activity.community_name}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          onClick={() =>
+                            navigate(
+                              `/community/detail/${activity.community_id}`,
+                            )
+                          }
+                          className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
+                        >
+                          <SquareArrowOutUpRight className="h-4 w-4" />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </Card>
+          </TabsContent>
       </Tabs>
     </div>
   );
