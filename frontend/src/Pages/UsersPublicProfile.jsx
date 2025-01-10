@@ -200,8 +200,8 @@ const UserPublicProfile = () => {
               <ChevronLeft /> <span>Back </span>
             </div>
             <div className="flex items-center justify-center font-bold text-2xl p-3">
-                Pandao
-              </div>
+              Pandao
+            </div>
             <Separator />
             <div className="flex flex-col items-start mt-2 w-full space-y-2">
               <TabsTrigger value="overview" asChild className="w-full p-0">
@@ -237,141 +237,142 @@ const UserPublicProfile = () => {
             </div>
           </div>
         </TabsList>
-        <TabsContent value="overview" className="w-full ">
+        <TabsContent value="overview" className="w-full  ">
           {userData && (
-            <div className="flex flex-col w-half">
+            <div className="flex">
+              <div className="flex  flex-col grid-cols-2 w-full">
 
-              <Card className="w-full grid md:grid-row grid-col-2 shadow-md  md:items-start max-w-[1400px] mx-auto rounded-sm  text-black border-b-0 h-48">
-                <img
-                  src={userData.usermetadata?.cover_url || "/Pandao.png"}
-                  alt="Cover"
-                  className="aspect-video h-48 w-full object-cover"
-                />
-              </Card>
-              <Card className="w-full rounded-t-none border-t-0 flex md:flex-row flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black ">
-                <CardHeader className="p-0 -translate-y-32 ">
-                  <Avatar className="size-48 border-[5px] border-purple-400">
-                    {userData.usermetadata?.image_url && (
-                      <AvatarImage
-                        src={userData.usermetadata.image_url}
-                        className="size-48 object-cover"
-                      />
-                    )}
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                </CardHeader>
-                <CardContent className="text-xl  relative font-bold flex flex-col gap-2 w-full p-5 justify-between">
-                  <div className="flex flex-col gap-1">
-                    <div className="text-black font-semibold text-3xl">
-                      {userData.name}
-                    </div>
-                    <div className="text-black font-light text-base text-left px-0">
-                      {userData.usermetadata?.about}
-                    </div>
-                    <div className="py-1 w-[300px]  rounded-sm flex flex-wrap text-ellipsis overflow-hidden relative group">
-                      {clipAddress(userData.public_address)}
-                      <button
-                        onClick={() => handleCopy(userData.public_address)}
-                        disabled={copied}
-                        className="py-0  text-black rounded-md px-2 h-6 text-xs absolute top-2 -right-2 group-hover:block "
-                      >
-                        {copied ? (
-                          <Check className="h-4 w-4" />
-                        ) : (
-                          <Copy className="h-4 w-4" />
-                        )}
-                      </button>
-                    </div>
-                    {socialLinks.x_url && (
-                      <div className="flex items-center w-full gap-2">
-                        <FaXTwitter className="text-black" />
-                        <div className="px-3 py-1 text-sm w-full bg-transparent  text-black">
-                          {socialLinks.x_url}
-                        </div>
+                <Card className="w-full grid md:grid-row  grid-col-4 shadow-md  md:items-start max-w-[1400px] mx-auto rounded-sm  text-black border-b-0 h-48 ">
+                  <img
+                    src={userData.usermetadata?.cover_url || "/Pandao.png"}
+                    alt="Cover"
+                    className="aspect-video h-48 w-full object-cover"
+                  />
+                </Card>
+                <Card className="w-full rounded-t-none border-t-0 flex md:flex-row flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black ">
+                  <CardHeader className="p-0 -translate-y-32 ">
+                    <Avatar className="size-48 border-[5px] border-purple-400">
+                      {userData.usermetadata?.image_url && (
+                        <AvatarImage
+                          src={userData.usermetadata.image_url}
+                          className="size-48 object-cover"
+                        />
+                      )}
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                  </CardHeader>
+                  <CardContent className="text-xl  relative font-bold flex flex-col gap-2 w-full p-5 justify-between">
+                    <div className="flex flex-col gap-1">
+                      <div className="text-black font-semibold text-3xl">
+                        {userData.name}
                       </div>
-                    )}
-                    {socialLinks.website_url && (
-                      <div className="flex items-center w-full gap-2">
-                        <Globe className="text-black" />
-                        <div className="px-3 py-1 text-sm w-full bg-transparent  text-black">
-                          {socialLinks.website_url}
-                        </div>
+                      <div className="text-black font-light text-base text-left px-0">
+                        {userData.usermetadata?.about}
                       </div>
-                    )}
-                    {socialLinks.linkedin && (
-                      <div className="flex items-center w-full gap-2">
-                        <FaLinkedinIn className="text-black" />
-                        <div className="px-3 py-1 text-sm w-full bg-transparent  text-black">
-                          {socialLinks.linkedin}
-                        </div>
-                      </div>
-                    )}{" "}
-                    {/* {socialLinks.tiktok && (
-                  <div className="flex items-center w-full gap-2">
-                    <FaTiktok className="text-black" />
-                    <div className="px-3 py-1 text-sm w-full bg-transparent  text-black">
-                      {socialLinks.tiktok}
-                    </div>
-                  </div>
-                )} */}
-                  </div>
-                </CardContent>
-              </Card>
-              <div className="grid  md:grid-cols-4 grid-cols-1.5 w-full max-w-[1400px] mx-auto">
-                <Card className="md:col-span-2 flex mt-1  flex-col shadow-md items-center md:items-start w-full mx-auto rounded-sm p-5 text-black  ">
-                  <div className="text-xl font-bold">Created Communities</div>
-                  <div className="w-full mt-4 flex flex-col gap-2 h-full ">
-                    {createdComminities.length === 0 && (
-                      <div className="flex items-center justify-center text-center h-full ">
-                        No comminities created
-                      </div>
-                    )}
-                    {createdComminities.length > 0 &&
-                      createdComminities.map((activity, index) => (
-                        <div
-                          key={index}
-                          className="p-4 border-2 rounded-lg group hover:shadow-md "
+                      <div className="py-1 w-[300px]  rounded-sm flex flex-wrap text-ellipsis overflow-hidden relative group">
+                        {clipAddress(userData.public_address)}
+                        <button
+                          onClick={() => handleCopy(userData.public_address)}
+                          disabled={copied}
+                          className="py-0  text-black rounded-md px-2 h-6 text-xs absolute top-2 -right-2 group-hover:block "
                         >
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <Avatar className="h-12 w-12 mt-1">
-                                <AvatarImage
-                                  src={activity.community_image}
-                                  className="h-12 w-12 object-cover"
-                                />
-
-                                <AvatarFallback>CN</AvatarFallback>
-                              </Avatar>
-                              <div>
-                                <div className="flex items-center gap-2">
-                                  <span>{activity.community_name}</span>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              onClick={() =>
-                                navigate(
-                                  `/community/detail/${activity.community_id}`
-                                )
-                              }
-                              className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
-                            >
-                              <SquareArrowOutUpRight className="h-4 w-4" />
-                            </div>
+                          {copied ? (
+                            <Check className="h-4 w-4" />
+                          ) : (
+                            <Copy className="h-4 w-4" />
+                          )}
+                        </button>
+                      </div>
+                      {socialLinks.x_url && (
+                        <div className="flex items-center w-full gap-2">
+                          <FaXTwitter className="text-black" />
+                          <div className="px-3 py-1 text-sm w-full bg-transparent  text-black">
+                            {socialLinks.x_url}
                           </div>
                         </div>
-                      ))}
-                  </div>
+                      )}
+                      {socialLinks.website_url && (
+                        <div className="flex items-center w-full gap-2">
+                          <Globe className="text-black" />
+                          <div className="px-3 py-1 text-sm w-full bg-transparent  text-black">
+                            {socialLinks.website_url}
+                          </div>
+                        </div>
+                      )}
+                      {socialLinks.linkedin && (
+                        <div className="flex items-center w-full gap-2">
+                          <FaLinkedinIn className="text-black" />
+                          <div className="px-3 py-1 text-sm w-full bg-transparent  text-black">
+                            {socialLinks.linkedin}
+                          </div>
+                        </div>
+                      )}{" "}
+                      {/* {socialLinks.tiktok && (
+                       <div className="flex items-center w-full gap-2">
+                         <FaTiktok className="text-black" />
+                           <div className="px-3 py-1 text-sm w-full bg-transparent  text-black">
+                             {socialLinks.tiktok}
+                                </div>
+                                       </div>
+                                    )} */}
+                    </div>
+                  </CardContent>
                 </Card>
-                <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black col-span-2  ">
-                  <div className="text-xl font-bold"> Communities Participated</div>
-                  <div className="w-full mt-4 flex flex-col gap-2 h-full">
-                    {participatedComminities.length === 0 && (
-                      <div className="flex items-center justify-center text-center h-full">
-                        No participated comminities.
-                      </div>
-                    )}
-                    {participatedComminities.length > 0 &&
+                <div className="grid  md:grid-cols-4 grid-cols-1.5 w-full max-w-[1400px] mx-auto">
+                  <Card className="md:col-span-2 flex mt-1  flex-col shadow-md items-center md:items-start w-full mx-auto rounded-sm p-5 text-black  ">
+                    <div className="text-xl font-bold">Created Communities</div>
+                    <div className="w-full mt-4 flex flex-col gap-2 h-full ">
+                      {createdComminities.length === 0 && (
+                        <div className="flex items-center justify-center text-center h-full ">
+                          No comminities created
+                        </div>
+                      )}
+                      {createdComminities.length > 0 &&
+                        createdComminities.map((activity, index) => (
+                          <div
+                            key={index}
+                            className="p-4 border-2 rounded-lg group hover:shadow-md "
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <Avatar className="h-12 w-12 mt-1">
+                                  <AvatarImage
+                                    src={activity.community_image}
+                                    className="h-12 w-12 object-cover"
+                                  />
+
+                                  <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                                <div>
+                                  <div className="flex items-center gap-2">
+                                    <span>{activity.community_name}</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                onClick={() =>
+                                  navigate(
+                                    `/community/detail/${activity.community_id}`
+                                  )
+                                }
+                                className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
+                              >
+                                <SquareArrowOutUpRight className="h-4 w-4" />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </Card>
+                  <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black col-span-2  ">
+                    <div className="text-xl font-bold"> Communities Participated</div>
+                    <div className="w-full mt-4 flex flex-col gap-2 h-full">
+                      {participatedComminities.length === 0 && (
+                        <div className="flex items-center justify-center text-center h-full">
+                          No participated comminities.
+                        </div>
+                      )}
+                      {participatedComminities.length > 0 &&
                         participatedComminities
                           .slice(0, 3)
                           .map((activity, index) => (
@@ -379,86 +380,92 @@ const UserPublicProfile = () => {
                               key={index}
                               className="p-4 border-2 rounded-lg group hover:shadow-md "
                             >
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <Avatar className="h-12 w-12 mt-1">
-                                <AvatarImage
-                                  src={activity.community_image}
-                                  className="h-12 w-12 object-cover"
-                                />
-
-                                <AvatarFallback>CN</AvatarFallback>
-                              </Avatar>
-                              <div>
+                              <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
-                                  <span>{activity.community_name}</span>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              onClick={() =>
-                                navigate(
-                                  `/community/detail/${activity.community_id}`
-                                )
-                              }
-                              className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
-                            >
-                              <SquareArrowOutUpRight className="h-4 w-4" />
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                  </div>
-                </Card>
-                <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
-                  <div className="text-xl font-bold"> Communities you might be interested In</div>
-                  <div className="w-full mt-4 flex flex-col gap-2 h-full">
-                    {dataAll.length === 0 && (
-                      <div className="flex items-center justify-center text-center h-full">
-                        No participated comminities.
-                      </div>
-                    )}
-                    {dataAll.length > 0 &&
-                      dataAll.map((activity, index) => (
-                        <div
-                          key={index}
-                          className="p-4 border-2 rounded-lg group hover:shadow-md "
-                        >
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <Avatar className="h-12 w-12 mt-1">
-                                <AvatarImage
-                                  src={activity.image}
-                                  className="h-12 w-12 object-cover"
-                                />
+                                  <Avatar className="h-12 w-12 mt-1">
+                                    <AvatarImage
+                                      src={activity.community_image}
+                                      className="h-12 w-12 object-cover"
+                                    />
 
-                                <AvatarFallback>CN</AvatarFallback>
-                              </Avatar>
-                              <div>
-                                <div className="flex items-center gap-2 text-xl px-4">
-                                  <span>{activity.name}</span>
+                                    <AvatarFallback>CN</AvatarFallback>
+                                  </Avatar>
+                                  <div>
+                                    <div className="flex items-center gap-2">
+                                      <span>{activity.community_name}</span>
+                                    </div>
+                                  </div>
                                 </div>
-                                <div className="flex items-center gap-2 px-4">
-                                  <span className="line-clamp-2">{activity.description}</span>
+                                <div
+                                  onClick={() =>
+                                    navigate(
+                                      `/community/detail/${activity.community_id}`
+                                    )
+                                  }
+                                  className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
+                                >
+                                  <SquareArrowOutUpRight className="h-4 w-4" />
                                 </div>
                               </div>
                             </div>
-                            <div
-                              onClick={() =>
-                                navigate(
-                                  `/community/detail/${activity.id}`
-                                )
-                              }
-                              className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
-                            >
-                              <SquareArrowOutUpRight className="h-4 w-4" />
+                          ))}
+                    </div>
+                  </Card>
+                 
+
+                </div>
+                
+              </div>
+              <div className="flex ml-2 sticky top-4 h-60">
+                  <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
+                    <div className="text-xl font-bold"> Communities you might be interested In</div>
+                    <div className="w-full mt-4 flex flex-col gap-2 h-full">
+                      {dataAll.length === 0 && (
+                        <div className="flex items-center justify-center text-center h-full">
+                          No participated comminities.
+                        </div>
+                      )}
+                      {dataAll.length > 0 &&
+                        dataAll.map((activity, index) => (
+                          <div
+                            key={index}
+                            className="p-4 border-2 rounded-lg group hover:shadow-md "
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <Avatar className="h-12 w-12 mt-1">
+                                  <AvatarImage
+                                    src={activity.image}
+                                    className="h-12 w-12 object-cover"
+                                  />
+
+                                  <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                                <div>
+                                  <div className="flex items-center gap-2 text-xl px-4">
+                                    <span>{activity.name}</span>
+                                  </div>
+                                  <div className="flex items-center gap-2 px-4">
+                                    <span className="line-clamp-2">{activity.description}</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                onClick={() =>
+                                  navigate(
+                                    `/community/detail/${activity.id}`
+                                  )
+                                }
+                                className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
+                              >
+                                <SquareArrowOutUpRight className="h-4 w-4" />
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
-                  </div>
-                </Card>
-              </div>
+                        ))}
+                    </div>
+                  </Card>
+                </div>
             </div>
           )}
         </TabsContent>
@@ -510,52 +517,52 @@ const UserPublicProfile = () => {
           </Card>
         </TabsContent>
         <TabsContent value="participated" className="w-full ">
-            <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black col-span-2  min-h-screen ">
-              <div className="text-xl font-bold"> Communities Participated</div>
-              <div className="w-full mt-4 flex flex-col gap-2 h-full">
-                {participatedComminities.length === 0 && (
-                  <div className="flex items-center justify-center text-center h-full">
-                    No participated comminities.
-                  </div>
-                )}
-                {participatedComminities.length > 0 &&
-                  participatedComminities.map((activity, index) => (
-                    <div
-                      key={index}
-                      className="p-4 border-2 rounded-lg group hover:shadow-md "
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Avatar className="h-12 w-12 mt-1">
-                            <AvatarImage
-                              src={activity.community_image}
-                              className="h-12 w-12 object-cover"
-                            />
+          <Card className="w-full flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black col-span-2  min-h-screen ">
+            <div className="text-xl font-bold"> Communities Participated</div>
+            <div className="w-full mt-4 flex flex-col gap-2 h-full">
+              {participatedComminities.length === 0 && (
+                <div className="flex items-center justify-center text-center h-full">
+                  No participated comminities.
+                </div>
+              )}
+              {participatedComminities.length > 0 &&
+                participatedComminities.map((activity, index) => (
+                  <div
+                    key={index}
+                    className="p-4 border-2 rounded-lg group hover:shadow-md "
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Avatar className="h-12 w-12 mt-1">
+                          <AvatarImage
+                            src={activity.community_image}
+                            className="h-12 w-12 object-cover"
+                          />
 
-                            <AvatarFallback>CN</AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <span>{activity.community_name}</span>
-                            </div>
+                          <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span>{activity.community_name}</span>
                           </div>
                         </div>
-                        <div
-                          onClick={() =>
-                            navigate(
-                              `/community/detail/${activity.community_id}`,
-                            )
-                          }
-                          className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
-                        >
-                          <SquareArrowOutUpRight className="h-4 w-4" />
-                        </div>
+                      </div>
+                      <div
+                        onClick={() =>
+                          navigate(
+                            `/community/detail/${activity.community_id}`,
+                          )
+                        }
+                        className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600 cursor-pointer"
+                      >
+                        <SquareArrowOutUpRight className="h-4 w-4" />
                       </div>
                     </div>
-                  ))}
-              </div>
-            </Card>
-          </TabsContent>
+                  </div>
+                ))}
+            </div>
+          </Card>
+        </TabsContent>
       </Tabs>
     </div>
   );
