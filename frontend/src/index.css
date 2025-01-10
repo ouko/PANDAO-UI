@@ -79,3 +79,29 @@
       @apply bg-background text-foreground;
     }
   }
+
+  /* Shining effect using keyframes */
+@keyframes shine {
+  0% {
+    border-color: #1a0441; 
+  }
+  50% {
+    border-color: #16023a;
+  }
+  100% {
+    border-color: #1c093b; 
+  }
+}
+
+
+.glow-border {
+  position: relative;
+  border-radius: 50%;
+  border: 5px solid #1f0f3b; 
+  animation: shine 2s infinite ease-in-out;
+}
+
+.glow-border:hover {
+  animation: none;
+  box-shadow: 0 0 10px 5px rgba(50, 12, 114, 0.5); 
+}

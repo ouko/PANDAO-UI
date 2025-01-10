@@ -222,9 +222,11 @@ const Activity = () => {
                     </div>
                   )}
                   {loading && (
-                    <div className="flex flex-col h-[200px] items-center justify-center text-center  mt-5  ">
-                      <SkeletonCard />
-                    </div>
+                    <div className="flex flex-col h-auto items-center justify-center text-center mt-5">
+                    {[...Array(8)].map((_, i) => (
+                      <SkeletonCard key={i} />
+                    ))}
+                  </div>
                   )}
                 </Card>
               </div>
