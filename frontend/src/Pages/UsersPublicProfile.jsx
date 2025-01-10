@@ -21,7 +21,7 @@ import { clipAddress } from "@/utils/functions/ClipAddress";
 import { Button } from "@/components/ui/button";
 import { formatStandardDateTime } from "@/utils/functions/convertActivityData";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Separator } from "@radix-ui/react-dropdown-menu";
+import { Separator } from "@/components/ui/separator";
 
 const UserPublicProfile = () => {
   const { accounts } = useAccount();
@@ -202,7 +202,7 @@ const UserPublicProfile = () => {
             <div className="flex items-center justify-center font-bold text-2xl p-3">
               Pandao
             </div>
-            <Separator />
+            <Separator/>
             <div className="flex flex-col items-start mt-2 w-full space-y-2">
               <TabsTrigger value="overview" asChild className="w-full p-0">
                 <Button
