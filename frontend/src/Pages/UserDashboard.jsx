@@ -376,9 +376,7 @@ const UserDashboard = () => {
 
   useEffect(() => {
     if (accounts && accounts.length > 0 && accounts[0].address) {
-      fetchCreatedBonds(
-        'account_tdx_2_12xzluwp8mes7dt67zvdvaz0hn6gtvdspmv9xrknq0wt2r766uxd8p4',
-      )
+      fetchCreatedBonds(accounts[0].address)
     }
   }, [check])
   if (!accounts || accounts.length === 0) {
