@@ -205,6 +205,9 @@ const DeployView = () => {
             <div>
               <strong>Description:</strong> {formFields.description}
             </div>
+            <div>
+              <strong>Token Name:</strong> {formFields.community_token_name}
+            </div>
             <div className="flex items-center justify-between gap-2">
             <div>
               <strong>Community Image</strong>
