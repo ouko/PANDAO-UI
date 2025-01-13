@@ -179,6 +179,18 @@ const DescribeView = () => {
           />
         </div>
         <div className="flex flex-col gap-1">
+          <span className="font-medium text-lg px-1">Community Token Name</span>
+          <span className="text-xs px-1">What would you like to name your community token?</span>
+          <Input
+            name="community_token_name"
+            className="border-slate-300 focus:ring-1 focus:ring-purple-400"
+            placeholder="Type your Communities Token Name..."
+            value={formFields.community_token_name}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="flex flex-col gap-1">
           <span className="font-medium text-lg px-1">
             What is the purpose of creating this DAO.{' '}
           </span>
