@@ -784,11 +784,17 @@ const Proposals = () => {
                         </div>
                       )}
 
-                      {loading && (
-                        <div className="flex flex-col h-[200px] items-center justify-center text-center  mt-5  ">
-                          <SkeletonCard />
-                        </div>
-                      )}
+
+{loading && (
+  <div className="grid grid-cols-3 gap-4 mt-5">
+    {[...Array(3)].map((_, index) => (
+      <SkeletonCard key={index} className="h-[200px]" />
+    ))}
+  </div>
+)}
+
+
+
                     </Card>
                   </TabsContent>
                   <TabsContent value="EXECUTED">
@@ -869,11 +875,16 @@ const Proposals = () => {
                         </div>
                       )}
 
-                      {loading && (
-                        <div className="flex flex-col h-[200px] items-center justify-center text-center  mt-5  ">
-                          <SkeletonCard />
-                        </div>
-                      )}
+
+{loading && (
+  <div className="grid grid-cols-3 gap-4 mt-5">
+    {[...Array(3)].map((_, index) => (
+      <SkeletonCard key={index} className="h-[200px]" />
+    ))}
+  </div>
+)}
+
+
                     </Card>
                   </TabsContent>
                 </Tabs>
