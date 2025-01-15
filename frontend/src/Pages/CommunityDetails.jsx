@@ -886,7 +886,7 @@ const CommunityDetails = () => {
               <Card
                 className="w-full p-6 bg-gray-100 hover:bg-gray-200 transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
                 onClick={() =>
-                  navigate(`/community/detail/${params.id}/proposals`)
+                  navigate(`/community/detail/${params.id}/proposals?state="proposal"`)
                 }
               >
                 <h3 className="text-xl font-medium text-gray-800">

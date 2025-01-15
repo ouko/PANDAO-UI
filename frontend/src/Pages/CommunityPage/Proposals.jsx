@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import CustomDatePicker from './components/CustomDatePicker'
@@ -48,7 +48,7 @@ const Proposals = () => {
   const [vote, setVote] = useState(Boolean)
   const [voted, setVoted] = useState(false)
   const [participants, setParticipants] = useState([])
-
+  const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const params = useParams()
   const [proposal, setProposal] = useState('')
@@ -85,12 +85,12 @@ const Proposals = () => {
     voteType: '',
     desireTokenPrice: 0,
     desireTokenBuyBackPrice: 0,
-  });
+  })
   const [voteType, setVoteType] = useState('')
   const [proposalDescription, setProposalDescription] = useState('')
   const [manifest, setManifest] = useState('')
   const [issuedBond, setIssuedBond] = useState(null)
-
+  const queryParam = searchParams.get('state')
   const [manifestForVoteAgainst, setManifestForVoteAgainst] = useState('')
   const [manifestForVoteFor, setManifestForVoteFor] = useState('')
   const sendTransaction = useSendTransaction()
@@ -233,17 +233,17 @@ const Proposals = () => {
       'startTime',
       'endTime',
       'voteType',
-    ];
-  
-    const missingFields = requiredFields.filter((field) => !form[field]);
-  
+    ]
+
+    const missingFields = requiredFields.filter((field) => !form[field])
+
     if (missingFields.length > 0) {
-      alert('Please fill out all fields.');
-      return false;
+      alert('Please fill out all fields.')
+      return false
     }
-  
-    return true;
-  };
+
+    return true
+  }
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -332,80 +332,101 @@ const Proposals = () => {
       setLoadingButton(false)
     }
   }
-const handleSubmitTokenChangeForm = async (e) => {
-  e.preventDefault();
+  const handleSubmitTokenChangeForm = async (e) => {
+    e.preventDefault()
 
-  // Validate form inputs
-  if (!validateForm(tokenPriceChangeForm)) {
-    return;
-  }
-
-  // Prepare start and end datetime
-  const startDateTime = new Date(tokenPriceChangeForm.startDate);
-  const [startHours, startMinutes] = tokenPriceChangeForm.startTime.split(':');
-  startDateTime.setHours(parseInt(startHours, 10), parseInt(startMinutes, 10), 0, 0);
-
-  const endDateTime = new Date(tokenPriceChangeForm.endDate);
-  const [endHours, endMinutes] = tokenPriceChangeForm.endTime.split(':');
-  endDateTime.setHours(parseInt(endHours, 10), parseInt(endMinutes, 10), 59, 0);
-
-  try {
-    setLoadingButton(true);
-
-    // Submit proposal data
-    const proposalPayload = {
-      userAddress: accounts[0]?.address,
-      community_id: params.id,
-      minimumquorum: parseInt(tokenPriceChangeForm.minimumQuorum, 10),
-      start_time: Math.floor(startDateTime.getTime() / 1000).toString(),
-      end_time: Math.floor(endDateTime.getTime() / 1000).toString(),
-      proposal: tokenPriceChangeForm.proposalText,
-      description: tokenPriceChangeForm.proposalDescription,
-      vote_type: tokenPriceChangeForm.voteType,
-    };
-
-    const res = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/manifest/proposal/update-token-price`,
-      proposalPayload
-    );
-
-    console.log('Proposal submitted successfully:', res.data);
-    setManifest(res.data);
-
-    const { receipt } = await sendTransaction(manifest);
-
-    if (receipt?.transaction?.intent_hash) {
-      const txId = receipt.transaction.intent_hash;
-
-      try {
-        const response = await axios.post(
-          `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
-          {
-            tx_id: txId,
-            user_address: accounts[0]?.address,
-          },
-          {
-            headers: { 'Content-Type': 'application/json' },
-          }
-        );
-
-        console.log(response.data);
-        toast.success('Proposal Submitted Successfully');
-        setLoadingButton(false);
-        location.reload();
-      } catch (error) {
-        console.error('Error during transaction submission:', error.response?.data);
-        toast.error('Something went wrong during transaction submission');
-        setLoadingButton(false);
-      }
+    // Validate form inputs
+    if (!validateForm(tokenPriceChangeForm)) {
+      return
     }
-  } catch (error) {
-    console.error('Error submitting proposal:', error.response?.data?.detail?.error || error.message);
-    toast.error(error.response?.data?.detail?.error?.toUpperCase() || 'Failed to submit proposal');
-  } finally {
-    setLoadingButton(false);
+
+    // Prepare start and end datetime
+    const startDateTime = new Date(tokenPriceChangeForm.startDate)
+    const [startHours, startMinutes] = tokenPriceChangeForm.startTime.split(':')
+    startDateTime.setHours(
+      parseInt(startHours, 10),
+      parseInt(startMinutes, 10),
+      0,
+      0,
+    )
+
+    const endDateTime = new Date(tokenPriceChangeForm.endDate)
+    const [endHours, endMinutes] = tokenPriceChangeForm.endTime.split(':')
+    endDateTime.setHours(
+      parseInt(endHours, 10),
+      parseInt(endMinutes, 10),
+      59,
+      0,
+    )
+
+    try {
+      setLoadingButton(true)
+
+      // Submit proposal data
+      const proposalPayload = {
+        userAddress: accounts[0]?.address,
+        community_id: params.id,
+        minimumquorum: parseInt(tokenPriceChangeForm.minimumQuorum, 10),
+        start_time: Math.floor(startDateTime.getTime() / 1000).toString(),
+        end_time: Math.floor(endDateTime.getTime() / 1000).toString(),
+        proposal: tokenPriceChangeForm.proposalText,
+        description: tokenPriceChangeForm.proposalDescription,
+        vote_type: tokenPriceChangeForm.voteType,
+      }
+
+      const res = await axios.post(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/manifest/proposal/update-token-price`,
+        proposalPayload,
+      )
+
+      console.log('Proposal submitted successfully:', res.data)
+      setManifest(res.data)
+
+      const { receipt } = await sendTransaction(manifest)
+
+      if (receipt?.transaction?.intent_hash) {
+        const txId = receipt.transaction.intent_hash
+
+        try {
+          const response = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+            {
+              tx_id: txId,
+              user_address: accounts[0]?.address,
+            },
+            {
+              headers: { 'Content-Type': 'application/json' },
+            },
+          )
+
+          console.log(response.data)
+          toast.success('Proposal Submitted Successfully')
+          setLoadingButton(false)
+          location.reload()
+        } catch (error) {
+          console.error(
+            'Error during transaction submission:',
+            error.response?.data,
+          )
+          toast.error('Something went wrong during transaction submission')
+          setLoadingButton(false)
+        }
+      }
+    } catch (error) {
+      console.error(
+        'Error submitting proposal:',
+        error.response?.data?.detail?.error || error.message,
+      )
+      toast.error(
+        error.response?.data?.detail?.error?.toUpperCase() ||
+          'Failed to submit proposal',
+      )
+    } finally {
+      setLoadingButton(false)
+    }
   }
-};
 
   const handleAgainst = async () => {
     setVote(true)
@@ -640,6 +661,10 @@ const handleSubmitTokenChangeForm = async (e) => {
     fetchProposals()
     fetchBondNames()
     fetchParticipant()
+    if (queryParam) {
+      setActiveProposal(null)
+      setShowCategories(true)
+    }
   }, [params.id])
   useEffect(() => {
     fetchProposalsComments()
@@ -653,6 +678,7 @@ const handleSubmitTokenChangeForm = async (e) => {
     navigate('/')
     return null
   }
+
   return (
     <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
       {!form && !activeProposal && !showCategories && !tokenChangeform ? (
@@ -1395,7 +1421,10 @@ const handleSubmitTokenChangeForm = async (e) => {
             Token Price Change Form
           </div>
           <div className="flex items-center justify-center p-2 w-full mx-auto">
-            <form className="w-1/2 flex flex-col gap-2" onSubmit={handleSubmitTokenChangeForm}>
+            <form
+              className="w-1/2 flex flex-col gap-2"
+              onSubmit={handleSubmitTokenChangeForm}
+            >
               <div className="flex flex-col gap-2">
                 <Label className="text-2xl p-1">Proposal</Label>
                 <Textarea
