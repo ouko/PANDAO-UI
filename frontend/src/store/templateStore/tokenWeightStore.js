@@ -7,6 +7,7 @@ const useTokenWeightStore = create((set) => ({
     description: "",
     tokenSupply: 0,
     tokenPrice: 0,
+    community_token_name:"",
     tokenWithDrawPrice: 0,
     communityImage: "",
     tokenImage: "",
@@ -31,6 +32,7 @@ const useTokenWeightStore = create((set) => ({
     tokenImage: "",
     userAddress: "", // Adding userAddress
     purpose: "",
+    community_token_name:"",
     investment:"",
     insurance:"",
     lending_borrowing:"",

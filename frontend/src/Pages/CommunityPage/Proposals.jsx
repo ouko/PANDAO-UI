@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import CustomDatePicker from './components/CustomDatePicker'
@@ -48,7 +48,7 @@ const Proposals = () => {
   const [vote, setVote] = useState(Boolean)
   const [voted, setVoted] = useState(false)
   const [participants, setParticipants] = useState([])
-
+  const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const params = useParams()
   const [proposal, setProposal] = useState('')
@@ -62,6 +62,7 @@ const Proposals = () => {
   const [loadingButtonFor, setLoadingButtonFor] = useState(false)
   const [loadingButton, setLoadingButton] = useState(false)
   const [form, setShowForm] = useState(false)
+  const [tokenChangeform, setShowTokenChangeForm] = useState(false)
   const [bondIssuerAddress, setBondIssuerAddress] = useState('')
   const [bondIssuerAddresses, setBondIssuerAddresses] = useState([])
   const [targetXrdAmount, setTargetXrdAmount] = useState('')
@@ -73,11 +74,23 @@ const Proposals = () => {
   const [comments, setComments] = useState([])
   const [minimumQuorum, setMinimumQuorum] = useState('')
   const [proposalText, setProposalText] = useState('')
+  const [tokenPriceChangeForm, setTokenPriceChangeForm] = useState({
+    proposalText: '',
+    proposalDescription: '',
+    startDate: new Date(),
+    endDate: new Date(),
+    startTime: '00:00',
+    endTime: '23:59',
+    minimumQuorum: '',
+    voteType: '',
+    desireTokenPrice: 0,
+    desireTokenBuyBackPrice: 0,
+  })
   const [voteType, setVoteType] = useState('')
   const [proposalDescription, setProposalDescription] = useState('')
   const [manifest, setManifest] = useState('')
   const [issuedBond, setIssuedBond] = useState(null)
-
+  const queryParam = searchParams.get('state')
   const [manifestForVoteAgainst, setManifestForVoteAgainst] = useState('')
   const [manifestForVoteFor, setManifestForVoteFor] = useState('')
   const sendTransaction = useSendTransaction()
@@ -118,8 +131,8 @@ const Proposals = () => {
     setVoteType(value)
   }
   const handleBondAddress = (value) => {
-    if(value === "No issued Bond"){
-      toast.error("Please buy a bond first.")
+    if (value === 'No issued Bond') {
+      toast.error('Please buy a bond first.')
       return
     }
     const selectedBond = bondIssuerAddresses.find(
@@ -210,7 +223,27 @@ const Proposals = () => {
       console.error('Error fetching blueprint data:', error)
     }
   }
+  const validateForm = (form) => {
+    const requiredFields = [
+      'proposalText',
+      'startDate',
+      'endDate',
+      'minimumQuorum',
+      'proposalDescription',
+      'startTime',
+      'endTime',
+      'voteType',
+    ]
 
+    const missingFields = requiredFields.filter((field) => !form[field])
+
+    if (missingFields.length > 0) {
+      alert('Please fill out all fields.')
+      return false
+    }
+
+    return true
+  }
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -299,6 +332,102 @@ const Proposals = () => {
       setLoadingButton(false)
     }
   }
+  const handleSubmitTokenChangeForm = async (e) => {
+    e.preventDefault()
+
+    // Validate form inputs
+    if (!validateForm(tokenPriceChangeForm)) {
+      return
+    }
+
+    // Prepare start and end datetime
+    const startDateTime = new Date(tokenPriceChangeForm.startDate)
+    const [startHours, startMinutes] = tokenPriceChangeForm.startTime.split(':')
+    startDateTime.setHours(
+      parseInt(startHours, 10),
+      parseInt(startMinutes, 10),
+      0,
+      0,
+    )
+
+    const endDateTime = new Date(tokenPriceChangeForm.endDate)
+    const [endHours, endMinutes] = tokenPriceChangeForm.endTime.split(':')
+    endDateTime.setHours(
+      parseInt(endHours, 10),
+      parseInt(endMinutes, 10),
+      59,
+      0,
+    )
+
+    try {
+      setLoadingButton(true)
+
+      // Submit proposal data
+      const proposalPayload = {
+        userAddress: accounts[0]?.address,
+        community_id: params.id,
+        minimumquorum: parseInt(tokenPriceChangeForm.minimumQuorum, 10),
+        start_time: Math.floor(startDateTime.getTime() / 1000).toString(),
+        end_time: Math.floor(endDateTime.getTime() / 1000).toString(),
+        proposal: tokenPriceChangeForm.proposalText,
+        description: tokenPriceChangeForm.proposalDescription,
+        vote_type: tokenPriceChangeForm.voteType,
+      }
+
+      const res = await axios.post(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/manifest/proposal/update-token-price`,
+        proposalPayload,
+      )
+
+      console.log('Proposal submitted successfully:', res.data)
+      setManifest(res.data)
+
+      const { receipt } = await sendTransaction(manifest)
+
+      if (receipt?.transaction?.intent_hash) {
+        const txId = receipt.transaction.intent_hash
+
+        try {
+          const response = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+            {
+              tx_id: txId,
+              user_address: accounts[0]?.address,
+            },
+            {
+              headers: { 'Content-Type': 'application/json' },
+            },
+          )
+
+          console.log(response.data)
+          toast.success('Proposal Submitted Successfully')
+          setLoadingButton(false)
+          location.reload()
+        } catch (error) {
+          console.error(
+            'Error during transaction submission:',
+            error.response?.data,
+          )
+          toast.error('Something went wrong during transaction submission')
+          setLoadingButton(false)
+        }
+      }
+    } catch (error) {
+      console.error(
+        'Error submitting proposal:',
+        error.response?.data?.detail?.error || error.message,
+      )
+      toast.error(
+        error.response?.data?.detail?.error?.toUpperCase() ||
+          'Failed to submit proposal',
+      )
+    } finally {
+      setLoadingButton(false)
+    }
+  }
+
   const handleAgainst = async () => {
     setVote(true)
     setLoadingButtonAgainst(true)
@@ -483,7 +612,12 @@ const Proposals = () => {
       setEndDate(date)
     }
   }
-
+  const handleInputChange = (field, value) => {
+    setTokenPriceChangeForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }))
+  }
   const handleEndDateChange = (date) => {
     // Ensure endDate is not before startDate
     if (date >= startDate) {
@@ -527,6 +661,10 @@ const Proposals = () => {
     fetchProposals()
     fetchBondNames()
     fetchParticipant()
+    if (queryParam) {
+      setActiveProposal(null)
+      setShowCategories(true)
+    }
   }, [params.id])
   useEffect(() => {
     fetchProposalsComments()
@@ -540,9 +678,10 @@ const Proposals = () => {
     navigate('/')
     return null
   }
+
   return (
     <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
-      {!form && !activeProposal && !showCategories ? (
+      {!form && !activeProposal && !showCategories && !tokenChangeform ? (
         <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
           <div className="space-y-6 md:w-[100%] ">
             <div className="flex md:flex-row flex-col md:w-[100%] mx-auto gap-2">
@@ -645,6 +784,7 @@ const Proposals = () => {
                         </div>
                       )}
 
+
 {loading && (
   <div className="grid grid-cols-3 gap-4 mt-5">
     {[...Array(3)].map((_, index) => (
@@ -652,6 +792,7 @@ const Proposals = () => {
     ))}
   </div>
 )}
+
 
 
                     </Card>
@@ -734,6 +875,7 @@ const Proposals = () => {
                         </div>
                       )}
 
+
 {loading && (
   <div className="grid grid-cols-3 gap-4 mt-5">
     {[...Array(3)].map((_, index) => (
@@ -741,6 +883,7 @@ const Proposals = () => {
     ))}
   </div>
 )}
+
 
                     </Card>
                   </TabsContent>
@@ -811,9 +954,15 @@ const Proposals = () => {
                     <div className="flex items-center justify-between w-full">
                       <div className="flex flex-col items-center gap-3">
                         {voted && (
-                          <div className='flex items-center gap-2 '>
-                            <Badge className="bg-green-600"> Total Vote For : {activeProposal.voted_for}</Badge>
-                            <Badge variant={"destructive"}>Total Vote Against : {activeProposal.voted_against}</Badge>
+                          <div className="flex items-center gap-2 ">
+                            <Badge className="bg-green-600">
+                              {' '}
+                              Total Vote For : {activeProposal.voted_for}
+                            </Badge>
+                            <Badge variant={'destructive'}>
+                              Total Vote Against :{' '}
+                              {activeProposal.voted_against}
+                            </Badge>
                           </div>
                         )}
                         {voted ? (
@@ -874,7 +1023,8 @@ const Proposals = () => {
 
                       <div>
                         {activeProposal.minimum_quorum <=
-                        activeProposal.number_of_people_voted > 0 ? (
+                        activeProposal.number_of_people_voted >
+                        0 ? (
                           <Button
                             onClick={handleExecuteActiveProposal}
                             disabled={
@@ -912,17 +1062,17 @@ const Proposals = () => {
 
             {loading && (
               <div className="flex flex-col h-[200px] items-center justify-center text-center  mt-5  ">
-                                    <SkeletonCard />
-                                  </div>
+                <SkeletonCard />
+              </div>
             )}
           </Card>
           <div className="grid mt-3  md:grid-cols-3 grid-cols-1 gap-3 px-1">
             <div className="bg-white col-span-2 rounded-md p-2">
               <div>
                 {loadingCommnets && proposal ? (
-                 <div className="flex flex-col h-[200px] items-center justify-center text-center  mt-5  ">
-                                       <SkeletonCard />
-                                     </div>
+                  <div className="flex flex-col h-[200px] items-center justify-center text-center  mt-5  ">
+                    <SkeletonCard />
+                  </div>
                 ) : (
                   <>
                     {comments &&
@@ -953,15 +1103,13 @@ const Proposals = () => {
                                 </div>
                               </div>
                               <div className="text-xs text-gray-700 dark:text-gray-700">
-                              {formatStandardDateTime(comment.timestamp)}
+                                {formatStandardDateTime(comment.timestamp)}
                               </div>
                             </div>
                             <p className="text-gray-800 dark:text-gray-400 font-medium">
                               {comment.comment}
                             </p>
-                            <div>
-                         
-                            </div>
+                            <div></div>
                           </div>
                         </div>
                       ))}
@@ -1177,12 +1325,14 @@ const Proposals = () => {
                     type="number"
                     value={minimumQuorum}
                     onChange={(e) => {
-                      const value = parseInt(e.target.value, 10);
+                      const value = parseInt(e.target.value, 10)
                       if (value > participants.length) {
-                        toast.error(`The minimum quorum cannot exceed ${participants.length}.`);
-                        return;
+                        toast.error(
+                          `The minimum quorum cannot exceed ${participants.length}.`,
+                        )
+                        return
                       }
-                      setMinimumQuorum(value);
+                      setMinimumQuorum(value)
                     }}
                     min="0"
                     max={participants.length}
@@ -1267,6 +1417,173 @@ const Proposals = () => {
             </form>
           </div>
         </div>
+      ) : tokenChangeform ? (
+        <div className="flex flex-col items-center justify-center max-w-[1440px] mx-auto my-6 p-2">
+          <div
+            onClick={() => {
+              setShowTokenChangeForm(false) // Hide the form and return to the list
+              setActiveProposal(null) // Ensure no proposal is active
+            }}
+            className="w-full cursor-pointer flex items-start m-2"
+          >
+            <ChevronLeft /> <span>Back</span>
+          </div>
+          <div className="text-4xl font-semibold p-4  bg-white w-full text-center">
+            Token Price Change Form
+          </div>
+          <div className="flex items-center justify-center p-2 w-full mx-auto">
+            <form
+              className="w-1/2 flex flex-col gap-2"
+              onSubmit={handleSubmitTokenChangeForm}
+            >
+              <div className="flex flex-col gap-2">
+                <Label className="text-2xl p-1">Proposal</Label>
+                <Textarea
+                  placeholder="Type your proposal here ..."
+                  value={tokenPriceChangeForm.proposalText}
+                  onChange={(e) =>
+                    handleInputChange('proposalText', e.target.value)
+                  }
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label className="text-lg p-1">Proposal Description</Label>
+                <Textarea
+                  placeholder="Type your proposal description ..."
+                  value={tokenPriceChangeForm.proposalDescription}
+                  onChange={(e) =>
+                    handleInputChange('proposalDescription', e.target.value)
+                  }
+                />
+              </div>
+              <div className="flex flex-col mt-3 gap-3 w-full ">
+                <div className="text-xl p-1">Proposal Timing</div>
+                <div className="flex items-center justify-between space-x-2">
+                  <div className="flex items-center">
+                    <div>From:</div>
+                    <label className="flex items-center">
+                      <DatePicker
+                        selected={tokenPriceChangeForm.startDate}
+                        onChange={(date) =>
+                          handleInputChange('startDate', date)
+                        }
+                        customInput={<CustomDatePicker />}
+                        minDate={new Date()}
+                      />
+                      <Input
+                        type="time"
+                        value={tokenPriceChangeForm.startTime}
+                        onChange={(e) =>
+                          handleInputChange('startTime', e.target.value)
+                        }
+                        className="ml-2 w-fit"
+                      />
+                    </label>
+                  </div>
+                  <div className="flex items-center">
+                    <div>To:</div>
+                    <label className="flex items-center">
+                      <DatePicker
+                        selected={tokenPriceChangeForm.endDate}
+                        onChange={(date) => handleInputChange('endDate', date)}
+                        customInput={<CustomDatePicker />}
+                        minDate={new Date()}
+                      />
+                      <Input
+                        type="time"
+                        value={tokenPriceChangeForm.endTime}
+                        onChange={(e) =>
+                          handleInputChange('endTime', e.target.value)
+                        }
+                        className="ml-2 w-fit"
+                      />
+                    </label>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Label className="text-2xl p-1">Minimum Quorum</Label>
+                  <Input
+                    placeholder="Enter Minimum quorum"
+                    type="number"
+                    value={tokenPriceChangeForm.minimumQuorum}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value, 10)
+                      if (value > participants.length) {
+                        toast.error(
+                          `The minimum quorum cannot exceed ${participants.length}.`,
+                        )
+                        return
+                      }
+                      handleInputChange('minimumQuorum', value)
+                    }}
+                    min="0"
+                    max={participants.length}
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Label className="text-2xl p-1">Vote Type</Label>
+                  <Select
+                    onValueChange={(value) =>
+                      handleInputChange('voteType', value)
+                    }
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Vote Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Equality">Equality</SelectItem>
+                      <SelectItem value="ResourceOwned">
+                        Resource Owned
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Label className="text-lg p-1">Desired Token Price</Label>
+                  <Input
+                    placeholder="Enter desired token price"
+                    type="number"
+                    value={tokenPriceChangeForm.desireTokenPrice}
+                    onChange={(e) =>
+                      handleInputChange('desireTokenPrice', e.target.value)
+                    }
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Label className="text-lg p-1">
+                    Desired Token Buy Back Price
+                  </Label>
+                  <Input
+                    placeholder="Enter desired token buy-back price"
+                    type="number"
+                    value={tokenPriceChangeForm.desireTokenBuyBackPrice}
+                    onChange={(e) =>
+                      handleInputChange(
+                        'desireTokenBuyBackPrice',
+                        e.target.value,
+                      )
+                    }
+                  />
+                </div>
+              </div>
+              {loadingButton ? (
+                <Button variant="radix" disabled className="w-full mt-2">
+                  Submitting....
+                </Button>
+              ) : (
+                <Button
+                  variant="radix"
+                  className="w-full mt-2"
+                  disabled={Object.values(tokenPriceChangeForm).some(
+                    (value) => !value,
+                  )}
+                >
+                  Submit Proposal
+                </Button>
+              )}
+            </form>
+          </div>
+        </div>
       ) : (
         <div className="flex  flex-col  px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
           <div
@@ -1296,6 +1613,10 @@ const Proposals = () => {
                       onClick={() => {
                         if (proposal.title === 'Custom Proposal') {
                           setShowForm(true)
+                        } else if (proposal.title === 'Token Price Change') {
+                          setShowTokenChangeForm(true)
+                        } else {
+                          null
                         }
                       }}
                     >

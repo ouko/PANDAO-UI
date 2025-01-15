@@ -6,7 +6,6 @@ import AvatarCircles from '@/components/ui/myComponents/avatarCircle'
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
-
 import axios from 'axios'
 import {
   Bitcoin,
@@ -41,19 +40,35 @@ import { Badge } from '@/components/ui/badge'
 import useBluePrintSlugStore from '@/store/blueprintSlug'
 
 import { Line } from 'react-chartjs-2'
-import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement, Title, Tooltip } from 'chart.js'
+import {
+  Chart as ChartJS,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+} from 'chart.js'
 import FundHistoryGraph from './CommunityPage/ChatHistory'
+import { DialogDescription } from '@radix-ui/react-dialog'
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Title, Tooltip)
+ChartJS.register(
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+)
 
 function removeNewLines(input) {
   return input.replace(/\n\s*/g, ' ')
 }
 
-
 const CommunityDetails = () => {
   const { accounts } = useAccount()
   const [openBuyModal, setBuyModal] = useState(false)
+  const [quickStartOpen, setQuickStartOpen] = useState(false)
   const [openSellModal, setSellModal] = useState(false)
   const { setOpen, setText } = useCustomAlertStore()
   const { setSlug } = useBluePrintSlugStore()
@@ -232,7 +247,7 @@ const CommunityDetails = () => {
       setLoading(false)
     }
   }
-  
+
   const handleSellToken = async () => {
     const data = {
       community_id: params.id,
@@ -316,15 +331,14 @@ const CommunityDetails = () => {
     }
   }
 
-
   const fetchDetails = async () => {
     try {
       const res = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/community/detail/${params.id}`,
       )
 
-      if(res.status==200){
-        console.log(res.data.blueprint_slug,"res")
+      if (res.status == 200) {
+        console.log(res.data.blueprint_slug, 'res')
         setSlug(res.data.blueprint_slug)
         setData(res.data)
 
@@ -342,7 +356,8 @@ const CommunityDetails = () => {
     try {
       const res = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/community/participant/${
-        params.id}`,
+          params.id
+        }`,
       )
       setParticipants(res.data)
     } catch (error) {
@@ -373,9 +388,9 @@ const CommunityDetails = () => {
   }
 
   const isUserParticipant = participants.some(
-    (participant) => participant.public_address  === accounts[0].address,
+    (participant) => participant.public_address === accounts[0].address,
   )
-  console.log(participants,"hey")
+  console.log(participants, 'hey')
   return (
     <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-50 to-purple-50 text-black px-2">
       <CustomAlert />
@@ -400,6 +415,14 @@ const CommunityDetails = () => {
                     {!isUserParticipant && (
                       <Button variant="radix" onClick={handleJoinCommunity}>
                         Join Community
+                      </Button>
+                    )}
+                    {isUserParticipant && (
+                      <Button
+                        variant="radix"
+                        onClick={() => setQuickStartOpen(true)}
+                      >
+                        🚀 Quick Start
                       </Button>
                     )}
                   </div>
@@ -514,22 +537,23 @@ const CommunityDetails = () => {
                       <AlertDescription>
                         {data.blueprint_slug === 'Insurance' ? (
                           <div className="mt-2">
-                            <p>
-                              This is an ANN Organization
-                            </p>
+                            <p>This is an ANN Organization</p>
                           </div>
-                        ) : ( <div>Investment DAO</div> )}
+                        ) : (
+                          <div>Investment DAO</div>
+                        )}
                       </AlertDescription>
                     </Alert>
                   </div>
-                  
                 </div>
               </div>
             </Card>
             <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
               <div className="md:w-[60%] space-y-3">
                 <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg flex items-center justify-between ">
-                <div className='font-semibold tracking-wide'>Total Proposals</div>
+                  <div className="font-semibold tracking-wide">
+                    Total Proposals
+                  </div>
                   <div className="flex items-center gap-2">
                     <div
                       onClick={() =>
@@ -542,7 +566,7 @@ const CommunityDetails = () => {
                   </div>
                 </Card>
                 <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg flex items-center justify-between ">
-                <div className='font-semibold tracking-wide'>Total Funds</div>
+                  <div className="font-semibold tracking-wide">Total Funds</div>
                   <div className="flex items-center gap-2">
                     <div className="bg-purple-600 shadow-lg min-w-28 flex items-center justify-center rounded-lg text-white p-1">
                       {Math.round(data.funds_in_usd * 10000) / 10000} $
@@ -554,9 +578,7 @@ const CommunityDetails = () => {
                 </Card>
 
                 <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg ">
-                  <h1 className='font-semibold tracking-wide'>
-                    Discussions
-                  </h1>
+                  <h1 className="font-semibold tracking-wide">Discussions</h1>
                   {communities.length === 0 && (
                     <div className="flex items-center justify-center">
                       No active discussions
@@ -598,7 +620,7 @@ const CommunityDetails = () => {
                   )}
                 </Card>
 
-                <FundHistoryGraph/>
+                <FundHistoryGraph />
                 <div className="bg-transparent w-full mx-auto  flex items-center  ">
                   <Card
                     onClick={() =>
@@ -732,14 +754,19 @@ const CommunityDetails = () => {
                           <span>Token Price: {data.token_price}</span>
                           <span>
                             Token Price in USD:{' '}
-                            {Math.round(data.token_price_in_usd * 10000) / 10000} $
+                            {Math.round(data.token_price_in_usd * 10000) /
+                              10000}{' '}
+                            $
                           </span>
                           <span>
                             Token Buy Back Price : {data.token_buy_back_price}
                           </span>
                           <span>
                             Token Buy Back Price in USD:{' '}
-                            {Math.round(data.token_buy_back_price_in_usd * 10000) / 10000} $
+                            {Math.round(
+                              data.token_buy_back_price_in_usd * 10000,
+                            ) / 10000}{' '}
+                            $
                           </span>
                         </div>
                       </div>
@@ -848,6 +875,44 @@ const CommunityDetails = () => {
           </div>
         )}
       </div>
+      <Dialog open={quickStartOpen} onOpenChange={setQuickStartOpen}>
+        <DialogTrigger></DialogTrigger>
+        <DialogContent className="max-w-xl p-6 bg-white rounded-lg shadow-lg">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-semibold text-gray-800">
+              Quick Start
+            </DialogTitle>
+            <DialogDescription className="flex  items-center gap-4 mt-4 w-full">
+              <Card
+                className="w-full p-6 bg-gray-100 hover:bg-gray-200 transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
+                onClick={() =>
+                  navigate(`/community/detail/${params.id}/proposals?state="proposal"`)
+                }
+              >
+                <h3 className="text-xl font-medium text-gray-800">
+                  Create a Proposal
+                </h3>
+                <p className="text-sm text-gray-600 mt-1">
+                  Start a new project by creating a detailed proposal.
+                </p>
+              </Card>
+              <Card
+                className="w-full p-6 bg-gray-100 hover:bg-gray-200 transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
+                onClick={() =>
+                  navigate(`/community/detail/${params.id}/bondissue`)
+                }
+              >
+                <h3 className="text-xl font-medium text-gray-800">
+                  Create a Bond
+                </h3>
+                <p className="text-sm text-gray-600 mt-1">
+                  Secure your projects with a reliable bond.
+                </p>
+              </Card>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

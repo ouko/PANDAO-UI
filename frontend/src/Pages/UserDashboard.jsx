@@ -376,9 +376,7 @@ const UserDashboard = () => {
 
   useEffect(() => {
     if (accounts && accounts.length > 0 && accounts[0].address) {
-      fetchCreatedBonds(
-        'account_tdx_2_12xzluwp8mes7dt67zvdvaz0hn6gtvdspmv9xrknq0wt2r766uxd8p4',
-      )
+      fetchCreatedBonds(accounts[0].address)
     }
   }, [check])
   if (!accounts || accounts.length === 0) {
@@ -393,7 +391,7 @@ const UserDashboard = () => {
   return (
     <>
       <div className=" relative flex items-start gap-3 justify-start min-h-screen bg-slate-100 text-black pb-7 pt-2 px-7">
-        <Tabs defaultValue="overview" className="w-full flex gap-2 ">
+        <Tabs defaultValue="overview" className="w-full flex gap-2 max-w-[1700px] mx-auto ">
           <TabsList className="  flex  items-start justify-start   mx-auto  bg-white shadow-lg border-2 w-72 h-screen mt-2 sticky top-4 ">
             <div className="flex flex-col w-full  h-full">
               <div
@@ -772,6 +770,9 @@ const UserDashboard = () => {
                   <DialogContent className="max-w-5xl">
                     {selectedInfo && (
                       <Card className="w-full max-w-5xl">
+                        <div className='flex pt-5 items-center w-full text-center text-3xl justify-center font-bold'>
+                          Bond Bucket Summary
+                        </div>
                         <CardHeader>
                           <div className="flex items-center justify-between w-full ">
                             <h2 className="text-2xl font-bold capitalize">
@@ -780,19 +781,19 @@ const UserDashboard = () => {
                             <div className="flex gap-3">
                               <div className="border-2 p-2 bg-green-100">
                                 <span className="font-semibold">
-                                  Amount Stored:
+                                 Total Amount Put In Bucket:
                                 </span>{' '}
                                 {selectedInfo.amount_stored || '0'}
                               </div>
                               <div className="border-2 p-2 bg-green-100">
                                 <span className="font-semibold">
-                                  Amount Owned:
+                                Total Amount To Repay:
                                 </span>{' '}
                                 {selectedInfo.amount_owned || '0'}
                               </div>
                               <div className="border-2 p-2 bg-blue-100">
                                 <span className="font-semibold">
-                                  Amount Left:
+                                  Amount Left To Store:
                                 </span>{' '}
                                 {selectedInfo.amount_owned -
                                   selectedInfo.amount_stored || '0'}

@@ -285,7 +285,7 @@ const PurchasedBond = (props) => {
                           </p>
                         </div>
                         {bond.maturity_date &&
-                          new Date(bond.maturity_date) < new Date() && bond.claimed === false && (
+                          new Date(bond.maturity_date) < new Date() &&  (
                             <Button disabled={loading2} onClick={()=>handleClaim(bond)} className="w-full mt-3">Claim</Button>
                           )}
                       </Card>
