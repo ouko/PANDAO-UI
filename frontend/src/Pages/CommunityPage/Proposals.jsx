@@ -373,7 +373,7 @@ const Proposals = () => {
         description: tokenPriceChangeForm.proposalDescription,
         vote_type: tokenPriceChangeForm.voteType,
         desire_token_buy_back_price:tokenPriceChangeForm.desireTokenBuyBackPrice,
-        desire_token_price:tokenChangeform.desireTokenPrice
+        desire_token_price:tokenPriceChangeForm.desireTokenPrice
       }
 
       const res = await axios.post(
