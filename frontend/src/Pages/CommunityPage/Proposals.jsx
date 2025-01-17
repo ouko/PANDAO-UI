@@ -1621,16 +1621,22 @@ const Proposals = () => {
 
                     </span>
 
-<CircleHelp className='size-3'/>
+                 <CircleHelp className='size-3'/>
 
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
-                      <DialogTitle>Are you absolutely sure?</DialogTitle>
+                      <DialogTitle>Please review the following points ?</DialogTitle>
                       <DialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete your account and remove your data from our
-                        servers.
+                      Ensure you have reviewed the following points before creating a proposal:
+                      <ul class="list-disc marker:text-green-500 marker:text-1xl p-5 text font-semibold ">
+                        
+                        <li>You should be a member of the community.</li>
+                        <li>You should buy at least one token.</li>
+                        <li>There should be a bond for sale in Issued Bond menu.</li>
+                        <li>The proposal must be written in a clear and concise manner.</li>
+                      </ul>
+
                       </DialogDescription>
                     </DialogHeader>
                   </DialogContent>
