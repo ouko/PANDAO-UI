@@ -879,7 +879,7 @@ const CommunityDetails = () => {
         <DialogTrigger></DialogTrigger>
         <DialogContent className="max-w-xl p-6 bg-white rounded-lg shadow-lg">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-semibold text-gray-800">
+            <DialogTitle className="text-2xl font-semibold text-gray-800 w-full text-center">
               Quick Start
             </DialogTitle>
             <DialogDescription className="flex  items-center gap-4 mt-4 w-full">
