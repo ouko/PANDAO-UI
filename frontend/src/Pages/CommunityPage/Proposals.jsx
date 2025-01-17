@@ -768,7 +768,10 @@ const Proposals = () => {
                                   ? 'Pending'
                                   : 'Executed'}
                               </Badge>
-
+                              {proposalItem.proposal_type &&  <Badge className={`absolute right-20 `}>
+                                {proposalItem.proposal_type}
+                              </Badge>}
+                              
                               <div className="capitalize font-semibold text-xl">
                                 {proposalItem.proposal}
                               </div>
@@ -855,7 +858,10 @@ const Proposals = () => {
                                   ? 'Pending'
                                   : 'Executed'}
                               </Badge>
-
+                              {proposalItem.proposal_type &&  <Badge className={`absolute right-20 `}>
+                                {proposalItem.proposal_type}
+                              </Badge>}
+                              
                               <div className="capitalize font-semibold text-xl">
                                 {proposalItem.proposal}
                               </div>
@@ -1618,14 +1624,10 @@ const Proposals = () => {
               <div>What kind of proposal do you want to create?</div>
               <div>
                 <Dialog>
-                  <DialogTrigger className='flex gap-1 items-center text-xs font-light'>
-                    <span>
-                    Not able to create proposal?
+                  <DialogTrigger className="flex gap-1 items-center text-xs font-light">
+                    <span>Not able to create proposal?</span>
 
-                    </span>
-
-<CircleHelp className='size-3'/>
-
+                    <CircleHelp className="size-3" />
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
