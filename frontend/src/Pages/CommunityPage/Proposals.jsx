@@ -768,7 +768,10 @@ const Proposals = () => {
                                   ? 'Pending'
                                   : 'Executed'}
                               </Badge>
-
+                              {proposalItem.proposal_type &&  <Badge className={`absolute right-20 `}>
+                                {proposalItem.proposal_type}
+                              </Badge>}
+                              
                               <div className="capitalize font-semibold text-xl">
                                 {proposalItem.proposal}
                               </div>
@@ -855,7 +858,10 @@ const Proposals = () => {
                                   ? 'Pending'
                                   : 'Executed'}
                               </Badge>
-
+                              {proposalItem.proposal_type &&  <Badge className={`absolute right-20 `}>
+                                {proposalItem.proposal_type}
+                              </Badge>}
+                              
                               <div className="capitalize font-semibold text-xl">
                                 {proposalItem.proposal}
                               </div>
