@@ -615,6 +615,12 @@ const Proposals = () => {
     }
   }
   const handleInputChange = (field, value) => {
+
+    if (field === 'desireTokenBuyBackPrice' && value > tokenPriceChangeForm.desireTokenPrice) {
+      toast.error('Buyback price cannot be greater than the desired token price.');
+      return; 
+    }
+
     setTokenPriceChangeForm((prev) => ({
       ...prev,
       [field]: value,
@@ -1439,9 +1445,9 @@ const Proposals = () => {
               onSubmit={handleSubmitTokenChangeForm}
             >
               <div className="flex flex-col gap-2">
-                <Label className="text-2xl p-1">Proposal</Label>
-                <Textarea
-                  placeholder="Type your proposal here ..."
+                <Label className="text-2xl p-1">Proposal Name</Label>
+                <Input
+                  placeholder="Proposal Name..."
                   value={tokenPriceChangeForm.proposalText}
                   onChange={(e) =>
                     handleInputChange('proposalText', e.target.value)
@@ -1545,6 +1551,7 @@ const Proposals = () => {
                   <Input
                     placeholder="Enter desired token price"
                     type="number"
+                    min="0"
                     value={tokenPriceChangeForm.desireTokenPrice}
                     onChange={(e) =>
                       handleInputChange('desireTokenPrice', e.target.value)
@@ -1558,6 +1565,7 @@ const Proposals = () => {
                   <Input
                     placeholder="Enter desired token buy-back price"
                     type="number"
+                    min="0"
                     value={tokenPriceChangeForm.desireTokenBuyBackPrice}
                     onChange={(e) =>
                       handleInputChange(
