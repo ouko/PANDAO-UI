@@ -950,7 +950,6 @@ const Proposals = () => {
               )}
             </div>
 
-            <div>{activeProposal.proposed_token_price}</div>
             {!loading && (
               <div className="space-y-4">
                 {!proposal && (
