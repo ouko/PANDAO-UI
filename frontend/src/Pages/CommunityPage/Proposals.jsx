@@ -1640,22 +1640,32 @@ const Proposals = () => {
             <ChevronLeft /> <span>Back</span>
           </div>
           <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
-            <div className="p-2 border-b-2 -translate-x-2 flex items-center justify-between">
+          <div className="p-2 border-b-2 -translate-x-2 flex items-center justify-between">
               <div>What kind of proposal do you want to create?</div>
               <div>
                 <Dialog>
-                  <DialogTrigger className="flex gap-1 items-center text-xs font-light">
-                    <span>Not able to create proposal?</span>
+                  <DialogTrigger className='flex gap-1 items-center text-xs font-light'>
+                    <span>
+                    Not able to create proposal?
 
-                    <CircleHelp className="size-3" />
+                    </span>
+
+                 <CircleHelp className='size-3'/>
+
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
-                      <DialogTitle>Are you absolutely sure?</DialogTitle>
+                      <DialogTitle>Please review the following points ?</DialogTitle>
                       <DialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete your account and remove your data from our
-                        servers.
+                      Ensure you have reviewed the following points before creating a proposal:
+                      <ul className="list-disc marker:text-green-500 marker:text-1xl px-5 py-3 text font-semibold ">
+                        
+                        <li>You should be a member of the community.</li>
+                        <li>You should buy at least one token.</li>
+                        <li>There should be a bond for sale in Issued Bond menu.</li>
+                        <li>The proposal must be written in a clear and concise manner.</li>
+                      </ul>
+
                       </DialogDescription>
                     </DialogHeader>
                   </DialogContent>
