@@ -918,8 +918,11 @@ const Proposals = () => {
             <ChevronLeft /> <span>Back</span>
           </div>
           <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
-            <div className="p-2 border-b-2 -translate-x-2 font-bold capitalize text-4xl">
+            <div className="p-2  -translate-x-2 font-bold capitalize text-4xl">
               {activeProposal.proposal}
+            </div>
+            <div className="p-2 border-b-2 -translate-x-2 font-bold capitalize text-md">
+              {activeProposal.description}
             </div>
             {!loading && (
               <div className="space-y-4">
