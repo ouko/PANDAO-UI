@@ -700,6 +700,8 @@ const Proposals = () => {
     return null
   }
 
+  console.log(activeProposal, 'activer')
+
   return (
     <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
       {!form && !activeProposal && !showCategories && !tokenChangeform ? (
@@ -768,10 +770,12 @@ const Proposals = () => {
                                   ? 'Pending'
                                   : 'Executed'}
                               </Badge>
-                              {proposalItem.proposal_type &&  <Badge className={`absolute right-20 `}>
-                                {proposalItem.proposal_type}
-                              </Badge>}
-                              
+                              {proposalItem.proposal_type && (
+                                <Badge className={`absolute right-20 `}>
+                                  {proposalItem.proposal_type}
+                                </Badge>
+                              )}
+
                               <div className="capitalize font-semibold text-xl">
                                 {proposalItem.proposal}
                               </div>
@@ -858,10 +862,12 @@ const Proposals = () => {
                                   ? 'Pending'
                                   : 'Executed'}
                               </Badge>
-                              {proposalItem.proposal_type &&  <Badge className={`absolute right-20 `}>
-                                {proposalItem.proposal_type}
-                              </Badge>}
-                              
+                              {proposalItem.proposal_type && (
+                                <Badge className={`absolute right-20 `}>
+                                  {proposalItem.proposal_type}
+                                </Badge>
+                              )}
+
                               <div className="capitalize font-semibold text-xl">
                                 {proposalItem.proposal}
                               </div>
@@ -930,6 +936,21 @@ const Proposals = () => {
             <div className="p-2 border-b-2 -translate-x-2 font-bold capitalize text-md">
               {activeProposal.description}
             </div>
+            <div className="flex space-x-2">
+              {activeProposal.proposed_token_buy_back_price && (
+                <Badge>
+                  Proposed Buy Back Price :
+                  {activeProposal.proposed_token_buy_back_price}
+                </Badge>
+              )}
+              {activeProposal.proposed_token_price && (
+                <Badge>
+                  Proposed Token Price :{activeProposal.proposed_token_price}
+                </Badge>
+              )}
+            </div>
+
+            <div>{activeProposal.proposed_token_price}</div>
             {!loading && (
               <div className="space-y-4">
                 {!proposal && (
@@ -1624,14 +1645,10 @@ const Proposals = () => {
               <div>What kind of proposal do you want to create?</div>
               <div>
                 <Dialog>
-                  <DialogTrigger className='flex gap-1 items-center text-xs font-light'>
-                    <span>
-                    Not able to create proposal?
+                  <DialogTrigger className="flex gap-1 items-center text-xs font-light">
+                    <span>Not able to create proposal?</span>
 
-                    </span>
-
-<CircleHelp className='size-3'/>
-
+                    <CircleHelp className="size-3" />
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
