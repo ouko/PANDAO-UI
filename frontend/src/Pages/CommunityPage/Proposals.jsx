@@ -768,10 +768,7 @@ const Proposals = () => {
                                   ? 'Pending'
                                   : 'Executed'}
                               </Badge>
-                              {proposalItem.proposal_type &&  <Badge className={`absolute right-20 `}>
-                                {proposalItem.proposal_type}
-                              </Badge>}
-                              
+
                               <div className="capitalize font-semibold text-xl">
                                 {proposalItem.proposal}
                               </div>
@@ -858,10 +855,7 @@ const Proposals = () => {
                                   ? 'Pending'
                                   : 'Executed'}
                               </Badge>
-                              {proposalItem.proposal_type &&  <Badge className={`absolute right-20 `}>
-                                {proposalItem.proposal_type}
-                              </Badge>}
-                              
+
                               <div className="capitalize font-semibold text-xl">
                                 {proposalItem.proposal}
                               </div>
@@ -1624,8 +1618,9 @@ const Proposals = () => {
               <div>What kind of proposal do you want to create?</div>
               <div>
                 <Dialog>
-                  <DialogTrigger className="flex gap-1 items-center text-xs font-light">
-                    <span>Not able to create proposal?</span>
+                  <DialogTrigger className='flex gap-1 items-center text-xs font-light'>
+                    <span>
+                    Not able to create proposal?
 
                     </span>
 
@@ -1634,17 +1629,11 @@ const Proposals = () => {
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
-                      <DialogTitle>Please review the following points ?</DialogTitle>
+                      <DialogTitle>Are you absolutely sure?</DialogTitle>
                       <DialogDescription>
-                      Ensure you have reviewed the following points before creating a proposal:
-                      <ul class="list-disc marker:text-green-500 marker:text-1xl p-5 text font-semibold ">
-                        
-                        <li>You should be a member of the community.</li>
-                        <li>You should buy at least one token.</li>
-                        <li>There should be a bond for sale in Issued Bond menu.</li>
-                        <li>The proposal must be written in a clear and concise manner.</li>
-                      </ul>
-
+                        This action cannot be undone. This will permanently
+                        delete your account and remove your data from our
+                        servers.
                       </DialogDescription>
                     </DialogHeader>
                   </DialogContent>
