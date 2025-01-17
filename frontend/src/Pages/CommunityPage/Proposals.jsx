@@ -8,7 +8,7 @@ import { clipAddress } from '@/utils/functions/ClipAddress'
 import axios from 'axios'
 import 'react-datepicker/dist/react-datepicker.css'
 
-import { ChevronLeft, HandHelping } from 'lucide-react'
+import { ChevronLeft, CircleHelp, HandHelping } from 'lucide-react'
 import {
   Select,
   SelectContent,
@@ -30,6 +30,14 @@ import { Badge } from '@/components/ui/badge'
 import { ProposalTypes } from '@/utils/data/proposalType'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { SkeletonCard } from '../GlobalComponents/Skeleton'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 
 const formatTime = (duration) => {
   const hours = Math.floor(
@@ -372,8 +380,9 @@ const Proposals = () => {
         proposal: tokenPriceChangeForm.proposalText,
         description: tokenPriceChangeForm.proposalDescription,
         vote_type: tokenPriceChangeForm.voteType,
-        desire_token_buy_back_price:tokenPriceChangeForm.desireTokenBuyBackPrice,
-        desire_token_price:tokenPriceChangeForm.desireTokenPrice
+        desire_token_buy_back_price:
+          tokenPriceChangeForm.desireTokenBuyBackPrice,
+        desire_token_price: tokenPriceChangeForm.desireTokenPrice,
       }
 
       const res = await axios.post(
@@ -615,10 +624,14 @@ const Proposals = () => {
     }
   }
   const handleInputChange = (field, value) => {
-
-    if (field === 'desireTokenBuyBackPrice' && value > tokenPriceChangeForm.desireTokenPrice) {
-      toast.error('Buyback price cannot be greater than the desired token price.');
-      return; 
+    if (
+      field === 'desireTokenBuyBackPrice' &&
+      value > tokenPriceChangeForm.desireTokenPrice
+    ) {
+      toast.error(
+        'Buyback price cannot be greater than the desired token price.',
+      )
+      return
     }
 
     setTokenPriceChangeForm((prev) => ({
@@ -792,17 +805,13 @@ const Proposals = () => {
                         </div>
                       )}
 
-
-{loading && (
-  <div className="grid grid-cols-3 gap-4 mt-5">
-    {[...Array(3)].map((_, index) => (
-      <SkeletonCard key={index} className="h-[200px]" />
-    ))}
-  </div>
-)}
-
-
-
+                      {loading && (
+                        <div className="grid grid-cols-3 gap-4 mt-5">
+                          {[...Array(3)].map((_, index) => (
+                            <SkeletonCard key={index} className="h-[200px]" />
+                          ))}
+                        </div>
+                      )}
                     </Card>
                   </TabsContent>
                   <TabsContent value="EXECUTED">
@@ -883,16 +892,13 @@ const Proposals = () => {
                         </div>
                       )}
 
-
-{loading && (
-  <div className="grid grid-cols-3 gap-4 mt-5">
-    {[...Array(3)].map((_, index) => (
-      <SkeletonCard key={index} className="h-[200px]" />
-    ))}
-  </div>
-)}
-
-
+                      {loading && (
+                        <div className="grid grid-cols-3 gap-4 mt-5">
+                          {[...Array(3)].map((_, index) => (
+                            <SkeletonCard key={index} className="h-[200px]" />
+                          ))}
+                        </div>
+                      )}
                     </Card>
                   </TabsContent>
                 </Tabs>
@@ -1605,8 +1611,31 @@ const Proposals = () => {
             <ChevronLeft /> <span>Back</span>
           </div>
           <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
-            <div className="p-2 border-b-2 -translate-x-2">
-              What kind of proposal do you want to create?
+            <div className="p-2 border-b-2 -translate-x-2 flex items-center justify-between">
+              <div>What kind of proposal do you want to create?</div>
+              <div>
+                <Dialog>
+                  <DialogTrigger className='flex gap-1 items-center text-xs font-light'>
+                    <span>
+                    Not able to create proposal?
+
+                    </span>
+
+<CircleHelp className='size-3'/>
+
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Are you absolutely sure?</DialogTitle>
+                      <DialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete your account and remove your data from our
+                        servers.
+                      </DialogDescription>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+              </div>
             </div>
 
             <div className=" grid md:grid-cols-3 grid-cols-1 gap-5 mt-3">
