@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import useBluePrintSlugStore from '@/store/blueprintSlug'
+import { IoHomeOutline } from "react-icons/io5";
 
 const Navbar = () => {
   const rdt = useRdt()
@@ -59,7 +60,8 @@ const Navbar = () => {
             className="bg-white p-2 rounded-xl hover:text-sky-600 group"
             end
           >
-            <ChevronLeft className="group-hover:-translate-x-[2px] duration-300 transition-transform" />
+            <IoHomeOutline className="group-hover:scale-110 duration-300 transition-transform" />
+            
           </NavLink>
           <NavLink
             to={`/community/detail/${params.id}`}
