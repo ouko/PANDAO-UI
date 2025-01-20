@@ -31,8 +31,8 @@ const Comments = () => {
   const [open, setOpen] = useState(false);
   const [selectedComments, setSelectedComments] = useState([]);
   const [selectedDiscussion, setSelectedDiscussion] = useState(null);
-  const [selectedDiscussionTitle, setSelectedDiscussionTitle] = useState(""); 
-  const [newComment, setNewComment] = useState(""); 
+  const [selectedDiscussionTitle, setSelectedDiscussionTitle] = useState("");
+  const [newComment, setNewComment] = useState("");
   const [commentUrl,setCommentUrl]=useState("")
 
   const handleAddDiscussion = async () => {
@@ -105,6 +105,7 @@ const Comments = () => {
       comment: newComment,
       image: commentUrl ||  "string",
     };
+    setLoading(true);
 
     try {
       const response = await axios.post(
@@ -112,7 +113,7 @@ const Comments = () => {
         data
       );
       console.log("Add Comment Response:", response);
-   
+
       if(response.status==200){
         toast.success("Comment Added");
         setNewComment("");
@@ -124,10 +125,11 @@ const Comments = () => {
         setNewComment("")
         return
       }
-   
+
     } catch (error) {
       console.error("Error adding comment:", error);
     }
+    setLoading(false);
   };
   const handleCommentId = (id) => {
     const url = `https://ucarecdn.com/${id}/-/preview/1000x562/`;
@@ -183,62 +185,62 @@ const Comments = () => {
               </Card>
               {!selectedDiscussion && (
                 <Card className="bg-white md:w-[80%] mx-auto md:p-4 p-4 space-y-2">
-                <div className="p-2 border-b-2 -translate-x-2">
-                  Discussions
-                </div>
-                {!loading && (
-                  <div className="space-y-4">
+                  <div className="p-2 border-b-2 -translate-x-2">
+                    Discussions
+                  </div>
+                  {!loading && (
+                    <div className="space-y-4">
                       {communities.length === 0 && <div className="flex items-center justify-center h-20">
                         No Active Discussion
                       </div> }
-                    {communities.length > 0 && (
-                      <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
-                        {communities.map((community, index) => (
-                          <Card
-                            key={index}
-                            className="p-4 flex flex-col gap-2 hover:shadow-lg shadow-md cursor-pointer"
-                            onClick={() =>
+                      {communities.length > 0 && (
+                        <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
+                          {communities.map((community, index) => (
+                            <Card
+                              key={index}
+                              className="p-4 flex flex-col gap-2 hover:shadow-lg shadow-md cursor-pointer"
+                              onClick={() =>
                                 fetchDiscussionComments(
                                   community.id,
                                   community.title
                                 )
-                            }
-                          >
+                              }
+                            >
                               <div className="text-lg font-semibold">
                                 {community.title}
                               </div>
-                            <div className="text-sm flex items-center gap-2">
-                              <div>Started By - </div>
-                              <div className="flex items-center gap-1">
+                              <div className="text-sm flex items-center gap-2">
+                                <div>Started By - </div>
+                                <div className="flex items-center gap-1">
                                   <div>
-                                <Avatar className="h-6 w-6">
-                                  <AvatarImage src={community.user_image} />
-                                  <AvatarFallback>CN</AvatarFallback>
-                                </Avatar>
+                                    <Avatar className="h-6 w-6">
+                                      <AvatarImage src={community.user_image} />
+                                      <AvatarFallback>CN</AvatarFallback>
+                                    </Avatar>
                                   </div>
-                                <div>{community.user_name}</div>
+                                  <div>{community.user_name}</div>
+                                </div>
                               </div>
-                            </div>
-                            <div className="w-full border-t-2 pt-2">
-                              {formatStandardDateTime(community.created_at)}
-                            </div>
-                          </Card>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
-                {loading && (
-                  <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-5">
-                    {[...Array(4)].map((_, index) => (
-                      <SkeletonCard
-                        key={index}
-                        className="p-4 h-[150px] bg-gray-200 rounded shadow-md"
-                      />
-                    ))}
-                  </div>
-                )}
-              </Card>
+                              <div className="w-full border-t-2 pt-2">
+                                {formatStandardDateTime(community.created_at)}
+                              </div>
+                            </Card>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {loading && (
+                    <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-5">
+                      {[...Array(4)].map((_, index) => (
+                        <SkeletonCard
+                          key={index}
+                          className="p-4 h-[150px] bg-gray-200 rounded shadow-md"
+                        />
+                      ))}
+                    </div>
+                  )}
+                </Card>
               )}
               {selectedDiscussion && (
                 <Card className="bg-white md:w-[80%] mx-auto md:p-4 p-4 space-y-2 mt-4">
@@ -252,7 +254,15 @@ const Comments = () => {
                       Back
                     </Button>
                   </div>
-                  {selectedComments.length > 0 ? (
+
+                  {loading ? (
+                    <div className="flex flex-col h-auto items-center justify-center text-center mt-5">
+                      {[...Array(4)].map((_, i) => (
+                        <SkeletonCard key={i} />
+                      ))}
+                    </div>
+                  ) :
+                    selectedComments.length > 0 ? (
                     <div className="space-y-4">
                       {selectedComments.map((comment, index) => (
                         <Card
@@ -262,10 +272,10 @@ const Comments = () => {
                           <div className="bg-purple-50 p-2 font-semibold rounded-sm"  style={{ whiteSpace: 'pre-wrap' }}>{comment.comment}</div>
                           <div>
                             {comment.image && comment.image!=="string" &&
-                            <img
-                            src={comment.image}
+                              <img
+                                src={comment.image}
                             className="h-[320px] w-[320px] aspect-square object-cover"
-                            />
+                              />
 
                             }
                           </div>
@@ -278,10 +288,10 @@ const Comments = () => {
                                   <AvatarFallback>CN</AvatarFallback>
                                 </Avatar>
                               </div>
-                              <div>{comment.user_name}</div>
+                              <div className="font-normal" >{comment.user_name}</div>
                             </div>
                           </div>
-                          <div className="text-sm font-light border-t-2 pt-1">
+                          <div className="text-sm font-semibold border-t-2 pt-1 text-end">
                             {formatStandardDateTime(comment.created_at)}
                           </div>
                         </Card>
@@ -296,16 +306,16 @@ const Comments = () => {
                       value={newComment}
                       onChange={(e) => setNewComment(e.target.value)}
                     />
-                
+
                     <div className="flex items-center w-fit">
-                    <Button variant="radix" className="rounded-r-none" onClick={handleAddComment}>
-                      Add Comment
-                    </Button>
+                      <Button variant="radix" className="rounded-r-none hover:scale-110  " onClick={handleAddComment}>
+                        Add Comment
+                      </Button>
                     <CommnetImageUpdater  onUploadSuccess={handleCommentId} />
                     </div>
                     {commentUrl !=="" && <img
-                    src={commentUrl}
-                    className="h-40 w-60 object-cover"
+                        src={commentUrl}
+                        className="h-40 w-60 object-cover"
                     />}
        
 
