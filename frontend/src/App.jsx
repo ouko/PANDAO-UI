@@ -84,7 +84,7 @@ function App() {
     if (accounts && accounts.length > 0) {
       const interval = setInterval(() => {
         fetchNotification();
-      }, 3000);
+      }, 10000);
   
       return () => clearInterval(interval);
     }
