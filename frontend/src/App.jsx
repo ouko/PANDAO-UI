@@ -49,27 +49,33 @@ function App() {
     if (accounts && accounts.length > 0 && accounts[0]?.address) {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/notification/${accounts[0].address}`,
-        );
-  
-        const notifications = res.data; 
-  
+          `${import.meta.env.VITE_BACKEND_URL}/user/notification/${
+            accounts[0].address
+          }`,
+        )
+
+        const notifications = res.data
+
         notifications.forEach((notification) => {
-          console.log(notification); 
+          console.log(notification)
           toast.message(notification.title, {
+            position: 'bottom-center',
+ 
+            style: { backgroundColor: "#f0f8ff", color: "black",border:"1px solid #4169E1" },
             duration: Infinity,
-            description: `${notification.text}\n${formatDate(notification.date)}`,
-          });
-        });
+            description: `${notification.text}\n${formatDate(
+              notification.date,
+            )}`,
+          })
+        })
       } catch (error) {
-        console.error("Error fetching notifications:", error);
+        console.error('Error fetching notifications:', error)
       }
     } else {
-      console.warn("Accounts not available or address missing");
+      console.warn('Accounts not available or address missing')
     }
-  };
-  
-  
+  }
+
   useEffect(() => {
     const checkIfMobile = () => {
       const userAgent = navigator.userAgent || navigator.vendor || window.opera
@@ -84,13 +90,13 @@ function App() {
   useEffect(() => {
     if (accounts && accounts.length > 0) {
       const interval = setInterval(() => {
-        fetchNotification();
-      }, 1000);
-  
-      return () => clearInterval(interval);
+        fetchNotification()
+      }, 1000)
+
+      return () => clearInterval(interval)
     }
-  }, [accounts]); // Add accounts as a dependency
-  
+  }, [accounts]) // Add accounts as a dependency
+
   if (isMobile) {
     return (
       <div
