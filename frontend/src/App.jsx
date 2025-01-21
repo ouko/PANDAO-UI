@@ -59,7 +59,6 @@ function App() {
         notifications.forEach((notification) => {
           console.log(notification)
           toast.message(notification.title, {
-            position: 'bottom-center',
  
             style: { backgroundColor: "#f0f8ff", color: "black",border:"1px solid #4169E1" },
             duration: Infinity,
