@@ -28,7 +28,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <GatewayApiProvider value={gatewayApi}>
         <AccountProvider>
           <App />
-          <Toaster />
+          <Toaster  closeButton />
         </AccountProvider>
       </GatewayApiProvider>
     </RdtProvider>

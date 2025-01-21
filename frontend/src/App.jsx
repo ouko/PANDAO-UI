@@ -57,6 +57,7 @@ function App() {
         notifications.forEach((notification) => {
           console.log(notification); 
           toast.message(notification.title, {
+            duration: Infinity,
             description: `${notification.text}\n${formatDate(notification.date)}`,
           });
         });
@@ -84,7 +85,7 @@ function App() {
     if (accounts && accounts.length > 0) {
       const interval = setInterval(() => {
         fetchNotification();
-      }, 10000);
+      }, 1000);
   
       return () => clearInterval(interval);
     }
