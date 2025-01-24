@@ -71,6 +71,9 @@ const UserDashboard = () => {
 
   const [participatedComminities, setParticipatedCommunities] = useState([])
 
+  const [notifications, setNotifications] = useState([]);
+  const [hasFetched, setHasFetched] = useState(false);
+
   // const [edit, setEdit] = useState(false);
   // const [fileUrl, setFileUrl] = useState("");
   const [about, setAbout] = useState('')
@@ -81,6 +84,45 @@ const UserDashboard = () => {
     tiktok: '',
   })
 
+ useEffect(() => {
+  const fetchUserNotifications = async () => {
+    if (accounts && accounts.length > 0 && accounts[0]?.address && !hasFetched) {
+      await fetchNotifications(accounts[0].address);
+      setHasFetched(true); 
+    }
+  };
+
+  fetchUserNotifications();
+}, [accounts, hasFetched]);  
+
+const fetchNotifications = async (user_address) => {
+  if (!user_address) {
+    console.error("User address is not provided.");
+    return;
+  }
+
+  try {
+    const endpoint = `${import.meta.env.VITE_BACKEND_URL}/user/notification/all/${user_address}`;
+    console.log(`Fetching notifications from: ${endpoint}`);
+
+    const res = await axios.get(endpoint);
+    console.log("Fetched Notifications:", res.data);
+
+    if (Array.isArray(res.data)) {
+      setNotifications(res.data);
+    } else {
+      console.error("Unexpected response format:", res.data);
+    }
+  } catch (error) {
+    if (error.response) {
+      console.error("Error fetching notifications:", error.response.data);
+    } else if (error.request) {
+      console.error("No response from server:", error.request);
+    } else {
+      console.error("Error setting up request:", error.message);
+    }
+  }
+};
   const handleCopy = (address) => {
     navigator.clipboard.writeText(address)
     setCopied(true)
@@ -231,8 +273,7 @@ const UserDashboard = () => {
   const fetchCreatedBonds = async (user_address) => {
     try {
       const res = await axios.get(
-        `${
-          import.meta.env.VITE_BACKEND_URL
+        `${import.meta.env.VITE_BACKEND_URL
         }/user/created-bonds/${user_address}?is_accepted=${check}`,
       )
       setCreatedBonds(res.data)
@@ -273,8 +314,7 @@ const UserDashboard = () => {
     const fetchAll = async (user_address) => {
       try {
         const res = await axios.get(
-          `${
-            import.meta.env.VITE_BACKEND_URL
+          `${import.meta.env.VITE_BACKEND_URL
           }/community/user/interest/user_add?user_addr=${user_address}`,
         )
         setDataAll(res.data)
@@ -288,8 +328,7 @@ const UserDashboard = () => {
     const fetchUserExpense = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/expense/${
-            accounts[0].address
+          `${import.meta.env.VITE_BACKEND_URL}/user/expense/${accounts[0].address
           }`,
         )
         console.log(res.data, 'hi00000hi')
@@ -303,8 +342,7 @@ const UserDashboard = () => {
     const fetchFailedTransactions = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/pending-transactions/${
-            accounts[0].address
+          `${import.meta.env.VITE_BACKEND_URL}/user/pending-transactions/${accounts[0].address
           }`,
         )
         console.log(res.data, 'hi00000hi')
@@ -318,8 +356,7 @@ const UserDashboard = () => {
     const fetchUserData = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/details/${
-            accounts[0].address
+          `${import.meta.env.VITE_BACKEND_URL}/user/details/${accounts[0].address
           }`,
         )
         setWorkData(res.data.user_work)
@@ -338,8 +375,7 @@ const UserDashboard = () => {
     const fetchCreatedCommunity = async (user_address) => {
       try {
         const res = await axios.get(
-          `${
-            import.meta.env.VITE_BACKEND_URL
+          `${import.meta.env.VITE_BACKEND_URL
           }/user/community/${user_address}?owner=true`,
         )
         setCreatedCommunities(res.data)
@@ -351,8 +387,7 @@ const UserDashboard = () => {
     const fetchCreatedParticipated = async (user_address) => {
       try {
         const res = await axios.get(
-          `${
-            import.meta.env.VITE_BACKEND_URL
+          `${import.meta.env.VITE_BACKEND_URL
           }/user/community/${user_address}?owner=false`,
         )
         setParticipatedCommunities(res.data)
@@ -367,6 +402,7 @@ const UserDashboard = () => {
       fetchCreatedCommunity(accounts[0].address)
       fetchCreatedParticipated(accounts[0].address)
       fetchCreatedBonds(accounts[0].address)
+      fetchNotifications(accounts[0].address, 1, 10)
 
       fetchAll(accounts[0].address)
       fetchUserExpense()
@@ -439,6 +475,18 @@ const UserDashboard = () => {
                     className="w-full data-[state=active]:bg-gradient-to-b from-[#c4b5fd]  to-[#8b5cf6] data-[state=active]:text-white"
                   >
                     Community Participated
+                  </Button>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="notification"
+                  asChild
+                  className="w-full p-0"
+                >
+                  <Button
+                    variant="ghost"
+                    className="w-full data-[state=active]:bg-gradient-to-b from-[#c4b5fd]  to-[#8b5cf6] data-[state=active]:text-white"
+                  >
+                    User Notification
                   </Button>
                 </TabsTrigger>
               </div>
@@ -663,17 +711,16 @@ const UserDashboard = () => {
                       createdBonds.map((bond) => (
                         <div
                           key={bond.bond_id}
-                          className={`w-full  shadow-sm rounded-md p-4 mt-4 flex flex-col md:flex-row justify-between items-start md:items-center ${
-                            check &&
-                            bond.maturity_date &&
-                            new Date(bond.maturity_date) < new Date()
+                          className={`w-full  shadow-sm rounded-md p-4 mt-4 flex flex-col md:flex-row justify-between items-start md:items-center ${check &&
+                              bond.maturity_date &&
+                              new Date(bond.maturity_date) < new Date()
                               ? 'ring-2 ring-red-300'
                               : check &&
                                 bond.maturity_date &&
                                 new Date(bond.maturity_date) > new Date()
-                              ? 'ring-2 ring-green-300'
-                              : ''
-                          }`}
+                                ? 'ring-2 ring-green-300'
+                                : ''
+                            }`}
                         >
                           <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
                             <img
@@ -715,12 +762,12 @@ const UserDashboard = () => {
                               Maturity Date:
                               {bond.maturity_date
                                 ? new Date(
-                                    bond.maturity_date,
-                                  ).toLocaleDateString('en-US', {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                  })
+                                  bond.maturity_date,
+                                ).toLocaleDateString('en-US', {
+                                  year: 'numeric',
+                                  month: 'long',
+                                  day: 'numeric',
+                                })
                                 : 'Not specified'}
                             </p>
                             <div className="flex items-center gap-3">
@@ -781,13 +828,13 @@ const UserDashboard = () => {
                             <div className="flex gap-3">
                               <div className="border-2 p-2 bg-green-100">
                                 <span className="font-semibold">
-                                 Total Amount Put In Bucket:
+                                  Total Amount Put In Bucket:
                                 </span>{' '}
                                 {selectedInfo.amount_stored || '0'}
                               </div>
                               <div className="border-2 p-2 bg-green-100">
                                 <span className="font-semibold">
-                                Total Amount To Repay:
+                                  Total Amount To Repay:
                                 </span>{' '}
                                 {selectedInfo.amount_owned || '0'}
                               </div>
@@ -1023,6 +1070,51 @@ const UserDashboard = () => {
             </div> */}
             </Card>
           </TabsContent>
+          <TabsContent value="notification" className="w-full">
+            <Card className="w-full flex mt-1 flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black min-h-screen">
+              <div className="text-xl font-bold">User Notification</div>
+              <div className="w-full mt-4 flex flex-col gap-2">
+                {notifications && notifications.length > 0 ? (
+                  notifications.map((notification, index) => (
+                    <div key={index} className="p-4 border-2 rounded-lg group">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-start gap-2">
+                          <Avatar className="h-8 w-8 mt-1">
+                            <AvatarImage
+                              src={notification.image}
+                              className="h-8 w-8 object-cover"
+                            />
+                            <AvatarFallback>CN</AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span>{notification.title}</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm ">
+                              <span>{notification.text}</span>
+                            </div>
+                            <div className="text-sm flex items-center gap-1 font-light">
+                              <ClockIcon className="h-3 w-3" />{' '}
+                              <span>{formatStandardDateTime(notification.date)}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600">
+                          <Activity className="h-4 w-4" />
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center text-gray-500 p-4">
+                    You currently have Not Any notifications.
+                  </div>
+                )}
+              </div>
+            </Card>
+          </TabsContent>
+          
           <TabsContent value="expenses" className="w-full ">
             <UserTransaction
               expneseData={expneseData}
