@@ -28,8 +28,7 @@ const PurchasedBond = (props) => {
   const fetchIssuedBond = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/zcb/all/${
-          params.id
+        `${import.meta.env.VITE_BACKEND_URL}/community/zcb/all/${params.id
         }?purchased=true`,
       )
       setIssuedBonds(res.data)
@@ -181,9 +180,8 @@ const PurchasedBond = (props) => {
                           {bond.description ? (
                             <div>
                               <div
-                                className={`${
-                                  expandedBonds[bond.id] ? '' : 'line-clamp-3'
-                                }`}
+                                className={`${expandedBonds[bond.id] ? '' : 'line-clamp-3'
+                                  }`}
                               >
                                 {bond.description}
                               </div>
@@ -287,10 +285,17 @@ const PurchasedBond = (props) => {
                             </span>
                           </p>
                         </div>
-                        {bond.maturity_date &&
-                           (
-                            <Button disabled={loading2} onClick={()=>handleClaim(bond)} className="w-full mt-3">Claim</Button>
-                          )}
+                        {bond.maturity_date && (
+                          bond.claimed ? (
+                            <Button disabled className="w-full mt-3 bg-gray-200 text-gray-600 cursor-not-allowed">
+                              Already Claimed
+                            </Button>
+                          ) : (
+                            <Button disabled={loading2} onClick={() => handleClaim(bond)} className="w-full mt-3">
+                              Claim
+                            </Button>
+                          )
+                        )}
                       </Card>
                     ))}
                   </div>
