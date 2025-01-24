@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { BookDownIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useSendTransaction } from '@/hooks/useSendTransaction'
+import { SkeletonCard } from '../GlobalComponents/Skeleton'
 
 const PurchasedBond = (props) => {
   const { accounts } = useAccount()
@@ -140,13 +141,15 @@ const PurchasedBond = (props) => {
               {/* Issued Bonds Section */}
               <Card className="p-5">
                 {loading ? (
-                  <div className="text-center">Loading...</div>
+                  <div className="flex items-center justify-center h-96"> {[...Array(3)].map((_, i) => (
+                    <SkeletonCard key={i} />
+                  ))} </div>
                 ) : error ? (
                   <div className="text-center text-red-500">{error}</div>
                 ) : issuedBonds.length === 0 ? (
                   <div className="text-center">No bonds purchased yet</div>
                 ) : (
-                  <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                  <div className="grid gap-6 grid-cols-1 h-full md:grid-cols-2 lg:grid-cols-3">
                     {issuedBonds.map((bond) => (
                       <Card
                         key={bond.id}

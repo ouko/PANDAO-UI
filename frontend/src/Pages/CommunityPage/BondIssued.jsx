@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { BookDownIcon } from 'lucide-react'
+import { SkeletonCard } from '../GlobalComponents/Skeleton'
 
 const BondIssued = (props) => {
   const { accounts } = useAccount()
@@ -71,7 +72,9 @@ const BondIssued = (props) => {
               {/* Issued Bonds Section */}
               <Card className="p-5">
                 {loading ? (
-                  <div className="text-center">Loading...</div>
+                  <div className="flex items-center justify-center h-96"> {[...Array(3)].map((_, i) => (
+                                      <SkeletonCard key={i} />
+                                    ))} </div>
                 ) : error ? (
                   <div className="text-center text-red-500">{error}</div>
                 ) : issuedBonds.length === 0 ? (
