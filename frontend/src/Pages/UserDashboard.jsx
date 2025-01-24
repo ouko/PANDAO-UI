@@ -1088,6 +1088,9 @@ const fetchNotifications = async (user_address) => {
                           </Avatar>
                           <div>
                             <div className="flex items-center gap-2">
+                              <span>{notification.title}</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm ">
                               <span>{notification.text}</span>
                             </div>
                             <div className="text-sm flex items-center gap-1 font-light">
