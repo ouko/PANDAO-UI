@@ -237,7 +237,7 @@ function Deploy() {
             onChange={(e) => setFormFields({ ...formFields, tokenSupply: parseInt(e.target.value) })}
           />
           <InputField
-            label="Token Price"
+            label="Token Price in XRD"
             type="number"
             value={formFields.tokenPrice}
             onChange={(e) => setFormFields({ ...formFields, tokenPrice: parseFloat(e.target.value) })}
