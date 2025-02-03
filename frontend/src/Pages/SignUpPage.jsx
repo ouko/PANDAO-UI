@@ -352,7 +352,7 @@ const SignupPage = () => {
                     handleSendEmail()
                     setSignUpView(2)
                   }}
-                  disabled={!formData.bio || !formData.display_image}
+                  disabled={!formData.bio || !formData.display_image || !formData.email}
                 >
                   Next
                 </Button>
