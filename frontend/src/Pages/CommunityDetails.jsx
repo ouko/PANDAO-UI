@@ -69,6 +69,7 @@ const CommunityDetails = () => {
   const { accounts } = useAccount()
   const [openBuyModal, setBuyModal] = useState(false)
   const [quickStartOpen, setQuickStartOpen] = useState(false)
+  const [execOpen, setExecOpen] = useState(false)
   const [openSellModal, setSellModal] = useState(false)
   const { setOpen, setText } = useCustomAlertStore()
   const { setSlug } = useBluePrintSlugStore()
@@ -81,6 +82,7 @@ const CommunityDetails = () => {
   const [copied, setCopied] = useState(false)
   const sendTransaction = useSendTransaction()
   const [loading, setLoading] = useState(false)
+  const [loadingMint, setLoadingMint] = useState(false)
   const [manifest, setManifest] = useState('')
   const [token, setToken] = useState(0)
   const [tokenToSell, setTokenToSell] = useState(0)
@@ -180,8 +182,7 @@ const CommunityDetails = () => {
 
     try {
       const response = await axios.post(
-        `${
-          import.meta.env.VITE_BACKEND_URL
+        `${import.meta.env.VITE_BACKEND_URL
         }/manifest/build/buy_token/token_weighted_dao`,
         data,
         {
@@ -259,8 +260,7 @@ const CommunityDetails = () => {
 
     try {
       const response = await axios.post(
-        `${
-          import.meta.env.VITE_BACKEND_URL
+        `${import.meta.env.VITE_BACKEND_URL
         }/manifest/build/sell_token/token_weighted_dao`,
         data,
         {
@@ -355,8 +355,7 @@ const CommunityDetails = () => {
   const fetchParticipant = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/participant/${
-          params.id
+        `${import.meta.env.VITE_BACKEND_URL}/community/participant/${params.id
         }`,
       )
       setParticipants(res.data)
@@ -373,6 +372,73 @@ const CommunityDetails = () => {
       setCommunities(res.data)
     } catch (error) {
       console.error('Error fetching blueprint data:', error)
+    }
+  }
+  const handleClickMint = async () => {
+    const data = {
+      user_address: accounts[0].address,
+      community_id: params.id,
+
+    }
+
+    setLoadingMint(true)
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL
+        }/mint/executive-token`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+
+      const responseData =
+        typeof response.data === 'string'
+          ? response.data.trim()
+          : JSON.stringify(response.data)
+
+      console.log('Response:', responseData)
+      setManifest(responseData)
+
+      const { receipt } = await sendTransaction(responseData)
+
+      const txId = receipt?.transaction?.intent_hash
+
+      if (txId) {
+        try {
+          const submitResponse = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+            {
+              tx_id: txId,
+              user_address: accounts[0].address,
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+
+          console.log('Submit Transaction Response:', submitResponse.data)
+          toast.success('Minted Successfully!')
+  
+        } catch (submitError) {
+          console.error('Error submitting transaction:', submitError)
+          toast.error('Failed to submit transaction.')
+        }
+      } else {
+        console.error('Transaction ID not found in receipt:', receipt)
+        toast.error('Transaction failed. Please try again.')
+
+      }
+    } catch (error) {
+      console.error('Error selling token:', error.response.data.detail)
+      toast.error('Something went wrong.')
+    } finally {
+      setLoadingMint(false)
     }
   }
 
@@ -418,12 +484,22 @@ const CommunityDetails = () => {
                       </Button>
                     )}
                     {isUserParticipant && (
-                      <Button
-                        variant="radix"
-                        onClick={() => setQuickStartOpen(true)}
-                      >
-                        🚀 Quick Start
-                      </Button>
+                      <div className='flex items-center gap-2'>
+                        <Button
+                          variant="radix"
+                          onClick={() => setExecOpen(true)}
+                        >
+                          Mint Executive Badge
+                        </Button>
+                        <Button
+                          variant="radix"
+                          onClick={() => setQuickStartOpen(true)}
+                        >
+                          🚀 Quick Start
+                        </Button>
+
+                      </div>
+
                     )}
                   </div>
                 </div>
@@ -909,6 +985,28 @@ const CommunityDetails = () => {
                   Secure your projects with a reliable bond.
                 </p>
               </Card>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+      <Dialog open={execOpen} onOpenChange={setExecOpen}>
+        <DialogTrigger></DialogTrigger>
+        <DialogContent className="max-w-xl p-6 bg-white rounded-lg shadow-lg">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-semibold text-gray-800 w-full text-center">
+              Mint Executive Badges
+            </DialogTitle>
+            <DialogDescription className="flex flex-col justify-center items-center gap-4 mt-4 w-full">
+              <div>
+                Mint Executive Badges
+              </div>
+              <Button
+                variant="radix"
+                onClick={handleClickMint}
+                disabled={loadingMint}
+              >
+                Mint Executive Badge
+              </Button>
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
