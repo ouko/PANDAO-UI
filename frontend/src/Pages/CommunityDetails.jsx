@@ -73,7 +73,8 @@ const CommunityDetails = () => {
   const [openSellModal, setSellModal] = useState(false)
   const { setOpen, setText } = useCustomAlertStore()
   const { setSlug } = useBluePrintSlugStore()
-
+  const [executiveId, setExecutiveId] = useState("")
+  const [executiveName, setExecutiveName] = useState("")
   const navigate = useNavigate()
   const params = useParams()
   const [data, setData] = useState([])
@@ -374,10 +375,19 @@ const CommunityDetails = () => {
       console.error('Error fetching blueprint data:', error)
     }
   }
+
   const handleClickMint = async () => {
+
+    if (!executiveId || !executiveName) {
+      toast.error("Fill Fields")
+      return
+    }
+
     const data = {
       user_address: accounts[0].address,
       community_id: params.id,
+      id: executiveId,
+      name: executiveName
 
     }
 
@@ -424,7 +434,7 @@ const CommunityDetails = () => {
 
           console.log('Submit Transaction Response:', submitResponse.data)
           toast.success('Minted Successfully!')
-  
+
         } catch (submitError) {
           console.error('Error submitting transaction:', submitError)
           toast.error('Failed to submit transaction.')
@@ -991,14 +1001,34 @@ const CommunityDetails = () => {
       </Dialog>
       <Dialog open={execOpen} onOpenChange={setExecOpen}>
         <DialogTrigger></DialogTrigger>
-        <DialogContent className="max-w-xl p-6 bg-white rounded-lg shadow-lg">
-          <DialogHeader>
+        <DialogContent className="w-full  p-6 bg-white rounded-lg shadow-lg ">
+          <DialogHeader className="max-w-4xl w-full">
             <DialogTitle className="text-2xl font-semibold text-gray-800 w-full text-center">
               Mint Executive Badges
             </DialogTitle>
-            <DialogDescription className="flex flex-col justify-center items-center gap-4 mt-4 w-full">
+            <DialogDescription className="flex flex-col justify-center items-center gap-4 mt-4 ">
               <div>
                 Mint Executive Badges
+              </div>
+              <div className='w-full'>
+                <Label>
+                  Executive Id
+                </Label>
+                <Input
+                  value={executiveId}
+                  onChange={(e) => setExecutiveId(e.target.value)}
+                  type="number"
+                  min={0}
+                />
+              </div>
+              <div className='w-full'>
+                <Label>
+                  Executive Name
+                </Label>
+                <Input
+                  value={executiveName}
+                  onChange={(e) => setExecutiveName(e.target.value)}
+                />
               </div>
               <Button
                 variant="radix"
