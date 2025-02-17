@@ -206,6 +206,10 @@ const PurchasedBond = (props) => {
                             {bond.contract_identity || 'N/A'}
                           </p>
                           <p>
+                            <strong>Creator By:</strong>{' '}
+                            {bond.creator_name}
+                          </p>
+                          <p>
                             <strong>Number of Bonds:</strong>{' '}
                             {bond.number_of_bonds}
                           </p>
