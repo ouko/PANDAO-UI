@@ -378,7 +378,7 @@ const CommunityDetails = () => {
 
   const handleClickMint = async () => {
 
-    if (!executiveId || !executiveName) {
+    if (!executiveName) {
       toast.error("Fill Fields")
       return
     }
@@ -386,7 +386,6 @@ const CommunityDetails = () => {
     const data = {
       user_address: accounts[0].address,
       community_id: params.id,
-      id: executiveId,
       name: executiveName
 
     }
@@ -1010,7 +1009,7 @@ const CommunityDetails = () => {
               <div>
                 Mint Executive Badges
               </div>
-              <div className='w-full'>
+              {/* <div className='w-full'>
                 <Label>
                   Executive Id
                 </Label>
@@ -1020,7 +1019,7 @@ const CommunityDetails = () => {
                   type="number"
                   min={0}
                 />
-              </div>
+              </div> */}
               <div className='w-full'>
                 <Label>
                   Executive Name
