@@ -16,7 +16,6 @@ export const AccountProvider = ({ children }) => {
     rdt.walletApi.setRequestData(DataRequestBuilder.accounts().atLeast(1));
 
     const subscription = rdt.walletApi.walletData$.subscribe((walletData) => {
-      console.log("subscription wallet data: ", walletData);
       setAccounts(walletData && walletData.accounts ? walletData.accounts : []);
     });
 
