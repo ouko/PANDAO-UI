@@ -471,7 +471,7 @@ const CommunityDetails = () => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL
-        }/mint/tranfer-executive-token`,
+        }/manifest/transfer-executive-token`,
         data,
         {
           headers: {
