@@ -71,7 +71,7 @@ const HomeSection = () => {
         </div>
       </div> */}
      
-        <div classname="relative">
+        <div className="relative">
           <img className="w-[700px] h-[1000px] absolute top-[70%] left-[76.5%] translate-x-[-50%] translate-y-[-50%]" src="/wave1.svg" alt="" />
         </div>
         <div>
