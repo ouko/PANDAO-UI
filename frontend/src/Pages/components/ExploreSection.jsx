@@ -120,7 +120,7 @@ const ExploreSection = () => {
 
       <div className="flex flex-col items-start p-3 md:p-0 justify-start -translate-y-24 mx-auto max-w-[1200px] ">
         {/* DAO Creation and Learning Section */}
-        <div className="w-full min-h-1/2 grid md:grid-cols-3 grid-cols-1 gap-3">
+        {/* <div className="w-full min-h-1/2 grid md:grid-cols-3 grid-cols-1 gap-3">
           <Card className="p-5 w-full gap-4 flex flex-col items-center justify-between bg-gradient-to-br from-[#100821] to-[rgb(8,6,42)] rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-90">
             <div className="w-full">
               <Building2 className="h-14 w-14 text-blue-900" />
@@ -152,9 +152,7 @@ const ExploreSection = () => {
               Learn about DAOs and how to create them using Radix
             </p>
             <div className="w-full  ">
-              {/* <Button onClick={() => navigate('/resources')} variant="radix">
-                Learn about DAOs
-              </Button> */}
+        
               <Button
                 onClick={() => navigate('/resources')}
                 className="relative w-[200px] h-[29px] shrink-0 flex items-center justify-center rounded-full border border-violet-900 bg-black overflow-hidden cursor-pointer"
@@ -169,7 +167,7 @@ const ExploreSection = () => {
 
             </div>
           </Card>
-        </div>
+        </div> */}
 
         {/* DAO List Section */}
         <div className="mt-20 w-full px-4">
