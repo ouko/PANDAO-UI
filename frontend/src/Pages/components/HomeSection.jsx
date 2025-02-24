@@ -1,7 +1,5 @@
 import { useAccount } from '@/AccountContext'
-import { Button } from '../../components/ui/button'
 import { useNavigate } from 'react-router-dom'
-import AnimatedGridPattern from '@/components/ui/myComponents/animated-grid'
 
 const HomeSection = () => {
   const { accounts } = useAccount()
