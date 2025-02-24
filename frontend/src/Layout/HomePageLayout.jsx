@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import Footer from "@/Pages/components/Footer";
+// import Footer from "@/Pages/components/Footer";
 import Navbar from "@/Pages/components/Navbar";
 import { Outlet } from "react-router-dom";
 
@@ -10,7 +10,7 @@ const HomePageLayout = ({ children }) => {
       <div className="home-page-content">
         {children || <Outlet />}
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

@@ -84,6 +84,13 @@ module.exports = {
           },
         },
       },
+      // theme: {
+      //   extend: {
+      //     fontFamily: {
+      //       clash: ["Clash Display", "sans-serif"], // Add Clash Display
+      //     },
+      //   },
+      // },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
