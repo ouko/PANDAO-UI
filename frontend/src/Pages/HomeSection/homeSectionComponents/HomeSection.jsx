@@ -23,7 +23,7 @@ const HomeSection = () => {
         </div>
         <div className="text-left self-stretch w-[800px]">
           <span>
-            <span className="text-white text-6xl ">Bringing Governance  </span>
+            <span className="text-white text-6xl font-clash ">Bringing Governance  </span>
             <span className="text-white text-6xl">To All with PanDAO</span>
             <br />
             <span className="text-white text-3xl  font-thin">Effortless, Effective, Empowering.</span>
