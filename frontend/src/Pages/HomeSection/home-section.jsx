@@ -7,7 +7,8 @@ import Reviews from "./homeSectionComponents/Reviews";
 
 const HomePage = () => {
     return (
-        <div>
+        <div className="bg-gradient-to-br from-[#100821] to-[rgb(8,6,42)]">      
+
             <HomeSection />
             <ExploreSection />
             <Reviews />

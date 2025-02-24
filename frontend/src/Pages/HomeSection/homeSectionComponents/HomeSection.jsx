@@ -7,7 +7,7 @@ const HomeSection = () => {
 
   return (
     <>
-      <div className="flex flex-col  items-start justify-start bg-gradient-to-br from-[#100821] to-[rgb(8,6,42)] relative h-screen container mx-auto overflow-hidden">
+      <div className="flex flex-col  items-start justify-start  relative h-screen container mx-auto overflow-hidden">
         <div className="flex flex-col gap-6 items-start justify-start self-stretch shrink-0 pt-40 pl-10 ">
           <div className="bg-white/20 rounded-[53px] border border-violet-900 pt-3.5 pr-5 pb-3.5 pl-5 flex flex-col  gap-2.5 items-center justify-center shrink-0 ">
             <div className="flex flex-row gap-[17px] items-center justify-start ">
@@ -23,7 +23,7 @@ const HomeSection = () => {
           </div>
           <div className="text-left self-stretch w-[800px]">
             <span>
-              <span className="text-white text-6xl font-clash ">Bringing Governance <br /> To All with PanDAO </span>
+              <span className="text-white text-[64px] font-clash leading-[96px] font-semibold">Bringing Governance <br /> To All with PanDAO </span>
               <br />
               <span className="text-white text-3xl  font-thin">Effortless, Effective, Empowering.</span>
             </span>
