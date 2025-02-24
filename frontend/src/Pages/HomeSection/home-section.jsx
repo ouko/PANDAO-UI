@@ -1,10 +1,22 @@
+import ExploreSection from "../components/ExploreSection";
+import HomeSection from "./homeSectionComponents/HomeSection";
+import Footer from "./homeSectionComponents/Footer";
+import PriceSection from "./homeSectionComponents/PriceSection";
+import Question from "./homeSectionComponents/Question";
+import Reviews from "./homeSectionComponents/Reviews";
 
-const HomeSection = () => {
-
-
+const HomePage = () => {
     return (
         <div>
-            
+            <HomeSection />
+            <ExploreSection />
+            <Reviews />
+            <PriceSection />
+            <Question />
+            <Footer />
+
         </div>
-    )
-}
+    );
+};
+
+export default HomePage;
