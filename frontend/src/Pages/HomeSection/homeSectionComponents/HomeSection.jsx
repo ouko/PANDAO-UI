@@ -9,26 +9,26 @@ const HomeSection = () => {
     <>
       <div className="flex flex-col  items-start justify-start  relative min-h-screen container mx-auto overflow-hidden">
         <div className="flex flex-col gap-6 items-start justify-start self-stretch shrink-0 pt-32 z-10 ">
-          <div className="bg-white/20 rounded-[53px] border border-violet-900 pt-3.5 pr-5 pb-3.5 pl-5 flex flex-col  gap-2.5 items-center justify-center shrink-0 ">
+          <div className="bg-white/20 rounded-[53px] border border-violet-900 px-3 py-2 flex flex-col  gap-2.5 items-center justify-center shrink-0 ">
             <div className="flex flex-row gap-[17px] items-center justify-start ">
               <img
                 className=" w-[26.63px] h-[25.34px] shadow-md "
                 src="/logo1.png"
                 alt="Icon"
               />
-              <div className="text-white text-left font-robotoMono text-base font-medium relative">
+              <div className="text-white text-left font-robotoMono text-base font-medium relative pr-4">
                 Lorem ipsum dolor sit amet elitsed
               </div>
             </div>
           </div>
-          <div className="text-left self-stretch w-[800px]">
+          <div className="text-left self-stretch max-w-[800px] font-clash ">
             <span>
-              <span className="text-white text-[64px] font-clash leading-[96px] font-semibold">Bringing Governance <br /> To All with PanDAO </span>
+              <span className="text-white text-[64px]  leading-[96px] font-extrabold">Bringing Governance <br /> To All with PanDAO </span>
               <br />
-              <span className="text-white text-3xl  font-thin">Effortless, Effective, Empowering.</span>
+              <span className="text-white text-3xl  font-thin tracking-wide">Effortless, Effective, Empowering.</span>
             </span>
           </div>
-          <div className="text-[#B59AEC] text-left font-robotoMono text-xl leading-normal font-medium tracking-wider relative w-[627.74px]">
+          <div className="text-[#B59AEC] text-left font-mono text-xl leading-normal font-medium tracking-wider relative max-w-[627.74px]">
             Making Blockchain Accessible and DAO Governance Effortless.
           </div>
 
