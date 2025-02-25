@@ -157,8 +157,8 @@ const ExploreSection = () => {
 
           {/* DAO Cards */}
           {isLoading ? (
-            <div className="mt-5 grid md:grid-cols-2 grid-cols-1 gap-3">
-              {Array(6)
+            <div className="mt-5 grid md:grid-cols-3 grid-cols-1 gap-3">
+              {Array(3)
                 .fill(0)
                 .map((_, index) => (
                   <SkeletonCard key={index} />

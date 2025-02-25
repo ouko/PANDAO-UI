@@ -4,6 +4,7 @@ import PriceSection from "./homeSectionComponents/PriceSection";
 import Question from "./homeSectionComponents/Question";
 import Reviews from "./homeSectionComponents/Reviews";
 import ExploreSection from "./homeSectionComponents/ExploreSection";
+import Welcome from "./homeSectionComponents/welcome";
 
 const HomePage = () => {
     return (
@@ -11,10 +12,11 @@ const HomePage = () => {
             <div className="absolute inset-0 h-full bg-black/60 z-10 "></div>
             <HomeSection />
             <ExploreSection />
-            {/* <Reviews />
+            <Welcome/>
+            <Reviews />
             <PriceSection />
             <Question />
-            <Footer /> */}
+            <Footer />
 
         </div>
     );
