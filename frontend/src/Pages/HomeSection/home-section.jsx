@@ -14,7 +14,7 @@ const HomePage = () => {
             <ExploreSection />
             <Welcome/>
             <Reviews />
-            <PriceSection />
+            {/* <PriceSection /> */}
             <Question />
             <Footer />
 
