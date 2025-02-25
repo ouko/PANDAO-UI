@@ -1104,7 +1104,7 @@ const CommunityDetails = () => {
               </div> */}
               <div className='w-full'>
                 <Label>
-                  Executive Name
+                  Executive
                 </Label>
                 <Input
                   value={executiveName}
@@ -1147,19 +1147,20 @@ const CommunityDetails = () => {
               </div> */}
               <div className='w-full'>
                 <Label>
-                  Executive Name
-                </Label>
+                Executive badges
+                 </Label>
                 <Input
                   value={tranferAddress}
                   onChange={(e) => setTranferAddress(e.target.value)}
                 />
               </div>
+
               <Button
                 variant="radix"
                 onClick={handleTransfer}
                 disabled={loadingMint}
               >
-                Mint Executive Badge
+                Transfer Executive Badge
               </Button>
             </DialogDescription>
           </DialogHeader>
