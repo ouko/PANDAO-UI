@@ -82,7 +82,7 @@ const HomeSection = () => {
           <img className=" absolute top-64 left-[76.5%] translate-x-[-50%] translate-y-[-50%]  " src="/animate.png" alt="" />
         </div>
         <div className='md:flex hidden z-30' >
-          <img className="w-[400px] h-[400px] absolute top-[300px]  left-[93%] translate-x-[-100%] translate-y-[-40%]" src="/logo1.png" alt="" />
+          <img className="w-[400px] h-[400px] absolute top-[300px]  md:left-[93%] 2xl:left-[85%] translate-x-[-100%] translate-y-[-40%]" src="/logo1.png" alt="" />
         </div>
 
 
