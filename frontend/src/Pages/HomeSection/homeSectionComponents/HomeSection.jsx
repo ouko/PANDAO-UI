@@ -26,7 +26,7 @@ const HomeSection = () => {
           </div>
           <div className="text-left self-stretch max-w-[800px] font-clash ">
             <span>
-              <span className="text-white text-[64px]  leading-[96px] font-extrabold">Bringing Governance <br /> To All with PanDAO </span>
+              <span className="text-white text-[64px]  leading-[96px] font-extrabold">Bringing Governance <br /> To All with <span className='bg-gradient-to-r from-white from-[50%] to-[#b894ff] bg-clip-text text-transparent'> PanDAO</span>  </span>
               <br />
               <span className="text-white text-3xl  font-thin tracking-wide">Effortless, Effective, Empowering.</span>
             </span>
@@ -40,7 +40,7 @@ const HomeSection = () => {
               <div className="absolute w-[230.02px] h-[59.52px] bg-primary-400 rounded-full opacity-70 blur-[25.75px]"></div>
               <div className="absolute w-[230.02px] h-[59.52px] bg-[#4a2692] rounded-full blur-[25.75px] top-[34px]"></div>
               <div className="absolute w-[230.02px] h-[59.52px] bg-[#22133e] rounded-full blur-[25.75px] top-[-34px]"></div>
-              <span className="text-center font-roboto font-bold text-[22px] leading-normal bg-gradient-to-r from-white to-[#b894ff] bg-clip-text text-transparent">
+              <span className="text-center font-roboto font-bold text-[22px] leading-normal bg-gradient-to-r from-white to-[#b894ff] bg-clip-text text-transparent z-30">
                 Get Started
               </span>
             </button>
@@ -52,7 +52,7 @@ const HomeSection = () => {
               <div className="absolute w-[230.02px] h-[59.52px] bg-primary-400 rounded-full opacity-70 blur-[25.75px]"></div>
               <div className="absolute w-[230.02px] h-[59.52px] bg-[#4a2692] rounded-full blur-[25.75px] top-[34px]"></div>
               <div className="absolute w-[230.02px] h-[59.52px] bg-[#22133e] rounded-full blur-[25.75px] top-[-34px]"></div>
-              <span className="text-center font-roboto font-bold text-[22px] leading-normal bg-gradient-to-r from-white to-[#b894ff] bg-clip-text text-transparent">
+              <span className="text-center font-roboto font-bold text-[22px] leading-normal bg-gradient-to-r from-white to-[#b894ff] bg-clip-text text-transparent z-30">
                 My Dashboard
               </span>
             </button>
