@@ -52,31 +52,31 @@ const ExploreSection = () => {
   const { setView } = useViewStore()
   const { accounts } = useAccount()
   const navigate = useNavigate()
-  
+
   // State for filter and dialogs
   const [selectedOption, setSelectedOption] = useState('participants')
   const [filterPopoverOpen, setFilterPopoverOpen] = useState(false)
   const [walletDialogOpen, setWalletDialogOpen] = useState(false)
-  
+
   // Set active view on component mount
   useEffect(() => {
     setView('1')
   }, [setView])
-  
+
   // Fetch data with React Query
   const { data: daos = [], isLoading } = useQuery({
     queryKey: ['daos', selectedOption],
     queryFn: () => fetchDAOs(selectedOption),
-    staleTime: 5 * 60 * 1000, 
+    staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
   })
-  
+
   // Handle filter option selection
   const handleOptionSelect = (optionId) => {
     setSelectedOption(optionId)
     setFilterPopoverOpen(false)
   }
-  
+
   // Check wallet connection before navigation
   const handleNavigation = (path) => {
     if (accounts && accounts.length > 0) {
@@ -85,7 +85,7 @@ const ExploreSection = () => {
       setWalletDialogOpen(true)
     }
   }
-  
+
   // Render DAO stats with tooltip
   const renderStat = (icon, value, tooltip) => (
     <div className="flex items-center gap-2 border-2 px-2 rounded-md shadow-sm bg-[#5228A4] border-[#7F42F9]">
@@ -170,45 +170,47 @@ const ExploreSection = () => {
                 <Card
                   key={index}
                   onClick={() => handleNavigation(`/community/detail/${dao.id}`)}
-                  className="flex overflow-hidden flex-col items-start justify-between p-5 h-[180px] cursor-pointer hover:shadow-md bg-gradient-to-r from-[#100821] to-[#1c0f32] border-2 border-[#2b1b49] rounded-lg"
+                  className="flex overflow-hidden flex-col items-start justify-between p-5 h-[300px] cursor-pointer hover:shadow-md bg-gradient-to-r from-[#100821] to-[#1c0f32] border-2 border-[#2b1b49] rounded-lg"
                 >
-                  <div className="flex items-start gap-2">
-                    <Avatar className="h-14 w-14">
-                      <AvatarImage src={dao.image} alt={dao.name || 'DAO'} />
-                      <AvatarFallback>{dao.name?.[0] || '?'}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <div className="text-xl font-semibold text-white">{dao.name}</div>
+                  <div className="flex flex-col items-start gap-2  overflow-hidden w-full">
+                  <div  className="w-full overflow-hidden p-[2px] bg-gradient-to-t from-brand2 via-brand5 to-brand2">
+
+                    <img src={dao.image} alt={dao.name || 'DAO'} className='h-[80px] w-full object-cover' />
                     </div>
-                  </div>
-                  <div className="line-clamp-2 text-[#B59AEC]">
-                    {dao.description || 'No description available'}
-                  </div>
-                  <div className="flex items-center justify-between w-full mt-1">
-                    <div className="flex items-center gap-2">
-                      {renderStat(
-                        <Users className="h-4 w-4" />, 
-                        dao.number_of_participants, 
-                        "Total Number of Participants"
-                      )}
-                      {renderStat(
-                        <Banknote className="h-4 w-4" />, 
-                        dao.funds || 0, 
-                        "Total Funds"
-                      )}
+                    <div className='flex flex-col mt-3'>
+                      <div>
+                        <div className="text-xl font-semibold text-white">{dao.name}</div>
+                      </div>
+                      <div className="line-clamp-2 text-[#B59AEC] mt-1">
+                        {dao.description || 'No description available'}
+                      </div>
                     </div>
                     <div className="flex items-center gap-1">
                       {dao.tags &&
                         dao.tags.slice(0, 2).map((token, index) => (
-                          <Badge 
-                            key={index} 
-                            variant="outline" 
-                            className="border-[#7F42F9] text-white"
-                          >
-                            {token}
-                          </Badge>
+                            <div key={index} className="rounded-full p-[2px] bg-gradient-to-r from-brand2 via-brand5 to-brand2">
+                              <div className="w-full  rounded-full bg-brand1 flex justify-center items-center">
+                                <h1 className="text-white  font-bold text-[10px] px-3 py-[0.5]">Governance</h1>
+                              </div>
+                            </div>
                         ))}
                     </div>
+                  </div>
+
+                  <div className="flex items-center justify-end w-full mt-1 ">
+                    <div className="flex items-center gap-2">
+                      {renderStat(
+                        <Users className="h-4 w-4 text-white" />,
+                        dao.number_of_participants,
+                        "Total Number of Participants"
+                      )}
+                      {renderStat(
+                        <Banknote className="h-4 w-4 text-white" />,
+                        dao.funds || 0,
+                        "Total Funds"
+                      )}
+                    </div>
+
                   </div>
                 </Card>
               ))}
@@ -220,12 +222,14 @@ const ExploreSection = () => {
           )}
         </div>
       </div>
-      
+
       {/* See All Button */}
       <div className="pb-10 flex justify-center items-center ">
         <button
-          onClick={(e) => { e.preventDefault() 
-            navigate('/explore')}}
+          onClick={(e) => {
+            e.preventDefault()
+            navigate('/explore')
+          }}
           className="relative w-[219px] h-[49px] mt-10 shrink-0 flex items-center justify-center rounded-full border border-violet-900 bg-black overflow-hidden cursor-pointer z-50"
         >
           <div className="absolute w-[230.02px] h-[59.52px] bg-primary-400 rounded-full opacity-70 blur-[25.75px]"></div>
