@@ -72,11 +72,14 @@ const Navbar = () => {
   }, [])
   console.log(scrolled, 'scrolled')
   return (
-    <div className="flex items-center justify-center ">
+    <div className="flex items-center flex-wrap justify-center ">
       <div
-        className={`mx-auto flex  bg-gradient-to-t from-black/80 to-purple-900 text-white fixed w-full  z-50 transition-all duration-300  items-center justify-center h-14 p-5  ${
-          scrolled ? 'top-6 max-w-[1200px] rounded-3xl ' : 'top-0 max-w-full '
-        }   `}
+       className={`mx-auto flex bg-[rgba(169,126,255,0.24)] bg-opacity/80 text-white fixed w-full z-[9999] transition-all duration-300 items-center justify-center h-14 p-5 ${
+        scrolled
+          ? 'top-6 max-w-[1200px] rounded-[77px] border border-violet-900 pt-[13px] pr-[25px] pb-[13px] pl-[25px]'
+          : 'top-0 max-w-full border-violet-900 '
+      }`}
+      
       >
         <div className="w-full ">
           <Link to="/">
@@ -89,8 +92,8 @@ const Navbar = () => {
             className={
               ({ isActive }) =>
                 isActive
-                  ? 'bg-purple-700/70 p-2 rounded-xl text-white font-semibold' // Active state with a darker purple background
-                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-white font-semibold' // Inactive state with a light purple hover effect
+                  ? 'bg-purple-700/70 p-2 rounded-xl text-[#B59AEC] font-semibold' // Active state with a darker purple background
+                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
             }
             end
           >
@@ -102,8 +105,8 @@ const Navbar = () => {
             className={
               ({ isActive }) =>
                 isActive
-                  ? 'bg-purple-700/70 p-2 rounded-xl text-white font-semibold' // Active state with a darker purple background
-                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-white font-semibold' // Inactive state with a light purple hover effect
+                  ? 'bg-purple-700/70 p-2 rounded-xl text-[#B59AEC] font-semibold' // Active state with a darker purple background
+                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
             }
             end
           >
@@ -114,8 +117,8 @@ const Navbar = () => {
             className={
               ({ isActive }) =>
                 isActive
-                  ? 'bg-purple-700/70 p-2 rounded-xl text-white font-semibold' // Active state with a darker purple background
-                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-white font-semibold' // Inactive state with a light purple hover effect
+                  ? 'bg-purple-700/70 p-2 rounded-xl text-[#B59AEC] font-semibold' // Active state with a darker purple background
+                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
             }
             end
           >
@@ -138,8 +141,8 @@ const Navbar = () => {
             className={
               ({ isActive }) =>
                 isActive
-                  ? 'bg-purple-700/70 p-2 rounded-xl text-white font-semibold' // Active state with a darker purple background
-                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-white font-semibold' // Inactive state with a light purple hover effect
+                  ? 'bg-purple-700/70 p-2 rounded-xl text-[#B59AEC] font-semibold' // Active state with a darker purple background
+                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
             }
             end
           >
@@ -150,8 +153,8 @@ const Navbar = () => {
             className={
               ({ isActive }) =>
                 isActive
-                  ? 'bg-purple-700/70 p-2 rounded-xl text-white font-semibold' // Active state with a darker purple background
-                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-white font-semibold' // Inactive state with a light purple hover effect
+                  ? 'bg-purple-700/70 p-2 rounded-xl text-[#B59AEC] font-semibold' // Active state with a darker purple background
+                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
             }
             end
           >

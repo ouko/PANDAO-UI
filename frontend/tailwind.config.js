@@ -13,12 +13,22 @@ module.exports = {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1500px",
       },
     },
     extend: {
+      fontFamily: {
+        clash: ['Clash Display', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
+        brand1: "#1B0D37",
+        brand2: "#361B6D",
+        brand3: "#5228A4",
+        brand4: "#6D36DB",
+        brand5: "#9268E4",
+        brand6: "#B59AEC",
+        brand7: "#DACCF6",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
@@ -64,12 +74,12 @@ module.exports = {
         },
         orbit: {
           "0%": {
-              transform: "rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg)",
+            transform: "rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg)",
           },
           "100%": {
-              transform: "rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg)",
+            transform: "rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg)",
           },
-      },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -82,14 +92,32 @@ module.exports = {
           "100%": {
             "offset-distance": "100%",
           },
+        },spotlight: {
+          "0%": {
+            opacity: 0,
+            transform: "translate(72%, -62%) scale(0.5)",
+          },
+          "100%": {
+            opacity: 1,
+            transform: "translate(-50%,-40%) scale(1)",
+          },
         },
       },
+      // theme: {
+      //   extend: {
+      //     fontFamily: {
+      //       clash: ["Clash Display", "sans-serif"], // Add Clash Display
+      //     },
+      //   },
+      // },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         orbit: "orbit calc(var(--duration)*1s) linear infinite",
         "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
+        spotlight: "spotlight 2s ease .75s 1 forwards",
+
 
       },
     },

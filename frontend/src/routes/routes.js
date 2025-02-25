@@ -7,7 +7,7 @@ const UserDashboardLayout = lazy(() => import('../Layout/UserDashboardLayout'));
 const CommunityDetailsLayout = lazy(() => import('../Layout/CommunityDetailsLayout'));
 
 // Public Pages
-const HomePage = lazy(() => import('../Pages/HomePage'));
+const HomePage = lazy(() => import('../Pages/HomeSection/home-section'));
 const SignupPage = lazy(() => import('../Pages/SignUpPage'));
 const Product = lazy(() => import('../Pages/product'));
 const OurStory = lazy(() => import('../Pages/OurStory'));
