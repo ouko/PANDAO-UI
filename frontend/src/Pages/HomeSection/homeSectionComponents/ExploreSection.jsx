@@ -122,10 +122,10 @@ const ExploreSection = () => {
         {/* DAO List Section */}
         <div className="mt-20 w-full px-4 z-50">
           <div className="flex flex-col items-center justify-center shrink-0 h-auto min-h-[148px] py-6 md:py-8">
-            <div className="text-3xl sm:text-5xl md:text-6xl leading-tight font-semibold bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent text-center font-clash">
+            <div className="text-[64px]  leading-tight font-semibold bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent text-center font-clash">
               Explore Top DAOs
             </div>
-            <div className="text-[#B59AEC] text-center font-mono text-sm sm:text-base md:text-lg leading-6 font-normal w-full max-w-4xl px-4">
+            <div className="text-[#B59AEC] text-center font-mono text-base sm:text-lg md:text-xl leading-6 font-normal w-full max-w-4xl px-4">
               Lorem ipsum dolor sit amet consectetur. Aliquam risus sit vehicula congue diam sapien
             </div>
           </div>
@@ -173,9 +173,9 @@ const ExploreSection = () => {
                   className="flex overflow-hidden flex-col items-start justify-between p-5 h-[300px] cursor-pointer hover:shadow-md bg-gradient-to-r from-[#100821] to-[#1c0f32] border-2 border-[#2b1b49] rounded-lg"
                 >
                   <div className="flex flex-col items-start gap-2  overflow-hidden w-full">
-                    <div className="w-full overflow-hidden p-[2px] bg-gradient-to-t from-brand2 via-brand5 to-brand2">
+                  <div  className="w-full overflow-hidden p-[2px] bg-gradient-to-t from-brand2 via-brand5 to-brand2">
 
-                      <img src={dao.image} alt={dao.name || 'DAO'} className='h-[80px] w-full object-cover' />
+                    <img src={dao.image} alt={dao.name || 'DAO'} className='h-[80px] w-full object-cover' />
                     </div>
                     <div className='flex flex-col mt-3'>
                       <div>
@@ -188,11 +188,11 @@ const ExploreSection = () => {
                     <div className="flex items-center gap-1">
                       {dao.tags &&
                         dao.tags.slice(0, 2).map((token, index) => (
-                          <div key={index} className="rounded-full p-[2px] bg-gradient-to-r from-brand2 via-brand5 to-brand2">
-                            <div className="w-full  rounded-full bg-brand1 flex justify-center items-center">
-                              <h1 className="text-white  font-bold text-[10px] px-3 py-[0.5]">Governance</h1>
+                            <div key={index} className="rounded-full p-[2px] bg-gradient-to-r from-brand2 via-brand5 to-brand2">
+                              <div className="w-full  rounded-full bg-brand1 flex justify-center items-center">
+                                <h1 className="text-white  font-bold text-[10px] px-3 py-[0.5]">Governance</h1>
+                              </div>
                             </div>
-                          </div>
                         ))}
                     </div>
                   </div>
