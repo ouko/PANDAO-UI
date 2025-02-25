@@ -7,8 +7,8 @@ import Reviews from "./homeSectionComponents/Reviews";
 
 const HomePage = () => {
     return (
-        <div className="bg-brand1">      
-
+        <div className="bg-brand1 relative">      
+<div className="absolute inset-0 h-full bg-black/60 z-10 "></div>
             <HomeSection />
             {/* <ExploreSection />
             <Reviews />
