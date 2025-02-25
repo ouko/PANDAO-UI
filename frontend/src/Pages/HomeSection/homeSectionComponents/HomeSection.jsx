@@ -34,21 +34,21 @@ const HomeSection = () => {
               />
 
 
-              <div className="text-white text-left font-mono text-base font-medium relative pr-4">
+              <div className="text-white text-xs sm:text-sm md:text-base font-mono font-medium relative pr-4">
                 Lorem ipsum dolor sit amet elitsed
               </div>
             </div>
           </div>
           <div className="text-left self-stretch max-w-[800px] font-clash ">
             <span>
-              <span className="text-white text-[64px]  leading-[96px] font-extrabold">Bringing Governance <br /> To All with <span className='bg-gradient-to-r from-white from-[50%] to-[#b894ff] bg-clip-text text-transparent'> PanDAO</span>  </span>
+              <span className="text-white text-[64px] sm:text-2xl md:text-5xl  leading-[96px] font-extrabold">Bringing Governance <br /> To All with <span className='bg-gradient-to-r from-white from-[50%] to-[#b894ff] bg-clip-text text-transparent'> PanDAO</span>  </span>
               <br />
-              <span className="text-white text-3xl  font-thin tracking-wide">Effortless, Effective, Empowering.</span>
+              <span className="text-white text-lg sm:text-2xl md:text-5xl  font-thin tracking-wide">Effortless, Effective, Empowering.</span>
             </span>
           </div>
-          <div className="text-[#B59AEC] text-left font-mono text-xl leading-normal font-medium tracking-wider relative max-w-[627.74px]">
-            Making Blockchain Accessible and DAO Governance Effortless.
-          </div>
+          <div className="text-[#B59AEC] text-left font-mono text-xs sm:text-sm md:text-base lg:text-xl leading-normal font-medium tracking-wider relative max-w-[627.74px]">
+  Making Blockchain Accessible and DAO Governance Effortless.
+</div>
 
           {!accounts || accounts.length === 0 ? (
             <button className="relative w-[219px] h-[49px] shrink-0 flex items-center justify-center rounded-full border border-violet-900 bg-black overflow-hidden cursor-pointer">
