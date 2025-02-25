@@ -9,7 +9,7 @@ const HomeSection = () => {
 
   return (
     <>
-      <div className="flex flex-col  items-start justify-start  relative container mx-auto overflow-hidden">
+      <div className="flex flex-col  items-start justify-start  relative max-w-[3000px] mx-auto overflow-hidden">
         <Spotlight
           className="-right-[800px] top-28 h-[129%]"
           fill="#B59AEC"
@@ -23,7 +23,7 @@ const HomeSection = () => {
           fill="#B59AEC"
         />
         <TileEffect />
-        <div className="flex flex-col gap-6 items-start justify-start self-stretch shrink-0 pt-32 z-30 ">
+        <div className="flex flex-col gap-6 items-start justify-start self-stretch shrink-0 pt-32 z-30 pl-10">
           <div className="bg-white/20 rounded-[53px] border border-brand2 px-3 py-2 flex flex-col  gap-2.5 items-center justify-center shrink-0 ">
             <div className="flex flex-row gap-[10px] items-center justify-center  ">
 
@@ -78,7 +78,7 @@ const HomeSection = () => {
 
 
 
-        <div className='md:flex hidden z-20 mb-48' >
+        <div className='md:flex hidden z-20 mb-52' >
           <img className=" absolute top-64 left-[76.5%] translate-x-[-50%] translate-y-[-50%]  " src="/animate.png" alt="" />
         </div>
         <div className='md:flex hidden z-30' >
