@@ -8,7 +8,7 @@ const HomeSection = () => {
   return (
     <>
       <div className="flex flex-col  items-start justify-start  relative min-h-screen container mx-auto overflow-hidden">
-        <div className="flex flex-col gap-6 items-start justify-start self-stretch shrink-0 pt-40 pl-10 ">
+        <div className="flex flex-col gap-6 items-start justify-start self-stretch shrink-0 pt-40 z-10 ">
           <div className="bg-white/20 rounded-[53px] border border-violet-900 pt-3.5 pr-5 pb-3.5 pl-5 flex flex-col  gap-2.5 items-center justify-center shrink-0 ">
             <div className="flex flex-row gap-[17px] items-center justify-start ">
               <img
@@ -68,10 +68,10 @@ const HomeSection = () => {
       </div> */}
 
         <div >
-          <img className="w-[700px] h-[1000px] absolute top-[70%] left-[76.5%] translate-x-[-50%] translate-y-[-50%]" src="/wave1.svg" alt="" />
+          <img className=" absolute top-80 left-[76.5%] translate-x-[-50%] translate-y-[-50%]" src="/animate.png" alt="" />
         </div>
         <div>
-          <img className="w-[200px] h-[200px] absolute top-[60%] left-[93%] translate-x-[-50%] translate-y-[-50%]" src="/lh.svg" alt="" />
+          <img className="w-[400px] h-[400px] absolute top-80  left-[93%] translate-x-[-100%] translate-y-[-40%]" src="/logo1.png" alt="" />
         </div>
 
 

@@ -10,11 +10,11 @@ const HomePage = () => {
         <div className="bg-gradient-to-br from-[#100821] to-[rgb(8,6,42)]">      
 
             <HomeSection />
-            <ExploreSection />
+            {/* <ExploreSection />
             <Reviews />
             <PriceSection />
             <Question />
-            <Footer />
+            <Footer /> */}
 
         </div>
     );
