@@ -1,4 +1,5 @@
 import { useAccount } from '@/AccountContext'
+import { Spotlight } from '@/components/ui/myComponents/spotlight'
 import { useNavigate } from 'react-router-dom'
 
 const HomeSection = () => {
@@ -8,6 +9,18 @@ const HomeSection = () => {
   return (
     <>
       <div className="flex flex-col  items-start justify-start  relative min-h-screen container mx-auto overflow-hidden">
+      <Spotlight
+        className="-right-[800px] top-28 h-[129%]"
+        fill="#DACCF6"
+      />
+      <Spotlight
+        className="-right-[600px] translate-x-[200px]"
+        fill="#DACCF6"
+      />
+        <Spotlight
+        className="-right-[400px] -top-48"
+        fill="#DACCF6"
+      />
         <div className="flex flex-col gap-6 items-start justify-start self-stretch shrink-0 pt-32 z-30 ">
           <div className="bg-white/20 rounded-[53px] border border-brand2 px-3 py-2 flex flex-col  gap-2.5 items-center justify-center shrink-0 ">
             <div className="flex flex-row gap-[10px] items-center justify-center  ">
