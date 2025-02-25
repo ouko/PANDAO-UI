@@ -8,6 +8,7 @@ import { GatewayApiProvider } from "./context/GatewayApiProvider.jsx";
 import { RdtProvider } from "./context/RdtProvider.jsx";
 import { AccountProvider } from "./AccountContext.jsx";
 import { Toaster } from "./components/ui/sonner.jsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 
 
@@ -17,6 +18,8 @@ const dappConfig = {
   applicationName: "Pandao",
   applicationDappDefinitionAddress: "account_tdx_2_128wx75khgz5rstma5aapejz3656eluz43v3jruz2s3kv3n0urr8m23",
 };
+const queryClient = new QueryClient();
+
 const rdt = RadixDappToolkit(dappConfig);
 console.log("dApp Toolkit: ", rdt);
 const gatewayApi = GatewayApiClient.initialize(dappConfig);
@@ -24,6 +27,8 @@ console.log("gatewayApi: ", gatewayApi);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+        <QueryClientProvider client={queryClient}>
+
     <RdtProvider value={rdt}>
       <GatewayApiProvider value={gatewayApi}>
         <AccountProvider>
@@ -32,5 +37,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </AccountProvider>
       </GatewayApiProvider>
     </RdtProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );
