@@ -22,6 +22,13 @@ module.exports = {
       },
       colors: {
         border: "hsl(var(--border))",
+        brand1: "#1B0D37",
+        brand2: "#361B6D",
+        brand3: "#5228A4",
+        brand4: "#6D36DB",
+        brand5: "#9268E4",
+        brand6: "#B59AEC",
+        brand7: "#DACCF6",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
@@ -67,12 +74,12 @@ module.exports = {
         },
         orbit: {
           "0%": {
-              transform: "rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg)",
+            transform: "rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg)",
           },
           "100%": {
-              transform: "rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg)",
+            transform: "rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg)",
           },
-      },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
