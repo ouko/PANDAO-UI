@@ -9,7 +9,7 @@ const HomeSection = () => {
 
   return (
     <>
-      <div className="flex flex-col  items-start justify-start  relative min-h-screen container mx-auto overflow-hidden">
+      <div className="flex flex-col  items-start justify-start  relative container mx-auto overflow-hidden">
         <Spotlight
           className="-right-[800px] top-28 h-[129%]"
           fill="#B59AEC"
