@@ -1,12 +1,15 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { Button } from '../../components/ui/button'
 import MobileSidebar from './MobileSidebar'
-import { Rocket } from 'lucide-react'
+import { Compass, DollarSign, FileText, Home, Info, Package, Rocket } from 'lucide-react'
 import { useRdt } from '@/hooks/useRdt'
 import axios from 'axios'
 import { useEffect } from 'react'
 import { useAccount } from '@/AccountContext'
 import useScrollTop from '@/hooks/useScroll'
+import { navconfig } from '@/lib/config'
+
+
 
 const Navbar = () => {
   const rdt = useRdt()
@@ -19,8 +22,7 @@ const Navbar = () => {
     } else {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/check-signup/${
-            result.value.accounts[0].address
+          `${import.meta.env.VITE_BACKEND_URL}/user/check-signup/${result.value.accounts[0].address
           }`,
         )
         console.log(response.data.exist)
@@ -53,8 +55,7 @@ const Navbar = () => {
       if (accounts && accounts.length > 0) {
         try {
           const response = await axios.get(
-            `${import.meta.env.VITE_BACKEND_URL}/user/check-signup/${
-              accounts[0].address
+            `${import.meta.env.VITE_BACKEND_URL}/user/check-signup/${accounts[0].address
             }`,
           )
 
@@ -72,103 +73,46 @@ const Navbar = () => {
   }, [])
   console.log(scrolled, 'scrolled')
   return (
-    <div className="flex items-center flex-wrap justify-center ">
-      <div
-       className={`mx-auto flex bg-brand1/80  text-white fixed w-full z-[99] transition-all duration-300 items-center justify-center h-14 p-5 ${
-        scrolled
-          ? 'top-6 max-w-[1200px] rounded-[77px] border border-violet-900 pt-[13px] pr-[25px] pb-[13px] pl-[25px]'
-          : 'top-0 max-w-full border-violet-900 '
-      }`}
-      
-      >
-        <div className="w-full ">
-          <Link to="/">
-            <img src="/logo.png" alt="Logo" className=" h-12 " />
-          </Link>
-        </div>
-        <ul className="md:flex hidden items-center justify-center  gap-5 w-[300%] font-semibold text-lg">
-          <NavLink
-            to="/ourstory "
-            className={
-              ({ isActive }) =>
-                isActive
-                  ? ' p-2 rounded-xl  text-white font-semibold' // Active state with a darker purple background
-                  : 'hover:text-white p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
-            }
-            end
-          >
-            <li>Our Story </li>
-          </NavLink>
-
-          <NavLink
-            to="/catalystsuite"
-            className={
-              ({ isActive }) =>
-                isActive
-              ? ' p-2 rounded-xl  text-white font-semibold' // Active state with a darker purple background
-              : 'hover:text-white p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
-            }
-            end
-          >
-            <li>Catalyst Suite</li>
-          </NavLink>
-          <NavLink
-            to="/resources"
-            className={
-              ({ isActive }) =>
-                isActive
-              ? ' p-2 rounded-xl  text-white font-semibold' // Active state with a darker purple background
-              : 'hover:text-white p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effectct
-            }
-            end
-          >
-            <li>Resources</li>
-          </NavLink>
-          {/* <NavLink
-            to="/blog"
-            className={
-              ({ isActive }) =>
-                isActive
-                  ? 'bg-purple-700/70 p-2 rounded-xl text-white font-semibold' // Active state with a darker purple background
-                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-white font-semibold' // Inactive state with a light purple hover effect
-            }
-            end
-          >
-            <li>Blog</li>
-          </NavLink> */}
-          <NavLink
-            to="/price"
-            className={
-              ({ isActive }) =>
-                isActive
-              ? ' p-2 rounded-xl  text-white font-semibold' // Active state with a darker purple background
-              : 'hover:text-white p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
-            }
-            end
-          >
-            <li>Pricing</li>
-          </NavLink> 
-          <NavLink
-            to="/explore"
-            className={
-              ({ isActive }) =>
-                isActive
-              ? ' p-2 rounded-xl  text-white font-semibold' // Active state with a darker purple background
-              : 'hover:text-white p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
-            }
-            end
-          >
-            <li>Explore</li>
-          </NavLink>
-        </ul>
-        <div id="connect-btn">
-        <radix-connect-button />
-      </div>
-        <div className="md:hidden block">
-          <MobileSidebar />
-        </div>
-      </div>
+    <div className="flex items-center flex-wrap justify-center">
+  <div
+    className={`mx-auto flex bg-brand1/80 text-white fixed w-full z-[99] transition-all duration-300 items-center justify-between h-14 p-5 ${
+      scrolled
+        ? 'top-6 max-w-[1300px] rounded-[77px] border border-violet-900 pt-[13px] pr-[25px] pb-[13px] pl-[25px]'
+        : 'top-0 max-w-full border-violet-900'
+    }`}
+  >
+    <div className="w-auto">
+      <Link to="/">
+        <img src="/logo.png" alt="Logo" className="h-12" />
+      </Link>
     </div>
+    <ul className="md:flex hidden items-center justify-evenly gap-5 font-semibold text-lg">
+      {navconfig.map((item, index) => (
+        <NavLink
+          key={index}
+          to={item.path}
+          className={({ isActive }) =>
+            isActive
+              ? 'p-2 rounded-xl text-white font-semibold'
+              : 'hover:text-white p-2 rounded-xl text-[#B59AEC] font-semibold'
+          }
+          end
+        >
+          <div className='flex items-center'>
+            <item.icon className="w-5 h-5 mr-2" />
+            <span>{item.title}</span>
+          </div>
+        </NavLink>
+      ))}
+    </ul>
+    <div id="connect-btn">
+      <radix-connect-button />
+    </div>
+    <div className="md:hidden block">
+      <MobileSidebar />
+    </div>
+  </div>
+</div>
   )
 }
 
