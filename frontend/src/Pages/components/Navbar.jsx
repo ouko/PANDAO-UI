@@ -86,7 +86,7 @@ const Navbar = () => {
         <img src="/logo.png" alt="Logo" className="h-12" />
       </Link>
     </div>
-    <ul className="md:flex hidden items-center justify-evenly gap-5 font-semibold text-lg">
+    <ul className="md:flex hidden items-center justify-evenly  gap-4 font-semibold text-lg">
       {navconfig.map((item, index) => (
         <NavLink
           key={index}
@@ -99,7 +99,7 @@ const Navbar = () => {
           end
         >
           <div className='flex items-center'>
-            <item.icon className="w-5 h-5 mr-2" />
+            {/* <item.icon className="w-5 h-5 mr-2" /> */}
             <span>{item.title}</span>
           </div>
         </NavLink>
