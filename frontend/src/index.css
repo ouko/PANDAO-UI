@@ -115,3 +115,11 @@
   animation: none;
   box-shadow: 0 0 10px 5px rgba(50, 12, 114, 0.5); 
 }
+#connect-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  --radix-connect-button-width: 9.25rem;
+  --radix-connect-button-height: 2.475rem;
+  --radix-connect-button-border-radius: 5rem;
+}

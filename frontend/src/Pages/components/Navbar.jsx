@@ -74,7 +74,7 @@ const Navbar = () => {
   return (
     <div className="flex items-center flex-wrap justify-center ">
       <div
-       className={`mx-auto flex bg-[rgba(169,126,255,0.24)] bg-opacity/80 text-white fixed w-full z-[9999] transition-all duration-300 items-center justify-center h-14 p-5 ${
+       className={`mx-auto flex bg-brand1/80  text-white fixed w-full z-[9999] transition-all duration-300 items-center justify-center h-14 p-5 ${
         scrolled
           ? 'top-6 max-w-[1200px] rounded-[77px] border border-violet-900 pt-[13px] pr-[25px] pb-[13px] pl-[25px]'
           : 'top-0 max-w-full border-violet-900 '
@@ -92,8 +92,8 @@ const Navbar = () => {
             className={
               ({ isActive }) =>
                 isActive
-                  ? 'bg-purple-700/70 p-2 rounded-xl text-[#B59AEC] font-semibold' // Active state with a darker purple background
-                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
+                  ? ' p-2 rounded-xl  text-white font-semibold' // Active state with a darker purple background
+                  : 'hover:text-white p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
             }
             end
           >
@@ -105,8 +105,8 @@ const Navbar = () => {
             className={
               ({ isActive }) =>
                 isActive
-                  ? 'bg-purple-700/70 p-2 rounded-xl text-[#B59AEC] font-semibold' // Active state with a darker purple background
-                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
+              ? ' p-2 rounded-xl  text-white font-semibold' // Active state with a darker purple background
+              : 'hover:text-white p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
             }
             end
           >
@@ -117,8 +117,8 @@ const Navbar = () => {
             className={
               ({ isActive }) =>
                 isActive
-                  ? 'bg-purple-700/70 p-2 rounded-xl text-[#B59AEC] font-semibold' // Active state with a darker purple background
-                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
+              ? ' p-2 rounded-xl  text-white font-semibold' // Active state with a darker purple background
+              : 'hover:text-white p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effectct
             }
             end
           >
@@ -141,8 +141,8 @@ const Navbar = () => {
             className={
               ({ isActive }) =>
                 isActive
-                  ? 'bg-purple-700/70 p-2 rounded-xl text-[#B59AEC] font-semibold' // Active state with a darker purple background
-                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
+              ? ' p-2 rounded-xl  text-white font-semibold' // Active state with a darker purple background
+              : 'hover:text-white p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
             }
             end
           >
@@ -153,17 +153,17 @@ const Navbar = () => {
             className={
               ({ isActive }) =>
                 isActive
-                  ? 'bg-purple-700/70 p-2 rounded-xl text-[#B59AEC] font-semibold' // Active state with a darker purple background
-                  : 'hover:bg-purple-600/30 p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
+              ? ' p-2 rounded-xl  text-white font-semibold' // Active state with a darker purple background
+              : 'hover:text-white p-2 rounded-xl text-[#B59AEC] font-semibold' // Inactive state with a light purple hover effect
             }
             end
           >
             <li>Explore</li>
           </NavLink>
         </ul>
-        <div className="w-full md:flex items-center justify-end gap-4 hidden ">
-          <radix-connect-button />
-        </div>
+        <div id="connect-btn">
+        <radix-connect-button />
+      </div>
         <div className="md:hidden block">
           <MobileSidebar />
         </div>
