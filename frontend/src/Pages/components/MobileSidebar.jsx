@@ -16,7 +16,7 @@ const MobileSidebar = () => {
       <SheetTrigger>
         <Menu />
       </SheetTrigger>
-      <SheetContent className="bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-[#281038] from-0% via-[#181734] via-50%  to-[#0D1E3B] to-100%">
+      <SheetContent className="z-[100] bg-brand1">
         <SheetHeader>
           <SheetTitle>
             <img src="/logo.png" className="h-20" />
