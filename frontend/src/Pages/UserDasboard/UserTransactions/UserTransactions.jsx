@@ -44,12 +44,21 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
                         <p className="text-sm text-gray-500">
                           {activity.xrd_spent_on}
                         </p>
+
+                        <p className="text-sm font-bold text-red-500">
+                         XRD Spent transactions: {activity.xrd_spent_on_transactions}
+                        </p>
+
+                        <p className="text-sm font-bold text-gray-500">
+                          XRD Spent On Assets: {activity.xrd_spent_on_assets ?? 0}
+                        </p>
+
                         <p
                           className={`text-sm font-bold ${
                             activity.xrd_spent < 0
                               ? 'text-red-500'
                               : 'text-green-500'
-                          }`}
+                            }`}
                         >
                           Spent: {Math.abs(activity.xrd_spent)} XRD
                         </p>
@@ -57,26 +66,27 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
                           Date: {new Date(activity.date).toLocaleString()}
                         </p>
                       </div>
-                     
+
+
                     </div>
-                    <Separator/>
+                    <Separator />
                     <div className='mt-4'>
-                        <Button >
-                          <Link
-                            to={`/community/detail/${activity.community_id}`}
-                          >
-                            View Community
-                          </Link>
-                        </Button>{' '}
-                        <Button >
-                          <Link
-                            to={`https://stokenet-dashboard.radixdlt.com/transaction/${activity.tx_hash}/summary`}
-                            target='_blank'
-                          >
-                            View Transaction
-                          </Link>
-                        </Button>
-                      </div>
+                      <Button >
+                        <Link
+                          to={`/community/detail/${activity.community_id}`}
+                        >
+                          View Community
+                        </Link>
+                      </Button>{' '}
+                      <Button >
+                        <Link
+                          to={`https://stokenet-dashboard.radixdlt.com/transaction/${activity.tx_hash}/summary`}
+                          target='_blank'
+                        >
+                          View Transaction
+                        </Link>
+                      </Button>
+                    </div>
                   </div>
                 ))}
             </div>
