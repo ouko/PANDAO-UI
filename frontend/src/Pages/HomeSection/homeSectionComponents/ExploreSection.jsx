@@ -225,7 +225,7 @@ const ExploreSection = () => {
       </div>
 
       {/* See All Button */}
-      <div className=" pt-12 flex justify-center items-center ">
+      <div className=" pt-12 flex justify-center items-center  z-20">
       <BrandButton title='See All' href='/explore' />
       </div>
     </div>
