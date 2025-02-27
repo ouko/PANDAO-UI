@@ -41,17 +41,17 @@ const HomeSection = () => {
           </div>
           <div className="text-left self-stretch max-w-[800px] font-clash ">
             <span>
-              <span className="text-white text-[34px] md:text-[64px] md:leading[96px] leading-[96px] font-extrabold">Bringing Governance <br /> To All with <span className='bg-gradient-to-r from-white from-[50%] to-[#b894ff] bg-clip-text text-transparent'> PanDAO</span>  </span>
+              <span className="text-white text-[34px] md:text-[64px] md:leading-[96px] leading-[50px] font-extrabold">Bringing Governance <br /> To All with <span className='bg-gradient-to-r from-white from-[50%] to-[#b894ff] bg-clip-text text-transparent'> PanDAO</span>  </span>
               <br />
-              <span className="text-white text-3xl  font-thin tracking-wide">Effortless, Effective, Empowering.</span>
+              <span className="text-white md:text-3xl text-xl  font-thin tracking-wide">Effortless, Effective, Empowering.</span>
             </span>
           </div>
-          <div className="text-[#B59AEC] text-left font-mono text-xl md:text-[xl] leading-normal font-medium tracking-wider relative max-w-[627.74px]">
+          <div className="text-[#B59AEC] text-left font-mono text-md md:text-xl leading-normal font-medium tracking-wider relative max-w-[627.74px]">
             Making Blockchain Accessible and DAO Governance Effortless.
           </div>
 
           {!accounts || accounts.length === 0 ? (
-            <button className="relative w-[219px] h-[49px] shrink-0 flex items-center justify-center rounded-full border border-violet-900 bg-black overflow-hidden cursor-pointer">
+            <button className="relative group w-[219px] h-[49px] shrink-0 flex items-center justify-center rounded-full border border-violet-900 bg-black overflow-hidden cursor-pointer hover:shadow-[0px_3px_174px_9px_#ed64a6] transition-shadow duration-500 ">
               <div className="absolute w-[230.02px] h-[59.52px] bg-primary-400 rounded-full opacity-70 blur-[25.75px]"></div>
               <div className="absolute w-[230.02px] h-[59.52px] bg-[#4a2692] rounded-full blur-[25.75px] top-[34px]"></div>
               <div className="absolute w-[230.02px] h-[59.52px] bg-[#22133e] rounded-full blur-[25.75px] top-[-34px]"></div>
