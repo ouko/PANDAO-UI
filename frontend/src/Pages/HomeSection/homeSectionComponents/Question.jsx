@@ -1,3 +1,4 @@
+import BrandButton from "@/components/ui/myComponents/brand-button";
 import React, { useState } from "react";
 
 function Question() {
@@ -22,18 +23,11 @@ function Question() {
             Got Questions? We&apos;ve Got Answers!
           </h1>
           <p className="text-gray-400 text-lg mt-2 font-clash">Find answers to the most common questions below.</p>
-          <button
-            // onClick={() => navigate('/userDashboard')}
-            className="relative w-[219px] h-[49px] mt-10 shrink-0 flex items-center justify-center rounded-full border border-violet-900 bg-black overflow-hidden cursor-pointer"
-          >
-            <div className="absolute w-[230.02px] h-[59.52px] bg-primary-400 rounded-full opacity-70 blur-[25.75px]"></div>
-            <div className="absolute w-[230.02px] h-[59.52px] bg-[#4a2692] rounded-full blur-[25.75px] top-[34px]"></div>
-            <div className="absolute w-[230.02px] h-[59.52px] bg-[#22133e] rounded-full blur-[25.75px] top-[-34px]"></div>
-            <span className="text-center font-roboto font-bold text-[22px] leading-normal bg-gradient-to-r from-white to-[#c1bbcf] bg-clip-text text-transparent z-50">
-              Get Started
-            </span>
-          </button>
+          <div className="pt-6">
+           <BrandButton title='Get Started' href='' />
+           </div>
         </div>
+        
         
         <div className="flex flex-col gap-4 w-full lg:w-[40rem] mt-8 lg:mt-0">
           {faqs.map((faq, index) => (

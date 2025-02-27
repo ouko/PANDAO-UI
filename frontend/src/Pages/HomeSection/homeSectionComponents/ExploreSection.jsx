@@ -32,6 +32,7 @@ import {
 // Store and Context
 import useViewStore from '@/store/view'
 import { useAccount } from '@/AccountContext'
+import BrandButton from '@/components/ui/myComponents/brand-button'
 
 // API Functions
 const fetchDAOs = async (sortBy) => {
@@ -224,21 +225,8 @@ const ExploreSection = () => {
       </div>
 
       {/* See All Button */}
-      <div className="pb-10 flex justify-center items-center ">
-        <button
-          onClick={(e) => {
-            e.preventDefault()
-            navigate('/explore')
-          }}
-          className="relative w-[219px] h-[49px] mt-10 shrink-0 flex items-center justify-center rounded-full border border-violet-900 bg-black overflow-hidden cursor-pointer z-50"
-        >
-          <div className="absolute w-[230.02px] h-[59.52px] bg-primary-400 rounded-full opacity-70 blur-[25.75px]"></div>
-          <div className="absolute w-[230.02px] h-[59.52px] bg-[#4a2692] rounded-full blur-[25.75px] top-[34px]"></div>
-          <div className="absolute w-[230.02px] h-[59.52px] bg-[#22133e] rounded-full blur-[25.75px] top-[-34px]"></div>
-          <span className="text-center font-roboto font-bold text-[22px] leading-normal bg-gradient-to-r from-white to-[#c1bbcf] bg-clip-text text-transparent z-[60]">
-            See All
-          </span>
-        </button>
+      <div className=" pt-12 flex justify-center items-center ">
+      <BrandButton title='See All' href='/explore' />
       </div>
     </div>
   )
