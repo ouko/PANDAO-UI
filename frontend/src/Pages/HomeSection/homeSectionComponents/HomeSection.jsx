@@ -1,4 +1,5 @@
 import { useAccount } from '@/AccountContext'
+import BrandButton from '@/components/ui/myComponents/brand-button'
 import TileEffect from '@/components/ui/myComponents/grid-bg-2'
 import { Spotlight } from '@/components/ui/myComponents/spotlight'
 import { useNavigate } from 'react-router-dom'
@@ -51,40 +52,14 @@ const HomeSection = () => {
           </div>
 
           {!accounts || accounts.length === 0 ? (
-            <button className="relative group w-[219px] h-[49px] shrink-0 flex items-center justify-center rounded-full border border-violet-900 bg-black overflow-hidden cursor-pointer hover:shadow-[0px_3px_174px_9px_#ed64a6] transition-shadow duration-500 ">
-              <div className="absolute w-[230.02px] h-[59.52px] bg-primary-400 rounded-full opacity-70 blur-[25.75px]"></div>
-              <div className="absolute w-[230.02px] h-[59.52px] bg-[#4a2692] rounded-full blur-[25.75px] top-[34px]"></div>
-              <div className="absolute w-[230.02px] h-[59.52px] bg-[#22133e] rounded-full blur-[25.75px] top-[-34px]"></div>
-              <span className="text-center font-roboto font-bold text-[22px] leading-normal bg-gradient-to-r from-white to-[#b894ff] bg-clip-text text-transparent z-30">
-                Get Started
-              </span>
-            </button>
+            <BrandButton />
           ) : (
             <div className='flex items-center gap-2'>
-<button
-              onClick={() => navigate('/userDashboard')}
-              className="relative w-[219px] h-[49px] shrink-0 flex items-center justify-center rounded-full border border-violet-900 bg-black overflow-hidden cursor-pointer"
-            >
-              <div className="absolute w-[230.02px] h-[59.52px] bg-primary-400 rounded-full opacity-70 blur-[25.75px]"></div>
-              <div className="absolute w-[230.02px] h-[59.52px] bg-[#4a2692] rounded-full blur-[25.75px] top-[34px]"></div>
-              <div className="absolute w-[230.02px] h-[59.52px] bg-[#22133e] rounded-full blur-[25.75px] top-[-34px]"></div>
-              <span className="text-center font-roboto font-bold text-[22px] leading-normal bg-gradient-to-r from-white to-[#b894ff] bg-clip-text text-transparent z-30">
-                My Dashboard
-              </span>
-            </button>
-            <button
-              onClick={() => navigate('/create')}
-              className="relative w-[219px] h-[49px] shrink-0 flex items-center justify-center rounded-full border border-violet-900 bg-black overflow-hidden cursor-pointer"
-            >
-              <div className="absolute w-[230.02px] h-[59.52px] bg-primary-400 rounded-full opacity-70 blur-[25.75px]"></div>
-              <div className="absolute w-[230.02px] h-[59.52px] bg-[#4a2692] rounded-full blur-[25.75px] top-[34px]"></div>
-              <div className="absolute w-[230.02px] h-[59.52px] bg-[#22133e] rounded-full blur-[25.75px] top-[-34px]"></div>
-              <span className="text-center font-roboto font-bold text-[22px] leading-normal bg-gradient-to-r from-white to-[#b894ff] bg-clip-text text-transparent z-30">
-                Create Dao
-              </span>
-            </button>
+              <BrandButton title='My Dashboard' href='/userDashboard' />
+              <BrandButton title='Create Dao' href='/create' />
+         
             </div>
-            
+
           )}
 
         </div>
