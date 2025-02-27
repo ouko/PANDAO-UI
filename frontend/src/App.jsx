@@ -22,7 +22,7 @@ function App() {
         )
 
         const notifications = res.data
-
+        if (notifications.length > 0) {
         notifications.forEach((notification) => {
           console.log(notification)
           toast.message(notification.title, {
@@ -33,7 +33,7 @@ function App() {
               notification.date,
             )}`,
           })
-        })
+        })}
       } catch (error) {
         console.error('Error fetching notifications:', error)
       }
