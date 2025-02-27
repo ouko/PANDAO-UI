@@ -463,7 +463,8 @@ const CommunityDetails = () => {
   }
   const handleTransfer = async () => {
 
-    if (!tranferAddress) {
+    if (tranferAddress.trim()!=="") {
+      
       toast.error("Fill Fields")
       return
     }
