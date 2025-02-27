@@ -216,7 +216,7 @@ const ExploreSection = () => {
               ))}
             </div>
           ) : (
-            <div className="flex items-center justify-center bg-white mt-3 h-32 rounded-lg shadow-xl">
+            <div className="flex items-center text-white justify-center bg-brand2 mt-3 h-32 rounded-lg shadow-xl">
               <p>No Deployed DAOs</p>
             </div>
           )}
