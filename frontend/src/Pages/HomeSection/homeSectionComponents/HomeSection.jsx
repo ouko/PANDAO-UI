@@ -41,7 +41,7 @@ const HomeSection = () => {
           </div>
           <div className="text-left self-stretch max-w-[800px] font-clash ">
             <span>
-              <span className="text-white text-[34px] md:text-[64px] md:leading[96px] leading-[50px] font-extrabold">Bringing Governance <br /> To All with <span className='bg-gradient-to-r from-white from-[50%] to-[#b894ff] bg-clip-text text-transparent'> PanDAO</span>  </span>
+              <span className="text-white text-[34px] md:text-[64px] md:leading-[96px] leading-[50px] font-extrabold">Bringing Governance <br /> To All with <span className='bg-gradient-to-r from-white from-[50%] to-[#b894ff] bg-clip-text text-transparent'> PanDAO</span>  </span>
               <br />
               <span className="text-white md:text-3xl text-xl  font-thin tracking-wide">Effortless, Effective, Empowering.</span>
             </span>
