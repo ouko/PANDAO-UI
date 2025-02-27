@@ -8,9 +8,9 @@ import { formatDate } from './utils/functions/ConvertDate'
 import { protectedRoutes, publicRoutes } from './routes/routes'
 import ProtectedRoute from './routes/protectedRoutes'
 import LoaderPage from './Pages/loaderPage'
+import useMobileDetection from './hooks/useIsMobile'
 
 function App() {
-  const [isMobile, setIsMobile] = useState(false)
   const { accounts } = useAccount()
   const fetchNotification = async () => {
     if (accounts && accounts.length > 0 && accounts[0]?.address) {
@@ -42,17 +42,11 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    const checkIfMobile = () => {
-      const userAgent = navigator.userAgent || navigator.vendor || window.opera
-      const isMobileDevice = /android|iphone|ipad|ipod|opera mini|blackberry|mobile/i.test(
-        userAgent,
-      )
-      setIsMobile(isMobileDevice)
-    }
-
-    checkIfMobile()
-  }, [])
+  const options = {
+    router: true,
+    excludedRoutes: ['/']
+  }
+  const isMobile = useMobileDetection(options)
   useEffect(() => {
     if (accounts && accounts.length > 0) {
       const interval = setInterval(() => {
