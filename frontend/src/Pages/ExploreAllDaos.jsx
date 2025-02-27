@@ -1,20 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { SkeletonCard } from "./GlobalComponents/Skeleton";
-import { Card } from "@/components/ui/card";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Banknote, Users } from "lucide-react";
 import { useAccount } from "@/AccountContext";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
+import BrandCard from '@/components/ui/myComponents/brand-card'
 const debounce = (func, delay) => {
   let timer;
   return (...args) => {
@@ -73,7 +68,7 @@ const ExploreAllDao = () => {
     }
   };
   useEffect(() => {
-  
+
     const fetchTags = async () => {
       try {
         const response = await axios.get(
@@ -121,38 +116,42 @@ const ExploreAllDao = () => {
   };
 
   return (
-    <div className="bg-blue-50">
-       <Dialog open={open} onOpenChange={setOpen}>
+    <div className="bg-brand1  overflow-hidden">
+      <div className="absolute left-1/3 bg-brand4 y-50 size-[300px] rounded-full blur-[200px]"></div>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger></DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>You have not connected your Wallet</DialogTitle>
             <DialogDescription>
-             Please connect your wallet your Radix Wallet
+              Please connect your wallet your Radix Wallet
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
       </Dialog>
 
-      <div className="min-h-screen pt-20 max-w-[1200px] mx-auto ">
+      <div className="min-h-screen bg-brand1 pt-20 max-w-[1200px] mx-auto ">
         <div className="flex items-center w-full justify-between pr-3">
-        <div className="px-2 mt-2 text-3xl font-semibold">Explore all DAOs</div>
-        <div>
-          <Input
-          type="text" 
-          placeholder="Search for a DAO..." 
-          value={searchQuery} 
-          onChange={handleSearchChange} 
-          />
+          <div className="text-[40px] md:text-[64px]  leading-tight font-semibold bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent text-center font-clash">
+            Explore All DAOs
+          </div>
+          <div>
+            <Input
+              type="text"
+              placeholder="Search for a DAO..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="w-full px-4 py-2 border border-brand3 bg-brand1 text-brand7 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-brand5 focus:border-brand4 placeholder-brand6 transition duration-200"
+            />
+          </div>
         </div>
-        </div>
-        <div className="mt-4 flex gap-3 px-2 flex-wrap">
+        <div className="mt-4 flex gap-3 px-2 flex-wrap relative">
           {tags.map((tag) => (
             <button
               key={tag.label}
               className={`px-4 py-2 text-sm rounded-md ${
-                activeTag === tag.label ? "bg-purple-600 text-white" : "bg-gray-200 text-black"
-              }`}
+                activeTag === tag.label ? "bg-brand2 text-white" : "bg-brand7 text-black"
+                }`}
               onClick={() => handleTagClick(tag)}
             >
               {tag.label}
@@ -171,81 +170,24 @@ const ExploreAllDao = () => {
           )}
         </div>
         {!loading && data.length === 0 && (
-          <div className="flex items-center justify-center bg-white mt-3 h-32 rounded-lg shadow-xl">
+          <div className="flex items-center justify-center bg-brand2 text-white mt-3 h-32 rounded-lg shadow-xl">
             No Deployed DAOs
           </div>
         )}
+
         {loading ? (
           <div className="mt-5 grid md:grid-cols-3 grid-cols-1 gap-3">
             <SkeletonCard />
-            <SkeletonCard /> <SkeletonCard /> <SkeletonCard /> <SkeletonCard />{" "}
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
             <SkeletonCard />
           </div>
         ) : (
-          <div className="mt-5 grid md:grid-cols-3 grid-cols-1 gap-4 px-2 pb-10">
-            {data.length > 0 &&
-              data.map((dao, index) => (
-                <Card
-                key={index}
-                onClick={() => handleNavigation(`/community/detail/${dao.id}`)}
-                className="flex overflow-hidden flex-col items-start justify-between p-5 h-[180px] cursor-pointer hover:shadow-md"
-              >
-                <div className="flex items-start gap-2">
-                  <Avatar className="h-14 w-14">
-                    <AvatarImage src={dao.image} alt={dao.name || 'DAO'} />
-                    <AvatarFallback>{dao.name?.[0] || '?'}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <div className="text-xl font-semibold">{dao.name}</div>
-                  </div>
-                </div>
-                <div className="line-clamp-2">{dao.description || 'No description available'}</div>
-                <div className="flex items-center justify-between w-full mt-1">
-                    <div className="flex items-center  gap-2 ">
-                      <div className="flex items-center gap-2 border-2 px-2 rounded-md shadow-sm ">
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger className="flex items-center gap-1">
-                              <Users className="h-4 w-4" />{' '}
-                              <p className="text-sm">
-                                {' '}
-                                {dao.number_of_participants}{' '}
-                              </p>{' '}
-                            </TooltipTrigger>
-                            <TooltipContent side="bottom">
-                              <p>Total Number of Participant</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </div>
-                      <div className="flex items-center gap-2   border-2 px-2 rounded-md shadow-sm ">
-                        {' '}
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger className="flex items-center gap-1">
-                              <Banknote className="h-4 w-4" />{' '}
-                              <p className="text-sm"> {dao.funds || 0} </p>{' '}
-                            </TooltipTrigger>
-                            <TooltipContent side="bottom">
-                              <p>Total Funds</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      {dao.tags &&
-                        dao.tags.slice(0, 2).map((token, index) => (
-                          <Badge key={index} variant="outline">
-                            {token}{' '}
-                          </Badge>
-                        ))}
-                    </div>
-                  </div>
-              </Card>
-              ))}
-          </div>
+          <BrandCard daos={data} />
         )}
+
       </div>
     </div>
   );

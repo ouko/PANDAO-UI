@@ -176,7 +176,7 @@ const ExploreSection = () => {
                   <div className="flex flex-col items-start gap-2  overflow-hidden w-full">
                   <div  className="w-full overflow-hidden p-[2px] bg-gradient-to-t from-brand2 via-brand5 to-brand2">
 
-                    <img src={dao.image} alt={dao.name || 'DAO'} className='h-[80px] w-full object-cover' />
+                      <img src={dao.image} alt={dao.name || 'DAO'} className='h-[80px] w-full object-cover' />
                     </div>
                     <div className='flex flex-col mt-3'>
                       <div>
@@ -188,13 +188,13 @@ const ExploreSection = () => {
                     </div>
                     <div className="flex items-center gap-1">
                       {dao.tags &&
-                        dao.tags.slice(0, 2).map((token, index) => (
+                        dao.tags.slice(0, 2).map((tag, index) => (
                             <div key={index} className="rounded-full p-[2px] bg-gradient-to-r from-brand2 via-brand5 to-brand2">
                               <div className="w-full  rounded-full bg-brand1 flex justify-center items-center">
-                                <h1 className="text-white  font-bold text-[10px] px-3 py-[0.5]">Governance</h1>
-                              </div>
-                            </div>
-                        ))}
+                                <h1 className="text-white  font-bold text-[10px] px-3 py-[0.5]">{tag}</h1>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
 
@@ -226,7 +226,7 @@ const ExploreSection = () => {
 
       {/* See All Button */}
       <div className=" pt-12 flex justify-center items-center ">
-      <BrandButton title='See All' href='/explore' />
+        <BrandButton title='See All' href='/explore' />
       </div>
     </div>
   )
