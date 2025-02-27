@@ -122,7 +122,7 @@ const ExploreSection = () => {
         {/* DAO List Section */}
         <div className="mt-20 w-full px-4 z-50">
           <div className="flex flex-col items-center justify-center shrink-0 h-auto min-h-[148px] py-6 md:py-8">
-            <div className="text-[64px]  leading-tight font-semibold bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent text-center font-clash">
+            <div className="text-[40px] md:text-[64px]  leading-tight font-semibold bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent text-center font-clash">
               Explore Top DAOs
             </div>
             <div className="text-[#B59AEC] text-center font-mono text-base sm:text-lg md:text-xl leading-6 font-normal w-full max-w-4xl px-4">

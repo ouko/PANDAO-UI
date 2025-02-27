@@ -50,7 +50,7 @@ function Reviews() {
     <div className="items-center justify-center  pb-20 z-50  container ">
       <div className="flex flex-col items-center justify-start gap-3  pb-10  w-full z-50">
         <h2
-          className="text-center text-[64px] font-semibold relative self-stretch z-50" 
+          className="text-center text-[40px] md:text-[64px] font-semibold relative self-stretch z-50 font-clash" 
           style={{
             background:
               "linear-gradient(90.09deg, rgba(255, 255, 255, 1) 33.17%, rgba(99, 89, 233, 1) 100%)",
@@ -61,7 +61,7 @@ function Reviews() {
         >
           Hear It from Our Users
         </h2>
-        <p className="text-[#B59AEC] text-center text-2xl leading-[120%] font-normal mb-6 self-stretch z-50">
+        <p className="text-[#B59AEC] text-center text-[18px] md:text-[24px] leading-[29px] font-normal mb-6 self-stretch z-50">
           Discover how Urify is empowering users to take control of their finances
           effortlessly.
         </p>

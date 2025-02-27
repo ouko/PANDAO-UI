@@ -2,7 +2,7 @@ import { WobbleCard } from "@/components/ui/myComponents/wobble-card";
 
 const Welcome = () => {
     return (<div className="min-h-screen flex flex-col items-center py-28  justify-center gap-7  text-white max-w-[1440px] mx-auto p-5 z-50">
-        <div className="text-[64px]  leading-tight font-semibold bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent text-center font-clash z-50">
+        <div className="text-[35px] md:text-[64px] leading-tight font-semibold bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent text-center font-clash z-50">
             Welcome to the Future of Decentralized Governance
         </div>
         <div className="text-[24px]  leading-tight font-semibold bg-gradient-to-r from-white to-[#9290bb] bg-clip-text text-transparent text-center  z-50 pb-10 font-mono">
