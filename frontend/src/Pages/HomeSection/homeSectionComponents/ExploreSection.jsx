@@ -37,7 +37,7 @@ import BrandButton from '@/components/ui/myComponents/brand-button'
 // API Functions
 const fetchDAOs = async (sortBy) => {
   const response = await axios.get(
-    `${import.meta.env.VITE_BACKEND_URL}/community?sort=${sortBy}`
+    `${import.meta.env.VITE_BACKEND_URL}/community/top`
   )
   return Array.isArray(response.data) ? response.data : []
 }
