@@ -24,8 +24,8 @@ const HomeSection = () => {
           fill="#B59AEC"
         />
         <TileEffect />
-        <div className="flex flex-col gap-6 items-start justify-start self-stretch shrink-0 pt-32 z-30 pl-10">
-          <div className="bg-white/20 rounded-[53px] border border-brand2 px-3 py-2 flex flex-col  gap-2.5 items-center justify-center shrink-0 ">
+        <div className="flex flex-col gap-6 items-start justify-start self-stretch shrink-0 pt-32 z-30 md:pl-10">
+          <div className="bg-white/20 rounded-[53px] border border-brand2 px-3 py-2 flex flex-col  gap-2.5 items-center justify-center shrink-0  ">
             <div className="flex flex-row gap-[10px] items-center justify-center  ">
 
               <img
@@ -35,12 +35,12 @@ const HomeSection = () => {
               />
 
 
-              <div className="text-white text-left font-mono md:text-base text-sm font-medium relative pr-4">
+              <div className="text-white text-left font-mono md:text-base text-sm font-medium relative pr-4 ">
                 Lorem ipsum dolor sit amet elitsed
               </div>
             </div>
           </div>
-          <div className="text-left self-stretch max-w-[800px] font-clash ">
+          <div className=" text-center md:text-left self-stretch max-w-[800px] font-clash ">
             <span>
               <span className="text-white text-[34px] md:text-[64px] md:leading-[96px] leading-[50px] font-extrabold">Bringing Governance <br /> To All with <span className='bg-gradient-to-r from-white from-[50%] to-[#b894ff] bg-clip-text text-transparent'> PanDAO</span>  </span>
               <br />
