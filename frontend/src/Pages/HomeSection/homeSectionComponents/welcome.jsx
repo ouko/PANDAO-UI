@@ -14,7 +14,7 @@ const Welcome = () => {
                 className=""
             >
                 <div className="max-w-xl font-clash">
-                    <h2 className="text-left text-balance text-base md:text-xl lg:text-4xl font-semibold tracking-[-0.015em] text-white">
+                    <h2 className="text-left text-balance text-base md:text-xl lg:text-5xl font-semibold tracking-[-0.015em] text-white">
                         Join, Vote, and Shape the Future – A Community-Driven DAO
                         Experience!
                     </h2>
