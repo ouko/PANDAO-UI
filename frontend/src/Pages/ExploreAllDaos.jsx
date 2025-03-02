@@ -1,15 +1,22 @@
 import { useNavigate } from "react-router-dom";
-
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { SkeletonCard } from "./GlobalComponents/Skeleton";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Banknote, Users } from "lucide-react";
+import { Banknote, ChevronDown, Users } from "lucide-react";
 import { useAccount } from "@/AccountContext";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import BrandCard from '@/components/ui/myComponents/brand-card'
+import BrandCard from '@/components/ui/myComponents/brand-card';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 const debounce = (func, delay) => {
   let timer;
   return (...args) => {
@@ -22,91 +29,55 @@ const ExploreAllDao = () => {
   const navigate = useNavigate();
   const { accounts } = useAccount();
   const [open, setOpen] = useState(false);
-  const [data, setData] = useState([]);
-  const [tags,setTags]=useState([])
-  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTag, setActiveTag] = useState(null);
 
+  // Fetch tags with TanStack Query
+  const { data: tags = [] } = useQuery({
+    queryKey: ['tags'],
+    queryFn: async () => {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/tags`);
+      return response.data.map((tag) => ({
+        value: tag.id,
+        label: tag.name,
+      }));
+    }
+  });
+
+  // Fetch DAOs with TanStack Query
+  const { data: daos = [], isLoading, refetch } = useQuery({
+    queryKey: ['daos', searchQuery, activeTag],
+    queryFn: async () => {
+      const params = {};
+      if (searchQuery) params.name = searchQuery;
+      if (activeTag) params.tags = activeTag;
+      
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/community/all`, { params });
+      return res.data;
+    },
+    enabled: true,
+  });
+
+  // Handle search with debounce
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
-  }
-  const handleTagClick = async (tag) => {
-    console.log(tag,"hihihi")
+  };
+
+  // Handle tag selection
+  const handleTagClick = (tag) => {
     if (tag.label === activeTag) {
-      setActiveTag(null); // Deselect tag
-      fetchBluePrint();
+      setActiveTag(null);
     } else {
       setActiveTag(tag.label);
-      fetchCommunitiesByTag(tag.label);
-    }
-  };
-  const fetchCommunitiesByTag = async (tagId) => {
-    setLoading(true);
-    try {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/community/all`, {
-        params: { tags: tagId }
-      });
-      setData(res.data);
-    } catch (error) {
-      console.error("Error fetching communities by tag:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
-  const fetchBluePrint = async () => {
-    try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/all`
-      );
-      setData(res.data);
-    } catch (error) {
-      console.error("Error fetching blueprint data:", error);
-    } finally {
-      setLoading(false);
-    }
+  // Clear tag filter
+  const clearFilter = () => {
+    setActiveTag(null);
   };
-  useEffect(() => {
 
-    const fetchTags = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/tags`
-        );
-        const tagOptions = response.data.map((tag) => ({
-          value: tag.id,
-          label: tag.name,
-        }));
-        setTags(tagOptions);
-      } catch (error) {
-        console.error("Failed to fetch tags:", error);
-      }
-    };
-
-    fetchTags();
-    fetchBluePrint();
-  }, []);
-  useEffect(() => {
-    const fetchBluePrint = async () => {
-      setLoading(true);
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/community/all`, {
-          params: { name: searchQuery }
-        });
-        console.log(res.data)
-        setData(res.data);
-      } catch (error) {
-        console.error("Error fetching blueprint data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    // Call the debounced function
-    const debouncedFetch = debounce(fetchBluePrint, 500); // 500ms delay
-    debouncedFetch();
-  }, [searchQuery]);
+  // Handle navigation with wallet check
   const handleNavigation = (path) => {
     if (accounts && accounts.length > 0) {
       navigate(path);
@@ -115,8 +86,12 @@ const ExploreAllDao = () => {
     }
   };
 
+  // Split tags into visible and dropdown
+  const visibleTags = tags.slice(0, 5);
+  const dropdownTags = tags.slice(5);
+
   return (
-    <div className="bg-brand1  overflow-hidden">
+    <div className="bg-brand1 overflow-hidden">
       <div className="absolute left-1/3 bg-brand4 y-50 size-[300px] rounded-full blur-[200px]"></div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger></DialogTrigger>
@@ -130,9 +105,9 @@ const ExploreAllDao = () => {
         </DialogContent>
       </Dialog>
 
-      <div className="min-h-screen bg-brand1 pt-20 max-w-[1200px] mx-auto ">
+      <div className="min-h-screen bg-brand1 pt-20 max-w-[1200px] mx-auto">
         <div className="flex items-center w-full justify-between pr-3">
-          <div className="text-[40px] md:text-[64px]  leading-tight font-semibold bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent text-center font-clash">
+          <div className="text-[40px] md:text-[64px] leading-tight font-semibold bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent text-center font-clash">
             Explore All DAOs
           </div>
           <div>
@@ -145,37 +120,59 @@ const ExploreAllDao = () => {
             />
           </div>
         </div>
-        <div className="mt-4 flex gap-3 px-2 flex-wrap relative">
-          {tags.map((tag) => (
+        
+        <div className="mt-4 flex gap-3 px-2 flex-wrap relative items-center">
+          {/* Show first 5 tags */}
+          {visibleTags.map((tag) => (
             <button
               key={tag.label}
               className={`px-4 py-2 text-sm rounded-md ${
                 activeTag === tag.label ? "bg-brand2 text-white" : "bg-brand7 text-black"
-                }`}
+              }`}
               onClick={() => handleTagClick(tag)}
             >
               {tag.label}
             </button>
           ))}
+          
+          {/* Dropdown for remaining tags */}
+          {dropdownTags.length > 0 && (
+            <DropdownMenu>
+              <DropdownMenuTrigger className="px-4 py-2 text-sm rounded-md bg-brand7 text-black flex items-center">
+                More Tags <ChevronDown className="ml-1 h-4 w-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                {dropdownTags.map((tag) => (
+                  <DropdownMenuItem 
+                    key={tag.label}
+                    className={activeTag === tag.label ? "bg-brand2 text-white" : ""}
+                    onClick={() => handleTagClick(tag)}
+                  >
+                    {tag.label}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+          
+          {/* Clear filter button */}
           {activeTag && (
             <button
               className="px-4 py-2 text-sm bg-red-500 text-white rounded-md"
-              onClick={() =>{
-                setActiveTag(null)
-                fetchBluePrint()
-              } }
+              onClick={clearFilter}
             >
               Clear Filter
             </button>
           )}
         </div>
-        {!loading && data.length === 0 && (
+        
+        {!isLoading && daos.length === 0 && (
           <div className="flex items-center justify-center bg-brand2 text-white mt-3 h-32 rounded-lg shadow-xl">
             No Deployed DAOs
           </div>
         )}
 
-        {loading ? (
+        {isLoading ? (
           <div className="mt-5 grid md:grid-cols-3 grid-cols-1 gap-3">
             <SkeletonCard />
             <SkeletonCard />
@@ -185,9 +182,8 @@ const ExploreAllDao = () => {
             <SkeletonCard />
           </div>
         ) : (
-          <BrandCard daos={data} />
+          <BrandCard daos={daos} />
         )}
-
       </div>
     </div>
   );
