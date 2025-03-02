@@ -10,11 +10,11 @@ const Welcome = () => {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 max-w-7xl mx-auto w-full z-50">
             <WobbleCard
-                containerClassName="col-span-1 lg:col-span-2 h-full bg-brand1 min-h-[500px] lg:min-h-[300px]"
+                containerClassName="col-span-1 lg:col-span-3 h-full bg-brand1 min-h-[500px] lg:min-h-[300px]"
                 className=""
             >
-                <div className="max-w-xs">
-                    <h2 className="text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
+                <div className="max-w-xl font-clash">
+                    <h2 className="text-left text-balance text-base md:text-xl lg:text-4xl font-semibold tracking-[-0.015em] text-white">
                         Join, Vote, and Shape the Future – A Community-Driven DAO
                         Experience!
                     </h2>
@@ -28,34 +28,40 @@ const Welcome = () => {
                     width={500}
                     height={500}
                     alt="linear demo image"
-                    className="absolute -right-4 lg:-right-[10%]  filter -bottom-10 object-contain rounded-2xl"
+                    className="absolute -right-4 lg:-right-[10%]  filter bottom-10 object-contain rounded-2xl"
                 />
             </WobbleCard>
-            <WobbleCard containerClassName="col-span-1 min-h-[300px] bg-brand2">
-                <h2 className="max-w-80  text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
-                    Secure, Scalable, and Seamless DAOs – Made Possible with Radix &
-                    Actus.
-                </h2>
-                {/* <p className="mt-4 max-w-[26rem] text-left  text-base/6 text-neutral-200">
-                  If someone yells “stop!”, goes limp, or taps out, the fight is
-                  over.
-                </p> */}
-            </WobbleCard>
-            <WobbleCard containerClassName="col-span-1 lg:col-span-3 bg-brand3 min-h-[500px] lg:min-h-[600px] xl:min-h-[300px]">
-                <div className="max-w-sm">
-                    <h2 className="max-w-sm md:max-w-lg  text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
-                        Actus for Precision, Radix for Trust – The Ultimate DAO
-                        Platform.
+
+            <WobbleCard containerClassName="col-span-1 lg:col-span-2 bg-brand3 min-h-[500px] lg:min-h-[600px] xl:min-h-[300px]">
+                <div className="max-w-sm font-clash">
+                    <h2 className="max-w-sm md:max-w-lg  text-left text-balance text-base md:text-xl lg:text-5xl font-semibold tracking-[-0.015em] text-white">
+                        Actus for Precision, Radix for Trust
                     </h2>
-                
+                    <h6 className="mt-3">
+                        The Ultimate DAO
+                        Platform.
+                    </h6>
                 </div>
                 <img
                     src="/radix.webp"
-                    width={500}
-                    height={500}
+                    width={300}
+                    height={300}
                     alt="linear demo image"
-                    className="absolute -right-10 md:-right-[40%] lg:-right-[10%] -bottom-10 object-contain rounded-2xl"
+                    className="absolute -right-10 md:right-[600]  -bottom-10 object-contain rounded-2xl"
                 />
+            </WobbleCard>
+            <WobbleCard containerClassName="col-span-1 min-h-[300px] bg-brand2 ">
+                <div className="font-clash">
+                <h2 className="max-w-80  text-center text-balance text-base md:text-xl lg:text-5xl font-semibold tracking-[-0.015em] text-white">
+                    Secure, Scalable, and Seamless DAOs 
+                </h2>
+                <h2 className="max-w-80  text-center text-balance text-base md:text-xl lg:text-xl font-semibold tracking-[-0.015em] text-white">
+                Made Possible with Radix &
+                Actus.
+                </h2>
+
+                </div>
+               
             </WobbleCard>
         </div>
 
