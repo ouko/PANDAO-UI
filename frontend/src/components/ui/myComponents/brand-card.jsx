@@ -2,13 +2,12 @@ import React from "react";
 import { Users, Banknote } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
-import { Badge } from '@/components/ui/badge'
 import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-  } from '@/components/ui/tooltip'
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 const BrandCard = ({ daos }) => {
   const navigate = useNavigate();
 
@@ -38,22 +37,23 @@ const BrandCard = ({ daos }) => {
         <Card
           key={index}
           onClick={() => handleNavigation(`/community/detail/${dao.id}`)}
-          className="flex overflow-hidden flex-col items-start justify-between p-5 h-[300px] cursor-pointer hover:shadow-md bg-gradient-to-r from-[#100821] to-[#1c0f32] border-2 border-[#2b1b49] rounded-lg"
+          className="flex overflow-hidden flex-col items-start justify-between p-5 h-[200px] cursor-pointer hover:shadow-md bg-gradient-to-r from-[#100821] to-[#1c0f32] border-2 border-[#2b1b49] rounded-lg"
         >
-          <div className="flex flex-col items-start gap-2 overflow-hidden w-full">
-            <div className="w-full overflow-hidden p-[2px] bg-gradient-to-t from-brand2 via-brand5 to-brand2">
+          <div className="flex flex-col items-start  space-y-5 overflow-hidden w-full">
+            <div className="w-full overflow-hidden flex items-start justify-start gap-4 ">
               <img
                 src={dao.image}
                 alt={dao.name || "DAO"}
-                className="h-[80px] w-full object-cover"
+                className="size-[60px]  object-cover rounded-md"
               />
-            </div>
-            <div className="flex flex-col mt-3">
-              <div className="text-xl font-semibold text-white">{dao.name}</div>
-              <div className="line-clamp-2 text-[#B59AEC] mt-1">
-                {dao.description || "No description available"}
+              <div className="flex flex-col ">
+                <div className="text-xl font-semibold text-white">{dao.name}</div>
+                <div className="line-clamp-1 text-[#B59AEC] mt-1">
+                  {dao.description || "No description available"}
+                </div>
               </div>
             </div>
+
             <div className="flex items-center gap-1">
               {dao.tags?.slice(0, 2).map((tag, index) => (
                 <div
@@ -61,7 +61,7 @@ const BrandCard = ({ daos }) => {
                   className="rounded-full p-[2px] bg-gradient-to-r from-brand2 via-brand5 to-brand2"
                 >
                   <div className="w-full rounded-full bg-brand1 flex justify-center items-center">
-                    <h1 className="text-white font-bold text-[10px] px-3 py-[0.5]">
+                    <h1 className="text-white font-bold text-[12px] px-3 py-[0.5]">
                       {tag}
                     </h1>
                   </div>
@@ -71,20 +71,20 @@ const BrandCard = ({ daos }) => {
           </div>
 
           <div className="flex items-center justify-end w-full mt-1 ">
-                    <div className="flex items-center gap-2">
-                      {renderStat(
-                        <Users className="h-4 w-4 text-white" />,
-                        dao.number_of_participants,
-                        "Total Number of Participants"
-                      )}
-                      {renderStat(
-                        <Banknote className="h-4 w-4 text-white" />,
-                        dao.funds || 0,
-                        "Total Funds"
-                      )}
-                    </div>
+            <div className="flex items-center gap-2">
+              {renderStat(
+                <Users className="h-4 w-4 text-white" />,
+                dao.number_of_participants,
+                "Total Number of Participants"
+              )}
+              {renderStat(
+                <Banknote className="h-4 w-4 text-white" />,
+                dao.funds || 0,
+                "Total Funds"
+              )}
+            </div>
 
-                  </div>
+          </div>
         </Card>
       ))}
     </div>
