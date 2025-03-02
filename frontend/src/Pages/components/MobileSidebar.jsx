@@ -14,6 +14,23 @@ import { Link } from "react-router-dom";
 
 const MobileSidebar = () => {
   const [open, setOpen] = useState(false);
+  const handleItemClick = (item) => {
+    // Always close the mobile menu
+    setOpen(false);
+
+    // If it's a scroll type, handle scrolling
+    if (item.type === "scroll") {
+      // Use setTimeout to allow menu close animation to complete first
+      setTimeout(() => {
+        const elementId = item.path.replace(/^\/+/, '');
+        const element = document.getElementById(elementId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 300);
+    }
+    // For link type, the Link component will handle navigation
+  };
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
@@ -27,19 +44,32 @@ const MobileSidebar = () => {
             <img src="/logo.png" className="h-20" />
           </SheetTitle>
           <SheetDescription>
-            <ul className="text-white  text-2xl flex flex-col gap-6 mt-10">
-              {navconfig.map((Item, index) => (
-                <Link key={index} to={Item.path} onClick={() => setOpen(false)}>
-                  <div className='flex items-center'>
-                    <Item.icon className="w-5 h-5 mr-2" />
-                    <span>{Item.title}</span>
-                  </div>
-                </Link>
+            <ul className="text-white text-2xl flex flex-col gap-6 mt-10">
+              {navconfig.map((item, index) => (
+                <li key={index}>
+                  {item.type === "scroll" ? (
+                    // For scroll type, use a button styled to match links
+                    <button
+                      onClick={() => handleItemClick(item)}
+                      className="text-white text-left flex items-center"
+                    >
+                      <item.icon className="w-5 h-5 mr-2" />
+                      <span>{item.title}</span>
+                    </button>
+                  ) : (
+                    // For link type, use React Router Link
+                    <Link
+                      to={item.path}
+                      onClick={() => handleItemClick(item)}
+                    >
+                      <div className="flex items-center">
+                        <item.icon className="w-5 h-5 mr-2" />
+                        <span>{item.title}</span>
+                      </div>
+                    </Link>
+                  )}
+                </li>
               ))}
-
-
-
-
             </ul>
           </SheetDescription>
         </SheetHeader>

@@ -1,7 +1,5 @@
-import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { Button } from '../../components/ui/button'
+import { Link,  useNavigate } from 'react-router-dom'
 import MobileSidebar from './MobileSidebar'
-import { Compass, DollarSign, FileText, Home, Info, Package, Rocket } from 'lucide-react'
 import { useRdt } from '@/hooks/useRdt'
 import axios from 'axios'
 import { useEffect } from 'react'
@@ -49,7 +47,15 @@ const Navbar = () => {
       }
     }
   })
-
+  const handleNavClick = (item) => {
+    if (item.type === "scroll") {
+      const elementId = item.path.replace(/^\/+/, ''); // Remove leading slashes
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
   useEffect(() => {
     const checkSignup = async () => {
       if (accounts && accounts.length > 0) {
@@ -86,23 +92,31 @@ const Navbar = () => {
         <img src="/logo.png" alt="Logo" className="h-12" />
       </Link>
     </div>
-    <ul className="md:flex hidden items-center justify-evenly  gap-4 font-semibold text-lg">
+    <ul className="md:flex hidden items-center justify-evenly gap-4 font-semibold text-lg">
       {navconfig.map((item, index) => (
-        <NavLink
-          key={index}
-          to={item.path}
-          className={({ isActive }) =>
-            isActive
-              ? 'p-2 rounded-xl text-white font-semibold'
-              : 'hover:text-white p-2 rounded-xl text-[#B59AEC] font-semibold'
-          }
-          end
-        >
-          <div className='flex items-center'>
-            {/* <item.icon className="w-5 h-5 mr-2" /> */}
-            <span>{item.title}</span>
-          </div>
-        </NavLink>
+        <li key={index}>
+          {item.type === "scroll" ? (
+            // Button for scroll behavior
+            <button
+              onClick={() => handleNavClick(item)}
+              className="hover:text-brand7 transition-colors "
+            >
+              <div className="flex items-center">
+                <span>{item.title}</span>
+              </div>
+            </button>
+          ) : (
+            // Regular link for navigation
+            <a 
+              href={item.path}
+              className="hover:text-brand7 transition-colors"
+            >
+              <div className="flex items-center">
+                <span>{item.title}</span>
+              </div>
+            </a>
+          )}
+        </li>
       ))}
     </ul>
     <div id="connect-btn">

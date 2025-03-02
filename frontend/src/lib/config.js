@@ -5,36 +5,43 @@ export const navconfig = [
       title: "Home",
       path: "/",
       icon: Home,
-      exact: true
+      exact: true,
+      type: "link" 
+
     },
     {
       title: "Our Story",
       path: "/ourstory",
       icon: Info,
-      exact: true
+      exact: true,
+      type: "link" 
     },
     {
       title: "Catalyst Suite",
-      path: "/catalystsuite",
+      path: "catalystsuite",
       icon: Package,
-      exact: true
+      exact: true,
+      type: "scroll" 
     },
     {
       title: "Resources",
       path: "/resources",
       icon: FileText,
-      exact: true
+      exact: true,
+      type: "link"
     },
     {
       title: "Pricing",
       path: "/price",
       icon: DollarSign,
-      exact: true
+      exact: true,
+      type: "link"
     },
     {
       title: "Explore",
       path: "/explore",
       icon: Compass,
-      exact: true
+      exact: true,
+      type: "link" 
     }
   ]
