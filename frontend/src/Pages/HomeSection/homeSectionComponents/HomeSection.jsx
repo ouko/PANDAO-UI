@@ -25,7 +25,7 @@ const HomeSection = () => {
         />
         <TileEffect />
         <div className="flex flex-col gap-6 items-start justify-start self-stretch shrink-0 pt-32 z-30 md:pl-10">
-          <div className="bg-white/20 rounded-[53px] border border-brand2 px-3 py-2 flex flex-col  gap-2.5 items-center justify-center shrink-0  ">
+          <div className="bg-white/20 rounded-[53px] border border-brand2 px-3 py-2 flex flex-col  gap-2.5 items-center justify-center shrink-0  mx-auto md:mx-0 ">
             <div className="flex flex-row gap-[10px] items-center justify-center  ">
 
               <img
@@ -47,12 +47,15 @@ const HomeSection = () => {
               <span className="text-white md:text-3xl text-xl  font-thin tracking-wide">Effortless, Effective, Empowering.</span>
             </span>
           </div>
-          <div className="text-[#B59AEC] text-left font-mono text-md md:text-xl leading-normal font-medium tracking-wider relative max-w-[627.74px]">
+          <div className="text-[#B59AEC] text-center md:text-left font-mono text-md md:text-xl leading-normal font-medium tracking-wider relative max-w-[627.74px]">
             Making Blockchain Accessible and DAO Governance Effortless.
           </div>
 
           {!accounts || accounts.length === 0 ? (
-            <BrandButton />
+            <div className='flex items-center md:justify-start justify-center w-full'>
+              <BrandButton />
+
+            </div>
           ) : (
             <div className='flex flex-wrap items-center gap-5'>
               <BrandButton title='My Dashboard' href='/userDashboard' />
