@@ -462,8 +462,8 @@ const CommunityDetails = () => {
     }
   }
   const handleTransfer = async () => {
-
-    if (tranferAddress.trim()!=="") {
+console.log(transferAddress)
+    if (transferAddress.trim() ==="") {
       
       toast.error("Fill Fields")
       return
@@ -472,7 +472,7 @@ const CommunityDetails = () => {
     const data = {
       user_address: accounts[0].address,
       community_id: params.id,
-      recipient: tranferAddress
+      recipient: transferAddress
 
     }
 
