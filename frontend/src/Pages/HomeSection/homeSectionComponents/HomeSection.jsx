@@ -57,7 +57,7 @@ const HomeSection = () => {
 
             </div>
           ) : (
-            <div className='flex flex-wrap items-center gap-5'>
+            <div className='flex flex-wrap  justify-center items-center gap-5'>
               <BrandButton title='My Dashboard' href='/userDashboard' />
               <BrandButton title='Create Dao' href='/create' />
          
