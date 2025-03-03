@@ -181,7 +181,7 @@ const CommunityDetails = () => {
   //   console.log(recipt);
 
   // };
-  
+
 
   const handleBuyToken = async () => {
     const data = {
@@ -259,7 +259,7 @@ const CommunityDetails = () => {
       setLoading(false)
     }
   }
-  
+
 
   const handleSellToken = async () => {
     const data = {
@@ -462,8 +462,8 @@ const CommunityDetails = () => {
     }
   }
   const handleTransfer = async () => {
-    if (transferAddress.trim() ==="") {
-      
+    if (transferAddress.trim() === "") {
+
       toast.error("Fill Fields")
       return
     }
@@ -1134,41 +1134,41 @@ const CommunityDetails = () => {
       <Dialog open={transferOpen} onOpenChange={setTransferOpen}>
         <DialogTrigger></DialogTrigger>
         <DialogContent className="w-half pt-10 bg-white rounded-lg shadow-lg max-w-5xl overflow-y-auto max-h-[80vh]">
-  <DialogHeader className="w-full overflow-auto">
-    <DialogTitle className="text-2xl font-semibold text-gray-800 w-full text-center">
-      Transfer Executive Badges
-    </DialogTitle>
-    <DialogDescription className="flex flex-col justify-center items-center gap-4 mt-4 w-full overflow-y-auto">
-      {participants.map((participant, index) => (
-        <div key={index} className="w-full text-center border-b pb-4 mb-4">
-          <p className="text-lg font-medium text-gray-700">
-            Name:{participant.name}</p>
-          <p
-            className="text-sm text-gray-500 break-all cursor-pointer hover:text-blue-500"
-            onClick={() => setTransferAddress(participant.public_address)}
-          >
-            {participant.public_address}
-          </p>
-          <p className="text-sm text-red-500 font-semibold">
-            Total Invested: {participant.total_invested}
-          </p>
-        </div>
-      ))}
+          <DialogHeader className="w-full overflow-auto">
+            <DialogTitle className="text-2xl font-semibold text-gray-800 w-full text-center">
+              Transfer Executive Badges
+            </DialogTitle>
+            <DialogDescription className="flex flex-col justify-center items-center gap-4 mt-4 w-full overflow-y-auto">
+              {participants.map((participant, index) => (
+                <div key={index} className="w-full text-center border-b pb-4 mb-4">
+                  <p className="text-lg font-medium text-gray-700">
+                    Name:{participant.name}</p>
+                  <p
+                    className="text-sm text-gray-500 break-all cursor-pointer hover:text-blue-500"
+                    onClick={() => setTransferAddress(participant.public_address)}
+                  >
+                    {participant.public_address}
+                  </p>
+                  <p className="text-sm text-red-500 font-semibold">
+                    Total Invested: {participant.total_invested}
+                  </p>
+                </div>
+              ))}
 
-      <div className="w-full">
-        <Label>Executive Badges</Label>
-        <Input
-          value={transferAddress}
-          onChange={(e) => setTransferAddress(e.target.value)}
-        />
-      </div>
+              <div className="w-full">
+                <Label>Executive Badges</Label>
+                <Input
+                  value={transferAddress}
+                  onChange={(e) => setTransferAddress(e.target.value)}
+                />
+              </div>
 
-      <Button variant="radix" onClick={handleTransfer} disabled={loadingMint}>
-        Transfer Executive Badge
-      </Button>
-    </DialogDescription>
-  </DialogHeader>
-</DialogContent>
+              <Button variant="radix" onClick={handleTransfer} disabled={loadingMint}>
+                Transfer Executive Badge
+              </Button>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
 
       </Dialog>
     </div>
