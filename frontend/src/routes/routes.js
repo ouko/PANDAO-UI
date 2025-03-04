@@ -1,4 +1,5 @@
 // src/routes/routes.js
+import OnboardingFlow from '@/Pages/onboarding-page/signup-page';
 import { lazy } from 'react';
 
 // Layouts
@@ -39,7 +40,7 @@ const BondIssued = lazy(() => import('../Pages/CommunityPage/BondIssued'));
 const AnnIssue = lazy(() => import('../Pages/CommunityPage/AnnIssue'));
 const AnnIssued = lazy(() => import('../Pages/CommunityPage/AnnIssued'));
 const PurchasedBond = lazy(() => import('../Pages/CommunityPage/PurchasedBond'));
-const exploreTopDao= lazy(()=> import('../Pages/ExploreAllDaos'))
+const exploreTopDao = lazy(() => import('../Pages/ExploreAllDaos'))
 
 export const publicRoutes = [
   {
@@ -47,7 +48,8 @@ export const publicRoutes = [
     element: HomePageLayout,
     children: [
       { index: true, element: HomePage },
-      { path: 'ourstory', element: OurStory},
+      { path: 'ourstory', element: OurStory },
+      { path: 'temp', element: OnboardingFlow },
       { path: 'privacypolicy', element: PrivacyPolicy },
       { path: 'termsandcondition', element: TermsAndConditions },
       { path: 'price', element: Price },

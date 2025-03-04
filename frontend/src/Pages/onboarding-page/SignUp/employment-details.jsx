@@ -1,12 +1,11 @@
-import React from 'react'
 
-function EmploymentDetails() {
-  return (
-    <div className="h-full bg-[#100821] w-full relative justify-center items-center gap-8 flex overflow-hidden">
-            <div className="flex flex-col gap-8 w-[663px]  left-[53px] top-[59.5px]">
+const EmploymentDetails = () => {
+    return (
+        <div className="h-full  w-full relative justify-center items-center gap-8 flex overflow-hidden">
+            <div className="flex flex-col gap-8 ">
 
                 <div className="flex flex-col gap-4 items-center">
-                    <img src="/new/logo.svg" alt="logo" className="w-40 h-10" />
+                    <img src="/logo.png" alt="logo" className="w-60 h-20" />
                     <div className="flex gap-16">
                         <span className="text-white text-xl font-medium">Personal Details</span>
                         <span className="text-white text-xl font-medium ">Employment Details</span>
@@ -14,7 +13,7 @@ function EmploymentDetails() {
                     </div>
                 </div>
 
-             
+
                 <div className="flex flex-col pt-10 gap-8 w-[670px] text-white">
                     <div className="flex flex-col gap-4 w-full">
                         <label className="text-white text-xl font-medium">Enter Company’s Name:</label>
@@ -78,25 +77,18 @@ function EmploymentDetails() {
                         </button>
                     </div>
                 </div>
-                
-              
+
+
 
 
 
             </div>
 
-            <div className=" rounded-2xl   p-4 w-[647px] h-[961px]  left-[771px] top-[31.5px] overflow-hidden">
-                <img
-                    src="/S2.svg"
-                    alt="Background1"
-                    className=" inset-0 w-[647px]  object-cover -z-10"
-                />
 
-            </div>
 
         </div>
     );
-};
+}
 
 
 

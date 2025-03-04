@@ -1,6 +1,12 @@
+import EmploymentDetails from "./SignUp/employment-details";
+import Otp from "./SignUp/otp-page";
+import PersonalDetail from "./SignUp/personal-details";
+
 const OnboardingFlow = () => {
-    return (<div>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis aspernatur alias fugiat mollitia esse asperiores eaque quasi recusandae possimus nihil. Animi consequatur, minus veritatis nihil quod autem reprehenderit minima consequuntur?
+    return (<div className="bg-brand1 pt-20">
+        <EmploymentDetails/>
+        <Otp/>
+        <PersonalDetail/>
     </div>);
 }
 
