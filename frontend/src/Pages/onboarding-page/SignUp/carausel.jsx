@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const carouselData = [
-    { image: "/S1.svg" },
-    { image: "/S2.svg" },
-    { image: "/S3.svg" },
+    { image: "/s1.png" },
+    { image: "/s2.png" },
+    { image: "/s3.png" },
 ];
 
 export default function CarouselComponent() {
@@ -19,7 +19,7 @@ export default function CarouselComponent() {
     }, []);
 
     return (
-        <div className="relative w-full mx-auto p-6">
+        <div className="relative w-full mx-auto p-6 opacity-100">
                         <AnimatePresence mode="wait">
 
             <motion.img
