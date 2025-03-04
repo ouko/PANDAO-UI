@@ -10,7 +10,7 @@ const OnboardingFlow = () => {
         <div className="absolute inset-0 bg-black/90  bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]">
             <TileEffect2 />
         </div>
- 
+
 
 
         <div className="absolute bottom-[-100px] left-1/3 bg-brand2 z-10 size-[500px] rounded-full blur-[200px]"></div>
@@ -22,8 +22,12 @@ const OnboardingFlow = () => {
         <div className="absolute bottom-[200px] right-[5%] bg-brand4 z-10 size-[400px] rounded-full blur-[180px]"></div>
         <div className="absolute top-[50%] right-[30%] bg-brand2 z-10 size-[350px] rounded-full blur-[170px]"></div>
         <div className="absolute top-[10%] left-[50%] bg-brand3 z-10 size-[250px] rounded-full blur-[120px]"></div>
+
         <div className="grid grid-cols-2 gap-2 font-clash ">
-            <div className=" w-full z-50">
+            <div className=" w-full z-50 ">
+                <div className="flex items-center justify-center  m-10">
+                    <img src="/logo.png" alt="logo" className="w-56" />
+                </div>
                 {/* <EmploymentDetails />
                        <Otp/> */}
                 <PersonalDetail />

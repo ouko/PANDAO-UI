@@ -1,7 +1,7 @@
 
 const PersonalDetail = () => {
     return (
-        <div className=" h-full  w-full relative justify-center items-center gap-8 flex overflow-hidden ">
+        <div className=" h-full  w-full relative justify-center items-start gap-8 flex overflow-hidden ">
 
 
             <div className="flex flex-col pt-10 gap-8  text-white ">
