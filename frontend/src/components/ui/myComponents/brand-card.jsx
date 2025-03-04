@@ -11,6 +11,7 @@ import {
 const BrandCard = ({ daos }) => {
   const navigate = useNavigate();
 
+  console.log(daos,"faisl")
   const handleNavigation = (path) => {
     navigate(path);
   };

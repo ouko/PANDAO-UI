@@ -33,6 +33,7 @@ import {
 import useViewStore from '@/store/view'
 import { useAccount } from '@/AccountContext'
 import BrandButton from '@/components/ui/myComponents/brand-button'
+import BrandCard from '@/components/ui/myComponents/brand-card'
 
 // API Functions
 const fetchDAOs = async (sortBy) => {
@@ -166,13 +167,16 @@ const ExploreSection = () => {
                 ))}
             </div>
           ) : daos.length > 0 ? (
-            <div className="mt-5 grid md:grid-cols-3 grid-cols-1 gap-4 z-30">
-              {daos.slice(0, 3).map((dao, index) => (
+            <div className="mt-5  z-30">
+                <BrandCard daos={daos} />
+              {/* {daos.slice(0, 3).map((dao, index) => (
                 <Card
                   key={index}
                   onClick={() => handleNavigation(`/community/detail/${dao.id}`)}
                   className="flex overflow-hidden flex-col items-start justify-between p-5 h-[300px] cursor-pointer hover:shadow-md bg-gradient-to-r from-[#100821] to-[#1c0f32] border-2 border-[#2b1b49] rounded-lg"
                 >
+                                
+
                   <div className="flex flex-col items-start gap-2  overflow-hidden w-full">
                   <div  className="w-full overflow-hidden p-[2px] bg-gradient-to-t from-brand2 via-brand5 to-brand2">
 
@@ -214,7 +218,7 @@ const ExploreSection = () => {
 
                   </div>
                 </Card>
-              ))}
+              ))} */}
             </div>
           ) : (
             <div className="flex items-center text-white justify-center bg-brand2 mt-3 h-32 rounded-lg shadow-xl">
