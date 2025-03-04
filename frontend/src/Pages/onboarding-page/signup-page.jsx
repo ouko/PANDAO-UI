@@ -3,15 +3,14 @@ import CarouselComponent from "./SignUp/carausel";
 import EmploymentDetails from "./SignUp/employment-details";
 import Otp from "./SignUp/otp-page";
 import PersonalDetail from "./SignUp/personal-details";
+import TileEffect2 from "@/components/ui/myComponents/grid-bg-3";
 
 const OnboardingFlow = () => {
     return (<div className="bg-brand1 pt-20 relative overflow-hidden min-h-screen">
-        <div className="absolute bottom-0 left-0 right-0 top-0 bg-black/90  bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]">
-            <TileEffect />
+        <div className="absolute inset-0 bg-black/90  bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]">
+            <TileEffect2 />
         </div>
-        {/* <div className="absolute inset-0 h-full bg-black/60  ">
-   
-        </div> */}
+ 
 
 
         <div className="absolute bottom-[-100px] left-1/3 bg-brand2 z-10 size-[500px] rounded-full blur-[200px]"></div>
