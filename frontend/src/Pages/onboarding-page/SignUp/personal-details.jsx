@@ -1,18 +1,21 @@
+import useStepStore from "@/store/stepStore";
 
 const PersonalDetail = () => {
+    const { currentStep, handleNext, handlePrev, setStepsLength } = useStepStore();
+    console.log(currentStep,"fais")
     return (
-        <div className=" h-full  w-full relative justify-center items-start gap-8 flex overflow-hidden ">
+        <div className=" h-full  w-full relative justify-center items-start gap-8 flex overflow-hidden  bg-">
 
 
             <div className="flex flex-col pt-10 gap-8  text-white ">
 
                 <div className="flex gap-8 ">
-                    <div>
+                    <div className="w-full">
                         <InputField label="Enter your Name" placeholder="John Doe" />
 
                         <label className="flex items-center gap-2 text-white text-sm mt-3">
                             <input type="checkbox" className="border-2 border-primary-300 rounded-sm pt-3" />
-                            Same as wallet name 
+                            Same as wallet name
                         </label>
                     </div>
 
@@ -36,11 +39,11 @@ const PersonalDetail = () => {
                 />
 
 
-                <div className="flex flex-col gap-4 w-80">
+                <div className="flex flex-col gap-4 ">
                     <label className="text-white text-xl font-medium">
-                        Upload your Profile picture here:
+                        Upload your Profile picture here
                     </label>
-                    <div className="flex bg-[#1B0D37] border border-primary-500 items-center h-19 overflow-hidden rounded-md">
+                    <div className="flex bg-[#1B0D37] border border-primary-500 items-center h-19 overflow-hidden rounded-md p-1">
                         <div className="bg-[#9268E4] px-5 py-4  items-start justify-start w-25 ">
                             <h1 className="text-white font-semibold text-[16px]">
                                 Choose File
@@ -56,7 +59,7 @@ const PersonalDetail = () => {
 
 
 
-                <button className="rounded-3xl hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483]   bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] text-white text-2xl font-semibold py-3 px-4 w-full">
+                <button onClick={handleNext} className="rounded-3xl hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483]   bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] text-white text-2xl font-semibold py-3 px-4 w-full">
                     Next
                 </button>
             </div>
@@ -70,7 +73,7 @@ const PersonalDetail = () => {
 
 const InputField = ({ label, placeholder, isTextArea = false, isTagInput = false }) => {
     return (
-        <div className="flex flex-col gap-2.5">
+        <div className="flex flex-col gap-2.5 w-full" >
             <label className="text-white text-xl font-medium">{label}</label>
             {isTextArea ? (
                 <textarea
