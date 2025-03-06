@@ -38,6 +38,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { formatDate } from '@/utils/functions/ConvertDate'
 import { Separator } from '@/components/ui/separator'
+import { use } from 'react'
 
 const UserDashboard = () => {
   const { accounts } = useAccount()
@@ -73,6 +74,8 @@ const UserDashboard = () => {
 
   const [notifications, setNotifications] = useState([]);
   const [hasFetched, setHasFetched] = useState(false);
+  const [expenseDatas, setExpenseDatas] = useState([])
+  const [loading4, setLoading4] = useState(false)
 
   // const [edit, setEdit] = useState(false);
   // const [fileUrl, setFileUrl] = useState("");
@@ -84,45 +87,69 @@ const UserDashboard = () => {
     tiktok: '',
   })
 
- useEffect(() => {
-  const fetchUserNotifications = async () => {
-    if (accounts && accounts.length > 0 && accounts[0]?.address && !hasFetched) {
-      await fetchNotifications(accounts[0].address);
-      setHasFetched(true); 
+  useEffect(() => {
+    const fetchUserNotifications = async () => {
+      if (accounts && accounts.length > 0 && accounts[0]?.address && !hasFetched) {
+        await fetchNotifications(accounts[0].address);
+        setHasFetched(true);
+      }
+    };
+
+    fetchUserNotifications();
+  }, [accounts, hasFetched]);
+
+  const fetchWithdrawal = async (user_address) => {
+    setLoading4(true)
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/user/token-withdraw-request/${user_address}`
+      )
+      if (response.status === 200) {
+        console.log(response.data, 'Fetched data')
+        setExpenseDatas(response.data)
+      } else {
+        console.warn('Unexpected response status:', response.status)
+      }
+    } catch (error) {
+      console.error('Error fetching withdrawal data:', error.response?.data || error.message)
+    } finally {
+      setLoading4(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchWithdrawal(accounts[0]?.address)
+  }, [])
+
+
+  const fetchNotifications = async (user_address) => {
+    if (!user_address) {
+      console.error("User address is not provided.");
+      return;
+    }
+
+    try {
+      const endpoint = `${import.meta.env.VITE_BACKEND_URL}/user/notification/all/${user_address}`;
+      console.log(`Fetching notifications from: ${endpoint}`);
+
+      const res = await axios.get(endpoint);
+      console.log("Fetched Notifications:", res.data);
+
+      if (Array.isArray(res.data)) {
+        setNotifications(res.data);
+      } else {
+        console.error("Unexpected response format:", res.data);
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("Error fetching notifications:", error.response.data);
+      } else if (error.request) {
+        console.error("No response from server:", error.request);
+      } else {
+        console.error("Error setting up request:", error.message);
+      }
     }
   };
-
-  fetchUserNotifications();
-}, [accounts, hasFetched]);  
-
-const fetchNotifications = async (user_address) => {
-  if (!user_address) {
-    console.error("User address is not provided.");
-    return;
-  }
-
-  try {
-    const endpoint = `${import.meta.env.VITE_BACKEND_URL}/user/notification/all/${user_address}`;
-    console.log(`Fetching notifications from: ${endpoint}`);
-
-    const res = await axios.get(endpoint);
-    console.log("Fetched Notifications:", res.data);
-
-    if (Array.isArray(res.data)) {
-      setNotifications(res.data);
-    } else {
-      console.error("Unexpected response format:", res.data);
-    }
-  } catch (error) {
-    if (error.response) {
-      console.error("Error fetching notifications:", error.response.data);
-    } else if (error.request) {
-      console.error("No response from server:", error.request);
-    } else {
-      console.error("Error setting up request:", error.message);
-    }
-  }
-};
   const handleCopy = (address) => {
     navigator.clipboard.writeText(address)
     setCopied(true)
@@ -688,6 +715,50 @@ const fetchNotifications = async (user_address) => {
                     </div>
                   </Card>
 
+
+                  <Card className="w-full flex mt-1 flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black col-span-2">
+                    <div className="text-2xl font-bold mb-4">My Withdrawal Requests</div>
+
+                    {loading4 ? (
+                      <div className="text-center">Loading...</div>
+                    ) : (
+                      <div className="w-full flex flex-col gap-4 h-full">
+                        {expenseDatas?.map((request, index) => (
+                          <div
+                            key={index}
+                            className="flex flex-col md:flex-row items-center w-full p-4 border border-gray-200 rounded-md shadow-sm bg-white"
+                          >
+                            <img
+                              src={request.community_image}
+                              alt={request.community_name}
+                              className="w-20 h-20 rounded-md object-cover mr-4"
+                            />
+                            <div className="flex flex-col flex-grow">
+                              <h2 className="text-lg font-semibold">{request.community_name}</h2>
+                              <p className="text-sm text-gray-600">
+                                Amount to Withdraw: <span className="font-medium">{request.amount_to_withdraw}</span>
+                              </p>
+                              <p className="text-sm text-gray-600">
+                                Request Date: <span className="font-medium">{new Date(request.request_date).toLocaleDateString()}</span>
+                              </p>
+                              <p
+                                className={`text-sm font-medium ${request.status ? 'text-green-500' : 'text-red-500'
+                                  }`}
+                              >
+                                Status: {request.status ? 'Approved' : 'Pending'}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+
+                        {!expenseDatas?.length && (
+                          <p className="text-gray-500">No withdrawal requests found.</p>
+                        )}
+                      </div>
+                    )}
+                  </Card>
+
+
                   <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
                     <div className="flex items-center justify-between w-full">
                       <div className="text-xl font-bold"> Created Bonds </div>
@@ -712,14 +783,14 @@ const fetchNotifications = async (user_address) => {
                         <div
                           key={bond.bond_id}
                           className={`w-full  shadow-sm rounded-md p-4 mt-4 flex flex-col md:flex-row justify-between items-start md:items-center ${check &&
+                            bond.maturity_date &&
+                            new Date(bond.maturity_date) < new Date()
+                            ? 'ring-2 ring-red-300'
+                            : check &&
                               bond.maturity_date &&
-                              new Date(bond.maturity_date) < new Date()
-                              ? 'ring-2 ring-red-300'
-                              : check &&
-                                bond.maturity_date &&
-                                new Date(bond.maturity_date) > new Date()
-                                ? 'ring-2 ring-green-300'
-                                : ''
+                              new Date(bond.maturity_date) > new Date()
+                              ? 'ring-2 ring-green-300'
+                              : ''
                             }`}
                         >
                           <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
@@ -1114,7 +1185,7 @@ const fetchNotifications = async (user_address) => {
               </div>
             </Card>
           </TabsContent>
-          
+
           <TabsContent value="expenses" className="w-full ">
             <UserTransaction
               expneseData={expneseData}
