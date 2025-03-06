@@ -1,8 +1,33 @@
 import useStepStore from "@/store/stepStore";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import axios from "axios";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { X } from "lucide-react";
+
+const fetchTags = async () => {
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/tags`);
+    return response.data;
+};
 
 const PersonalDetail = () => {
-    const { currentStep, handleNext, handlePrev, setStepsLength } = useStepStore();
-    console.log(currentStep,"fais")
+    const { handleNext } = useStepStore();
+    const { data: tags = [], isLoading, error } = useQuery({
+        queryKey: ["tags"],
+        queryFn: fetchTags,
+    });
+    const [selectedTag, setSelectedTag] = useState([]);
+    const toggleTag = (tagName) => {
+        setSelectedTag((prev) =>
+            prev.includes(tagName) ? prev.filter((tag) => tag !== tagName) : [...prev, tagName]
+        );
+    };
     return (
         <div className=" h-full  w-full relative justify-center items-start gap-8 flex overflow-hidden  bg-">
 
@@ -31,13 +56,43 @@ const PersonalDetail = () => {
                     isTextArea
                 />
 
+                {/* Dropdown for tags */}
+                <DropdownMenu>
+                    <div className="relative inline-block w-full">
+                        <label className="text-white text-xl font-medium ">    Choose 5 communities you might be interested in</label>
 
-                <InputField
-                    label="Choose 5 communities you might be interested in"
-                    placeholder="Select communities"
-                    isTagInput
-                />
+                        <DropdownMenuTrigger asChild>
+                            <button className="bg-[#1B0D37] border-brand5 mt-2 border p-2 rounded-md w-full flex flex-wrap gap-2 min-h-[40px] items-center">
+                                <span className="text-neutral-400">Select a tag</span>
+                            </button>
+                        </DropdownMenuTrigger>
 
+                        {/* Dropdown Content */}
+                        <DropdownMenuContent align="start" className="max-h-60 w-[30rem] overflow-y-auto">
+                            {isLoading ? (
+                                <DropdownMenuItem>Loading...</DropdownMenuItem>
+                            ) : error ? (
+                                <DropdownMenuItem>Error loading tags</DropdownMenuItem>
+                            ) : (
+                                tags.map((tag) => (
+                                    <DropdownMenuItem key={tag.id} onClick={() => toggleTag(tag.name)}>
+                                        {tag.name} {selectedTag.includes(tag.name) ? "✅" : ""}
+                                    </DropdownMenuItem>
+                                ))
+                            )}
+                        </DropdownMenuContent>
+                    </div>
+                </DropdownMenu>
+                <div className="flex flex-wrap gap-2 ">
+                    {selectedTag.map((tag) => (
+                        <div key={tag} className="flex items-center gap-1 bg-purple-600 text-white px-2 py-1 rounded-md">
+                            {tag}
+                            <button onClick={() => toggleTag(tag)} className="text-white">
+                                <X size={14} />
+                            </button>
+                        </div>
+                    ))}
+                </div>
 
                 <div className="flex flex-col gap-4 ">
                     <label className="text-white text-xl font-medium">
@@ -77,17 +132,17 @@ const InputField = ({ label, placeholder, isTextArea = false, isTagInput = false
             <label className="text-white text-xl font-medium">{label}</label>
             {isTextArea ? (
                 <textarea
-                    className="bg-[#1B0D37] rounded-md border border-[#9268E4] p-4 w-full h-24 resize-none"
+                    className="bg-[#1B0D37] rounded-md border border-brand5 p-4 w-full h-24 resize-none"
                     placeholder={placeholder}
                 />
             ) : isTagInput ? (
-                <div className="bg-[#1B0D37] rounded-md border border-[#9268E4] p-3 flex gap-2 items-center h-14">
+                <div className="bg-[#1B0D37] rounded-md border border-brand5 p-3 flex gap-2 items-center h-14">
 
 
                 </div>
             ) : (
                 <input
-                    className="bg-[#1B0D37] rounded-md border border-[#9268E4] p-4 w-full"
+                    className="bg-[#1B0D37] rounded-md border border-brand5 p-4 w-full"
                     placeholder={placeholder}
                 />
             )}
