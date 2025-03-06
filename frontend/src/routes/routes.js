@@ -65,7 +65,7 @@ export const publicRoutes = [
   },
   {
     path: '/signup',
-    element: SignupPage,
+    element: OnboardingFlow,
   },
 ];
 

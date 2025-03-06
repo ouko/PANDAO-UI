@@ -2,6 +2,7 @@ import { useSignupFormStore } from '@/store/onboarding/signup-form';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAccount } from '@/AccountContext';
 
 const Otp = () => {
     const [otpFields, setOtpFields] = useState(Array(6).fill(""));
