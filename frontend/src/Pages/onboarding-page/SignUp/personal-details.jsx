@@ -81,7 +81,23 @@ const PersonalDetail = () => {
         const fileUrl = `https://ucarecdn.com/${id}/-/preview/1000x562/`;
         setDisplayImage(fileUrl);
     };
-
+    const handleSendEmail = async () => {
+        try {
+          const response = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/email-verification?user_email=${
+              email
+            }`,
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+          console.log('API Response:', response.data)
+        } catch (error) {
+          console.error('Error in API call:', error)
+        }
+      }
     const handleNextClick = () => {
         useSignupFormStore.getState().setName(username);
         useSignupFormStore.getState().setEmail(email);
@@ -89,6 +105,7 @@ const PersonalDetail = () => {
         useSignupFormStore.getState().setTags(selectedTags);
         handleNext();
     };
+  
     console.log(username, email, public_address, bio, storedTags, display_image, "fasial")
     return (
         <div className="w-full relative justify-center items-start gap-8 flex h-full">
@@ -195,7 +212,10 @@ const PersonalDetail = () => {
                 </div>
 
                 <button
-                    onClick={handleNextClick}
+                    onClick={() => {
+                        handleSendEmail()
+                        handleNextClick()
+                      }}
                     disabled={!isFormValid}
                     className={`rounded-3xl text-white text-2xl font-semibold py-3 px-4 w-full ${isFormValid
                         ? "bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483]"
