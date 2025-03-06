@@ -83,7 +83,7 @@ const PersonalDetail = () => {
     };
 
     const handleNextClick = () => {
-        useSignupFormStore.getState().setName(name);
+        useSignupFormStore.getState().setName(username);
         useSignupFormStore.getState().setEmail(email);
         useSignupFormStore.getState().setBio(bio);
         useSignupFormStore.getState().setTags(selectedTags);

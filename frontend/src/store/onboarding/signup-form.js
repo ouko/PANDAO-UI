@@ -6,13 +6,11 @@ export const useSignupFormStore = create((set) => ({
   public_address: '',
   username: '',
   email: '',
-  newletterOpted: false,
+  newletterOpted: true,
   bio: '',
   otp: '',
   display_image: '',
   work_history: [],
-  
-  name: '',
   tags: [],
   
   // Form update methods
@@ -22,6 +20,8 @@ export const useSignupFormStore = create((set) => ({
   setDisplayImage: (display_image) => set({ display_image }),
   setTags: (tags) => set({ tags }),
   setPublicAddress: (public_address) => set({ public_address }),
+  setNewsletter: (newletterOpted) => set({ newletterOpted }),
+
   setFormData: (data) => set((state) => ({
     ...state,
     ...data,
@@ -37,7 +37,6 @@ export const useSignupFormStore = create((set) => ({
     otp: '',
     display_image: '',
     work_history: [],
-    name: '',
     tags: [],
   }),
 }));
