@@ -56,12 +56,12 @@ const OnboardingFlow = () => {
                 <div className="w-full  relative">
                     <AnimatePresence mode="wait">
                         <motion.div
-                            key={currentStep} 
+                            key={currentStep} // Ensures Framer Motion detects changes
                             variants={stepVariants}
                             initial="initial"
                             animate="animate"
                             exit="exit"
-                            className="absolute w-full "
+                            className=" w-full "
                         >
                             {renderStepContent()}
                         </motion.div>

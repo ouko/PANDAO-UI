@@ -10,12 +10,17 @@ import axios from "axios";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { X } from "lucide-react";
+import ImageUpload from "@/Pages/components/ImageUpload";
+import { Label } from "@/components/ui/label";
 
 const fetchTags = async () => {
     const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/tags`);
     return response.data;
 };
-
+const handleFileId = (id) => {
+    const fileUrl = `https://ucarecdn.com/${id}/-/preview/1000x562/`
+  
+  }
 const PersonalDetail = () => {
     const { handleNext } = useStepStore();
     const { data: tags = [], isLoading, error } = useQuery({
@@ -29,7 +34,7 @@ const PersonalDetail = () => {
         );
     };
     return (
-        <div className=" h-full  w-full relative justify-center items-start gap-8 flex overflow-hidden  bg-">
+        <div className="   w-full relative justify-center items-start gap-8 flex  h-full">
 
 
             <div className="flex flex-col pt-10 gap-8  text-white ">
@@ -93,39 +98,38 @@ const PersonalDetail = () => {
                         </div>
                     ))}
                 </div>
-
-                <div className="flex flex-col gap-4 ">
-                    <label className="text-white text-xl font-medium">
-                        Upload your Profile picture here
-                    </label>
-                    <div className="flex bg-[#1B0D37] border border-primary-500 items-center h-19 overflow-hidden rounded-md p-1">
-                        <div className="bg-[#9268E4] px-5 py-4  items-start justify-start w-25 ">
-                            <h1 className="text-white font-semibold text-[16px]">
-                                Choose File
-                            </h1>
-                        </div>
-                        <input
-                            type="file"
-                            className="bg-[#1B0D37] p-4 text-neutral-60 text-lg flex-1 file:hidden"
-                        />
+                
+                    <div className="flex flex-col gap-2">
+                        <Label
+                            htmlFor="display_image"
+                            className="text-xl  font-bold"
+                        >
+                           Upload your Profile picture here
+                        </Label>
+                        <ImageUpload onUploadSuccess={handleFileId} />
                     </div>
-                </div>
+                  
+                
 
 
 
 
-                <button onClick={handleNext} className="rounded-3xl hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483]   bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] text-white text-2xl font-semibold py-3 px-4 w-full">
-                    Next
-                </button>
-            </div>
-
-
-
+            <button onClick={handleNext} className="rounded-3xl hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483]   bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] text-white text-2xl font-semibold py-3 px-4 w-full">
+                Next
+            </button>
         </div>
+
+
+
+        </div >
     );
 };
 
 
+
+
+
+export default PersonalDetail
 const InputField = ({ label, placeholder, isTextArea = false, isTagInput = false }) => {
     return (
         <div className="flex flex-col gap-2.5 w-full" >
@@ -149,7 +153,3 @@ const InputField = ({ label, placeholder, isTextArea = false, isTagInput = false
         </div>
     );
 };
-
-
-
-export default PersonalDetail
