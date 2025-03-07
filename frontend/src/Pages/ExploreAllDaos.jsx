@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { SkeletonCard } from "./GlobalComponents/Skeleton";
+
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Banknote, ChevronDown, Users } from "lucide-react";
@@ -16,6 +16,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { SkeletonCard } from "@/components/ui/myComponents/card-skeleton";
 
 const debounce = (func, delay) => {
   let timer;
@@ -174,7 +175,7 @@ const ExploreAllDao = () => {
 
         {isLoading ? (
           <div className="mt-5 grid md:grid-cols-3 grid-cols-1 gap-3">
-            <SkeletonCard />
+            <SkeletonCard />      
             <SkeletonCard />
             <SkeletonCard />
             <SkeletonCard />

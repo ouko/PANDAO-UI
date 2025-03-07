@@ -8,7 +8,7 @@ import { Banknote, Check, Filter, Users } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { SkeletonCard } from '@/Pages/GlobalComponents/Skeleton'
+
 import {
   Dialog,
   DialogContent,
@@ -34,6 +34,7 @@ import useViewStore from '@/store/view'
 import { useAccount } from '@/AccountContext'
 import BrandButton from '@/components/ui/myComponents/brand-button'
 import BrandCard from '@/components/ui/myComponents/brand-card'
+import { SkeletonCard } from '@/components/ui/myComponents/card-skeleton'
 
 // API Functions
 const fetchDAOs = async (sortBy) => {
