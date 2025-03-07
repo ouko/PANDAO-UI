@@ -48,13 +48,15 @@ const PersonalDetail = () => {
 
     // Form validation effect
     useEffect(() => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const valid =
             username?.trim().length > 0 &&
             email?.trim().length > 0 &&
+            emailRegex.test(email) &&
             bio?.trim().length > 0 &&
             display_image &&
-            selectedTags.length > 0;
-
+            selectedTags.length >= 5;
+    
         setIsFormValid(valid);
     }, [username, email, bio, display_image, selectedTags]);
 

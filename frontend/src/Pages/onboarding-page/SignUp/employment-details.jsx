@@ -96,6 +96,8 @@ const EmploymentDetails = () => {
                 <input
                   type="date"
                   value={entry.start_date}
+                  min="2000-01-01" 
+                  max={new Date().toISOString().split("T")[0]}
                   onChange={(e) =>
                     handleWorkHistoryChange(index, "start_date", e.target.value)
                   }
@@ -109,6 +111,8 @@ const EmploymentDetails = () => {
                 <input
                   type="date"
                   value={entry.end_date}
+                  min={entry.start_date} 
+                  max={new Date().toISOString().split("T")[0]} 
                   disabled={entry.current}
                   onChange={(e) =>
                     handleWorkHistoryChange(index, "end_date", e.target.value)
