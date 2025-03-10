@@ -7,7 +7,6 @@ import axios from "axios";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Banknote, ChevronDown, Users } from "lucide-react";
 import { useAccount } from "@/AccountContext";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import BrandCard from '@/components/ui/myComponents/brand-card';
 import {
@@ -28,7 +27,6 @@ const debounce = (func, delay) => {
 
 const ExploreAllDao = () => {
   const navigate = useNavigate();
-  const { accounts } = useAccount();
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTag, setActiveTag] = useState(null);
@@ -79,14 +77,7 @@ const ExploreAllDao = () => {
   };
 
   // Handle navigation with wallet check
-  const handleNavigation = (path) => {
-    if (accounts && accounts.length > 0) {
-      navigate(path);
-    } else {
-      setOpen(true);
-    }
-  };
-
+  
   // Split tags into visible and dropdown
   const visibleTags = tags.slice(0, 5);
   const dropdownTags = tags.slice(5);
@@ -94,17 +85,7 @@ const ExploreAllDao = () => {
   return (
     <div className="bg-brand1 overflow-hidden">
       <div className="absolute left-1/3 bg-brand4 y-50 size-[300px] rounded-full blur-[200px]"></div>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger></DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>You have not connected your Wallet</DialogTitle>
-            <DialogDescription>
-              Please connect your wallet your Radix Wallet
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+
 
       <div className="min-h-screen bg-brand1 pt-20 max-w-[1200px] mx-auto">
         <div className="flex items-center w-full justify-between pr-3">
