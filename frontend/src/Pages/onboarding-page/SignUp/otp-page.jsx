@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAccount } from '@/AccountContext';
+import useStepStore from '@/store/stepStore';
 
 const Otp = () => {
     const [otpFields, setOtpFields] = useState(Array(6).fill(""));
@@ -10,8 +11,9 @@ const Otp = () => {
     const [error, setError] = useState("");
     const firstInputRef = useRef(null);
     const navigate = useNavigate();
-        const { accounts } = useAccount();
-    
+    const { accounts } = useAccount();
+    const { handlePrev } = useStepStore();
+
 
     const {
         setNewsletter,
@@ -43,7 +45,7 @@ const Otp = () => {
 
     const handleOtpChange = (e, index) => {
         const { value } = e.target;
-        
+
         // Clear any previous errors
         if (error) setError("");
 
@@ -78,18 +80,18 @@ const Otp = () => {
     const handlePaste = (e) => {
         e.preventDefault();
         const pastedData = e.clipboardData.getData('text/plain').trim();
-        
+
         // Only proceed if pasted content is numeric and within valid length
         if (/^\d+$/.test(pastedData) && pastedData.length <= 6) {
             const newOtp = [...otpFields];
-            
+
             // Fill OTP fields with pasted digits
             for (let i = 0; i < Math.min(pastedData.length, 6); i++) {
                 newOtp[i] = pastedData[i];
             }
-            
+
             setOtpFields(newOtp);
-            
+
             // Focus on the next empty field or the last field
             const nextIndex = Math.min(pastedData.length, 5);
             document.getElementById(`otp-input-${nextIndex}`).focus();
@@ -102,22 +104,22 @@ const Otp = () => {
             setError("Please enter all 6 digits of the OTP");
             return false;
         }
-        
+
         if (!username || !email) {
             setError("Required profile information is missing");
             return false;
         }
-        
+
         return true;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         if (!validateForm()) return;
-        
+
         setIsSubmitting(true);
-        
+
         const submitData = {
             username,
             email,
@@ -125,7 +127,7 @@ const Otp = () => {
             work_history,
             tags,
             display_image,
-            public_address:accounts[0].address,
+            public_address: accounts[0].address,
             newletterOpted,
             otp: otpFields.join("")
         };
@@ -155,7 +157,7 @@ const Otp = () => {
     //         setError("Email is required to resend OTP");
     //         return;
     //     }
-        
+
     //     try {
     //         await axios.post(
     //             `${import.meta.env.VITE_BACKEND_URL}/user/resend-otp`,
@@ -225,15 +227,22 @@ const Otp = () => {
                     </p>
                 </div>
 
-                <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-4 w-full">
+                    <button
+                        onClick={handlePrev}
+                        disabled={isSubmitting}
+                        className={`w-full hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] text-white text-2xl font-semibold py-3 px-5 rounded-[26px] shadow-inner transition-all duration-300 `}
+                    >
+                        Previous
+                    </button>
                     <button
                         onClick={handleSubmit}
                         disabled={isSubmitting}
-                        className={`hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] text-white text-2xl font-semibold py-3 px-5 rounded-[26px] shadow-inner transition-all duration-300 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                        className={`w-full hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] text-white text-2xl font-semibold py-3 px-5 rounded-[26px] shadow-inner transition-all duration-300 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                     >
                         {isSubmitting ? 'Submitting...' : 'Submit'}
                     </button>
-                    
+
                     {/* <button
                         type="button"
                         onClick={resendOtp}

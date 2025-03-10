@@ -5,7 +5,8 @@ import { useSignupFormStore } from "@/store/onboarding/signup-form";
 import useStepStore from "@/store/stepStore";
 
 const EmploymentDetails = () => {
-  const { handleNext } = useStepStore();
+  const { handleNext,handlePrev } = useStepStore();
+
   const {
     username,
     email,
@@ -187,6 +188,12 @@ const EmploymentDetails = () => {
         </div>
 
         <div className="flex gap-4 w-full">
+        <button
+            onClick={ handlePrev}
+            className="flex-1 rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"
+          >
+            Previous
+          </button>
           <button
             onClick={ handleNext}
             className="flex-1 rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"
