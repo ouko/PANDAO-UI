@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 const UserTransaction = ({ expneseData, failedTransaction }) => {
   console.log(expneseData, 'faisal')
   return (
-    <Card className="w-full md:col-span-3 flex mt-1  flex-col shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
+    <Card className="w-full md:col-span-3 flex mt-1  flex-col bg-brand2 shadow-md items-center md:items-start max-w-[1400px] mx-auto rounded-sm p-5 text-black  ">
       <Tabs defaultValue="account" className="w-full">
         <TabsList>
           <TabsTrigger value="account">Success</TabsTrigger>
@@ -28,7 +28,7 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
               )}
               {expneseData.length > 0 &&
                 expneseData.map((activity, index) => (
-                  <div key={index} className='flex flex-col p-4 border-2 rounded-lg group hover:shadow-md'>
+                  <div key={index} className='flex flex-col p-4 border-2 bg-[rgba(109,54,219,0.21)] rounded-lg group hover:shadow-md'>
                     <div className=" flex items-center space-x-4 mb-4">
                       {/* Community Image */}
                       <img
