@@ -23,7 +23,7 @@ export const steps = [
 ];
 
 export const StepIndicator2 = ({ currentStep, steps }) => (
-    <div className="relative w-full">
+    <div className="relative w-full container">
         <div className="flex items-center justify-between px-10">
             {steps.map((step, index) => (
                 <React.Fragment key={step.label}>
@@ -61,6 +61,16 @@ export const StepIndicator2 = ({ currentStep, steps }) => (
 
                 </React.Fragment>
             ))}
+        </div>
+        <div className='text-white pl-3 pr-10 mt-4 flex items-center justify-between  '>
+            <div className=''> 
+                Perosonal Details
+            </div>
+            <div className='pr-14'>
+                Work History
+            </div><div>
+                OTP
+            </div>
         </div>
     </div>
 );
