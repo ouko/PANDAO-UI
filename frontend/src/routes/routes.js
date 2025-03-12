@@ -25,7 +25,7 @@ const BlogDetail = lazy(() => import('../Pages/Resources/BlogDeatails'));
 // Protected Pages
 // const UserDashboard = lazy(() => import('../Pages/UserDashboard'));  // old Dahboard
 
-const Dashboard = lazy(() => import('../Pages/onboarding-page/Dashboard/Dashboard'));  // ADD NEW Dahboard
+const Dashboard = lazy(() => import('../Pages/userDashboard/Dashboard/Dashboard'));  // ADD NEW Dahboard
 
 const EditPage = lazy(() => import('../Pages/UserDasboard/EditPage'));
 const UserPublicProfile = lazy(() => import('../Pages/UsersPublicProfile'));
