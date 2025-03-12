@@ -82,6 +82,7 @@ const CommunityDetails = () => {
   const [data, setData] = useState([])
   const [participants, setParticipants] = useState([])
   const [communities, setCommunities] = useState([])
+  const [withDrawRequest, setWithDrawRequest] = useState([])
   const [copied, setCopied] = useState(false)
   const sendTransaction = useSendTransaction()
   const [loading, setLoading] = useState(false)
@@ -387,6 +388,17 @@ const CommunityDetails = () => {
       console.error('Error fetching blueprint data:', error)
     }
   }
+  const fetchWithdrawRequest = async () => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/community/token-withdraw/request?c_id=${params.id}`,
+      )
+      setWithDrawRequest(res.data)
+    } catch (error) {
+      console.error('Error fetching blueprint data:', error)
+    }
+  }
+
 
   const handleClickMint = async () => {
 
@@ -614,6 +626,7 @@ const CommunityDetails = () => {
     fetchDetails()
     fetchParticipant()
     fetchComments()
+    fetchWithdrawRequest()
   }, [params.id])
 
   if (!accounts || accounts.length === 0) {
@@ -824,12 +837,61 @@ const CommunityDetails = () => {
                     <div className="bg-purple-600 shadow-lg min-w-28 flex items-center justify-center rounded-lg text-white p-1">
                       {data.funds} XRD
                     </div>
-                    <Button onClick={()=>setWithDrawModal(true)}>
+                    <Button onClick={() => setWithDrawModal(true)}>
                       Withdraw Request
                     </Button>
                   </div>
                 </Card>
-
+                <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg flex flex-col items-center justify-center">
+                  <div className="font-semibold tracking-wide py-5">Total WithDraw Request</div>
+                  <div className='flex flex-col w-full space-y-4'>
+                    {withDrawRequest.map((request) => (
+                      <Card
+                        key={request.id}
+                        className="bg-white w-full mx-auto md:p-4 p-4 flex-col shadow-lg flex items-center justify-between"
+                      >
+                        <div className='w-full'>
+                          <div className="font-semibold tracking-wide">
+                            Total Withdraw Request: ${request.amount_to_withdraw}
+                          </div>
+                          <div className="text-sm text-gray-500">
+                            Date: {new Date(request.request_date).toLocaleString()}
+                          </div>
+                          <div className="text-sm text-gray-500">
+                            Status:{" "}
+                            <span
+                              className={`${request.status ? "text-green-500" : "text-red-500"
+                                }`}
+                            >
+                              {request.status ? "Completed" : "Pending"}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-4 w-full py-2">
+                          <img
+                            src={request.community_image}
+                            alt={request.community_name}
+                            className="w-12 h-12 rounded-full object-cover"
+                          />
+                          <div>
+                            <div className="text-sm font-semibold">
+                              {request.community_name}
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              {request.user_address.slice(0, 8)}...
+                              {request.user_address.slice(-8)}
+                            </div>
+                          </div>
+                          {/* <img
+                            src={request.user_image}
+                            alt="User"
+                            className="w-12 h-12 rounded-full object-cover"
+                          /> */}
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                </Card>
                 <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg ">
                   <h1 className="font-semibold tracking-wide">Discussions</h1>
                   {communities.length === 0 && (
@@ -1253,13 +1315,13 @@ const CommunityDetails = () => {
         <DialogContent className="w-half pt-10 bg-white rounded-lg shadow-lg max-w-5xl overflow-y-auto max-h-[80vh]">
           <DialogHeader className="w-full overflow-auto">
             <DialogTitle className="text-2xl font-semibold text-gray-800 w-full text-center">
-             Fund Withdraw Request
+              Fund Withdraw Request
             </DialogTitle>
             <DialogDescription className="flex flex-col justify-center items-center gap-4 mt-4 w-full overflow-y-auto">
-      
+
               <div className="w-full">
                 <Input
-                type="number"
+                  type="number"
                   value={withdrawAmount}
                   onChange={(e) => setwithdrawAmout(e.target.value)}
                 />
