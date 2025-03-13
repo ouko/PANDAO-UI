@@ -19,6 +19,7 @@ import CommunitiesParticipated from './Dash-component/CommunitiesParticipated'
 import BondList from './Dash-component/BondList'
 import UserActivity from './Dash-component/UserActivity'
 import UserCommunities from './Dash-component/UserCommunities'
+import TileEffect4 from '@/components/ui/myComponents/grid-bg-4'
 
 
 
@@ -434,16 +435,15 @@ const Dashboard = () => {
     }
 
     return (
-        <div>
+        <div className='bg-brand1 relative min-h-screen'>
+            <div className="w-full h-full absolute  overflow-hidden opacity-20">
+                <TileEffect4 />
+            </div>
             <NavBar userImage={userData.usermetadata?.image_url} />
 
-            <div className="absolute top-[850px] left-[-10%] bg-brand3 z-20 size-[400px] rounded-full blur-[150px]"></div>
-            <div>
-                <div className="flex flex-row items-start bg-[#100821]  justify-between relative">
-                    <div className="w-full h-full absolute pt overflow-hidden opacity-20">
-                        <TileEffect />
-                    </div>
-                    <div>
+                <div className="flex flex-row items-start  justify-between relative max-w-[1600px] mx-auto gap-5">
+
+                    <div className='sticky top-0' >
 
                         <Sidebar
                             userData={userData}
@@ -456,7 +456,7 @@ const Dashboard = () => {
                         />
                     </div>
 
-                    <div className="bg-[rgba(169,126,255,0.24)] rounded-[20px] border mt-20 border-brand2  mr-10 w-[1015px] h-[1884px] relative overflow-hidden backdrop-blur-[6.7px]">
+                    <div className="bg-[rgba(169,126,255,0.24)] rounded-[20px] border mt-20 border-brand2  mr-10  w-full  relative overflow-hidden backdrop-blur-[6.7px]">
                         <div className="flex border-b bg-brand1 border-brand1">
                             {tabs.map((tab, index) => (
                                 <button
@@ -516,7 +516,7 @@ const Dashboard = () => {
                                         failedTransaction={failedData}
                                     />
                                 </div>
-                            </section> )}
+                            </section>)}
 
                         {activeTab === 3 && (
                             <section className="px-4 py-6">
@@ -527,7 +527,6 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-            </div>
         </div>
     );
 };
