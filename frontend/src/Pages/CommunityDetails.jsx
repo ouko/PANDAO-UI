@@ -382,7 +382,7 @@ const CommunityDetails = () => {
           )
 
           console.log('Submit Transaction Response:', submitResponse.data)
-          toast.success('Token Sold Successfully!')
+          toast.success('Withdraw Request Sign Successfully!')
           setText('Token Sold')
           setOpen(true)
           setSellModal(false)
@@ -960,7 +960,7 @@ const CommunityDetails = () => {
                         </div>
                         <div className='flex items-center justify-end w-full'>
                         <Button disabled={loading} onClick={() => handleWithDrawSign(request.id)}>
-                            Withdraw
+                            Sign Withdraw Request
                           </Button>
                         </div>
                       </Card>
