@@ -444,91 +444,102 @@ const Dashboard = () => {
             </div>
             <NavBar userImage={userData.usermetadata?.image_url} />
 
-                <div className="flex flex-row items-start  justify-between relative max-w-[1600px] mx-auto gap-5">
+            <div className="flex flex-row items-start  justify-between relative max-w-[1600px] mx-auto gap-5">
 
-                    <div className='sticky top-0' >
+                <div className='sticky top-0' >
 
-                        <Sidebar
-                            userData={userData}
-                            accounts={accounts}
-                            copied={copied}
-                            handleCopy={handleCopy}
-                            clipAddress={clipAddress}
-                            dataAll={dataAll}
-                            navigate={navigate}
-                        />
-                    </div>
-
-                    <div className="bg-[rgba(169,126,255,0.24)] rounded-[20px] border mt-20 border-brand2  mr-10  w-full  relative overflow-hidden backdrop-blur-[6.7px]">
-                        <div className="flex border-b bg-brand1 border-brand1">
-                            {tabs.map((tab, index) => (
-                                <button
-                                    key={tab.id}
-                                    className={`flex-1 py-2 px-6 text-center font-medium text-lg ${activeTab === tab.id
-                                        ? 'text-brand3 border-b-4 border-brand4'
-                                        : 'text-white hover:text-primary-500'
-                                        } ${index !== 0 ? 'border-l border-brand5' : ''}`}
-                                    onClick={() => setActiveTab(tab.id)}
-                                >
-                                    {tab.label}
-                                </button>
-                            ))}
-                        </div>
-
-
-                        {activeTab === 0 && (
-                            <section className="px-4 py-6">
-                                <WorkExperience />
-
-                                <div>
-                                    <UserCommunities />
-                                </div>
-
-                                <CommunitiesParticipated participatedCommunities={participatedComminities} />
-
-
-                                <BondList
-                                    bonds={createdBonds}
-                                    check={check}
-                                    setCheck={setCheck}
-                                    loading={loading}
-                                    handleRetrieveBond={handleRetreiveBond}
-                                    setOpenPay={setOpenPay}
-                                    setSelectedBond={setSelectedBond}
-                                    setSelectedInfo={setSelectedInfo}
-                                    setShowInfo={setShowInfo}
-                                />
-                            </section>)}
-
-
-                        {activeTab === 1 && (
-                            <section className="px-4 py-6">
-                                <UserActivity activityData={activityData} />
-                            </section>
-                        )}
-
-                        {activeTab === 2 && (
-                            <section className="px-4 py-6">
-                                <div className="bg-[#39246b] p-3 flex items-center justify-start rounded-md mb-6">
-                                    <h2 className="text-white text-2xl font-medium">User Transection:</h2>
-                                </div>
-
-                                <div className="flex flex-wrap gap-5 justify-center mb-6">
-                                    <UserTransaction
-                                        expneseData={expneseData}
-                                        failedTransaction={failedData}
-                                    />
-                                </div>
-                            </section>)}
-
-                        {activeTab === 3 && (
-                            <section className="px-4 py-6">
-                                <CommunitiesParticipated participatedCommunities={participatedComminities} />
-
-                            </section>
-                        )}
-                    </div>
+                    <Sidebar
+                        userData={userData}
+                        accounts={accounts}
+                        copied={copied}
+                        handleCopy={handleCopy}
+                        clipAddress={clipAddress}
+                        dataAll={dataAll}
+                        navigate={navigate}
+                    />
                 </div>
+
+                <div className="bg-[rgba(169,126,255,0.24)] rounded-[20px] border mt-20 border-brand2  mr-10  w-full  relative overflow-hidden backdrop-blur-[6.7px]">
+                    <div className="flex border-b bg-brand1 border-brand1 py-2 ">
+                        {tabs.map((tab, index) => (
+                            <button
+                                key={tab.id}
+                                className={`flex-1 py-2  px-6 text-center font-medium relative text-lg ${activeTab === tab.id
+                                    ? 'text-brand6'
+                                    : 'text-white hover:text-primary-500'
+                                    } ${index !== 0 ? 'border-l border-brand5 ' : ''}`}
+                                onClick={() => setActiveTab(tab.id)}
+
+                            >
+                                <div className='absolute inset-0 flex items-center justify-center'>
+                                    {activeTab === tab.id ? (
+                                        <div className='absolute bottom-0   bg-gradient-to-r from-brand3 to-brand5 h-1 w-[80%]'></div>
+                                    ) : null}
+                                </div>
+
+
+
+
+
+                                {tab.label}
+                            </button>
+                        ))}
+                    </div>
+
+
+                    {activeTab === 0 && (
+                        <section className="px-4 py-6">
+                            <WorkExperience />
+
+                            <div>
+                                <UserCommunities />
+                            </div>
+
+                            <CommunitiesParticipated participatedCommunities={participatedComminities} />
+
+
+                            <BondList
+                                bonds={createdBonds}
+                                check={check}
+                                setCheck={setCheck}
+                                loading={loading}
+                                handleRetrieveBond={handleRetreiveBond}
+                                setOpenPay={setOpenPay}
+                                setSelectedBond={setSelectedBond}
+                                setSelectedInfo={setSelectedInfo}
+                                setShowInfo={setShowInfo}
+                            />
+                        </section>)}
+
+
+                    {activeTab === 1 && (
+                        <section className="px-4 py-6">
+                            <UserActivity activityData={activityData} />
+                        </section>
+                    )}
+
+                    {activeTab === 2 && (
+                        <section className="px-4 py-6">
+                            <div className="bg-[#39246b] p-3 flex items-center justify-start rounded-md mb-6">
+                                <h2 className="text-white text-2xl font-medium">User Transection:</h2>
+                            </div>
+
+                            <div className="flex flex-wrap gap-5 justify-center mb-6">
+                                <UserTransaction
+                                    expneseData={expneseData}
+                                    failedTransaction={failedData}
+                                />
+                            </div>
+                        </section>)}
+
+                    {activeTab === 3 && (
+                        <section className="px-4 py-6">
+                            <CommunitiesParticipated participatedCommunities={participatedComminities} />
+
+                        </section>
+                    )}
+                </div>
+            </div>
 
         </div>
     );
