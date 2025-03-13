@@ -473,7 +473,7 @@ const Dashboard = () => {
                             >
                                 <div className='absolute inset-0 flex items-center justify-center'>
                                     {activeTab === tab.id ? (
-                                        <div className='absolute bottom-0   bg-gradient-to-r from-brand3 to-brand5 h-1 w-[80%]'></div>
+                                        <div className='absolute bottom-0   bg-gradient-to-l from-brand3 to-brand5 h-1 w-[80%]'></div>
                                     ) : null}
                                 </div>
 
