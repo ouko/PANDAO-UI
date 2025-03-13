@@ -2,47 +2,18 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useAccount } from '@/AccountContext'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
 
-import {
-    Activity,
-    Check,
-    ChevronLeft,
-    ClockIcon,
-    Copy,
-    Globe,
-    SquareArrowOutDownLeft,
-    SquareArrowOutUpRight,
-} from 'lucide-react'
-import { Switch } from '@/components/ui/switch'
-
-import { FaLinkedinIn, FaXTwitter } from 'react-icons/fa6'
 import { clipAddress } from '@/utils/functions/ClipAddress'
-import { formatStandardDateTime } from '@/utils/functions/convertActivityData'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 
-import { Badge } from '@/components/ui/badge'
+
 import { useSendTransaction } from '@/hooks/useSendTransaction'
 import { toast } from 'sonner'
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { formatDate } from '@/utils/functions/ConvertDate'
-import { Separator } from '@/components/ui/separator'
-import { use } from 'react'
+
 import UserTransaction from '@/Pages/UserDasboard/UserTransactions/UserTransactions'
 import NavBar from './Dash-component/NavBar'
 import TileEffect from '@/components/ui/myComponents/grid-bg-2'
-import Sidebar from './Dash-component/Sidebar'
+import Sidebar from './Dash-component/sidebar'
 import WorkExperience from './Dash-component/WorkExperience'
 import CommunitiesParticipated from './Dash-component/CommunitiesParticipated'
 import BondList from './Dash-component/BondList'
