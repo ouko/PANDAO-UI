@@ -488,7 +488,7 @@ const Dashboard = () => {
 
 
                     {activeTab === 0 && (
-                        <section className="px-4 py-6">
+                        <section className=" py-6">
                             <WorkExperience />
 
                             <div>
