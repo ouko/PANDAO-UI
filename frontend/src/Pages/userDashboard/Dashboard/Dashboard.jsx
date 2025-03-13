@@ -435,8 +435,11 @@ const Dashboard = () => {
     }
 
     return (
-        <div className='bg-brand1 relative min-h-screen'>
-            <div className="w-full h-full absolute  overflow-hidden opacity-20">
+        <div className='bg-brand1 relative min-h-screen pb-20 font-clash'>
+            <div className='bg-black/50 absolute inset-0 '>
+
+            </div>
+            <div className="w-full  absolute  overflow-hidden opacity-20 h-[600px]">
                 <TileEffect4 />
             </div>
             <NavBar userImage={userData.usermetadata?.image_url} />
