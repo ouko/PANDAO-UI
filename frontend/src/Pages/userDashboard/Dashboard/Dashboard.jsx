@@ -51,6 +51,11 @@ const Dashboard = () => {
 
   const userAddress = accounts[0]?.address;
 
+const handleOnEdit=()=>{
+
+  queryClient.refetchQueries({ queryKey: ['userData'] });
+}
+
   // Queries
   const { data: userData = {} } = useQuery({
     queryKey: ['userData', userAddress],
@@ -214,7 +219,7 @@ const Dashboard = () => {
 
       <div className="flex flex-row items-start justify-between relative max-w-[1600px] mx-auto gap-5">
         <div className="sticky top-0 h-full">
-          <Sidebar userData={userData || {}} />
+          <Sidebar userData={userData || {}} onEdit={handleOnEdit} />
         </div>
 
         <div className="bg-[rgba(169,126,255,0.24)] rounded-[20px] border mt-24 border-brand2 mr-10 w-full relative overflow-hidden backdrop-blur-[6.7px]">
