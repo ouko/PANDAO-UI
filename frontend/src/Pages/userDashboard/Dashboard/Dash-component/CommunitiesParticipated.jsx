@@ -42,7 +42,7 @@ const CommunitiesParticipated = ({ participatedCommunities }) => {
                 <Card
                   key={dao.community_id || index}
                   onClick={() => navigate(`/community/detail/${dao.community_id}`)}
-                  className="flex overflow-hidden flex-col items-start justify-between p-5 min-w-[calc(50%-8px)] mx-2 cursor-pointer hover:shadow-md bg-gradient-to-r from-[#100821] to-[#1c0f32] border-2 border-brand4 rounded-lg opacity-90 "
+                  className="flex overflow-hidden flex-col items-start justify-between p-5 min-w-[calc(50%-8px)] mx-2 cursor-pointer hover:shadow-md bg-gradient-to-r from-[#100821] to-[#1c0f32] border-2 border-brand4 rounded-lg opacity-90 h-[200px] "
                 >
                   <div className="flex flex-col items-start space-y-5 overflow-hidden w-full">
                     <div className="w-full overflow-hidden flex items-start justify-start gap-4 ">
