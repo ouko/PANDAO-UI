@@ -1,20 +1,7 @@
 import React from "react";
 
 const WorkExperience = ({ userData }) => {
-  const experiences = [
-    {
-      role: "Senior Backend Developer",
-      company: "Creatix Studio",
-      logo: "/radix.webp",
-      duration: "March 2022 - Present",
-    },
-    {
-      role: "Backend Developer",
-      company: "CodeSphere Technologies",
-      logo: "/logo1.png",
-      duration: "July 2019 - February 2022",
-    },
-  ];
+
   return (
     <div className="text-white">
       <div className="bg-[#39246b] p-3 flex items-center justify-start rounded-md mb-6">
@@ -31,7 +18,7 @@ const WorkExperience = ({ userData }) => {
               <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-indigo-500 border-2 border-white  ring-4 ring-indigo-300 z-10  rounded-full"></div>
 
               {/* Dashed Vertical Line */}
-              {index < experiences.length - 1 && (
+              {index < userData.user_work.length - 1 && (
                 <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 h-[160px] w-0.5 bg-indigo-400 border-l-2 border-dashed border-indigo-400"></div>
               )}
             </div>
