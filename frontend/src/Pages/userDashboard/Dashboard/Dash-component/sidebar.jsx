@@ -5,7 +5,7 @@ import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Sidebar = ({ userData}) => {
+const Sidebar = ({ userData, isAdmin = true }) => {
   const [copied, setCopied] = useState(false);
 
   const navigate = useNavigate();
@@ -90,17 +90,16 @@ const Sidebar = ({ userData}) => {
               <div className="text-white text-base">No interested tags</div>
             )}
           </div>
-
-        
         </div>
       </div>
-
-      <button
-        onClick={() => navigate("/userDashboard/edit")}
-        className="bg-primary-400 rounded-br-lg w-[53px] h-11 absolute left-[-1px] top-[-1px]"
-      >
-        <img className="w-[43px] h-[43px]" src="/edit.svg" alt="Edit" />
-      </button>
+      {isAdmin && (
+        <button
+          onClick={() => navigate("/userDashboard/edit")}
+          className="bg-primary-400 rounded-br-lg w-[53px] h-11 absolute left-[-1px] top-[-1px]"
+        >
+          <img className="w-[43px] h-[43px]" src="/edit.svg" alt="Edit" />
+        </button>
+      )}
     </div>
   );
 };
