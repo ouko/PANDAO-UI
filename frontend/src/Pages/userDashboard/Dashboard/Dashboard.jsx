@@ -491,14 +491,14 @@ const Dashboard = () => {
           )}
 
           {activeTab === 2 && (
-            <section className="px-4 py-6">
+            <section className=" py-6">
               <div className="bg-[#39246b] p-3 flex items-center justify-start rounded-md mb-6">
-                <h2 className="text-white text-2xl font-medium">
-                  User Transection:
+                <h2 className="text-white text-2xl font-semibold">
+                  User Transection
                 </h2>
               </div>
 
-              <div className="flex flex-wrap gap-5 justify-center mb-6">
+              <div className="flex flex-wrap gap-5 justify-center mb-6 px-3">
                 <UserTransaction
                   expneseData={expneseData}
                   failedTransaction={failedData}

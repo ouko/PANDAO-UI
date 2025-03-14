@@ -10,7 +10,6 @@ const UserActivity = ({ activityData }) => {
     const date = new Date(dateString);
     return date.toLocaleString();
   };
-console.log(activityData,"fasik")
   return (
     <div>
       <div className="bg-[#39246b] p-4 flex items-center justify-start rounded-md mb-6">
