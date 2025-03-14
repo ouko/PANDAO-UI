@@ -23,7 +23,10 @@ const Resources = lazy(() => import('../Pages/Resources'));
 const BlogDetail = lazy(() => import('../Pages/Resources/BlogDeatails'));
 
 // Protected Pages
-const UserDashboard = lazy(() => import('../Pages/UserDashboard'));
+// const UserDashboard = lazy(() => import('../Pages/UserDashboard'));  // old Dahboard
+
+const Dashboard = lazy(() => import('../Pages/userDashboard/Dashboard/Dashboard'));  // ADD NEW Dahboard
+
 const EditPage = lazy(() => import('../Pages/UserDasboard/EditPage'));
 const UserPublicProfile = lazy(() => import('../Pages/UsersPublicProfile'));
 const MyCommunity = lazy(() => import('../Pages/MyCommunites'));
@@ -74,7 +77,7 @@ export const protectedRoutes = [
     path: '/userDashboard',
     element: UserDashboardLayout,
     children: [
-      { index: true, element: UserDashboard },
+      { index: true, element: Dashboard },    // change UserDashboard to Dashboard
       { path: 'edit', element: EditPage },
       { path: 'userProfile/:id', element: UserPublicProfile },
     ],

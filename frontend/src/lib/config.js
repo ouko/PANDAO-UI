@@ -45,3 +45,26 @@ export const navconfig = [
       type: "link" 
     }
   ]
+
+ export const tabs = [
+    {
+      id: 0,
+      label: "MyProfile",
+      content: "This is the MyProfile tab content.",
+    },
+    {
+      id: 1,
+      label: "UserActivity",
+      content: "This is the UserActivity tab content.",
+    },
+    {
+      id: 2,
+      label: "Transaction",
+      content: "This is the Transaction tab content.",
+    },
+    {
+      id: 3,
+      label: "Bonds",
+      content: "This is the Community tab content.",
+    },
+  ];

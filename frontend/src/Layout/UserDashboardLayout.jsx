@@ -7,7 +7,7 @@ const UserDashboardLayout = ({ children }) => {
   return (
     <div>
       <div className="community-details-content">{children || <Outlet />}</div>
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   );
 };
