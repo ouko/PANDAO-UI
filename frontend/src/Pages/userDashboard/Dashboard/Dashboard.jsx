@@ -489,7 +489,7 @@ const Dashboard = () => {
 
           {activeTab === 0 && (
             <section className=" py-6">
-              <WorkExperience  />
+              <WorkExperience userData={userData}  />
 
               <div>
                 <UserCommunities />
