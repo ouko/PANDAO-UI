@@ -440,7 +440,7 @@ const Dashboard = () => {
       <NavBar userImage={userData.usermetadata?.image_url} />
 
       <div className="flex flex-row items-start  justify-between relative max-w-[1600px] mx-auto gap-5 ">
-        <div className="sticky top-0">
+      <div className="sticky top-0 h-full">
           <Sidebar userData={userData} />
         </div>
 
@@ -476,6 +476,7 @@ const Dashboard = () => {
               <CommunitiesParticipated
                 participatedCommunities={participatedComminities}
               />
+              
             </section>
           )}
 
