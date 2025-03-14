@@ -18,6 +18,7 @@ import BondList from "./Dash-component/BondList";
 import UserActivity from "./Dash-component/UserActivity";
 import UserCommunities from "./Dash-component/UserCommunities";
 import TileEffect4 from "@/components/ui/myComponents/grid-bg-4";
+import { tabs } from "@/lib/config";
 
 const Dashboard = () => {
   const { accounts } = useAccount();
@@ -56,28 +57,7 @@ const Dashboard = () => {
   const [loading4, setLoading4] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
 
-  const tabs = [
-    {
-      id: 0,
-      label: "MyProfile",
-      content: "This is the MyProfile tab content.",
-    },
-    {
-      id: 1,
-      label: "UserActivity",
-      content: "This is the UserActivity tab content.",
-    },
-    {
-      id: 2,
-      label: "Transaction",
-      content: "This is the Transaction tab content.",
-    },
-    {
-      id: 3,
-      label: "Community",
-      content: "This is the Community tab content.",
-    },
-  ];
+  
 
   useEffect(() => {
     const fetchUserNotifications = async () => {
@@ -489,26 +469,12 @@ const Dashboard = () => {
 
           {activeTab === 0 && (
             <section className=" py-6">
-              <WorkExperience userData={userData}  />
+              <UserCommunities communities={createdComminities}/>
 
-              <div>
-                <UserCommunities />
-              </div>
+              <WorkExperience userData={userData} />
 
               <CommunitiesParticipated
                 participatedCommunities={participatedComminities}
-              />
-
-              <BondList
-                bonds={createdBonds}
-                check={check}
-                setCheck={setCheck}
-                loading={loading}
-                handleRetrieveBond={handleRetreiveBond}
-                setOpenPay={setOpenPay}
-                setSelectedBond={setSelectedBond}
-                setSelectedInfo={setSelectedInfo}
-                setShowInfo={setShowInfo}
               />
             </section>
           )}
@@ -537,9 +503,17 @@ const Dashboard = () => {
           )}
 
           {activeTab === 3 && (
-            <section className="px-4 py-6">
-              <CommunitiesParticipated
-                participatedCommunities={participatedComminities}
+            <section className="">
+              <BondList
+                bonds={createdBonds}
+                check={check}
+                setCheck={setCheck}
+                loading={loading}
+                handleRetrieveBond={handleRetreiveBond}
+                setOpenPay={setOpenPay}
+                setSelectedBond={setSelectedBond}
+                setSelectedInfo={setSelectedInfo}
+                setShowInfo={setShowInfo}
               />
             </section>
           )}

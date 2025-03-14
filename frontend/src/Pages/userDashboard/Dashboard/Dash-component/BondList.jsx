@@ -5,7 +5,7 @@ import { Switch } from '@/components/ui/switch';
 const BondList = ({ bonds, check, setCheck, loading, handleRetreiveBond, setOpenPay, setSelectedBond, setSelectedInfo, setShowInfo }) => {
   return (
     <div>
-      <div className="bg-[#39246b] p-3 flex justify-between items-center rounded-md mb-6 mt-10">
+      <div className="bg-[#39246b] p-3 flex justify-between items-center rounded-md mb-6 ">
         <h2 className="text-white text-2xl font-medium">Created Bonds:</h2>
         <div className="flex items-center gap-2">
           <div>Purchased Bonds</div>
