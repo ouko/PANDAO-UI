@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 
@@ -47,7 +46,7 @@ const BondList = ({ bonds, check, setCheck, loading, handleRetreiveBond, setOpen
                     <Button className="mt-3" variant="secondary" onClick={() => { setSelectedInfo(bond); setShowInfo(true); }}>Show Info</Button>
                   )}
                   {check && !bond.has_withdrawn && (
-                    <Button disabled={loading} className="mt-3" onClick={async () => await handleRetrieveBond(bond)}>Withdraw</Button>
+                    <Button disabled={loading} className="mt-3" onClick={async () => await handleRetreiveBond(bond)}>Withdraw</Button>
                   )}
                   {check && bond.has_withdrawn && (
                     <Button disabled={loading} className="mt-3" onClick={() => { setOpenPay(true); setSelectedBond(bond); }}>Deposit</Button>
