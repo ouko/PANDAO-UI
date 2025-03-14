@@ -485,7 +485,7 @@ const Dashboard = () => {
           )}
 
           {activeTab === 1 && (
-            <section className="px-4 py-6">
+            <section className=" py-6">
               <UserActivity activityData={activityData} />
             </section>
           )}
