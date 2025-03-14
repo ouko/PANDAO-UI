@@ -21,10 +21,11 @@ const CommunitiesParticipated = ({ participatedCommunities }) => {
 
   return (
     <div>
-      <div className="bg-[#39246b] p-3 flex items-center justify-start rounded-md mb-6">
-        <h2 className="text-white text-2xl font-medium">
-          Communities Participated:
-        </h2>
+      <div className="bg-[#39246b] p-4 flex items-center justify-start rounded-md mb-6">
+      <h1 className="text-white text-2xl font-semibold tracking-wider">
+
+          Communities Participated
+        </h1>
       </div>
 
       <div className="relative px-6">

@@ -3,8 +3,8 @@ import React from "react";
 const WorkExperience = ({ userData }) => {
   return (
     <div className="text-white">
-      <div className="bg-[#39246b] p-3 flex items-center justify-start rounded-md mb-6">
-        <h1 className="text-white text-2xl font-medium">Work Experience:</h1>
+      <div className="bg-[#39246b] p-4 flex items-center justify-start rounded-md mb-6">
+        <h1 className="text-white text-2xl font-semibold tracking-wider">Work Experience</h1>
       </div>
       <div className="flex flex-col items-center justify-center w-full ">
         {userData &&
