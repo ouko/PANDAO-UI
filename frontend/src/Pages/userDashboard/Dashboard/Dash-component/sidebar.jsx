@@ -5,7 +5,7 @@ import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Sidebar = ({ userData, dataAll }) => {
+const Sidebar = ({ userData}) => {
   const [copied, setCopied] = useState(false);
 
   const navigate = useNavigate();
@@ -91,14 +91,7 @@ const Sidebar = ({ userData, dataAll }) => {
             )}
           </div>
 
-          {/* Active Communities */}
-          <div className="w-full mt-4 flex flex-col gap-2 h-full">
-            {dataAll.length === 0 && (
-              <div className="flex items-center justify-center text-center h-full">
-                No active communities.
-              </div>
-            )}
-          </div>
+        
         </div>
       </div>
 

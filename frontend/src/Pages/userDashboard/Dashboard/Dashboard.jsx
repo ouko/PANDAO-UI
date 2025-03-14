@@ -461,7 +461,7 @@ const Dashboard = () => {
 
       <div className="flex flex-row items-start  justify-between relative max-w-[1600px] mx-auto gap-5 ">
         <div className="sticky top-0">
-          <Sidebar userData={userData} dataAll={dataAll} />
+          <Sidebar userData={userData} />
         </div>
 
         <div className="bg-[rgba(169,126,255,0.24)] rounded-[20px] border mt-24 border-brand2  mr-10  w-full  relative overflow-hidden backdrop-blur-[6.7px]">
@@ -489,7 +489,7 @@ const Dashboard = () => {
 
           {activeTab === 0 && (
             <section className=" py-6">
-              <WorkExperience />
+              <WorkExperience  />
 
               <div>
                 <UserCommunities />
