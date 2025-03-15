@@ -6,12 +6,21 @@ import DescribeView from "./Create/components/DescribeDao";
 import DeployView from "./Create/components/DeployView";
 import GridPattern from "@/components/ui/myComponents/grid-bg";
 import FinancialView from "./Create/components/FinancialDao";
+import TileEffect4 from "@/components/ui/myComponents/grid-bg-4";
 
 const Create = () => {
   const {view} = useViewStore();
   return (
-    <div className="min-h-screen py-10 px-5 bg-purple-50 relative">
-       <GridPattern
+    <div className="bg-brand1 relative min-h-screen pb-20 font-clash overflow-hidden">
+          {/* Background elements */}
+          <div className="bg-black/50 absolute  "></div>
+          <div className="absolute bottom-[100px] left-0 bg-brand2 y-0 size-[500px] rounded-full blur-[200px]"></div>
+          <div className="absolute top-[10px] right-0 bg-brand2 y-0 size-[500px] rounded-full blur-[200px]"></div>
+          <div className="absolute top-[600px] right-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px]"></div>
+          <div className="w-full absolute overflow-hidden opacity-20 h-[600px]">
+            <TileEffect4 />
+          </div>
+       {/* <GridPattern
         squares={[
           [4, 4],
           [5, 1],
@@ -25,7 +34,7 @@ const Create = () => {
           [15, 10],
           [10, 15],
           [15, 10],
-        ]}/>
+        ]}/> */}
       {view === "1" && (
        <InstructionView/>
       )}
