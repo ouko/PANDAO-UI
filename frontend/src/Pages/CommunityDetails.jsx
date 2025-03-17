@@ -938,10 +938,10 @@ const CommunityDetails = () => {
                           </div>
                         </div>
                         <div className="flex items-center gap-4 w-full py-2">
-                          <img
-                            src={request.community_image}
-                            alt={request.community_name}
-                            className="w-12 h-12 rounded-full object-cover"
+                        <img
+                            src={request.user_image}
+                            alt="User"
+                            className="w-12 h-12 rounded-full object-cover border-brand3 border-2"
                           />
                           <div>
                             <div className="text-sm font-semibold">
@@ -952,11 +952,7 @@ const CommunityDetails = () => {
                               {request.user_address.slice(-8)}
                             </div>
                           </div>
-                          {/* <img
-                            src={request.user_image}
-                            alt="User"
-                            className="w-12 h-12 rounded-full object-cover"
-                          /> */}
+                        
                         </div>
                         <div className='flex items-center justify-end w-full'>
                           <Button disabled={loading} onClick={() => handleWithDrawSign(request.id)}>
