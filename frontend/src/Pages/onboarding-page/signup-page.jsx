@@ -1,6 +1,8 @@
 import CarouselComponent from "./SignUp/carausel";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { useAccount } from "@/AccountContext";
+
 import EmploymentDetails from "./SignUp/employment-details";
 import Otp from "./SignUp/otp-page";
 import PersonalDetail from "./SignUp/personal-details";
@@ -8,6 +10,7 @@ import TileEffect2 from "@/components/ui/myComponents/grid-bg-3";
 
 import useStepStore from "@/store/stepStore";
 import { StepIndicator2, steps } from "./SignUp/stepper";
+import { useNavigate } from "react-router-dom";
 const stepVariants = {
     initial: { opacity: 0, x: 50 },  // Start off-screen to the right
     animate: { opacity: 1, x: 0, transition: { duration: 0.3 } }, // Slide in
@@ -16,6 +19,21 @@ const stepVariants = {
 
 const OnboardingFlow = () => {
     const { currentStep } = useStepStore();
+    const { accounts } = useAccount();
+    const navigate = useNavigate();
+
+
+    if (!accounts || accounts.length === 0) {
+        navigate("/");
+        return null;
+      }
+    
+      const userAddress = accounts[0]?.address;
+
+
+
+      
+    
 
     const renderStepContent = () => {
         switch (currentStep) {

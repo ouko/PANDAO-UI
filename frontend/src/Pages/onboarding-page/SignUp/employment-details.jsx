@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus, Trash2 } from "lucide-react";
 import { useSignupFormStore } from "@/store/onboarding/signup-form";
@@ -15,8 +15,21 @@ const EmploymentDetails = () => {
     display_image,
     work_history, setFormData,
     public_address,
-} = useSignupFormStore();
-  // Initialize work_history if empty
+  } = useSignupFormStore();
+
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    const valid = work_history.every(entry => 
+      entry.company_name.trim().length > 0 &&
+      entry.start_date.trim().length > 0 &&
+      (entry.current || entry.end_date.trim().length > 0) &&
+      entry.designation.trim().length > 0 &&
+      entry.description.trim().length > 0
+    );
+    setIsFormValid(valid);
+  }, [work_history]);
+
   useState(() => {
     if (work_history.length === 0) {
       setFormData({
@@ -61,9 +74,13 @@ const EmploymentDetails = () => {
     const updatedWorkHistory = [...work_history];
     updatedWorkHistory[index].current = checked;
     if (checked) {
-      updatedWorkHistory[index].end_date = "";
+      updatedWorkHistory[index].end_date = checked ? null : "";
     }
     setFormData({ work_history: updatedWorkHistory });
+  };
+  const handleSkip = () => {
+    setFormData({ work_history: [] });
+    handleNext();
   };
 
 
@@ -91,7 +108,7 @@ const EmploymentDetails = () => {
 
             <div className="flex gap-8 w-full">
               <div className="flex flex-col gap-4 w-1/2">
-                <label className="text-white text-xl font-medium">
+                <label className="text-white text-xl  font-medium">
                   Enter Starting Date:
                 </label>
                 <input
@@ -102,9 +119,10 @@ const EmploymentDetails = () => {
                   onChange={(e) =>
                     handleWorkHistoryChange(index, "start_date", e.target.value)
                   }
-                  className="bg-[#1B0D37] border border-[#9268E4] rounded-md p-4 w-full text-neutral-60 shadow-sm"
+                  className="bg-[#1B0D37] border  border-[#9268E4] rounded-md p-4 w-full text-white shadow-sm"
                 />
               </div>
+
               <div className="flex flex-col gap-4 w-1/2">
                 <label className="text-white text-xl font-medium">
                   Enter Ending Date:
@@ -118,7 +136,7 @@ const EmploymentDetails = () => {
                   onChange={(e) =>
                     handleWorkHistoryChange(index, "end_date", e.target.value)
                   }
-                  className="bg-[#1B0D37] border border-[#9268E4] rounded-md p-4 w-full text-neutral-60 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-[#1B0D37] border border-[#9268E4] rounded-md p-4 w-full text-white shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 />
                 <label className="flex items-center gap-2 text-white text-sm">
                   <input
@@ -188,21 +206,24 @@ const EmploymentDetails = () => {
         </div>
 
         <div className="flex gap-4 w-full">
-        <button
+          <button
             onClick={ handlePrev}
             className="flex-1 rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"
           >
             Previous
           </button>
           <button
-            onClick={ handleNext}
-            className="flex-1 rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"
-          >
+         
+            onClick={handleSkip}
+            disabled={!isFormValid}
+            className="flex-1 rounded-2xl p-3 text-white bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:from-[#C0A1FF] hover:to-[#391483] font-semibold shadow-inner"
+            >
             Skip
           </button>
           <button
             onClick={handleNext}
-            className="flex-1 rounded-2xl p-3 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner"
+            disabled={!isFormValid}
+            className={`flex-1 rounded-2xl p-3 text-white font-semibold shadow-inner ${isFormValid ? "bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:from-[#C0A1FF] hover:to-[#391483]" : "bg-gray-500 cursor-not-allowed"}`}
           >
             Next
           </button>

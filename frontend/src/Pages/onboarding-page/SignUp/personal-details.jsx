@@ -46,19 +46,34 @@ const PersonalDetail = () => {
     const [useWalletName, setUseWalletName] = useState(false);
     const [isFormValid, setIsFormValid] = useState(false);
 
+    // Individual validation states
+    const [isUsernameValid, setIsUsernameValid] = useState(true);
+    const [isEmailValid, setIsEmailValid] = useState(true);
+    const [isBioValid, setIsBioValid] = useState(true);
+    const [isTagsValid, setIsTagsValid] = useState(true);
+    const [isDisplayImageValid, setIsDisplayImageValid] = useState(true);
+
     // Form validation effect
     useEffect(() => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        const valid =
-            username?.trim().length > 0 &&
-            email?.trim().length > 0 &&
-            emailRegex.test(email) &&
-            bio?.trim().length > 0 &&
-            display_image &&
-            selectedTags.length >= 5;
+        const usernameRegex = /^[a-zA-Z0-9_]{3,}$/;
     
+        const isUsernameValid = username?.trim().length >= 3 && usernameRegex.test(username);
+        const isEmailValid = email?.trim().length > 0 && emailRegex.test(email) && email.includes('@gmail.com');
+        const isBioValid = bio?.trim().length >= 10 && bio.trim().length <= 300;
+        const isDisplayImageValid = typeof display_image === 'string' && display_image.trim().length > 0;
+        const isTagsValid = Array.isArray(selectedTags) && selectedTags.length >= 5 && selectedTags.length <= 10;
+    
+        const valid = isUsernameValid && isEmailValid && isBioValid && isDisplayImageValid && isTagsValid;
+        setIsUsernameValid(isUsernameValid);
+        setIsEmailValid(isEmailValid);
+        setIsBioValid(isBioValid);
+        setIsDisplayImageValid(isDisplayImageValid);
+        setIsTagsValid(isTagsValid);
         setIsFormValid(valid);
+    
     }, [username, email, bio, display_image, selectedTags]);
+    
 
     // Handle wallet name checkbox
     useEffect(() => {
@@ -85,21 +100,21 @@ const PersonalDetail = () => {
     };
     const handleSendEmail = async () => {
         try {
-          const response = await axios.post(
+            const response = await axios.post(
             `${import.meta.env.VITE_BACKEND_URL}/email-verification?user_email=${
               email
             }`,
-            {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            },
-          )
-          console.log('API Response:', response.data)
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                },
+            )
+            console.log('API Response:', response.data)
         } catch (error) {
-          console.error('Error in API call:', error)
+            console.error('Error in API call:', error)
         }
-      }
+    }
     const handleNextClick = () => {
         useSignupFormStore.getState().setName(username);
         useSignupFormStore.getState().setEmail(email);
@@ -107,7 +122,7 @@ const PersonalDetail = () => {
         useSignupFormStore.getState().setTags(selectedTags);
         handleNext();
     };
-  
+
     console.log(username, email, public_address, bio, storedTags, display_image, "fasial")
     return (
         <div className="w-full relative justify-center items-start gap-8 flex h-full">
@@ -120,6 +135,7 @@ const PersonalDetail = () => {
                             value={username || ""}
                             onChange={(e) => setName(e.target.value)}
                             disabled={useWalletName}
+                            isValid={isUsernameValid}
                         />
 
                         <label className="flex items-center gap-2 text-white text-sm mt-3">
@@ -138,6 +154,7 @@ const PersonalDetail = () => {
                         placeholder="Enter your email"
                         value={email || ""}
                         onChange={(e) => setEmail(e.target.value)}
+                        isValid={isEmailValid}
                     />
                 </div>
                 <InputField
@@ -153,15 +170,16 @@ const PersonalDetail = () => {
                     isTextArea
                     value={bio || ""}
                     onChange={(e) => setBio(e.target.value)}
+                    isValid={isBioValid}
                 />
 
-                {/* Dropdown for tags */}
+                {/* Tags Selection */}
                 <DropdownMenu>
                     <div className="relative inline-block w-full">
                         <label className="text-white text-xl font-medium">Choose 5 communities you might be interested in</label>
 
                         <DropdownMenuTrigger asChild>
-                            <button className="bg-[#1B0D37] border-brand5 mt-2 border p-2 rounded-md w-full flex flex-wrap gap-2 min-h-[40px] items-center">
+                            <button className={`bg-[#1B0D37] border p-2 rounded-md w-full flex flex-wrap gap-2 min-h-[40px] items-center mt-2 ${isTagsValid ? 'border-brand5' : 'border-red-500'}`}>
                                 {selectedTags.length > 0 ? (
                                     selectedTags.map((tag) => (
                                         <span key={tag} className="bg-purple-600 text-white px-2 py-1 rounded-md">
@@ -188,39 +206,31 @@ const PersonalDetail = () => {
                                 ))
                             )}
                         </DropdownMenuContent>
+                        {!isTagsValid && <span className="text-red-500 text-sm">Select at least 5 tags.</span>}
                     </div>
                 </DropdownMenu>
-
-                <div className="flex flex-wrap gap-2">
-                    {selectedTags.map((tag) => (
-                        <div key={tag} className="flex items-center gap-1 bg-purple-600 text-white px-2 py-1 rounded-md">
-                            {tag}
-                            <button onClick={() => toggleTag(tag)} className="text-white">
-                                <X size={14} />
-                            </button>
-                        </div>
-                    ))}
-                </div>
+              
+                
 
                 <div className="flex flex-col gap-2">
                     <Label
                         htmlFor="display_image"
                         className="text-xl font-bold"
                     >
-                        Upload your Profile picture here
-                    </Label>
-                    <ImageUpload onUploadSuccess={handleFileId} />
-
+                    Upload your Profile picture here
+                </Label>
+                <ImageUpload onUploadSuccess={handleFileId} imageUrl={display_image} />
+                {!isDisplayImageValid && <span className="text-red-500 text-sm">Profile image is required.</span>}
                 </div>
 
                 <button
                     onClick={() => {
                         handleSendEmail()
                         handleNextClick()
-                      }}
+                    }}
                     disabled={!isFormValid}
                     className={`rounded-3xl text-white text-2xl font-semibold py-3 px-4 w-full ${isFormValid
-                        ? "bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483]"
+                        ? "bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:from-[#C0A1FF] hover:to-[#391483]"
                         : "bg-gray-500 cursor-not-allowed"
                         }`}
                 >
@@ -231,32 +241,18 @@ const PersonalDetail = () => {
     );
 };
 
-export default PersonalDetail;
+// Updated InputField component
+const InputField = ({ label, placeholder, isTextArea = false, value, onChange, disabled = false, isValid }) => (
+    <div className="flex flex-col gap-2.5 w-full">
+        <label className="text-white text-xl font-medium">{label}</label>
+        <input
+            className={`bg-[#1B0D37] rounded-md border p-4 w-full ${disabled ? 'opacity-70 cursor-not-allowed' : isValid ? 'border-brand5' : 'border-red-500'}`}
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+            disabled={disabled}
+        />
+    </div>
+);
 
-// Updated InputField component to handle value, onChange, and disabled props
-const InputField = ({ label, placeholder, isTextArea = false, value, onChange, disabled = false }) => {
-    return (
-        <div className="flex flex-col gap-2.5 w-full">
-            <label className="text-white text-xl font-medium">{label}</label>
-            {isTextArea ? (
-                <textarea
-                    className={`bg-[#1B0D37] rounded-md border border-brand5 p-4 w-full h-24 resize-none ${disabled ? 'opacity-70 cursor-not-allowed' : ''
-                        }`}
-                    placeholder={placeholder}
-                    value={value}
-                    onChange={onChange}
-                    disabled={disabled}
-                />
-            ) : (
-                <input
-                    className={`bg-[#1B0D37] rounded-md border border-brand5 p-4 w-full ${disabled ? 'opacity-70 cursor-not-allowed' : ''
-                        }`}
-                    placeholder={placeholder}
-                    value={value}
-                    onChange={onChange}
-                    disabled={disabled}
-                />
-            )}
-        </div>
-    );
-};
+export default PersonalDetail;

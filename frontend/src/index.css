@@ -138,3 +138,14 @@
   --radix-connect-button-height: 2.475rem;
   --radix-connect-button-border-radius: 5rem;
 }
+
+input[type="date"] {
+  color: white;
+  background-color: #1B0D37;
+  border: 1px solid #9268E4;
+}
+
+/* Force calendar dropdown arrow to be white on Chrome/Safari */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}

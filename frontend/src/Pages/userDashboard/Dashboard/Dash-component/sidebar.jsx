@@ -27,7 +27,7 @@ const [open,setOpen]=useState(false)
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger className="hidden"></DialogTrigger>
-        <DialogContent className="sm:max-w-7xl max-h-[500px] overflow-y-auto">
+        <DialogContent className="sm:max-w-7xl max-h-[500px] bg-brand2 border-brand4 overflow-y-auto">
           <EditPage onClose={handleClose}/>
         </DialogContent>
       </Dialog>

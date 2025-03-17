@@ -9,8 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import axios from "axios";
 import { toast } from "sonner";
-import ImageUpdater from "@/Pages/components/ImageUpdater";
+import ImageUpload from "@/Pages/components/ImageUpload";
 import WorkHistoryItem from "@/Pages/UserDasboard/WorkHistory";
+import EmploymentDetails from "@/Pages/onboarding-page/SignUp/employment-details";
 
 
 const EditPage = ({onClose}) => {
@@ -103,8 +104,8 @@ const EditPage = ({onClose}) => {
     setWorkHistory(updatedWorkHistory);
   };
   return (
-    <div className="">
-         {/* <Card className="w-full relative flex md:flex-row flex-col shadow-md items-center md:items-start max-w-[1200px] mx-auto rounded-sm  text-black border-b-0 h-48">
+    <div className=" bg-brand2 ">
+         {/* <Card className="w-full relative flex md:flex-row flex-col shadow-md items-center md:items-start max-w-[1200px] mx-auto rounded-sm  text-white border-b-0 h-48">
             <img
                src={coverUrl || "/Pandao.png"}
               alt="Cover"
@@ -115,41 +116,41 @@ const EditPage = ({onClose}) => {
 
             </div>
           </Card> */}
-      <Card className="border-0 rounded-t-none border-t-0       flex   mt-1   mx-auto gap-3 p-5">
+      <Card className="border-0 rounded-t-none border-t-0   bg-brand2    flex   mt-1   mx-auto gap-3 p-5">
         <CardHeader className="p-0 mt-4 flex flex-col items-center ">
-          <Avatar className="h-72 w-72 border-[5px] border-purple-500">
+          <Avatar className="h-72 w-72 border-[5px] border-brand5">
             <AvatarImage
               src={fileUrl || userData.usermetadata?.image_url}
               className="h-72 w-72 object-cover"
             />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <ImageUpdater onUploadSuccess={handleFileId} />
+          <ImageUpload onUploadSuccess={handleFileId} />
         </CardHeader>
         <CardContent className="text-xl font-bold flex flex-col gap-2 w-full px-2">
-          <div className="text-black font-semibold text-4xl">
+          <div className="text-white font-semibold  text-4xl">
             {userData.name}
           </div>
           <Textarea
             value={about}
             onChange={(e) => setAbout(e.target.value)}
-            className="w-full bg-transparent text-black"
+            className="w-full bg-transparent border-brand1 outline-none text-white"
             maxLength="150"
           />
-          <div className="text-black text-sm mt-5" >Social Accounts</div>
+          <div className="text-white text-sm mt-5" >Social Accounts</div>
           <div className="flex items-center w-full gap-2">
-            <FaXTwitter className="text-black" />
+            <FaXTwitter className="text-white" />
             <input
               value={socialLinks.x_url}
               onChange={(e) =>
                 setSocialLinks({ ...socialLinks, x_url: e.target.value })
               }
               placeholder="Your X url"
-              className="px-3 py-1 text-sm w-full bg-transparent border-2 rounded-lg outline-none text-black"
+              className="px-3 py-1 text-sm w-full bg-transparent border-2 rounded-lg  border-brand1 outline-none text-white"
             />
           </div>
           <div className="flex items-center w-full gap-2">
-            <Globe className="text-black" />
+            <Globe className="text-white" />
             <input
               value={socialLinks.website_url}
               onChange={(e) =>
@@ -159,11 +160,11 @@ const EditPage = ({onClose}) => {
                 })
               }
               placeholder="Your website URL"
-              className="px-3 py-1 text-sm w-full bg-transparent border-2 rounded-lg outline-none text-black"
+              className="px-3 py-1 text-sm w-full bg-transparent border-2 rounded-lg  border-brand1 outline-none text-white"
             />
           </div>
           <div className="flex items-center w-full gap-2">
-            <FaLinkedinIn className="text-black" />
+            <FaLinkedinIn className="text-white" />
             <input
               value={socialLinks.linkedin}
               onChange={(e) =>
@@ -173,18 +174,18 @@ const EditPage = ({onClose}) => {
                 })
               }
               placeholder="Your LinkedIn"
-              className="px-3 py-1 text-sm w-full bg-transparent border-2 rounded-lg outline-none text-black"
+              className="px-3 py-1 text-sm w-full bg-transparent border-2 rounded-lg  border-brand1 outline-none text-white"
             />
           </div>
           {/* <div className="flex items-center w-full gap-2">
-            <FaTiktok className="text-black" />
+            <FaTiktok className="text-white" />
             <input
               value={socialLinks.tiktok}
               onChange={(e) =>
                 setSocialLinks({ ...socialLinks, tiktok: e.target.value })
               }
               placeholder="Your Tiktok"
-              className="px-3 py-1 text-sm w-full bg-transparent border-2 rounded-lg outline-none text-black"
+              className="px-3 py-1 text-sm w-full bg-transparent border-2 rounded-lg outline-none text-white"
             />
           </div> */}
     
@@ -199,25 +200,33 @@ const EditPage = ({onClose}) => {
           </div> */}
         </CardContent>
       </Card>
-      <Card className=" max-w-[1200px] mx-auto gap-3 p-5 mt-4 ">
-      {workHistory.map((item, index) => (
-        <WorkHistoryItem
-          key={index}
-          history={item}
-          onChange={(value, field) => handleWorkHistoryChange(index, field, value)}
-          onRemove={() => handleRemoveWorkHistory(index)}
-        />
-      ))}
-         <Button className="w-full mt-2" onClick={handleAddWorkHistory}>Add Work History</Button>
-      </Card>
-      <Card className="flex gap-2 items-center w-full p-3 mb-5 max-w-[1200px] mx-auto">
-            <Button
-              onClick={handleUpdateUser}
-              className="bg-green-600 hover:bg-green-700 border-2 w-full"
+      <Card className="max-w-[1200px] mx-auto bg-brand2  border-brand2 gap-3 p-5 mt-4">
+  {workHistory.map((item, index) => (
+    <EmploymentDetails
+      key={index}
+      history={item}
+      onChange={(value, field) => handleWorkHistoryChange(index, field, value)}
+      onRemove={() => handleRemoveWorkHistory(index)}
+    />
+  ))}
+
+  <Button className="w-full mt-2" onClick={handleAddWorkHistory}>
+    Add Work History
+  </Button>
+
+  
+</Card>
+
+     <div className="flex items-center justify-center ">
+          <button
+            onClick={handleUpdateUser}
+           
+            className="flex-1 rounded-2xl p-3 text-white bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:from-[#C0A1FF] hover:to-[#391483] font-semibold shadow-inner"
             >
-              Save All
-            </Button>
-          </Card>
+            Save All
+          </button>
+          </div>
+          
     </div>
   );
 };

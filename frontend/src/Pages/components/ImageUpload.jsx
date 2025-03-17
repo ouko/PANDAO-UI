@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 
-const ImageUpload = ({ onUploadSuccess }) => {
+const ImageUpload = ({ onUploadSuccess, imageUrl }) => {
   const [uploadStatus, setUploadStatus] = useState("");
   const [signature, setSignature] = useState("");
   const [expire, setExpire] = useState("");
-  const [imagePreview, setImagePreview] = useState(null);
+  const [imagePreview, setImagePreview] = useState(imageUrl || null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -99,6 +99,7 @@ const ImageUpload = ({ onUploadSuccess }) => {
 
 ImageUpload.propTypes = {
   onUploadSuccess: PropTypes.func.isRequired,
+  imageUrl: PropTypes.string,
 };
 
 export default ImageUpload;
