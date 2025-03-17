@@ -265,13 +265,13 @@ const CommunityDetails = () => {
 
 
   const handleWithDrawSign = async (id) => {
-    console.log("id",id)
+    console.log("id", id)
     const data = {
       community_id: params.id,
       user_address: accounts[0].address,
       id,
     }
-    console.log("id",data)
+    console.log("id", data)
     setLoading(true)
 
     try {
@@ -326,7 +326,7 @@ const CommunityDetails = () => {
     } catch (error) {
       console.error('Error selling token:', error)
 
-    
+
       toast.error('Something went wrong while selling tokens.')
     } finally {
       setLoading(false)
@@ -959,7 +959,7 @@ const CommunityDetails = () => {
                           /> */}
                         </div>
                         <div className='flex items-center justify-end w-full'>
-                        <Button disabled={loading} onClick={() => handleWithDrawSign(request.id)}>
+                          <Button disabled={loading} onClick={() => handleWithDrawSign(request.id)}>
                             Sign Withdraw Request
                           </Button>
                         </div>
@@ -1238,12 +1238,21 @@ const CommunityDetails = () => {
                           />
                           <AvatarFallback>JD</AvatarFallback>
                         </Avatar>
-                        <div className="text-left hover:text-blue-600 cursor-pointer text-ellipsis overflow-hidden">
-                          <p className="font-medium">
-                            {participant.name || 'Unnamed Participant'}
-                          </p>
+                        <div className="text-left hover:text-blue-600 cursor-pointer text-ellipsis overflow-hidden w-full">
+                          <div className="font-medium flex items-center justify-between w-full ">
+                            <span>
+                              {participant.name || 'Unnamed Participant'}
+                            </span>
+                            <span>
+                              {participant.is_executive_member ? <Badge>
+                                Executive  Member
+                              </Badge> : ""}
+
+                            </span>
+                          </div>
                           <div className="text-gray-black dark:text-gray-400 text-sm truncate">
                             {participant.participant || ''}
+
                           </div>
                         </div>
                       </Card>
