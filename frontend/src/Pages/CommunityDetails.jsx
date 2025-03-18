@@ -314,7 +314,7 @@ const CommunityDetails = () => {
           )
 
           console.log('Submit Transaction Response:', submitResponse.data)
-          toast.success('Token Sold Successfully!')
+          toast.success('Sign Withdraw Request Successfully!')
         } catch (submitError) {
           console.error('Error submitting transaction:', submitError)
           toast.error('Failed to submit transaction.')
@@ -600,7 +600,7 @@ const CommunityDetails = () => {
           )
 
           console.log('Submit Transaction Response:', submitResponse.data)
-          toast.success('Minted Successfully!')
+          toast.success('Transfer Token Successfully!')
 
         } catch (submitError) {
           console.error('Error submitting transaction:', submitError)
@@ -945,7 +945,7 @@ const CommunityDetails = () => {
                           />
                           <div>
                             <div className="text-sm font-semibold">
-                              {request.community_name}
+                              {request.user_name}
                             </div>
                             <div className="text-xs text-gray-500">
                               {request.user_address.slice(0, 8)}...
