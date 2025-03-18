@@ -122,7 +122,7 @@ const TemplateView = () => {
         <button
           onClick={handleViewChange}
           type="button"
-          disabled={!selectedCard}
+          disabled={!!selectedCard}
           className="w-1/4 text-2xl rounded-2xl p-3 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] disabled:bg-slate-900 disabled:cursor-not-allowed "
         >
           NEXT STEP
