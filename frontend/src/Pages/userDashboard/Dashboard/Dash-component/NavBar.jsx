@@ -70,11 +70,16 @@ const Navbar = ({ userImage, userName, accounts }) => {
 
         <ul className="md:flex hidden items-center gap-4 font-semibold text-lg">
           <Dialog>
-            <DialogTrigger asChild>
-              <button className="p-2 rounded-full hover:bg-gray-200 transition">
-                <img src="/BELL.svg" alt="Notifications" className="h-6 w-6" />
-              </button>
-            </DialogTrigger>
+          <DialogTrigger asChild>
+  <button className="p-2 rounded-full  transition group">
+    <img 
+      src="/BELL.svg" 
+      alt="Notifications" 
+      className="h-6 w-6 group-hover:animate-bell-wiggle"
+    />
+  </button>
+</DialogTrigger>
+
             <DialogContent className="max-w-[600px] bg-brand2">
               <DialogTitle>User Notifications</DialogTitle>
               <div className="w-full mt-4 flex flex-col gap-2">

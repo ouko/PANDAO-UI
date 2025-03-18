@@ -1,5 +1,5 @@
 import React from "react";
-
+import dayjs from 'dayjs';
 const WorkExperience = ({ userData }) => {
   return (
     <div className="text-white">
@@ -29,21 +29,24 @@ const WorkExperience = ({ userData }) => {
                 <div className="flex flex-row gap-[67px] items-start justify-between w-full">
                   <div className="flex flex-row gap-[27px] items-end justify-start">
                     <img
-                      className="w-[66.02px] h-[64.94px] object-cover"
-                      src={exp.logo}
+                      className="w-[86.02px] h-[64.94px] mb-5 object-cover"
+                      src={exp.logo || '/logo1.png'}
                       alt="Company Logo"
                     />
                     <div className="flex flex-col gap-[11px] items-start justify-start w-[342px]">
                       <div className="text-white font-semibold text-[26px]">
-                        {exp.role}
+                        {exp.designation}
                       </div>
                       <div className="text-[#bdbdbd] font-medium text-base">
                         {exp.company}
                       </div>
+                      <div className="text-[#bdbdbd] font-medium text-sm">
+                        {exp.description}
+                      </div>
                     </div>
                   </div>
                   <div className="text-white text-right font-medium text-xl">
-                    {exp.duration}
+                    {dayjs(exp.from_date).format('MMM YYYY')} - {dayjs(exp.to_date).format('MMM YYYY')}
                   </div>
                 </div>
               </div>
