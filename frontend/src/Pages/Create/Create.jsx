@@ -10,7 +10,7 @@ import TileEffect4 from "@/components/ui/myComponents/grid-bg-4";
 const Create = () => {
   const {view} = useViewStore();
   return (
-    <div className="bg-brand1 relative min-h-screen pb-20 font-clash overflow-hidden">
+    <div className=" relative pb-20 font-clash overflow-hidden  bg-[#100821] min-h-screen  flex flex-col items-center justify-center">
           {/* Background elements */}
           <div className="bg-black/50 absolute  "></div>
           <div className="absolute bottom-[100px] left-0 bg-brand2 y-0 size-[500px] rounded-full blur-[200px]"></div>
@@ -40,3 +40,5 @@ const Create = () => {
 };
 
 export default Create;
+
+

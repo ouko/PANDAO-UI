@@ -49,19 +49,23 @@ const TemplateView = () => {
     return null;
   }
   return (
-    <div className="bg-[#100821] min-h-screen font-[ClashDisplayVariable-Semibold,sans-serif] flex flex-col items-center justify-center">
-      <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-[1221px] h-[247px] gap-7 border border-[#5228A4] flex flex-col justify-start items-start mb-10">
-      
-        <div className="font-[ClashDisplayVariable-Semibold,sans-serif] ms-6 mt-6 text-[40px] leading-[130%] font-semibold text-start">
-        <Progress value={33} className="rounded-sm" />
+    <div className="container mx-auto flex flex-col mt-20">
+      <div className='border-8 rounded-full border-gray-700' >
+        <Progress value={33} className="h-5 rounded-full" />
+
+      </div>
+      <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] p-10  gap-7 border border-[#5228A4] flex flex-col justify-start items-start my-10">
+
+        <div className="font-[ClashDisplayVariable-Semibold,sans-serif]  text-[40px] leading-[130%] font-semibold text-start">
+
           <span>
-          
+
             <span className="step-2-describe-your-dao-span text-[#AE85FF]">STEP -1 :</span>
             <span className="step-2-describe-your-dao-span2"></span>
             <span className="step-2-describe-your-dao-span3 text-amber-50">Build your DAO</span>
           </span>
         </div>
-        <div className="text-[#ffffff] font-[Inter-Regular,sans-serif] ms-6 text-xl leading-[130%] font-normal text-center">
+        <div className="text-[#ffffff] font-[Inter-Regular,sans-serif]  text-xl leading-[130%] font-normal text-left ">
           <span>
             Check out our various template models that you can use to make your process of developing your DAO less bulky. Customize these models to use as
             the basis to organize your stakeholders, defining different roles and responsibilities, setting your governance policies, and more. Using a template model
@@ -70,15 +74,14 @@ const TemplateView = () => {
         </div>
       </div>
       <div className="flex flex-row gap-5 items-center justify-start relative">
-      {loading
-        ? Array.from({ length: 3 }, (_, index) => <SkeletonCard key={index} />)
-        : data.map((project, index) => (
+        {loading
+          ? Array.from({ length: 3 }, (_, index) => <SkeletonCard key={index} />)
+          : data.map((project, index) => (
             <div
               key={index}
-              className={`p-2.5 flex flex-row gap-2.5 items-start justify-start shrink-0 w-[604px] h-[350px] relative cursor-pointer ${
-                selectedCard === index ? "border-2 border-[#C0A1FF]" : ""
-              }`}
-              onClick={() => setSelectedCard(index)} 
+              className={`p-2.5 flex flex-row gap-2.5 items-start justify-start shrink-0 w-[604px] h-[350px] relative cursor-pointer ${selectedCard === index ? "border-2 border-[#C0A1FF]" : ""
+                }`}
+              onClick={() => setSelectedCard(index)}
             >
               <div className="bg-[rgba(169,126,255,0.31)] rounded-2xl border border-solid pt-6 pr-[18px] pb-[19px] pl-[18px] flex flex-col gap-[37px] items-start justify-start self-stretch flex-1 relative border-[#5228A4] backdrop-blur-md">
                 <h2 className="text-[#ffffff] text-left font-semibold text-[32px] leading-[130%] relative self-stretch">
@@ -108,7 +111,7 @@ const TemplateView = () => {
               </div>
             </div>
           ))}
-    </div>
+      </div>
 
     </div>
   )
