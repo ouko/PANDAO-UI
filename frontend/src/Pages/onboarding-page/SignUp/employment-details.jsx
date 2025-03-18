@@ -20,15 +20,16 @@ const EmploymentDetails = () => {
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
-    const valid = work_history.every(entry => 
-      entry.company_name.trim().length > 0 &&
-      entry.start_date.trim().length > 0 &&
-      (entry.current || entry.end_date.trim().length > 0) &&
-      entry.designation.trim().length > 0 &&
-      entry.description.trim().length > 0
-    );
-    setIsFormValid(valid);
-  }, [work_history]);
+  const valid = work_history.every(entry =>
+    entry &&
+    entry.company_name?.trim().length > 0 &&
+    entry.start_date?.trim().length > 0 &&
+    (entry.current || entry.end_date?.trim().length > 0) &&
+    entry.designation?.trim().length > 0 &&
+    entry.description?.trim().length > 0
+  );
+  setIsFormValid(valid);
+}, [work_history]);
 
   useState(() => {
     if (work_history.length === 0) {
@@ -74,7 +75,7 @@ const EmploymentDetails = () => {
     const updatedWorkHistory = [...work_history];
     updatedWorkHistory[index].current = checked;
     if (checked) {
-      updatedWorkHistory[index].end_date = checked ? null : "";
+      updatedWorkHistory[index].end_date = checked ? null : "";  // fix this return none
     }
     setFormData({ work_history: updatedWorkHistory });
   };
