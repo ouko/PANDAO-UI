@@ -8,7 +8,7 @@ const InstructionView = () => {
   const { setView } = useViewStore();
 
   return (
-    <div className="container mx-auto mt-20 ">
+    <div className="container mx-auto mt-20 z-50">
       
       <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] p-10  gap-7 border border-[#5228A4] flex flex-col justify-start items-start my-10">
 
@@ -51,7 +51,7 @@ const InstructionView = () => {
       </div>
 
 
-      <div className="flex items-center justify-center ">
+      <div className="flex items-center mt-10 justify-center ">
           {/* <Button
             onClick={() => setView("2")}
             className="w-full md:w-1/4 group"
