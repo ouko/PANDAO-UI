@@ -30,7 +30,7 @@ const Dashboard = lazy(() => import('../Pages/userDashboard/Dashboard/Dashboard'
 const EditPage = lazy(() => import('../Pages/UserDasboard/EditPage'));
 const UserPublicProfile = lazy(() => import('../Pages/UsersPublicProfile'));
 const MyCommunity = lazy(() => import('../Pages/MyCommunites'));
-const Create = lazy(() => import('../Pages/Create'));
+const Create = lazy(() => import('../Pages/Create/Create'));
 const Deploy = lazy(() => import('../Pages/Deploy'));
 const CommunityDetails = lazy(() => import('../Pages/CommunityDetails'));
 const Members = lazy(() => import('../Pages/CommunityPage/Members'));

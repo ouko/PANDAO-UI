@@ -1,10 +1,10 @@
 
-import InstructionView from "./Create/components/InstructionView";
+import InstructionView from "./components/InstructionView";
 import useViewStore from "@/store/view";
-import TemplateView from "./Create/components/TemplateView";
-import DescribeView from "./Create/components/DescribeDao";
-import DeployView from "./Create/components/DeployView";
-import FinancialView from "./Create/components/FinancialDao";
+import TemplateView from "./components/TemplateView";
+import DescribeView from "./components/DescribeDao";
+import DeployView from "./components/DeployView";
+import FinancialView from "./components/FinancialDao";
 import TileEffect4 from "@/components/ui/myComponents/grid-bg-4";
 
 const Create = () => {
