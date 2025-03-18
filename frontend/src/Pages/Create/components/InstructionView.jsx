@@ -51,7 +51,7 @@ const InstructionView = () => {
       </div>
 
 
-      <div className="flex items-center justify-center ">
+      <div className="flex items-center mt-10 justify-center ">
           {/* <Button
             onClick={() => setView("2")}
             className="w-full md:w-1/4 group"
