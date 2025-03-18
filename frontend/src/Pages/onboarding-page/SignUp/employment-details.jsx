@@ -4,7 +4,7 @@ import { Plus, Trash2 } from "lucide-react";
 import { useSignupFormStore } from "@/store/onboarding/signup-form";
 import useStepStore from "@/store/stepStore";
 
-const EmploymentDetails = () => {
+const EmploymentDetails = ({isOnboarding=true}) => {
   const { handleNext,handlePrev } = useStepStore();
 
   const {
@@ -94,7 +94,7 @@ const EmploymentDetails = () => {
           <div key={index} className="flex flex-col gap-6 w-full">
             <div className="flex flex-col gap-4 w-full">
               <label className="text-white text-xl font-medium">
-                Enter Company's Name:
+                Enter Company&apso;s Name:
               </label>
               <input
                 type="text"
@@ -205,8 +205,7 @@ const EmploymentDetails = () => {
           </Button>
           <span className="text-white text-xl">Add another work Experience.</span>
         </div>
-
-        <div className="flex gap-4 w-full">
+{isOnboarding === true &&    <div className="flex gap-4 w-full">
           <button
             onClick={ handlePrev}
             className="flex-1 rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"
@@ -228,7 +227,8 @@ const EmploymentDetails = () => {
           >
             Next
           </button>
-        </div>
+        </div>}
+     
       </div>
     </div>
   );

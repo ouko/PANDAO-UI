@@ -134,7 +134,7 @@ const EditPage = ({onClose}) => {
           <Textarea
             value={about}
             onChange={(e) => setAbout(e.target.value)}
-            className="w-full bg-transparent border-brand1 outline-none text-white"
+            className="w-full bg-transparent border-brand1 bg-brand1 outline-none text-white"
             maxLength="150"
           />
           <div className="text-white text-sm mt-5" >Social Accounts</div>
@@ -207,10 +207,11 @@ const EditPage = ({onClose}) => {
       history={item}
       onChange={(value, field) => handleWorkHistoryChange(index, field, value)}
       onRemove={() => handleRemoveWorkHistory(index)}
+      isOnboarding="false"
     />
   ))}
 
-  <Button className="w-full mt-2" onClick={handleAddWorkHistory}>
+  <Button className="w-full my-5" onClick={handleAddWorkHistory}>
     Add Work History
   </Button>
 
