@@ -54,7 +54,7 @@ const TemplateView = () => {
         <Progress value={33} className="h-5 rounded-full" />
 
       </div>
-      <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] p-10  gap-7 border border-[#5228A4] flex flex-col justify-start items-start my-10">
+      <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] p-10  gap-7 border border-[#5228A4] flex flex-col justify-start items-start my-10 z-50" >
 
         <div className="font-[ClashDisplayVariable-Semibold,sans-serif]  text-[40px] leading-[130%] font-semibold text-start">
 
@@ -102,12 +102,12 @@ const TemplateView = () => {
                     </div>
                   ))}
                 </div>
-                <div className="flex w-full gap-3 mt-4">
+                {/* <div className="flex w-full gap-3 mt-4">
                   <Button onClick={() => navigate(`/exploreDao/${project.slug}`)}>
                     Details
                   </Button>
                   <Button onClick={() => handleViewChange(project)}>Use</Button>
-                </div>
+                </div> */}
               </div>
             </div>
           ))}

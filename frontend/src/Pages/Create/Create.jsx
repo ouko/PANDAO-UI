@@ -12,7 +12,7 @@ const Create = () => {
   return (
     <div className=" relative pb-20 font-clash overflow-hidden  bg-[#100821] min-h-screen  flex flex-col items-center justify-center">
           {/* Background elements */}
-          <div className="bg-black/50 absolute  "></div>
+          <div className="bg-black/90 absolute inset-0 "></div>
           <div className="absolute bottom-[100px] left-0 bg-brand2 y-0 size-[500px] rounded-full blur-[200px]"></div>
           <div className="absolute top-[10px] right-0 bg-brand2 y-0 size-[500px] rounded-full blur-[200px]"></div>
           <div className="absolute top-[600px] right-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px]"></div>
