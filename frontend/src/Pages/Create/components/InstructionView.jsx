@@ -8,10 +8,10 @@ const InstructionView = () => {
   const { setView } = useViewStore();
 
   return (
-    <div className="max-w-[1300px] mx-auto mt-20 ">
+    <div className="container mx-auto mt-20 ">
       <Card className="bg-white relative z-40 text-black mt-10 p-12 flex flex-col gap-3 rounded-xl shadow-sm">
         <div className="text-4xl font-semibold ">Build your DAO</div>
-        <div className="flex md:flex-row flex-col items-center justify-between gap-3">
+        <div className="flex flex-col items-center justify-between gap-3">
           <span className="w-full">
             Welcome to the How to Build Your DAO hub. Here you can find a variety of
             guides and resources to assist you in forming and operating your own
@@ -21,6 +21,7 @@ const InstructionView = () => {
             skills you need to create, launch, and regulate your DAO.
 
           </span>
+          <div className="flex items-center justify-end w-full">
           <Button
             onClick={() => setView("2")}
             className="w-full md:w-1/4 group"
@@ -29,6 +30,8 @@ const InstructionView = () => {
             <span>Build you DAO</span>
             <ChevronRight className="h-4 w-5 group-hover:translate-x-2 duration-200 transition-transform" />
           </Button>
+          </div>
+       
         </div>
       </Card>
       <div className="flex md:flex-row flex-col items-center justify-center  gap-5 mt-2 mb-5">

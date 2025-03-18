@@ -1,9 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { useEffect, useState } from "react";
-import {
-  VerticalTimeline,
-  VerticalTimelineElement,
-} from "react-vertical-timeline-component";
+
 import axios from 'axios';
 import { clipAddress } from "@/utils/functions/ClipAddress";
 

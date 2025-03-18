@@ -4,7 +4,6 @@ import useViewStore from "@/store/view";
 import TemplateView from "./Create/components/TemplateView";
 import DescribeView from "./Create/components/DescribeDao";
 import DeployView from "./Create/components/DeployView";
-import GridPattern from "@/components/ui/myComponents/grid-bg";
 import FinancialView from "./Create/components/FinancialDao";
 import TileEffect4 from "@/components/ui/myComponents/grid-bg-4";
 
@@ -20,21 +19,7 @@ const Create = () => {
           <div className="w-full absolute overflow-hidden opacity-20 h-[600px]">
             <TileEffect4 />
           </div>
-       {/* <GridPattern
-        squares={[
-          [4, 4],
-          [5, 1],
-          [8, 2],
-          [5, 3],
-          [5, 5],
-          [10, 10],
-          [12, 15],
-          [15, 10],
-          [10, 15],
-          [15, 10],
-          [10, 15],
-          [15, 10],
-        ]}/> */}
+   
       {view === "1" && (
        <InstructionView/>
       )}
