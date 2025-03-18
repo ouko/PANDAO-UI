@@ -78,7 +78,7 @@ const TemplateView = () => {
       <div className="grid grid-cols-3 gap-5 items-center justify-start relative">
         {loading
           ? Array.from({ length: 3 }, (_, index) => <SkeletonCard key={index} />)
-          : [...data, ...data, ...data].map((project, index) => (
+          : [...data].map((project, index) => (
             <div
               key={index}
               className={` flex flex-row gap-2.5 items-start justify-start shrink-0  p-1 relative rounded-2xl cursor-pointer ${selectedCard === index ? "bg-gradient-to-r from-blue-500 to-purple-500" : ""

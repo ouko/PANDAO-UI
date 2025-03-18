@@ -134,11 +134,15 @@ const DescribeView = () => {
     : []
   console.log(predefinedTags)
   return (
-    <div className="bg-[#100821] min-h-screen font-[ClashDisplayVariable-Semibold,sans-serif]  flex flex-col items-center justify-center">
+    <div className="z-50 container mx-auto flex flex-col items-center justify-center mt-10 w-full">
+      <div className='border-8 rounded-full border-gray-700 w-full my-5' >
+        <Progress value={33} className="h-5 rounded-full" />
+
+      </div>
       {/* Step 2 Section */}
-      <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-[1221px] h-[147px] gap-7  border border-[#5228A4] flex flex-col justify-start items-start mb-10">
-        <div className="font-[ClashDisplayVariable-Semibold,sans-serif] ms-6 mt-6 text-[40px] leading-[130%] font-semibold text-start">
-          <Progress value={66} className="rounded-sm" />
+      <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full gap-7 p-10 border border-[#5228A4] flex flex-col justify-start items-start mb-10">
+        <div className="font-[ClashDisplayVariable-Semibold,sans-serif]   text-[40px] leading-[130%] font-semibold text-start">
+        
 
           <span>
             <span className="step-2-describe-your-dao-span text-[#AE85FF]">STEP -2 :</span>
@@ -146,7 +150,7 @@ const DescribeView = () => {
             <span className="step-2-describe-your-dao-span3 text-amber-50">Describe your DAO</span>
           </span>
         </div>
-        <div className="text-[#ffffff] font-[Inter-Regular,sans-serif] ms-6  text-xl leading-[130%] font-normal text-center">
+        <div className="text-[#ffffff] font-[Inter-Regular,sans-serif]  text-xl leading-[130%] font-normal text-center">
           Start simple and learn as you go. You can always evolve your DAO in the future
         </div>
       </div>
