@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import useTokenWeightStore from '@/store/templateStore/tokenWeightStore'
 import { SkeletonCard } from "@/Pages/GlobalComponents/Skeleton"
+import { Check } from 'lucide-react'
 
 const TemplateView = () => {
   const { setView } = useViewStore();
@@ -50,6 +51,7 @@ const TemplateView = () => {
   }
   return (
     <div className="container mx-auto flex flex-col mt-20">
+
       <div className='border-8 rounded-full border-gray-700' >
         <Progress value={33} className="h-5 rounded-full" />
 
@@ -73,17 +75,20 @@ const TemplateView = () => {
           </span>
         </div>
       </div>
-      <div className="flex flex-row gap-5 items-center justify-start relative">
+      <div className="grid grid-cols-3 gap-5 items-center justify-start relative">
         {loading
           ? Array.from({ length: 3 }, (_, index) => <SkeletonCard key={index} />)
-          : data.map((project, index) => (
+          : [...data, ...data, ...data].map((project, index) => (
             <div
               key={index}
-              className={`p-2.5 flex flex-row gap-2.5 items-start justify-start shrink-0 w-[604px] h-[350px] relative cursor-pointer ${selectedCard === index ? "border-2 border-[#C0A1FF]" : ""
+              className={` flex flex-row gap-2.5 items-start justify-start shrink-0  p-1 relative rounded-2xl cursor-pointer ${selectedCard === index ? "bg-gradient-to-r from-blue-500 to-purple-500" : ""
                 }`}
               onClick={() => setSelectedCard(index)}
             >
-              <div className="bg-[rgba(169,126,255,0.31)] rounded-2xl border border-solid pt-6 pr-[18px] pb-[19px] pl-[18px] flex flex-col gap-[37px] items-start justify-start self-stretch flex-1 relative border-[#5228A4] backdrop-blur-md">
+              {selectedCard === index && <div className='size-8 bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center absolute -top-2 -right-2 z-20 rounded-full'>
+                <Check className='text-white' />
+              </div>}
+              <div className="bg-brand1 rounded-2xl border border-solid pt-6 pr-[18px] pb-[19px] pl-[18px] flex h-full w-full flex-col gap-[37px] items-start justify-start self-stretch flex-1 relative border-[#5228A4] ">
                 <h2 className="text-[#ffffff] text-left font-semibold text-[32px] leading-[130%] relative self-stretch">
                   {project.slug}
                 </h2>
@@ -99,6 +104,7 @@ const TemplateView = () => {
                       <span className="text-[#ffffff] text-base leading-6 font-normal">
                         {text}
                       </span>
+
                     </div>
                   ))}
                 </div>
@@ -111,6 +117,17 @@ const TemplateView = () => {
               </div>
             </div>
           ))}
+      </div>
+      <div className='z-50 flex items-center justify-center mt-10'>
+        <button
+          onClick={handleViewChange}
+          type="button"
+          disabled={!selectedCard}
+          className="w-1/4 text-2xl rounded-2xl p-3 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] disabled:bg-slate-900 disabled:cursor-not-allowed "
+        >
+          NEXT STEP
+        </button>
+
       </div>
 
     </div>
