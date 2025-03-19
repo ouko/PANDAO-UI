@@ -1,9 +1,7 @@
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+
 
 import useViewStore from '@/store/view'
-import { Progress } from '@/components/ui/progress'
-import { useEffect, useState } from 'react'
+
 import { useAccount } from '@/AccountContext'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -11,14 +9,19 @@ import useTokenWeightStore from '@/store/templateStore/tokenWeightStore'
 
 import { Check } from 'lucide-react'
 import { DaoCard } from '@/components/ui/myComponents/dao-card'
+import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 
+
+const fetchBluePrint = async () => {
+  const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/blueprint`)
+  return res.data
+}
 const TemplateView = () => {
   const { setView } = useViewStore();
   const navigate = useNavigate();
   const { accounts } = useAccount();
   const { setFormFields } = useTokenWeightStore();
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [selectedCard, setSelectedCard] = useState(null); // ✅ Define selectedCard state
 
   const handleViewChange = (project) => {
@@ -29,22 +32,13 @@ const TemplateView = () => {
     }
     setFormFields({ package_addr: project.package_addr });
   };
+  const { data, isLoading } = useQuery({
+    queryKey: ['blueprint'],
+    queryFn: fetchBluePrint,
+  })
 
-  useEffect(() => {
-    const fetchBluePrint = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/blueprint`
-        );
-        setData(res.data);
-      } catch (error) {
-        console.error("Error fetching blueprint data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchBluePrint();
-  }, []);
+
+
 
   if (!accounts || accounts.length === 0 || !data) {
     navigate("/");
@@ -80,7 +74,7 @@ const TemplateView = () => {
         </div>
       </div>
       <div className="grid grid-cols-3 gap-5 items-center justify-start relative">
-        {loading
+        {isLoading
           ? Array.from({ length: 3 }, (_, index) => <DaoCard key={index} />)
           : [...data].map((project, index) => (
             <div
