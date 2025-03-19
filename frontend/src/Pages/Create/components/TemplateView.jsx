@@ -8,8 +8,9 @@ import { useAccount } from '@/AccountContext'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import useTokenWeightStore from '@/store/templateStore/tokenWeightStore'
-import { SkeletonCard } from "@/Pages/GlobalComponents/Skeleton"
+
 import { Check } from 'lucide-react'
+import { DaoCard } from '@/components/ui/myComponents/dao-card'
 
 const TemplateView = () => {
   const { setView } = useViewStore();
@@ -50,13 +51,16 @@ const TemplateView = () => {
     return null;
   }
   return (
-    <div className="container mx-auto flex flex-col mt-20">
+    <div className="container mx-auto flex flex-col  mt-20">
 
-      <div className='border-8 rounded-full border-gray-700' >
-        <Progress value={33} className="h-5 rounded-full" />
-
+      <div className="h-[42px] relative w-full ">
+        <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] h-[42px]"></div>
+        <div className="rounded-[300px] w-[20%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
+        <div className="bg-[#8f58ff] rounded-full w-[24.55px] h-[21px] absolute left-[75%] top-1/2 -translate-y-1/2 blur-[18.95px]"></div>
       </div>
-      <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] p-10  gap-7 border border-[#5228A4] flex flex-col justify-start items-start my-10 z-50" >
+
+       
+       <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] p-10  gap-7 border border-[#5228A4] flex flex-col justify-start items-start my-10 z-50" >
 
         <div className="font-[ClashDisplayVariable-Semibold,sans-serif]  text-[40px] leading-[130%] font-semibold text-start">
 
@@ -77,18 +81,18 @@ const TemplateView = () => {
       </div>
       <div className="grid grid-cols-3 gap-5 items-center justify-start relative">
         {loading
-          ? Array.from({ length: 3 }, (_, index) => <SkeletonCard key={index} />)
+          ? Array.from({ length: 3 }, (_, index) => <DaoCard key={index} />)
           : [...data].map((project, index) => (
             <div
               key={index}
               className={` flex flex-row gap-2.5 items-start justify-start shrink-0  p-1 relative rounded-2xl cursor-pointer ${selectedCard === index ? "bg-gradient-to-r from-blue-500 to-purple-500" : ""
                 }`}
               onClick={() => setSelectedCard(index)}
-            >
+             >
               {selectedCard === index && <div className='size-8 bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center absolute -top-2 -right-2 z-20 rounded-full'>
                 <Check className='text-white' />
-              </div>}
-              <div className="bg-brand1 rounded-2xl border border-solid pt-6 pr-[18px] pb-[19px] pl-[18px] flex h-full w-full flex-col gap-[37px] items-start justify-start self-stretch flex-1 relative border-[#5228A4] ">
+                 </div>}
+                   <div className="bg-brand1 rounded-2xl border border-solid pt-6 pr-[18px] pb-[19px] pl-[18px] flex h-full w-full flex-col gap-[37px] items-start justify-start self-stretch flex-1 relative border-[#5228A4] ">
                 <h2 className="text-[#ffffff] text-left font-semibold text-[32px] leading-[130%] relative self-stretch">
                   {project.slug}
                 </h2>

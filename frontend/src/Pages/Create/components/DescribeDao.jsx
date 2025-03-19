@@ -135,14 +135,18 @@ const DescribeView = () => {
   console.log(predefinedTags)
   return (
     <div className="z-50 container mx-auto flex flex-col items-center justify-center mt-10 w-full">
-      <div className='border-8 rounded-full border-gray-700 w-full my-5' >
-        <Progress value={33} className="h-5 rounded-full" />
-
+      
+     
+      <div className="h-[42px] relative w-full ">
+        <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] w-full h-[42px]"></div>
+        <div className="rounded-[300px] w-[75%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
+        <div className="bg-[#8f58ff] rounded-full w-[24.55px] h-[21px] absolute left-[75%] top-1/2 -translate-y-1/2 blur-[18.95px]"></div>
       </div>
+
       {/* Step 2 Section */}
-      <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full gap-7 p-10 border border-[#5228A4] flex flex-col justify-start items-start mb-10">
+      <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-10 gap-7 p-10 border border-[#5228A4] flex flex-col justify-start items-start mb-10">
         <div className="font-[ClashDisplayVariable-Semibold,sans-serif]   text-[40px] leading-[130%] font-semibold text-start">
-        
+
 
           <span>
             <span className="step-2-describe-your-dao-span text-[#AE85FF]">STEP -2 :</span>
@@ -241,61 +245,25 @@ const DescribeView = () => {
               <label className="text-white text-2xl leading-[120%] font-medium font-[ClashDisplayVariable-Medium,sans-serif]">
                 Community Image URL:
               </label>
-              <div className="bg-[#1B0D37] border border-[#5228A4] flex items-center h-[51px] w-full overflow-hidden">
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  id="communityImage"
-                  onChange={handleUrlId}
-                  required
-                />
-                <label
-                  htmlFor="communityImage"
-                  className="bg-[#1B0D37] p-4 flex-1 text-white text-left cursor-pointer"
-                >
-                  Choose Community Image
-                </label>
-                <label
-                  htmlFor="communityImage"
-                  className="bg-primary-500 cursor-pointer"
-                >
-                  <img className="w-[70px] h-[47px]" src="/pin.svg" alt="Upload" />
-                </label>
-              </div>
+              <CommunityImageUrl onUploadSuccess={handleUrlId} onChange={handleUrlId} />
+
+
             </div>
             {/* Token Image */}
+
             <div className="flex-1">
-              <label className="text-white text-2xl leading-[120%] font-medium font-[ClashDisplayVariable-Medium,sans-serif]">
+              <label className="text-white text-2xl leading-[120%] font-medium font-[ClashDisplayVariable-Medium,sans-serif] mt-4">
                 Token Image URL:
               </label>
-              <div className="bg-[#1B0D37] border border-[#5228A4] flex items-center h-[51px] w-full overflow-hidden">
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  id="tokenImage"
-                  onChange={handleTokenUrl}
-                  required
-                />
-                <label
-                  htmlFor="tokenImage"
-                  className="bg-[#1B0D37] p-4 flex-1 text-white text-left cursor-pointer"
-                >
-                  Choose Token Image
-                </label>
-                <label
-                  htmlFor="tokenImage"
-                  className="bg-primary-500 cursor-pointer"
-                >
-                  <img className="w-[70px] h-[47px]" src="/pin.svg" alt="Upload" />
-                </label>
-              </div>
+
+
+              <TokenImageURL onUploadComplete2={handleTokenUrl} onChange={handleUrlId} />
+
             </div>
           </div>
 
           {/* Purpose */}
-          <div className="flex flex-col gap-2.5 items-start justify-start self-stretch shrink-0 relative">
+          <div className="flex flex-col gap-2.5 items-start text-white justify-start self-stretch shrink-0 relative">
             <label
               className="text-white text-left font-['ClashDisplayVariable-Medium',_sans-serif] text-2xl leading-[120%] font-medium relative self-stretch"
               htmlFor="dao-purpose"
@@ -306,7 +274,7 @@ const DescribeView = () => {
               <SelectTrigger className="w-full bg-[#1B0D37] rounded-md border border-[#5228A4] p-4 h-14 shadow-xs">
                 <SelectValue placeholder="Select the purpose" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-[#1B0D37] rounded-md border border-[#5228A4] text-white">
                 <SelectItem value="governance">Governance</SelectItem>
                 <SelectItem value="communityBuilding">
                   Community Building
@@ -351,13 +319,13 @@ const DescribeView = () => {
           </div>
 
           {/* Proposal Rights */}
-          <div className="flex flex-col gap-1 mt-4">
+          <div className="flex flex-col text-white gap-1 mt-4">
             <span className="text-white text-2xl leading-[120%] font-medium font-[ClashDisplayVariable-Medium,sans-serif]">Who can create Proposal:</span>
             <Select2 onValueChange={handleDaoPrposalCreator}>
               <SelectTrigger className="w-full bg-[#1B0D37] rounded-md border border-[#5228A4] p-4 h-14 shadow-xs">
                 <SelectValue placeholder="Select who can publish proposal" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-[#1B0D37] rounded-md border border-[#5228A4] text-white">
                 <SelectItem value="EveryOne">Every One</SelectItem>
                 <SelectItem value="Admin">Admin</SelectItem>
                 <SelectItem value="TokenHolder">Token Holder</SelectItem>

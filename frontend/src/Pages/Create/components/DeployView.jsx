@@ -190,14 +190,14 @@ const DeployView = () => {
 
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={open} onOpenChange={setOpen} >
         <DialogTrigger></DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
+        <DialogContent className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full gap-7  border border-[#5228A4]  ">
+          <DialogHeader >
             {/* <DialogTitle>This is all info?</DialogTitle> */}
           </DialogHeader>
           {/* Displaying the current form fields with images */}
-          <div className="space-y-2">
+          <div className="space-y-2 text-gray-400 text-lg ">
             <div>
               <strong>Community Name:</strong> {formFields.communityName}
             </div>
@@ -207,14 +207,14 @@ const DeployView = () => {
             <div>
               <strong>Token Name:</strong> {formFields.community_token_name}
             </div>
-            <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center justify-between gap-2 ">
               <div>
                 <strong>Community Image</strong>
                 {formFields.communityImage && (
                   <img
                     src={formFields.communityImage}
                     alt="Community Image"
-                    className="size-52  object-cover"
+                    className="size-42  object-cover rounded-lg"
                   />
                 )}
               </div>
@@ -224,7 +224,7 @@ const DeployView = () => {
                   <img
                     src={formFields.tokenImage}
                     alt="Token Image"
-                    className="size-52 object-cover"
+                    className="size-42 object-cover rounded-lg "
                   />
                 )}
               </div>
@@ -251,7 +251,7 @@ const DeployView = () => {
                 <div>
                   <strong>Tags:</strong>{' '}
                   {formFields.tags.map((tag) => (
-                    <span key={tag} className="px-2 py-1 bg-gray-200 mr-2">
+                    <span key={tag} className="px-2 py-1 bg-brand2 rounded-lg mr-2">
                       {tag}
                     </span>
                   ))}
@@ -260,18 +260,34 @@ const DeployView = () => {
             </div>
           </div>
           {loading ? (
-            <Button variant="radix" className="w-full" disabled>
+            // <Button variant="radix" className="w-full" disabled>
+            //   Deploying....
+            // </Button>
+            <button
+            variant="radix" className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF]
+             hover:to-[#391483] disabled:bg-slate-900 disabled:cursor-not-allowed "
+             disabled>
               Deploying....
-            </Button>
+          </button>
           ) : (
-            <Button
-              variant="radix"
-              className="w-full"
-              disabled={!allFieldsFilled()}
+            // <Button
+            //   variant="radix"
+            //   className="w-full"
+            //   disabled={!allFieldsFilled()}
+            //   onClick={handleClaimToken}
+            // >
+            //   Deploy
+            // </Button>
+            <button
+             variant="radix"
+           
+            type="button"
+            disabled={!allFieldsFilled()}
               onClick={handleClaimToken}
-            >
-              Deploy
-            </Button>
+            className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] disabled:bg-slate-900 disabled:cursor-not-allowed "
+          >
+            Deploy
+          </button>
           )}
         </DialogContent>
       </Dialog>
@@ -286,9 +302,14 @@ const DeployView = () => {
         )}
       </ReceiptModal>
       <div className='bg-[#100821] min-h-screen font-[ClashDisplayVariable-Semibold,sans-serif]  flex flex-col items-center justify-center'>
-        <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-[1221px] h-[147px]   border border-[#5228A4] flex flex-col justify-start items-start mb-10">
-          <div className="font-[ClashDisplayVariable-Semibold,sans-serif] ms-6 mt-7 text-[40px] leading-[130%] font-semibold text-start">
-          <Progress value={100} className="rounded-sm" />
+      <div className="h-[42px] relative w-full ">
+        <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] h-[42px]"></div>
+        <div className="rounded-[300px] w-[98%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
+        <div className="bg-[#8f58ff] rounded-full w-[24.55px] h-[21px] absolute left-[75%] top-1/2 -translate-y-1/2 blur-[18.95px]"></div>
+      </div>
+        <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-[1221px] h-[147px] z-50 mt-10  border border-[#5228A4] flex flex-col justify-start items-start mb-10">
+          <div className="font-[ClashDisplayVariable-Semibold,sans-serif] ms-6 mt-7  text-[40px] leading-[130%] font-semibold text-start">
+          
             <span>
               <span className="step-2-describe-your-dao-span text-[#AE85FF]">STEP -3 :</span>
               <span className="step-2-describe-your-dao-span2"></span>
@@ -301,8 +322,8 @@ const DeployView = () => {
         </div>
 
 
-        <div className="w-[1221px] mx-auto pt-10 gap-15  shadow-lg rounded-lg">
-          <div className="w-full gap-2.5 space-y-4">
+        <div className="w-[1221px] mx-auto pt-10 gap-15 z-50 text-white shadow-lg rounded-lg  ">
+          <div className="w-full gap-2.5 py-8 ">
             <label className="text-white text-2xl leading-[120%] font-medium font-[ClashDisplayVariable-Medium,sans-serif]">
               Token Supply:
             </label>
@@ -313,10 +334,11 @@ const DeployView = () => {
               value={formFields.tokenSupply}
               onChange={handleInputChange}
               required
+               min="0"
               className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-neutral-60 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
-          <div className="w-full gap-2.5">
+          <div className="w-full gap-2.5 pb-8">
             <label className="text-white text-2xl leading-[120%] font-medium font-[ClashDisplayVariable-Medium,sans-serif]">
               Token Price:
             </label>
@@ -327,6 +349,7 @@ const DeployView = () => {
               value={formFields.tokenPrice}
               onChange={handleInputChange}
               required
+               min="0"
               className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-neutral-60 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
@@ -341,6 +364,7 @@ const DeployView = () => {
               value={formFields.tokenWithDrawPrice}
               onChange={handleInputChange}
               required
+               min="0"
               className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-neutral-60 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
