@@ -1,13 +1,10 @@
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+
 import useViewStore from '@/store/view'
-import { Progress } from '@/components/ui/progress'
 import { useEffect, useState } from 'react'
 import { useAccount } from '@/AccountContext'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+
 import useTokenWeightStore from '@/store/templateStore/tokenWeightStore'
 import CommunityImageUrl from '@/Pages/components/CommunityImageUrl'
 import TokenImageURL from '@/Pages/components/TokenImage'
@@ -160,11 +157,11 @@ const DescribeView = () => {
       </div>
 
       {/* Form Section */}
-      <div className=" w-[1221px] mx-auto pt-10  gap-10 shadow-lg rounded-lg">
+      <div className=" w-[1221px] mx-auto pt-10  gap-4 shadow-lg rounded-lg">
 
         <div className="space-y-4">
           {/* Community Name */}
-          <div className="flex flex-col gap-2.5 items-start justify-start py-5 self-stretch shrink-0 relative">
+          <div className="flex flex-col gap-2.5 items-start justify-start py-2 self-stretch shrink-0 relative">
             <label
               className="text-white text-left text-2xl leading-[120%] font-medium relative self-stretch"
               for="community-name"
@@ -189,7 +186,7 @@ const DescribeView = () => {
 
 
           {/* Description */}
-          <div className="flex flex-col gap-2.5 items-start justify-start py-5 self-stretch shrink-0 relative">
+          <div className="flex flex-col gap-2.5 items-start justify-start py-2 self-stretch shrink-0 relative">
             <label
               className="text-white text-left text-2xl leading-[120%] font-medium relative self-stretch"
               for="community-description"
@@ -213,7 +210,7 @@ const DescribeView = () => {
 
 
 
-          <div className="flex flex-col gap-2.5 items-start justify-start py-5 self-stretch shrink-0 relative">
+          <div className="flex flex-col gap-2.5 items-start justify-start py-2 self-stretch shrink-0 relative">
             <label
               className="text-white text-left  text-2xl leading-[120%] font-medium relative self-stretch"
               for="community-token-name"
@@ -238,7 +235,7 @@ const DescribeView = () => {
 
 
           {/* Image Uploads */}
-          <div className="flex flex-row gap-8 py-5">
+          <div className="flex flex-row gap-8 py-2">
             {/* Community Image */}
             <div className="flex-1">
               <label className="text-white text-2xl leading-[120%] font-medium  ">
@@ -262,7 +259,7 @@ const DescribeView = () => {
           </div>
 
           {/* Purpose */}
-          <div className="flex flex-col gap-2.5 items-start py-5 text-white justify-start self-stretch shrink-0 relative">
+          <div className="flex flex-col gap-2.5 items-start py-2 text-white justify-start self-stretch shrink-0 relative">
             <label
               className="text-white text-left  text-2xl leading-[120%] font-medium relative self-stretch"
               htmlFor="dao-purpose"
@@ -284,7 +281,7 @@ const DescribeView = () => {
             </Select2>
           </div>
           {/* Community Interests */}
-          <div className="flex  flex-col gap-2.5 items-start justify-start self-stretch py-5 shrink-0 relative">
+          <div className="flex  flex-col gap-2.5 items-start justify-start self-stretch py-2 shrink-0 relative">
             <label className="text-white text-2xl leading-[120%] font-medium  ">
               Choose 5 communities you might be interested in:
             </label>
