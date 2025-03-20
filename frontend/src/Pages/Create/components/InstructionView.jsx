@@ -12,7 +12,7 @@ const InstructionView = () => {
       
       <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] p-10  gap-7 border border-[#5228A4] flex flex-col justify-start items-start my-10">
 
-        <div className="font-[ClashDisplayVariable-Semibold,sans-serif]  text-[40px] leading-[130%] font-semibold text-start">
+        <div className="  text-[40px] leading-[130%] font-semibold text-start">
 
           <span>
 
@@ -20,7 +20,7 @@ const InstructionView = () => {
             <span className="step-2-describe-your-dao-span3 text-amber-50">Build your DAO</span>
           </span>
         </div>
-        <div className="text-[#ffffff] font-[Inter-Regular,sans-serif]  text-xl leading-[130%] font-normal text-left ">
+        <div className="text-[#ffffff]   text-xl leading-[130%] font-normal text-left ">
           <span>
           Welcome to the How to Build Your DAO hub. Here you can find a variety of
             guides and resources to assist you in forming and operating your own

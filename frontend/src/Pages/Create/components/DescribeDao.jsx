@@ -145,7 +145,7 @@ const DescribeView = () => {
 
       {/* Step 2 Section */}
       <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-10 gap-7 p-10 border border-[#5228A4] flex flex-col justify-start items-start mb-10">
-        <div className="font-[ClashDisplayVariable-Semibold,sans-serif]   text-[40px] leading-[130%] font-semibold text-start">
+        <div className="  text-[40px] leading-[130%] font-semibold text-start">
 
 
           <span>
@@ -154,7 +154,7 @@ const DescribeView = () => {
             <span className="step-2-describe-your-dao-span3 text-amber-50">Describe your DAO</span>
           </span>
         </div>
-        <div className="text-[#ffffff] font-[Inter-Regular,sans-serif]  text-xl leading-[130%] font-normal text-center">
+        <div className="text-[#ffffff]   text-xl leading-[130%] font-normal text-center">
           Start simple and learn as you go. You can always evolve your DAO in the future
         </div>
       </div>
@@ -166,7 +166,7 @@ const DescribeView = () => {
           {/* Community Name */}
           <div className="flex flex-col gap-2.5 items-start justify-start py-5 self-stretch shrink-0 relative">
             <label
-              className="text-white text-left font-['ClashDisplayVariable-Medium',_sans-serif] text-2xl leading-[120%] font-medium relative self-stretch"
+              className="text-white text-left text-2xl leading-[120%] font-medium relative self-stretch"
               for="community-name"
             >
               Community Name:
@@ -191,13 +191,13 @@ const DescribeView = () => {
           {/* Description */}
           <div className="flex flex-col gap-2.5 items-start justify-start py-5 self-stretch shrink-0 relative">
             <label
-              className="text-white text-left font-['ClashDisplayVariable-Medium',_sans-serif] text-2xl leading-[120%] font-medium relative self-stretch"
+              className="text-white text-left text-2xl leading-[120%] font-medium relative self-stretch"
               for="community-description"
             >
               Community Description:
             </label>
             <div
-              className="text-[#b59aec] text-left font-['ClashDisplayVariable-Regular',_sans-serif] text-sm leading-[120%] font-normal relative self-stretch"
+              className="text-[#b59aec] text-left text-sm leading-[120%] font-normal relative self-stretch"
             >
               Keep it short and simple.
             </div>
@@ -215,13 +215,13 @@ const DescribeView = () => {
 
           <div className="flex flex-col gap-2.5 items-start justify-start py-5 self-stretch shrink-0 relative">
             <label
-              className="text-white text-left font-['ClashDisplayVariable-Medium',_sans-serif] text-2xl leading-[120%] font-medium relative self-stretch"
+              className="text-white text-left  text-2xl leading-[120%] font-medium relative self-stretch"
               for="community-token-name"
             >
               Community Token Name:
             </label>
             <div
-              className="text-[#b59aec] text-left font-['ClashDisplayVariable-Regular',_sans-serif] text-sm leading-[120%] font-normal relative self-stretch"
+              className="text-[#b59aec] text-left  text-sm leading-[120%]  relative self-stretch"
             >
               What would you like to name your community token?
             </div>
@@ -241,7 +241,7 @@ const DescribeView = () => {
           <div className="flex flex-row gap-8 py-5">
             {/* Community Image */}
             <div className="flex-1">
-              <label className="text-white text-2xl leading-[120%] font-medium font-[ClashDisplayVariable-Medium,sans-serif]">
+              <label className="text-white text-2xl leading-[120%] font-medium  ">
                 Community Image URL:
               </label>
               <CommunityImageUrl onUploadSuccess={handleUrlId} onChange={handleUrlId} />
@@ -251,7 +251,7 @@ const DescribeView = () => {
             {/* Token Image */}
 
             <div className="flex-1">
-              <label className="text-white text-2xl leading-[120%] font-medium font-[ClashDisplayVariable-Medium,sans-serif] mt-4">
+              <label className="text-white text-2xl leading-[120%] font-medium  mt-4">
                 Token Image URL:
               </label>
 
@@ -264,7 +264,7 @@ const DescribeView = () => {
           {/* Purpose */}
           <div className="flex flex-col gap-2.5 items-start py-5 text-white justify-start self-stretch shrink-0 relative">
             <label
-              className="text-white text-left font-['ClashDisplayVariable-Medium',_sans-serif] text-2xl leading-[120%] font-medium relative self-stretch"
+              className="text-white text-left  text-2xl leading-[120%] font-medium relative self-stretch"
               htmlFor="dao-purpose"
             >
               What is the purpose of creating that DAO:
@@ -285,7 +285,7 @@ const DescribeView = () => {
           </div>
           {/* Community Interests */}
           <div className="flex  flex-col gap-2.5 items-start justify-start self-stretch py-5 shrink-0 relative">
-            <label className="text-white text-2xl leading-[120%] font-medium font-[ClashDisplayVariable-Medium,sans-serif]">
+            <label className="text-white text-2xl leading-[120%] font-medium  ">
               Choose 5 communities you might be interested in:
             </label>
             <div className="flex flex-col gap-1 w-full">
@@ -319,7 +319,7 @@ const DescribeView = () => {
 
           {/* Proposal Rights */}
           <div className="flex flex-col text-white gap-1 mt-4">
-            <span className="text-white text-2xl leading-[120%] font-medium font-[ClashDisplayVariable-Medium,sans-serif]">Who can create Proposal:</span>
+            <span className="text-white text-2xl leading-[120%] font-medium  ">Who can create Proposal:</span>
             <Select2 onValueChange={handleDaoPrposalCreator}>
               <SelectTrigger className="w-full bg-[#1B0D37] rounded-md border border-[#5228A4] p-4 h-14 shadow-xs">
                 <SelectValue placeholder="Select who can publish proposal" />

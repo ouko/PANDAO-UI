@@ -56,7 +56,7 @@ const TemplateView = () => {
        
        <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] p-10  gap-7 border border-[#5228A4] flex flex-col justify-start items-start my-10 z-50" >
 
-        <div className="font-[ClashDisplayVariable-Semibold,sans-serif]  text-[40px] leading-[130%] font-semibold text-start">
+        <div className="  text-[40px] leading-[130%] font-semibold text-start">
 
           <span>
 
@@ -65,7 +65,7 @@ const TemplateView = () => {
             <span className="step-2-describe-your-dao-span3 text-amber-50">Build your DAO</span>
           </span>
         </div>
-        <div className="text-[#ffffff] font-[Inter-Regular,sans-serif]  text-xl leading-[130%] font-normal text-left ">
+        <div className="text-[#ffffff] text-xl leading-[130%] font-normal text-left ">
           <span>
             Check out our various template models that you can use to make your process of developing your DAO less bulky. Customize these models to use as
             the basis to organize your stakeholders, defining different roles and responsibilities, setting your governance policies, and more. Using a template model
