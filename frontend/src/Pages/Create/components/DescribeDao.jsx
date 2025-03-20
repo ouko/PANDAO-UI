@@ -301,7 +301,7 @@ const DescribeView = () => {
                 placeholder="Select tags..."
                 components={{
                   MultiValue: ({ data, removeProps }) => (
-                    <div className="bg-brand3 text-white px-2 py-0.5 rounded-md flex items-center gap-1">
+                    <div className="bg-brand3 text-white px-2 ms-2 py-0.5 rounded-md flex items-center gap-1">
                       <span>{data.label}</span>
                       <button
                         {...removeProps}

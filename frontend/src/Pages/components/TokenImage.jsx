@@ -90,7 +90,7 @@ const TokenImageURL = ({ onUploadComplete2 }) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center py-4 gap-2">
       <div className="flex w-full items-center border border-[#5228A4] bg-[#1B0D37] h-[63px] cursor-pointer relative overflow-hidden">
         <label
           htmlFor="tokenImage"

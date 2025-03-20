@@ -163,5 +163,29 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 }
 .css-13cymwt-control{
-  background-color: #16023a !important;
+  background-color: #1B0D37 !important;
 }
+
+.select__value-container{
+  background-color: #1B0D37 !important;
+}
+
+.css-1xc3v61-indicatorContainer {
+  background-color: #1B0D37 !important;
+
+}
+.select__value-container--has-value{
+  background-color: #1B0D37 !important;
+}
+
+.css-1nmdiq5-menu {
+  background-color: #1B0D37 !important;
+  border: #2a164d !important;
+  color: white;
+}
+
+.css-1nmdiq5-menu:hover {
+  
+  color: black !important; 
+}
+

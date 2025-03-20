@@ -27,13 +27,13 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
             )}
             {expneseData.length > 0 &&
               expneseData.map((activity, index) => (
-                <div key={index} className='flex flex-col p-4 border-2 bg-[rgba(109,54,219,0.21)] rounded-lg group hover:shadow-md'>
+                <div key={index} className='flex flex-col p-4 border-2 bg-[rgba(109,54,219,0.21)] border-brand2 rounded-lg group hover:shadow-md'>
                   <div className=" flex items-center space-x-4 mb-4">
                     {/* Community Image */}
                     <img
                       src={activity.community_image}
                       alt={`${activity.community_name} image`}
-                      className="w-16 h-16 rounded-full"
+                      className="w-16 h-16 rounded-sm"
                     />
                     {/* Activity Details */}
                     <div>
@@ -67,7 +67,7 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
 
 
                   </div>
-                  <Separator />
+                  <Separator style={{ borderColor: '#6d36db' }} />
                   <div className='mt-4'>
                     <Button >
                       <Link

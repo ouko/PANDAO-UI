@@ -323,8 +323,8 @@ const DeployView = () => {
 
 
         <div className="w-[1221px] mx-auto pt-10 gap-15 z-50 text-white shadow-lg rounded-lg  ">
-          <div className="w-full gap-2.5 py-8 ">
-            <label className="text-white text-2xl leading-[120%] font-medium ">
+          <div className="w-full gap-2.5  py-7 ">
+            <label className="text-white text-2xl leading-[120%] mb-6  font-medium ">
               Token Supply:
             </label>
             <input
@@ -335,7 +335,7 @@ const DeployView = () => {
               onChange={handleInputChange}
               required
               min="0"
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] mt-5 rounded-md text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
           <div className="w-full gap-2.5 pb-8">
@@ -350,7 +350,7 @@ const DeployView = () => {
               onChange={handleInputChange}
               required
               min="0"
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md  text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5  text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
           <div className="w-full gap-2.5">
@@ -365,7 +365,7 @@ const DeployView = () => {
               onChange={handleInputChange}
               required
               min="0"
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md  text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
           <div className="flex flex-row text-2xl gap-6 mt-10 w-full">
