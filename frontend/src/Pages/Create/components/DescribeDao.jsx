@@ -139,7 +139,7 @@ const DescribeView = () => {
      
       <div className="h-[42px] relative w-full ">
         <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] w-full h-[42px]"></div>
-        <div className="rounded-[300px] w-[75%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
+        <div className="rounded-[300px] w-[55%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
         <div className="bg-[#8f58ff] rounded-full w-[24.55px] h-[21px] absolute left-[75%] top-1/2 -translate-y-1/2 blur-[18.95px]"></div>
       </div>
 
@@ -164,7 +164,7 @@ const DescribeView = () => {
 
         <div className="space-y-4">
           {/* Community Name */}
-          <div className="flex flex-col gap-2.5 items-start justify-start self-stretch shrink-0 relative">
+          <div className="flex flex-col gap-2.5 items-start justify-start py-5 self-stretch shrink-0 relative">
             <label
               className="text-white text-left font-['ClashDisplayVariable-Medium',_sans-serif] text-2xl leading-[120%] font-medium relative self-stretch"
               for="community-name"
@@ -183,13 +183,13 @@ const DescribeView = () => {
               id="community-name"
               type="text"
               placeholder="Type your community's name..."
-              className="bg-[#1B0D37] rounded-md border border-[#5228A4] p-4 self-stretch shrink-0 h-14  relative overflow-hidden text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
 
 
           {/* Description */}
-          <div className="flex flex-col gap-2.5 items-start justify-start self-stretch shrink-0 relative">
+          <div className="flex flex-col gap-2.5 items-start justify-start py-5 self-stretch shrink-0 relative">
             <label
               className="text-white text-left font-['ClashDisplayVariable-Medium',_sans-serif] text-2xl leading-[120%] font-medium relative self-stretch"
               for="community-description"
@@ -207,13 +207,13 @@ const DescribeView = () => {
               onChange={handleInputChange}
               id="community-description"
               placeholder="Type your community's description..."
-              className="bg-[#1B0D37] rounded-md border border-[#5228A4] p-4 self-stretch shrink-0 h-[126px] relative overflow-hidden text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs"
+             className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             ></textarea>
           </div>
 
 
 
-          <div className="flex flex-col gap-2.5 items-start justify-start self-stretch shrink-0 relative">
+          <div className="flex flex-col gap-2.5 items-start justify-start py-5 self-stretch shrink-0 relative">
             <label
               className="text-white text-left font-['ClashDisplayVariable-Medium',_sans-serif] text-2xl leading-[120%] font-medium relative self-stretch"
               for="community-token-name"
@@ -233,13 +233,12 @@ const DescribeView = () => {
               id="community-token-name"
               type="text"
               placeholder="Type your Community’s token Name..."
-              className="bg-[#1B0D37] rounded-md border border-[#5228A4] p-4 self-stretch shrink-0 h-14 relative overflow-hidden text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs"
-            />
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"/>
           </div>
 
 
           {/* Image Uploads */}
-          <div className="flex flex-row gap-8">
+          <div className="flex flex-row gap-8 py-5">
             {/* Community Image */}
             <div className="flex-1">
               <label className="text-white text-2xl leading-[120%] font-medium font-[ClashDisplayVariable-Medium,sans-serif]">
@@ -263,7 +262,7 @@ const DescribeView = () => {
           </div>
 
           {/* Purpose */}
-          <div className="flex flex-col gap-2.5 items-start text-white justify-start self-stretch shrink-0 relative">
+          <div className="flex flex-col gap-2.5 items-start py-5 text-white justify-start self-stretch shrink-0 relative">
             <label
               className="text-white text-left font-['ClashDisplayVariable-Medium',_sans-serif] text-2xl leading-[120%] font-medium relative self-stretch"
               htmlFor="dao-purpose"
@@ -271,7 +270,7 @@ const DescribeView = () => {
               What is the purpose of creating that DAO:
             </label>
             <Select2 onValueChange={handleDaoPurposeChange}>
-              <SelectTrigger className="w-full bg-[#1B0D37] rounded-md border border-[#5228A4] p-4 h-14 shadow-xs">
+              <SelectTrigger className="w-full bg-[#1B0D37] rounded-md border border-[#5228A4] p-4 h-14  shadow-xs">
                 <SelectValue placeholder="Select the purpose" />
               </SelectTrigger>
               <SelectContent className="bg-[#1B0D37] rounded-md border border-[#5228A4] text-white">
@@ -285,12 +284,12 @@ const DescribeView = () => {
             </Select2>
           </div>
           {/* Community Interests */}
-          <div className="flex  flex-col gap-2.5 items-start justify-start self-stretch shrink-0 relative">
+          <div className="flex  flex-col gap-2.5 items-start justify-start self-stretch py-5 shrink-0 relative">
             <label className="text-white text-2xl leading-[120%] font-medium font-[ClashDisplayVariable-Medium,sans-serif]">
               Choose 5 communities you might be interested in:
             </label>
             <div className="flex flex-col gap-1 w-full">
-              <span className="font-medium text-lg text-white px-1">Tags</span>
+              <span className="font-medium text-lg  text-[#b59aec] px-1">Tags</span>
               <Select
                 isMulti
                 name="tags"
@@ -302,7 +301,7 @@ const DescribeView = () => {
                 placeholder="Select tags..."
                 components={{
                   MultiValue: ({ data, removeProps }) => (
-                    <div className="bg-brand2 text-white px-2 py-0.5 rounded-md flex items-center gap-1">
+                    <div className="bg-brand3 text-white px-2 py-0.5 rounded-md flex items-center gap-1">
                       <span>{data.label}</span>
                       <button
                         {...removeProps}
@@ -333,11 +332,11 @@ const DescribeView = () => {
             </Select2>
           </div>
           {/* Buttons */}
-          <div className="flex gap-4 pt-8 w-full">
+          <div className="flex gap-4 pt-8 text-2xl w-full">
             <button
               onClick={() => setView('2')}
               type="button"
-              className="flex-1 bg-primary-500  rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"
+              className="flex-1   rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"
             >
               Back
             </button>

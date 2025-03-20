@@ -192,12 +192,12 @@ const DeployView = () => {
     <>
       <Dialog open={open} onOpenChange={setOpen} >
         <DialogTrigger></DialogTrigger>
-        <DialogContent className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full gap-7  border border-[#5228A4]  ">
+        <DialogContent className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full  max-w-5xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
           <DialogHeader >
             {/* <DialogTitle>This is all info?</DialogTitle> */}
           </DialogHeader>
           {/* Displaying the current form fields with images */}
-          <div className="space-y-2 text-gray-400 text-lg ">
+          <div className="space-y-2 text-gray-200 text-lg ">
             <div>
               <strong>Community Name:</strong> {formFields.communityName}
             </div>
@@ -335,7 +335,7 @@ const DeployView = () => {
               onChange={handleInputChange}
               required
                min="0"
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-neutral-60 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
           <div className="w-full gap-2.5 pb-8">
@@ -350,7 +350,7 @@ const DeployView = () => {
               onChange={handleInputChange}
               required
                min="0"
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-neutral-60 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md  text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
           <div className="w-full gap-2.5">
@@ -365,10 +365,10 @@ const DeployView = () => {
               onChange={handleInputChange}
               required
                min="0"
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-neutral-60 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md  text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
-          <div className="flex flex-row gap-6 mt-10 w-full">
+          <div className="flex flex-row text-2xl gap-6 mt-10 w-full">
             <button
               type="button"
               className="flex-1 bg-primary-500 rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"

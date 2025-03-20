@@ -91,7 +91,13 @@ const CommunityImageUrl = ({ onUploadSuccess }) => {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <div className="flex w-full items-center border border-[#5228A4] bg-[#1B0D37] h-[63px] cursor-pointer">
+      <div className="flex w-full items-center border border-[#5228A4] bg-[#1B0D37] h-[63px] cursor-pointer relative overflow-hidden">
+        <label
+          htmlFor="communityImage"
+          className="flex-1 p-4 text-white text-left cursor-pointer z-10 overflow-hidden whitespace-nowrap overflow-ellipsis"
+        >
+          {loading ? "Uploading..." : selectedFile ? selectedFile.name : "Choose Community Image"}
+        </label>
         <input
           type="file"
           accept="image/*"
@@ -102,13 +108,7 @@ const CommunityImageUrl = ({ onUploadSuccess }) => {
         />
         <label
           htmlFor="communityImage"
-          className="flex-1 p-4 text-white text-left cursor-pointer"
-        >
-          {loading ? "Uploading..." : "Choose Community Image"}
-        </label>
-        <label
-          htmlFor="communityImage"
-          className="bg-primary-500 px-5 cursor-pointer"
+          className="bg-primary-500 px-5 cursor-pointer z-10"
         >
           <Paperclip className="w-6 h-6 text-white" />
         </label>

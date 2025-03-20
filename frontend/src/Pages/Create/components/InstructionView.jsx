@@ -43,7 +43,7 @@ const InstructionView = () => {
 
 
 
-      <div className="flex md:flex-row flex-col items-center justify-center   gap-5 mt-2 mb-5">
+      <div className="flex md:flex-row flex-col items-center justify-center    gap-5 mt-2 mb-5">
         <StepsCard title="Select Template" step="Step 1" icon={CirclePlus} />
         <StepsCard title="Describe your DAO" step="Step 2" icon={Pen} />
         <StepsCard title="Deploy" step="Step 3" icon={ShieldCheck} />
@@ -64,7 +64,7 @@ const InstructionView = () => {
           <button
           onClick={() => setView("2")}
               type="button"
-              className="flex justify-center items-center w-full md:w-1/4 group bg-primary-500 rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"
+              className="flex justify-center text-2xl items-center w-full md:w-1/4 group bg-primary-500 rounded-full p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"
             >
               <span>Build you DAO </span>
               <ChevronRight className="h-4 w-5 group-hover:translate-x-2 duration-200 transition-transform" />

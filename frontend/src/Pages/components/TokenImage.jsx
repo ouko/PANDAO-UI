@@ -91,25 +91,27 @@ const TokenImageURL = ({ onUploadComplete2 }) => {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <input
-        type="file"
-        id="tokenImage"
-        accept="image/*"
-        className="hidden"
-        onChange={handleFileSelection}
-        
-      />
-      <label
-        htmlFor="tokenImage"
-        className="flex items-center bg-[#1B0D37] border border-[#5228A4] h-[63px] w-full cursor-pointer"
-      >
-        <div className="bg-[#1B0D37] p-4 flex-1 text-white text-left">
-          {isLoading ? "Uploading..." : "Choose Token Image"}
-        </div>
-        <div className="bg-primary-500 px-5 ">
+      <div className="flex w-full items-center border border-[#5228A4] bg-[#1B0D37] h-[63px] cursor-pointer relative overflow-hidden">
+        <label
+          htmlFor="tokenImage"
+          className="flex-1 p-4 text-white text-left cursor-pointer z-10 overflow-hidden whitespace-nowrap overflow-ellipsis"
+        >
+          {isLoading ? "Uploading..." : fileToUpload ? fileToUpload.name : "Choose Token Image"}
+        </label>
+        <input
+          type="file"
+          id="tokenImage"
+          accept="image/*"
+          className="hidden"
+          onChange={handleFileSelection}
+        />
+        <label
+          htmlFor="tokenImage"
+          className="bg-primary-500 px-5 cursor-pointer z-10"
+        >
           <Paperclip className="w-6 h-6 text-white" />
-        </div>
-      </label>
+        </label>
+      </div>
       {statusMessage && (
         <p
           className={`text-sm ${statusMessage.includes("success") ? "text-white" : "text-red-500"}`}
