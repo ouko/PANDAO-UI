@@ -162,3 +162,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     animation: bell-wiggle 0.5s ease-in-out;
   }
 }
+.css-13cymwt-control{
+  background-color: #16023a !important;
+}
