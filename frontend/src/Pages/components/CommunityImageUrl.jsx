@@ -90,27 +90,36 @@ const CommunityImageUrl = ({ onUploadSuccess }) => {
   };
 
   return (
-    <div className="flex rounded-none flex-col items-center justify-center gap-2">
-      <div className="w-">
+    <div className="flex flex-col items-center gap-2">
+      <div className="flex w-full items-center border border-[#5228A4] bg-[#1B0D37] h-[63px] cursor-pointer relative overflow-hidden">
+        <label
+          htmlFor="communityImage"
+          className="flex-1 p-4 text-white text-left cursor-pointer z-10 overflow-hidden whitespace-nowrap overflow-ellipsis"
+        >
+          {loading ? "Uploading..." : selectedFile ? selectedFile.name : "Choose Community Image"}
+        </label>
         <input
           type="file"
-          id="fileInput"
-          onChange={handleFileChange}
+          accept="image/*"
           className="hidden"
+          id="communityImage"
+          onChange={handleFileChange}
+          required
         />
         <label
-          htmlFor="fileInput"
-          className="flex items-center pl-2 border-2 py-[6.5px] px-1  border-l-0"
+          htmlFor="communityImage"
+          className="bg-primary-500 px-5 cursor-pointer z-10"
         >
-          <Paperclip className="h-"/>
+          <Paperclip className="w-6 h-6 text-white" />
         </label>
       </div>
-      {/* {uploadStatus && (
-        <p className={`text-sm ${isSuccess ? "text-green-500" : "text-red-500"}`}>
+      {uploadStatus && (
+        <p
+          className={`text-sm ${uploadStatus.includes("success") ? "text-white" : "text-red-500"}`}
+        >
           {uploadStatus}
         </p>
       )}
-      {loading && <p className="text-sm text-blue-500">Uploading...</p>} */}
     </div>
   );
 };

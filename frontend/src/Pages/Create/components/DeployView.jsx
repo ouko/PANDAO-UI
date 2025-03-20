@@ -52,8 +52,7 @@ const DeployView = () => {
 
     try {
       const response = await axios.post(
-        `${
-          import.meta.env.VITE_BACKEND_URL
+        `${import.meta.env.VITE_BACKEND_URL
         }/manifest/build/deploy_token_weighted_dao`,
         formFields,
         {
@@ -168,37 +167,37 @@ const DeployView = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target
     const numericValue = parseFloat(value)
-    
+
     if (name === 'tokenWithDrawPrice') {
       if (numericValue > parseFloat(formFields.tokenPrice)) {
         toast.error('Token Withdraw Price cannot be greater than Token Price')
         return
       }
     }
-    
+
     if (name === 'tokenPrice') {
       if (parseFloat(formFields.tokenWithDrawPrice) > numericValue) {
-        setFormFields({ 
+        setFormFields({
           [name]: value,
           tokenWithDrawPrice: value
         })
         return
       }
     }
-    
+
     setFormFields({ [name]: value })
   }
 
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={open} onOpenChange={setOpen} >
         <DialogTrigger></DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
+        <DialogContent className="bg-brand1 rounded-[20px] w-full  max-w-5xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
+          <DialogHeader >
             {/* <DialogTitle>This is all info?</DialogTitle> */}
           </DialogHeader>
           {/* Displaying the current form fields with images */}
-          <div className="space-y-2">
+          <div className="space-y-2 text-gray-200 text-lg ">
             <div>
               <strong>Community Name:</strong> {formFields.communityName}
             </div>
@@ -208,40 +207,40 @@ const DeployView = () => {
             <div>
               <strong>Token Name:</strong> {formFields.community_token_name}
             </div>
-            <div className="flex items-center justify-between gap-2">
-            <div>
-              <strong>Community Image</strong>
-              {formFields.communityImage && (
-                <img
-                  src={formFields.communityImage}
-                  alt="Community Image"
-                  className="size-52  object-cover"
-                />
-              )}
+            <div className="grid grid-cols-2 gap-10 pb-12 ">
+              <div>
+                <div className='font-medium my-2'>Community Image</div>
+                {formFields.communityImage && (
+                  <img
+                    src={formFields.communityImage}
+                    alt="Community Image"
+                    className="size-10  aspect-video object-cover h-full w-full rounded-lg border"
+                  />
+                )}
+              </div>
+              <div>
+                <div className='font-medium my-2'>Token Image</div>
+                {formFields.tokenImage && (
+                  <img
+                    src={formFields.tokenImage}
+                    alt="Token Image"
+                    className="size-10  aspect-video object-cover h-full w-full rounded-lg border"
+                  />
+                )}
+              </div>
             </div>
-            <div>
-              <strong>Token Image</strong>
-              {formFields.tokenImage && (
-                <img
-                  src={formFields.tokenImage}
-                  alt="Token Image"
-                  className="size-52 object-cover"
-                />
-              )}
-            </div>
-            </div>
-          
-            <div>
+
+            <div className=''>
               <strong>Token Supply:</strong> {formFields.tokenSupply} XRD
             </div>
             <div>
               <strong>Token Price:</strong> {formFields.tokenPrice} XRD
             </div>
             <div>
-              <strong>Who can Vote:</strong> {formFields.proposal_right} 
+              <strong>Who can Vote:</strong> {formFields.proposal_right}
             </div>
             <div className='capitalize'>
-              <strong>Purpose:</strong> {formFields.purpose} 
+              <strong>Purpose:</strong> {formFields.purpose}
             </div>
             <div>
               <strong>Token Withdraw Price:</strong>{' '}
@@ -252,7 +251,7 @@ const DeployView = () => {
                 <div>
                   <strong>Tags:</strong>{' '}
                   {formFields.tags.map((tag) => (
-                    <span key={tag} className="px-2 py-1 bg-gray-200 mr-2">
+                    <span key={tag} className="px-2 py-1 bg-brand2 rounded-lg mr-2">
                       {tag}
                     </span>
                   ))}
@@ -261,18 +260,34 @@ const DeployView = () => {
             </div>
           </div>
           {loading ? (
-            <Button variant="radix" className="w-full" disabled>
+            // <Button variant="radix" className="w-full" disabled>
+            //   Deploying....
+            // </Button>
+            <button
+              className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF]
+             hover:to-[#391483] disabled:bg-slate-900 disabled:cursor-not-allowed "
+              disabled>
               Deploying....
-            </Button>
+            </button>
           ) : (
-            <Button
+            // <Button
+            //   variant="radix"
+            //   className="w-full"
+            //   disabled={!allFieldsFilled()}
+            //   onClick={handleClaimToken}
+            // >
+            //   Deploy
+            // </Button>
+            <button
               variant="radix"
-              className="w-full"
+
+              type="button"
               disabled={!allFieldsFilled()}
               onClick={handleClaimToken}
+              className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] disabled:bg-slate-900 disabled:cursor-not-allowed "
             >
               Deploy
-            </Button>
+            </button>
           )}
         </DialogContent>
       </Dialog>
@@ -286,79 +301,100 @@ const DeployView = () => {
           ''
         )}
       </ReceiptModal>
-      <div className="max-w-[1000px] mx-auto mt-20">
-        <Card className="bg-white relative z-40 text-black mt-10 p-12 flex flex-col gap-3 rounded-xl shadow-sm">
-          <div className="mb-6 flex flex-col gap-2">
-            <div className="flex items-center justify-between">
-              <div>Deploy DAO</div>
-              <div>Step 3 of 3</div>
-            </div>
-            <Progress value={100} className="rounded-sm" />
-          </div>
+      <div className='bg-[#100821] min-h-screen flex flex-col items-center justify-center'>
+        <div className="h-[42px] relative w-full ">
+          <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] h-[42px]"></div>
+          <div className="rounded-[300px] w-[98%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
+          <div className="bg-[#8f58ff] rounded-full w-[24.55px] h-[21px] absolute left-[75%] top-1/2 -translate-y-1/2 blur-[18.95px]"></div>
+        </div>
+        <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-[1221px] h-[147px] z-50 mt-10  border border-[#5228A4] flex flex-col justify-start items-start mb-10">
+          <div className=" ms-6 mt-7  text-[40px] leading-[130%] font-semibold text-start">
 
-          <div className="text-4xl font-semibold">Deploy your Community</div>
-          <div className="flex md:flex-row flex-col items-center justify-between gap-3">
-            <span className="w-full">
-              Start simple and learn as you go. You can always evolve your DAO
-              in the future.
+            <span>
+              <span className="step-2-describe-your-dao-span text-[#AE85FF]">STEP -3 :</span>
+              <span className="step-2-describe-your-dao-span2"></span>
+              <span className="step-2-describe-your-dao-span3 text-amber-50"> Deploy Your Community</span>
             </span>
           </div>
-        </Card>
-        <div className="max-w-[600px] mx-auto mt-5 flex flex-col gap-3 bg-white p-5 rounded-xl relative z-30">
-          <div className="flex flex-col gap-1">
-            <span className="font-medium text-lg px-1">Token Supply</span>
-            <Input
+          <div className="text-[#ffffff] text-xl ms-6 mt-4 leading-[130%] font-normal text-center">
+            Start simple and learn as you go. You can always evolve your DAO in the future
+          </div>
+        </div>
+
+
+        <div className="w-[1221px] mx-auto pt-10 gap-15 z-50 text-white shadow-lg rounded-lg  ">
+          <div className="w-full gap-2.5 py-8 ">
+            <label className="text-white text-2xl leading-[120%] font-medium ">
+              Token Supply:
+            </label>
+            <input
               type="number"
               name="tokenSupply"
-              className="border-slate-300 focus:ring-1 focus:ring-purple-400"
               placeholder="Enter Token Supply"
               value={formFields.tokenSupply}
               onChange={handleInputChange}
               required
+              min="0"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
-          <div className="flex flex-col gap-1">
-            <span className="font-medium text-lg px-1">Token Price</span>
-            <Input
+          <div className="w-full gap-2.5 pb-8">
+            <label className="text-white text-2xl leading-[120%] font-medium ">
+              Token Price:
+            </label>
+            <input
               type="number"
               name="tokenPrice"
-              className="border-slate-300 focus:ring-1 focus:ring-purple-400"
               placeholder="Enter Token Price"
               value={formFields.tokenPrice}
               onChange={handleInputChange}
               required
+              min="0"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md  text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
-          <div className="flex flex-col gap-1">
-            <span className="font-medium text-lg px-1">
-              Token Withdraw Price
-            </span>
-            <Input
+          <div className="w-full gap-2.5">
+            <label className="text-white text-2xl leading-[120%] font-medium">
+              Token Withdraw Price:
+            </label>
+            <input
               type="number"
               name="tokenWithDrawPrice"
-              className="border-slate-300 focus:ring-1 focus:ring-purple-400"
               placeholder="Enter Token Withdraw Price"
               value={formFields.tokenWithDrawPrice}
               onChange={handleInputChange}
               required
+              min="0"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md  text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-row text-2xl gap-6 mt-10 w-full">
+            <button
+              type="button"
+              className="flex-1 bg-primary-500 rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"
+            >
+              Back
+            </button>
             {loading ? (
-              <Button variant="radix" className="w-full" disabled>
-                Deploying....
-              </Button>
+              <button
+                type="button"
+                className="flex-1 rounded-2xl p-3 text-white font-semibold bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner opacity-50 cursor-not-allowed"
+                disabled
+              >
+                Deploying...
+              </button>
             ) : (
-              <Button
-                variant="radix"
-                className="w-full"
+              <button
+                type="submit"
+                className={`flex-1 rounded-2xl p-3 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner ${!allFieldsFilled() ? 'opacity-50 cursor-not-allowed' : ''}`}
                 disabled={!allFieldsFilled()}
                 onClick={() => setOpen(true)}
               >
                 Deploy
-              </Button>
+              </button>
             )}
           </div>
+
         </div>
       </div>
     </>

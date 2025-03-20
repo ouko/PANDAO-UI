@@ -90,27 +90,35 @@ const TokenImageURL = ({ onUploadComplete2 }) => {
   };
 
   return (
-    <div className="flex rounded-none flex-col items-center justify-center gap-2">
-      <div className="w-">
+    <div className="flex flex-col items-center gap-2">
+      <div className="flex w-full items-center border border-[#5228A4] bg-[#1B0D37] h-[63px] cursor-pointer relative overflow-hidden">
+        <label
+          htmlFor="tokenImage"
+          className="flex-1 p-4 text-white text-left cursor-pointer z-10 overflow-hidden whitespace-nowrap overflow-ellipsis"
+        >
+          {isLoading ? "Uploading..." : fileToUpload ? fileToUpload.name : "Choose Token Image"}
+        </label>
         <input
           type="file"
-          id="fileUploader"
-          onChange={handleFileSelection}
+          id="tokenImage"
+          accept="image/*"
           className="hidden"
+          onChange={handleFileSelection}
         />
         <label
-          htmlFor="fileUploader"
-          className="flex items-center pl-2 border-2 py-[6.5px] px-1  border-l-0"
+          htmlFor="tokenImage"
+          className="bg-primary-500 px-5 cursor-pointer z-10"
         >
-          <Paperclip className="h-"/>
+          <Paperclip className="w-6 h-6 text-white" />
         </label>
       </div>
-      {/* {statusMessage && (
-        <p className={`text-sm ${uploadSuccess ? "text-green-500" : "text-red-500"}`}>
+      {statusMessage && (
+        <p
+          className={`text-sm ${statusMessage.includes("success") ? "text-white" : "text-red-500"}`}
+        >
           {statusMessage}
         </p>
       )}
-      {isLoading && <p className="text-sm text-blue-500">Uploading...</p>} */}
     </div>
   );
 };
