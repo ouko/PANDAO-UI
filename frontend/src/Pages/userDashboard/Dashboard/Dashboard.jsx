@@ -222,7 +222,7 @@ const handleOnEdit=()=>{
           <Sidebar userData={userData || {}} onEdit={handleOnEdit} />
         </div>
 
-        <div className="bg-[rgba(169,126,255,0.24)] rounded-[20px] border mt-24 border-brand2 mr-10 w-full relative overflow-hidden backdrop-blur-[6.7px]">
+        <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] border mt-24 border-brand2 mr-10 w-full relative overflow-hidden backdrop-blur-[6.7px]">
           {/* Tab navigation */}
           <div className="flex border-b bg-black/60 border-brand1 py-2">
             {tabs.map((tab, index) => (

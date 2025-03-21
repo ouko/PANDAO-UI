@@ -34,7 +34,7 @@ const [open,setOpen]=useState(false)
         </DialogContent>
       </Dialog>
 
-      <div className="bg-[rgba(169,126,255,0.24)] mt-24 ms-6  rounded-[20px] justify-center items-center flex border border-brand2 p-[13px_25px] w-[393px] min-h-[921px] h-full relative overflow-hidden backdrop-blur-[6.7px]">
+      <div className="bg-[rgba(169,126,255,0.08)] mt-24 ms-6  rounded-[20px] justify-center items-center flex border border-brand2 p-[13px_25px] w-[393px] min-h-[921px] h-full relative overflow-hidden backdrop-blur-[6.7px]">
         <Avatar className="w-[182.76px] h-[182.76px] absolute left-1/2 top-[62px] transform -translate-x-1/2 border-[5px] border-brand5">
           {userData.usermetadata?.image_url ? (
             <AvatarImage
