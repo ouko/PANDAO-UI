@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Activity } from 'lucide-react';
 
-const UserActivity = ({ activityData }) => {
+const UserActivity = ({activityData = [] }) => {
   const navigate = useNavigate();
 
   const formatStandardDateTime = (dateString) => {

@@ -26,35 +26,49 @@ import TileEffect4 from "@/components/ui/myComponents/grid-bg-4";
 import Sidebar from "./userDashboard/Dashboard/Dash-component/sidebar";
 import UserActivity from "./userDashboard/Dashboard/Dash-component/UserActivity";
 import CommunitiesParticipated from "./userDashboard/Dashboard/Dash-component/CommunitiesParticipated";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+
+
+
+
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
+const fetchData = async (endpoint, params = {}) => {
+  const response = await axios.get(`${API_BASE_URL}${endpoint}`, { params });
+  return response.data;
+};
 
 const UserPublicProfile = () => {
   const { accounts } = useAccount();
   const navigate = useNavigate();
   const params = useParams();
   const [coverUrl, setCoverUrl] = useState("");
-  const [activityData, setActivityData] = useState([]);
+  
   const [totalPages, setTotalPages] = useState(1);
 
   const [copied, setCopied] = useState(false);
   const [data, setData] = useState([]);
-  const [userData, setUserData] = useState({});
+  // const [userData, setUserData] = useState({});
   const [edit, setEdit] = useState(false);
   const [fileUrl, setFileUrl] = useState("");
   const [about, setAbout] = useState("");
   const [dataAll, setDataAll] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState(0);
+  const queryClient = useQueryClient();
 
 
   const [createdComminities, setCreatedCommunities] = useState([]);
-  const [participatedComminities, setParticipatedCommunities] = useState([]);
+ 
   const [socialLinks, setSocialLinks] = useState({
     x_url: "",
     website_url: "",
     linkedin: "",
     tiktok: "",
   });
-
+ 
+  const user_address = accounts[0]?.address;
+   
   const handleCopy = (address) => {
     navigator.clipboard.writeText(address);
     setCopied(true);
@@ -63,30 +77,6 @@ const UserPublicProfile = () => {
     }, 1000);
   };
 
-  //   const handleFileId = (id) => {
-  //     const url = `https://ucarecdn.com/${id}/-/preview/1000x562/`;
-  //     setFileUrl(url);
-  //     console.log("Received file URL:", url);
-  //   };
-  const fetchActivity = async (user_address, page, page_size) => {
-    try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/user/activity`,
-        {
-          params: {
-            user_address,
-            page,
-            page_size,
-          },
-        }
-      );
-      setActivityData(res.data.data);
-      setTotalPages(res.data.page);
-      console.log(res.data, "data");
-    } catch (error) {
-      console.error("Error fetching activity data:", error);
-    }
-  };
   const fetchCreatedCommunity = async (user_address) => {
     try {
       const res = await axios.get(
@@ -98,17 +88,51 @@ const UserPublicProfile = () => {
       console.error("Error fetching activity data:", error);
     }
   };
-  const fetchCreatedParticipated = async (user_address) => {
-    try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL
-        }/user/community/${user_address}?owner=false`
-      );
-      setParticipatedCommunities(res.data);
-    } catch (error) {
-      console.error("Error fetching activity data:", error);
-    }
-  };
+
+
+  const { data: userData = [] } = useQuery({
+    queryKey: ['userData', params.id],
+    queryFn: () => fetchData(`/user/details/${params.id}`),
+    onSuccess: (data) => {
+      // setUserData(data);
+      setAbout(data.about);
+      setSocialLinks({
+        x_url: data.x_url || "",
+        website_url: data.website_url || "",
+        linkedin: data.linkedin || "",
+        tiktok: data.tiktok || "",
+      });
+    },
+  });
+
+
+  const { data: participatedCommunities = [] } = useQuery({
+    queryKey: ['participatedCommunities', userData.public_address],
+    queryFn: () =>
+      fetchData(`/user/community/${userData.public_address}`, { owner: false }),
+    enabled: !!userData.public_address,
+  });
+
+  const { data: activityData = {} } = useQuery({
+    queryKey: ['userActivity', userData.public_address, 1, 10],
+    queryFn: () =>
+      fetchData('/user/activity', {
+        user_address: userData.public_address,
+        page: 1,
+        page_size: 10,
+      }),
+    enabled: !!userData.public_address,
+  });
+
+
+  
+
+
+
+
+
+
+
   useEffect(() => {
     const fetchBluePrint = async () => {
       try {
@@ -134,35 +158,19 @@ const UserPublicProfile = () => {
         setLoading(false);
       }
     };
-    const fetchUserData = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/details/${params.id}`
-        );
-        setUserData(res.data);
-        setAbout(res.data.about);
-        setSocialLinks({
-          x_url: res.data.x_url || "",
-          website_url: res.data.website_url || "",
-          linkedin: res.data.linkedin || "",
-          tiktok: res.data.tiktok || "",
-        });
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
+  
 
     if (accounts && accounts.length > 0 && accounts[0].address) {
       fetchBluePrint();
-      fetchUserData();
+      // fetchUserData();
       fetchAll(accounts[0].address)
     }
   }, [accounts, params.id]);
   useEffect(() => {
     if (userData.public_address) {
-      fetchActivity(userData.public_address, 1, 10);
+      // fetchActivity(userData.public_address, 1, 10);
       fetchCreatedCommunity(userData.public_address);
-      fetchCreatedParticipated(userData.public_address);
+      // fetchCreatedParticipated(userData.public_address);
     }
   }, [userData.public_address]);
   //   const handleUpdateUser = async () => {
@@ -238,13 +246,13 @@ const UserPublicProfile = () => {
   {/* Tab content */}
   {activeTab === 0 && (
     <section className="py-6">
-      <UserActivity activityData={activityData} />
+      <UserActivity activityData={activityData?.data || []} />
     </section>
   )}
 
   {activeTab === 1 && (
     <section className="py-6">
-      <CommunitiesParticipated participatedCommunities={participatedComminities} />
+      <CommunitiesParticipated participatedCommunities={participatedCommunities} />
     </section>
   )}
 </div>
