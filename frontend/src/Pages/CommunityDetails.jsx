@@ -51,6 +51,11 @@ import {
 } from 'chart.js'
 import FundHistoryGraph from './CommunityPage/ChatHistory'
 import { DialogDescription } from '@radix-ui/react-dialog'
+import DaoCard from './CommunityPage/components/DaoCard'
+import TokenCard from './CommunityPage/components/TokenCard'
+import Members from './CommunityPage/Members'
+import MembersCard from './CommunityPage/components/MembersCard'
+import TotalProposalsCard from './CommunityPage/components/PraposalCard'
 
 ChartJS.register(
   LineElement,
@@ -709,196 +714,19 @@ const CommunityDetails = () => {
   )
   console.log(participants, 'hey')
   return (
-    <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-50 to-purple-50 text-black px-2">
+    <div className=" pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg- text-black px-2">
       <CustomAlert />
-      <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
+      <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6  md:py-12 max-w-[1440px] mx-auto ">
         {data && (
           <div className="space-y-6 md:w-[100%] ">
-            <Card className="bg-white md:w-[90%] mx-auto md:p-5 p-6 shadow-lg flex  md:flex-row flex-col gap-3 overflow-hidden">
-              <Avatar className="h-28 w-28 border-[5px] border-purple-400">
-                <AvatarImage
-                  src={data.image}
-                  className="h-28 w-28 object-cover"
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <div className="w-full">
-                <div className="flex md:flex-row flex-col items-center justify-between gap-5">
-                  <h1 className="text-3xl font-bold text-left w-full">
-                    {data.name}
-                  </h1>
 
-                  <div className="flex items-end md:items-start md:justify-end w-full gap-2">
-                    {!isUserParticipant && (
-                      <Button variant="radix" onClick={handleJoinCommunity}>
-                        Join Community
-                      </Button>
-                    )}
-                    {isUserParticipant && (
-                      <div className='flex items-center gap-2'>
-                        <Button
-                          variant="radix"
-                          onClick={() => setTransferOpen(true)}
-                        >
-                          Transfer Executive Badge
-                        </Button>
-                        <Button
-                          variant="radix"
-                          onClick={() => setExecOpen(true)}
-                        >
-                          Mint Executive Badge
-                        </Button>
-                        <Button
-                          variant="radix"
-                          onClick={() => setQuickStartOpen(true)}
-                        >
-                          🚀 Quick Start
-                        </Button>
+            <DaoCard daoData={data} />
 
-                      </div>
+            <div className="flex md:flex-row flex-col md:w-[100%] mx-auto gap-2">
+              <div className="md:w-[50%] space-y-3">
 
-                    )}
-                  </div>
-                </div>
-                <div className="flex ">
-                  <div className="grid gap-4">
-                    <div>
-                      <h2 className="text-xl font-semibold">
-                        Community Overview
-                      </h2>
-                      <p className=" mt-2">{data.description}</p>
-                    </div>
-                    <div>
-                      <h2 className="text-md font-semibold">Pupose</h2>
-                      <p className="text-gray-800 dark:text-gray-400 mt-2">
-                        {data.purpose || 'N/A'}
-                      </p>
-                    </div>
-                    <div>
-                      <h2 className="text-md font-semibold">Owner Address</h2>
-                      <div className="flex items-center  gap-2">
-                        <p className="text-gray-900 dark:text-gray-400 mt-2 text-ellipsis overflow-hidden">
-                          {clipAddress(data.owner_address || 'N/A')}
-                        </p>
-                        <p
-                          className="cursor-pointer"
-                          onClick={() => handleCopy(data.owner_address)}
-                        >
-                          {copied ? (
-                            <Check className="h-4 w-4" />
-                          ) : (
-                            <Copy className="h-4 w-4" />
-                          )}
-                        </p>
-                      </div>
-                    </div>
-                    <div>
-                      <h2 className="text-md font-semibold">
-                        Component Address
-                      </h2>
-                      <p className="text-gray-900 dark:text-gray-400 mt-2 text-ellipsis w-fit ">
-                        {data.component_address || 'N/A'}
-                      </p>
-                    </div>
-                    <div className="">
-                      <h2 className="text-md font-semibold">Proposal Rights</h2>
-                      {data.proposal_rights === 'TOKEN_HOLDER_THRESHOLD' ? (
-                        <div className="mt-2">
-                          <p>
-                            Proposal submission is restricted. You need to hold
-                            at least{' '}
-                            <span className="font-bold">
-                              {data.proposal_minimum_token || 10}{' '}
-                            </span>{' '}
-                            tokens to make a proposal.
-                          </p>
-                        </div>
-                      ) : data.proposal_rights === 'ADMIN' ? (
-                        <div className="mt-2">
-                          <p>Proposal creation is restricted to Admin only.</p>
-                        </div>
-                      ) : (
-                        <div className="mt-2">
-                          Proposal creation is open to all.
-                        </div>
-                      )}
-                    </div>
-                    {/* <div>
-                    <h2 className="text-md font-semibold">Tags</h2>
-                    <div className="flex items-center gap-1">
-                        {data.tags &&
-                          data.tags.map((token, index) => (
-                            <Badge key={index} variant="outline">
-                              {token}{' '}
-                            </Badge>
-                          ))}
-                      </div>
-                  </div> */}
-                  </div>
-                  <div className=" mt-4 w-full space-y-2">
-                    <Alert className="w-full ">
-                      <CircleAlert className="h-4 w-4" />
-                      <AlertTitle>Proposal Rights</AlertTitle>
-                      <AlertDescription>
-                        {data.proposal_rights === 'TOKEN_HOLDER_THRESHOLD' ? (
-                          <div className="mt-2">
-                            <p>
-                              Proposal submission is restricted. You need to
-                              hold at least{' '}
-                              <span className="font-bold">
-                                {data.proposal_minimum_token || 10}{' '}
-                              </span>{' '}
-                              tokens to make a proposal.
-                            </p>
-                          </div>
-                        ) : data.proposal_rights === 'ADMIN' ? (
-                          <div className="mt-2">
-                            <p>
-                              Proposal creation is restricted to Admin only.
-                            </p>
-                          </div>
-                        ) : (
-                          <div className="mt-2">
-                            Proposal creation is open to all.
-                          </div>
-                        )}
-                      </AlertDescription>
-                    </Alert>
-                    <Alert className="w-full ">
-                      <CircleAlert className="h-4 w-4" />
-                      <AlertTitle>DAO TYPE</AlertTitle>
-                      <AlertDescription>
-                        {data.blueprint_slug === 'Insurance' ? (
-                          <div className="mt-2">
-                            <p>This is an ANN Organization</p>
-                          </div>
-                        ) : (
-                          <div>Investment DAO</div>
-                        )}
-                      </AlertDescription>
-                    </Alert>
-                  </div>
-                </div>
-              </div>
-            </Card>
-            <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
-              <div className="md:w-[60%] space-y-3">
-                <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg flex items-center justify-between ">
-                  <div className="font-semibold tracking-wide">
-                    Total Proposals
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div
-                      onClick={() =>
-                        navigate(`/community/detail/${params.id}/proposals`)
-                      }
-                      className="bg-purple-600 shadow-lg min-w-28 flex items-center justify-center rounded-lg text-white py-1 px-2 cursor-pointer "
-                    >
-                      New Proposal
-                    </div>
-                  </div>
-                </Card>
-                <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg flex items-center justify-between ">
+
+                {/* <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg flex items-center justify-between ">
                   <div className="font-semibold tracking-wide">Total Funds</div>
                   <div className="flex items-center gap-2">
                     <div className="bg-purple-600 shadow-lg min-w-28 flex items-center justify-center rounded-lg text-white p-1">
@@ -911,7 +739,20 @@ const CommunityDetails = () => {
                       Withdraw Request
                     </Button>
                   </div>
-                </Card>
+                </Card> */}
+                <TokenCard data={data}
+                  handleSellToken={handleSellToken}
+                  handleBuyToken={handleBuyToken}
+                  loading={loading}
+                />
+
+                <div className="w-[608px] px-7 py-7 ">
+
+
+
+
+                 
+                </div>
                 <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg flex flex-col items-center justify-center">
                   <div className="font-semibold tracking-wide py-5">Total WithDraw Request</div>
                   <div className='flex flex-col w-full space-y-4'>
@@ -938,7 +779,7 @@ const CommunityDetails = () => {
                           </div>
                         </div>
                         <div className="flex items-center gap-4 w-full py-2">
-                        <img
+                          <img
                             src={request.user_image}
                             alt="User"
                             className="w-12 h-12 rounded-full object-cover border-brand3 border-2"
@@ -952,7 +793,7 @@ const CommunityDetails = () => {
                               {request.user_address.slice(-8)}
                             </div>
                           </div>
-                        
+
                         </div>
                         <div className='flex items-center justify-end w-full'>
                           <Button disabled={loading} onClick={() => handleWithDrawSign(request.id)}>
@@ -1020,199 +861,11 @@ const CommunityDetails = () => {
                 </div>
               </div>
               <div className="md:w-[40%] space-y-6 w-[100%]  ">
-                <div className="flex flex-col gap-2 w-full ">
-                  <Card className="bg-white md:w-[100%] w-full mx-auto md:p-10 p-4 shadow-lg space-y-10 md:h-80">
-                    <div className="flex items-center justify-between">
-                      <div className="bg-slate-200 w-fit rounded-full">
-                        <img src="/radix.webp" className="h-10 w-10" />
-                      </div>
-                      <div className="flex items-center gap-1">
-                        {data.total_token > 0 && data.token_bought > 0 && (
-                          <div>
-                            <Dialog
-                              open={openSellModal}
-                              onOpenChange={setSellModal}
-                            >
-                              <DialogTrigger asChild>
-                                <Button variant="radix">Sell Token</Button>
-                              </DialogTrigger>
-                              <DialogContent className="sm:max-w-[425px]">
-                                <DialogHeader>
-                                  <DialogTitle>Sell Token</DialogTitle>
-                                </DialogHeader>
-                                <div className="grid gap-4 py-4">
-                                  <div className="grid grid-cols-4 items-center gap-4">
-                                    <Label
-                                      htmlFor="name"
-                                      className="text-right"
-                                    >
-                                      Token
-                                    </Label>
-                                    <Input
-                                      id="name"
-                                      className="col-span-3"
-                                      placeholder="How many Token you want to Sell"
-                                      type="number"
-                                      onChange={(e) =>
-                                        setTokenToSell(e.target.value)
-                                      }
-                                      required
-                                      min={0}
-                                    />
-                                  </div>
-                                </div>
-                                <DialogFooter>
-                                  {loading ? (
-                                    <Button variant="radix" disabled>
-                                      Selling...
-                                    </Button>
-                                  ) : (
-                                    <Button
-                                      variant="radix"
-                                      onClick={handleSellToken}
-                                      disabled={!tokenToSell}
-                                    >
-                                      Sell Token
-                                    </Button>
-                                  )}
-                                </DialogFooter>
-                              </DialogContent>
-                            </Dialog>
-                          </div>
-                        )}
-                        {data.total_token > data.token_bought && (
-                          <div>
-                            <Dialog
-                              open={openBuyModal}
-                              onOpenChange={setBuyModal}
-                            >
-                              <DialogTrigger asChild>
-                                <Button variant="radix">Buy Token</Button>
-                              </DialogTrigger>
-                              <DialogContent className="sm:max-w-[425px]">
-                                <DialogHeader>
-                                  <DialogTitle>Buy Token</DialogTitle>
-                                </DialogHeader>
-                                <div className="grid gap-4 py-4">
-                                  <div className="grid grid-cols-4 items-center gap-4">
-                                    <Label
-                                      htmlFor="name"
-                                      className="text-right"
-                                    >
-                                      Token
-                                    </Label>
-                                    <Input
-                                      id="name"
-                                      className="col-span-3"
-                                      placeholder="How many Token you want to buy"
-                                      type="number"
-                                      onChange={(e) => setToken(e.target.value)}
-                                      required
-                                      min={0}
-                                    />
-                                  </div>
-                                </div>
-                                <DialogFooter>
-                                  {loading ? (
-                                    <Button variant="radix" disabled>
-                                      Buying...
-                                    </Button>
-                                  ) : (
-                                    <Button
-                                      variant="radix"
-                                      onClick={handleBuyToken}
-                                      disabled={!token}
-                                    >
-                                      Buy Token
-                                    </Button>
-                                  )}
-                                </DialogFooter>
-                              </DialogContent>
-                            </Dialog>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div className="text-3xl flex flex-col gap-3 font-semibold">
-                        <span>{data.total_token} Tokens</span>
-                        <div className="flex flex-col text-base">
-                          <span>Token Price: {data.token_price}</span>
-                          <span>
-                            Token Price in USD:{' '}
-                            {Math.round(data.token_price_in_usd * 10000) /
-                              10000}{' '}
-                            $
-                          </span>
-                          <span>
-                            Token Buy Back Price : {data.token_buy_back_price}
-                          </span>
-                          <span>
-                            Token Buy Back Price in USD:{' '}
-                            {Math.round(
-                              data.token_buy_back_price_in_usd * 10000,
-                            ) / 10000}{' '}
-                            $
-                          </span>
-                        </div>
-                      </div>
-                      <div className="h-36 w-36 -translate-y-3 ">
-                        <PieChart
-                          data={[
-                            {
-                              title: 'Total Token',
-                              value: data.total_token - data.token_bought,
-                              color: '#BF40BF',
-                            },
-                            {
-                              title: 'Token Bought',
-                              value: data.token_bought,
-                              color: '#770737',
-                            },
-                          ]}
-                        />
-                        <div className="text-sm w-full flex-col items-center justify-center md:flex hidden ">
-                          <div className="flex items-center justify-between w-28">
-                            Total Token:{' '}
-                            <span className="bg-[#BF40BF] h-4 w-4"></span>
-                          </div>
-                          <div className="flex items-center justify-between w-28">
-                            Bought :{' '}
-                            <span className="bg-[#770737] h-4 w-4"></span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Card>
-                  <Card className="bg-white md:w-[100%] w-full mx-auto md:p-10 p-4 shadow-lg space-y-10">
-                    <div className="flex items-center justify-between">
-                      <div className="bg-slate-200 w-fit p-2 rounded-full">
-                        <Users className=" text-blue-700" />
-                      </div>
-                      <div>
-                        <Button
-                          onClick={() =>
-                            navigate(`/community/detail/${params.id}/members`)
-                          }
-                          variant="radix"
-                        >
-                          View members
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div className="text-3xl font-semibold">
-                        {participants.length} Members
-                      </div>
-                      {participants.length > 4 && (
-                        <AvatarCircles
-                          numPeople={participants.length - 3}
-                          src1={participants[0].image_url}
-                        />
-                      )}
-                    </div>
-                  </Card>
-                </div>
+              <MembersCard participants={participants} />
+                  <div>
+                    <TotalProposalsCard />
+                  </div>
+
 
                 <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg space-y-2 ">
                   {participants.length === 0 && <div>No Participants</div>}
@@ -1255,15 +908,7 @@ const CommunityDetails = () => {
                     ))}
                 </Card>
                 <div className="bg-transparent w-full mx-auto  flex items-center   ">
-                  <Card
-                    onClick={() =>
-                      navigate(`/community/detail/${params.id}/members`)
-                    }
-                    className="p-3 w-32 text-center flex items-center justify-center hover:text-blue-700 cursor-pointer group"
-                  >
-                    <p>See all</p>
-                    <ChevronRight className="h-5 w-5 group-hover:translate-x-1 duration-300 transition-transform" />
-                  </Card>
+                 
                 </div>
               </div>
             </div>
