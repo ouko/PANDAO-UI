@@ -16,7 +16,7 @@ const BondList = ({ bonds, check, setCheck, loading, handleRetreiveBond, setOpen
           bonds.map((bond) => (
             <div
               key={bond.bond_id}
-              className={`w-full shadow-sm rounded-md border border-brand1 p-4 mt-4 flex flex-col md:flex-row justify-between items-start md:items-center transition-colors duration-300 hover:border-brand1 ${
+              className={`w-full shadow-sm rounded-md border border-brand3 p-4 mt-4 flex flex-col md:flex-row justify-between items-start md:items-center transition-colors duration-300 hover:border-brand2 ${
                 check && bond.maturity_date && new Date(bond.maturity_date) < new Date()
                   ? 'ring-2 ring-brand2'
                   : check && bond.maturity_date && new Date(bond.maturity_date) > new Date()
@@ -31,16 +31,16 @@ const BondList = ({ bonds, check, setCheck, loading, handleRetreiveBond, setOpen
                   className="w-16 h-16 rounded-sm object-cover"
                 />
                 <div>
-                  <h2 className="text-lg font-bold">{bond.name || 'Unnamed Bond'}</h2>
-                  <p className="text-sm text-gray-600">Community: {bond.community?.name || 'N/A'}</p>
-                  <p className="text-sm text-gray-600">Description: {bond.description || 'No description provided'}</p>
+                  <h2 className="text-lg text-white font-bold">{bond.name || 'Unnamed Bond'}</h2>
+                  <p className="text-sm text-white">Community: {bond.community?.name || 'N/A'}</p>
+                  <p className="text-sm text-white">Description: {bond.description || 'No description provided'}</p>
                 </div>
               </div>
 
               <div className="mt-4 md:mt-0 flex flex-col space-y-1 items-start md:items-end">
-                <p className="text-sm text-gray-600">Price: {bond.price ? `${bond.price} XRD` : 'Not Available'}</p>
-                <p className="text-sm text-gray-600">Interest Rate: {bond.interest_rate ? `${bond.interest_rate}%` : 'N/A'}</p>
-                <p className="text-sm text-gray-600">Maturity Date: {bond.maturity_date ? new Date(bond.maturity_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Not specified'}</p>
+                <p className="text-sm text-green-500">Price: {bond.price ? `${bond.price} XRD` : 'Not Available'}</p>
+                <p className="text-sm text-white">Interest Rate: {bond.interest_rate ? `${bond.interest_rate}%` : 'N/A'}</p>
+                <p className="text-sm text-white">Maturity Date: {bond.maturity_date ? new Date(bond.maturity_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Not specified'}</p>
                 <div className="flex items-center gap-3">
                   {check && (
                     <Button className="mt-3" variant="secondary" onClick={() => { setSelectedInfo(bond); setShowInfo(true); }}>Show Info</Button>

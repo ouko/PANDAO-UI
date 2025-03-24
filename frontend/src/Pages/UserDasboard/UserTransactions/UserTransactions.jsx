@@ -67,23 +67,23 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
 
 
                   </div>
-                  <Separator style={{ borderColor: '#6d36db' }} />
+                  <Separator style={{ borderColor: '#39246b' }} />
                   <div className='mt-4'>
-                    <Button >
+                    <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" >
                       <Link
                         to={`/community/detail/${activity.community_id}`}
                       >
                         View Community
                       </Link>
-                    </Button>{' '}
-                    <Button >
+                    </button>{' '}
+                    <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" >
                       <Link
                         to={`https://stokenet-dashboard.radixdlt.com/transaction/${activity.tx_hash}/summary`}
                         target='_blank'
                       >
                         View Transaction
                       </Link>
-                    </Button>
+                    </button>
                   </div>
                 </div>
               ))}
