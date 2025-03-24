@@ -4,13 +4,11 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { clipAddress } from "@/utils/functions/ClipAddress";
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import EditPage from "./EditPage";
 
 const Sidebar = ({ userData, isAdmin = true ,onEdit}) => {
   const [copied, setCopied] = useState(false);
 const [open,setOpen]=useState(false)
-  const navigate = useNavigate();
   const { accounts } = useAccount();
   const handleClose=()=>{
     setOpen(false)
@@ -24,7 +22,6 @@ const [open,setOpen]=useState(false)
     }, 1000);
   };
 
-  console.log(userData,"faisal")
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>

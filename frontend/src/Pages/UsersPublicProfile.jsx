@@ -215,7 +215,7 @@ const UserPublicProfile = () => {
       <div className="flex flex-row items-start justify-between relative max-w-[1600px] mx-auto gap-5">
        <div className="sticky top-0 h-full">
 
-       <Sidebar userData={userData || {}} onEdit={false} />
+       <Sidebar userData={userData || {}} onEdit={false}  isAdmin={false} />
 
        </div>
 
