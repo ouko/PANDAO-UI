@@ -78,14 +78,14 @@ const [open,setOpen]=useState(false)
 
           {/* Bio */}
           <div className="flex flex-col gap-5 w-full">
-            <div className="text-[#DACCF6] font-semibold text-xl">BIO:</div>
+            <div className="text-brand5 font-semibold text-xl">BIO:</div>
             <div className="text-[#f2f2f2] text-base">
               {userData.usermetadata?.bio || "No bio available"}
             </div>
           </div>
           <div className="flex flex-col gap-4">
-          <div className="text-[#DACCF6] font-semibold text-xl">Social:</div>
-        {userData.usermetadata?.x_url && (
+          <div className="text-brand5 font-semibold text-xl">Social:</div>
+        {userData.usermetadata?.x_url  && (
           <a 
             href={userData.usermetadata.x_url} 
             target="_blank" 
@@ -110,12 +110,12 @@ const [open,setOpen]=useState(false)
             </svg>
             <span>{userData.usermetadata.linkedin}</span>
           </a>
-        )}
+        )} 
       </div>
 
           {/* Communities */}
           <div className="flex flex-col gap-5 w-full h-full">
-            <div className="text-xl font-bold text-[#DACCF6]">
+            <div className="text-xl font-bold text-brand5">
               Communities you might be interested in:
             </div>
             <div className="flex flex-wrap gap-3.5 py-2">
