@@ -8,11 +8,22 @@ import { Link } from 'react-router-dom'
 const UserTransaction = ({ expneseData, failedTransaction }) => {
   return (
 
-    <Tabs defaultValue="account" className="w-full text-white">
-      <TabsList>
-        <TabsTrigger value="account" >Success</TabsTrigger>
-        <TabsTrigger value="password">Pending</TabsTrigger>
+    <Tabs defaultValue="account" className="w-full text-white ">
+      <TabsList className="bg-[rgba(169,126,255,0)]">
+        <TabsTrigger
+          value="account"
+          className="rounded-[26px] py-2 px-[25px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+        >
+          Success
+        </TabsTrigger>
+        <TabsTrigger
+          value="password"
+          className="rounded-[26px] py-2 px-[25px] ms-4 bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+        >
+          Pending
+        </TabsTrigger>
       </TabsList>
+
       <TabsContent value="account">
         <div className=" min-h-screen  ">
           <div className="text-xl font-bold pl-2 pt-3">
@@ -27,7 +38,7 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
             )}
             {expneseData.length > 0 &&
               expneseData.map((activity, index) => (
-                <div key={index} className='flex flex-col p-4 border-2 bg-[rgba(109,54,219,0.21)] border-brand2 rounded-lg group hover:shadow-md'>
+                <div key={index} className='flex flex-col p-4 border-2 bg-gradient-to-br from-[rgba(39,18,76,0.68)] to-brand1 shadow-lg border-brand2 rounded-lg group hover:shadow-md'>
                   <div className=" flex items-center space-x-4 mb-4">
                     {/* Community Image */}
                     <img
@@ -67,7 +78,7 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
 
 
                   </div>
-                  <Separator style={{ borderColor: '#39246b' }} />
+                  <Separator className="bg-brand2" />
                   <div className='mt-4'>
                     <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" >
                       <Link
@@ -76,7 +87,7 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
                         View Community
                       </Link>
                     </button>{' '}
-                    <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" >
+                    <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-extrabold" >
                       <Link
                         to={`https://stokenet-dashboard.radixdlt.com/transaction/${activity.tx_hash}/summary`}
                         target='_blank'

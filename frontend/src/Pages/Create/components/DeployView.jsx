@@ -340,7 +340,7 @@ const DeployView = () => {
           </div>
           <div className="w-full gap-2.5 pb-8">
             <label className="text-white text-2xl leading-[120%] font-medium ">
-              Token Price:
+            Token Price In XRD :
             </label>
             <input
               type="number"
@@ -355,7 +355,7 @@ const DeployView = () => {
           </div>
           <div className="w-full gap-2.5">
             <label className="text-white text-2xl leading-[120%] font-medium">
-              Token Withdraw Price:
+            Token Buy Back Price In XRD:
             </label>
             <input
               type="number"

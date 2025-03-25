@@ -1,16 +1,13 @@
 import { Link } from 'react-router-dom';
 import useScrollTop from '@/hooks/useScroll';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { Card } from '@/components/ui/card';
-import { Dialog, DialogTrigger, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { ClockIcon } from 'lucide-react';
-import { Activity } from 'lucide-react';
+import { ClockIcon, Activity } from 'lucide-react';
 
 const Navbar = ({ userImage, userName, accounts }) => {
   const scrolled = useScrollTop();
-  const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [hasFetched, setHasFetched] = useState(false);
 
@@ -43,13 +40,7 @@ const Navbar = ({ userImage, userName, accounts }) => {
         console.error('Unexpected response format:', res.data);
       }
     } catch (error) {
-      if (error.response) {
-        console.error('Error fetching notifications:', error.response.data);
-      } else if (error.request) {
-        console.error('No response from server:', error.request);
-      } else {
-        console.error('Error setting up request:', error.message);
-      }
+      console.error('Error fetching notifications:', error);
     }
   };
 
@@ -68,20 +59,18 @@ const Navbar = ({ userImage, userName, accounts }) => {
           </Link>
         </div>
 
-        <ul className="md:flex hidden items-center gap-4 font-semibold text-lg">
-          <Dialog>
-          <DialogTrigger asChild>
-  <button className="p-2 rounded-full  transition group">
-    <img 
-      src="/BELL.svg" 
-      alt="Notifications" 
-      className="h-6 w-6 group-hover:animate-bell-wiggle"
-    />
-  </button>
-</DialogTrigger>
-
-            <DialogContent className="max-w-[600px] bg-brand2">
-              <DialogTitle>User Notifications</DialogTitle>
+        <ul className="md:flex hidden items-start gap-4 font-semibold text-lg ">
+          <Popover className="ml-11">
+            <PopoverTrigger asChild  >
+              <button className="p-2 rounded-full transition group">
+                <img 
+                  src="/BELL.svg" 
+                  alt="Notifications" 
+                  className="h-6 w-6 group-hover:animate-bell-wiggle"
+                />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="max-w-[600px] bg-brand2 border-2 border-brand1 py-11 " align={"end"}>
               <div className="w-full mt-4 flex flex-col gap-2">
                 {notifications && notifications.length > 0 ? (
                   notifications.map((notification, index) => (
@@ -120,8 +109,8 @@ const Navbar = ({ userImage, userName, accounts }) => {
                   </div>
                 )}
               </div>
-            </DialogContent>
-          </Dialog>
+            </PopoverContent>
+          </Popover>
 
           <Avatar className="w-10 h-10 border-2 border-primary-300">
             {userImage ? (
