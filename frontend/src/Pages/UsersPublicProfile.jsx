@@ -27,6 +27,8 @@ import Sidebar from "./userDashboard/Dashboard/Dash-component/sidebar";
 import UserActivity from "./userDashboard/Dashboard/Dash-component/UserActivity";
 import CommunitiesParticipated from "./userDashboard/Dashboard/Dash-component/CommunitiesParticipated";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import Navbar from "./userDashboard/Dashboard/Dash-component/NavBar";
+
 
 
 
@@ -124,15 +126,6 @@ const UserPublicProfile = () => {
     enabled: !!userData.public_address,
   });
 
-
-  
-
-
-
-
-
-
-
   useEffect(() => {
     const fetchBluePrint = async () => {
       try {
@@ -211,7 +204,7 @@ const UserPublicProfile = () => {
       <div className="w-full absolute overflow-hidden opacity-20 h-[600px]">
         <TileEffect4 />
       </div>
-
+       <Navbar userData={userData || {}}  isAdmin={false} />
       <div className="flex flex-row items-start justify-between relative max-w-[1600px] mx-auto gap-5">
        <div className="sticky top-0 h-full">
 

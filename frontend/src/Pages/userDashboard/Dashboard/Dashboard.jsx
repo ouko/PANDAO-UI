@@ -213,9 +213,9 @@ const handleOnEdit=()=>{
       <div className="w-full absolute overflow-hidden opacity-20 h-[600px]">
         <TileEffect4 />
       </div>
-
+0
       {/* Safe access to usermetadata */}
-      <NavBar userImage={userData?.usermetadata?.image_url || null} />
+      <NavBar userImage={userData?.usermetadata?.image_url || null} isAdmin={true} />
 
       <div className="flex flex-row items-start justify-between relative max-w-[1600px] mx-auto gap-5">
         <div className="sticky top-0 h-full">
