@@ -260,31 +260,22 @@ const DeployView = () => {
             </div>
           </div>
           {loading ? (
-            // <Button variant="radix" className="w-full" disabled>
-            //   Deploying....
-            // </Button>
+          
             <button
               className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF]
-             hover:to-[#391483] disabled:bg-slate-900 disabled:cursor-not-allowed "
+             hover:to-[#391483] disabled:bg-brand3 disabled:cursor-not-allowed "
               disabled>
               Deploying....
             </button>
           ) : (
-            // <Button
-            //   variant="radix"
-            //   className="w-full"
-            //   disabled={!allFieldsFilled()}
-            //   onClick={handleClaimToken}
-            // >
-            //   Deploy
-            // </Button>
+         
             <button
               variant="radix"
 
               type="button"
               disabled={!allFieldsFilled()}
               onClick={handleClaimToken}
-              className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] disabled:bg-slate-900 disabled:cursor-not-allowed "
+              className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] disabled:bg-brand3 disabled:cursor-not-allowed "
             >
               Deploy
             </button>

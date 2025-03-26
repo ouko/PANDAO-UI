@@ -122,14 +122,19 @@ const TemplateView = () => {
           ))}
       </div>
       <div className='z-50 flex items-center justify-center mt-10'>
-        <button
-          onClick={handleViewChange}
-          type="button"
-          disabled={!!selectedCard}
-          className="w-1/4 text-2xl rounded-2xl p-3 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] disabled:bg-slate-900 disabled:cursor-not-allowed "
-        >
-          NEXT STEP
-        </button>
+      <button
+  onClick={handleViewChange}
+  type="button"
+  disabled={selectedCard === null}
+  className={`w-1/4 text-2xl rounded-2xl p-3 text-white font-semibold shadow-inner
+    ${selectedCard === null 
+      ? 'bg-brand2 cursor-not-allowed' 
+      : 'bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:from-[#C0A1FF] hover:to-[#391483]'
+    }`}
+>
+  NEXT STEP
+</button>
+
 
       </div>
 

@@ -93,6 +93,7 @@ const DescribeView = () => {
     return (
       formFields.communityName.trim() !== '' &&
       formFields.description.trim() !== '' &&
+      formFields.community_token_name.trim() !== '' &&
       formFields.communityImage.trim() !== '' &&
       formFields.tokenImage.trim() !== '' &&
       formFields.purpose.trim() !== '' &&
@@ -132,8 +133,8 @@ const DescribeView = () => {
   console.log(predefinedTags)
   return (
     <div className="z-50 container mx-auto flex flex-col items-center justify-center mt-10 w-full">
-      
-     
+
+
       <div className="h-[42px] relative w-full ">
         <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] w-full h-[42px]"></div>
         <div className="rounded-[300px] w-[55%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
@@ -204,7 +205,7 @@ const DescribeView = () => {
               onChange={handleInputChange}
               id="community-description"
               placeholder="Type your community's description..."
-             className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             ></textarea>
           </div>
 
@@ -230,7 +231,7 @@ const DescribeView = () => {
               id="community-token-name"
               type="text"
               placeholder="Type your Community’s token Name..."
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"/>
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400" />
           </div>
 
 
@@ -333,18 +334,23 @@ const DescribeView = () => {
             <button
               onClick={() => setView('2')}
               type="button"
-              className="flex-1   rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"
+              className="flex-1 rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"
             >
               Back
             </button>
             <button
-              disabled={!allFieldsFilled()} onClick={handleViewChange}
+              disabled={!allFieldsFilled()}
+              onClick={handleViewChange}
               type="submit"
-              className="flex-1 rounded-2xl p-3 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner"
+              className={`flex-1 rounded-2xl p-3 font-semibold shadow-inner ${allFieldsFilled()
+                  ? "text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF]"
+                  : "bg-brand2 text-gray-300 cursor-not-allowed"
+                }`}
             >
               Next
             </button>
           </div>
+
         </div>
       </div>
     </div>
