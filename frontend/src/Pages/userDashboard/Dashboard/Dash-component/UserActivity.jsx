@@ -23,7 +23,11 @@ const UserActivity = ({activityData = [] }) => {
           </div>
         ) : (
           activityData.slice(0, 3).map((activity, index) => (
-            <div key={index} className="bg-gradient-to-br from-[rgba(39,18,76,0.68)] w-[980px]  to-brand1 rounded-2xl border-2 border-brand3 hover:border-brand2  transition-transform transform hover:scale-105 duration-300 p-6 flex items-center gap-4 ">
+            <div key={index} 
+            className="bg-gradient-to-br from-[rgba(39,18,76,0.68)] w-[1000px]  to-brand1 rounded-2xl border-2 border-brand3 hover:border-brand2  transition-transform transform hover:scale-105 duration-300 p-6 flex items-center gap-4 "
+            onClick={() => navigate(`/community/detail/${activity.community_id}`)}
+            
+            >
               <Avatar className="w-20 h-20 object-cover rounded-md">
                 <AvatarImage src={activity.user_image_url} className="object-cover" />
                 <AvatarFallback>CN</AvatarFallback>
@@ -34,12 +38,7 @@ const UserActivity = ({activityData = [] }) => {
                   {formatStandardDateTime(activity.created_at)}
                 </p>
               </div>
-              {/* <div
-                onClick={() => navigate(`/community/detail/${activity.community_id}`)}
-                className="text-primary-200 cursor-pointer"
-              >
-                <Activity className="h-5 w-5" />
-              </div> */}
+              
             </div>
           ))
         )}

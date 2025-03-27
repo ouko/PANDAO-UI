@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ClockIcon, Activity } from 'lucide-react';
 
-const Navbar = ({ userImage, userName, accounts }) => {
+const Navbar = ({ userImage, userName, accounts, isAdmin }) => {
   const scrolled = useScrollTop();
   const [notifications, setNotifications] = useState([]);
   const [hasFetched, setHasFetched] = useState(false);
@@ -60,65 +60,64 @@ const Navbar = ({ userImage, userName, accounts }) => {
         </div>
 
         <ul className="md:flex hidden items-start gap-4 font-semibold text-lg ">
-          <Popover className="ml-11">
-            <PopoverTrigger asChild  >
-              <button className="p-2 rounded-full transition group">
-                <img 
-                  src="/BELL.svg" 
-                  alt="Notifications" 
-                  className="h-6 w-6 group-hover:animate-bell-wiggle"
-                />
-              </button>
-            </PopoverTrigger>
-            <PopoverContent className="max-w-[600px] bg-brand2 border-2 border-brand1 py-11 " align={"end"}>
-              <div className="w-full mt-4 flex flex-col gap-2">
-                {notifications && notifications.length > 0 ? (
-                  notifications.map((notification, index) => (
-                    <div key={index} className="p-4 border-2 rounded-lg group">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-start gap-2">
-                          <Avatar className="h-8 w-8 mt-1">
-                            <AvatarImage
-                              src={notification.image}
-                              className="h-8 w-8 object-cover"
-                            />
-                            <AvatarFallback>CN</AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <span>{notification.title}</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm ">
-                              <span>{notification.text}</span>
-                            </div>
-                            <div className="text-sm flex items-center gap-1 font-light">
-                              <ClockIcon className="h-3 w-3" />{' '}
-                              <span>{notification.date}</span>
+          {isAdmin && (
+            <Popover className="ml-11">
+              <PopoverTrigger asChild  >
+                <button className="p-2 rounded-full transition group">
+                  <img 
+                    src="/BELL.svg" 
+                    alt="Notifications" 
+                    className="h-6 w-6 group-hover:animate-bell-wiggle"
+                  />
+                  
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="max-w-[600px] bg-brand2 border-2 border-brand1 py-11 " align={"end"}>
+                <div className="w-full mt-4 flex flex-col gap-2">
+                  {notifications && notifications.length > 0 ? (
+                    notifications.map((notification, index) => (
+                      <div key={index} className="p-4 border-2 rounded-lg group">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-start gap-2">
+                            <Avatar className="h-8 w-8 mt-1">
+                              <AvatarImage
+                                src={notification.image}
+                                className="h-8 w-8 object-cover"
+                              />
+                              <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <span>{notification.title}</span>
+                              </div>
+                              <div className="flex items-center gap-2 text-sm ">
+                                <span>{notification.text}</span>
+                              </div>
+                              <div className="text-sm flex items-center gap-1 font-light">
+                                <ClockIcon className="h-3 w-3" />{' '}
+                                <span>{notification.date}</span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600">
-                          <Activity className="h-4 w-4" />
+                          <div className="border-2 rounded-full p-2 group-hover:text-purple-600 group-hover:border-purple-600">
+                            <Activity className="h-4 w-4" />
+                          </div>
                         </div>
                       </div>
+                    ))
+                  ) : (
+                    <div className="text-center text-gray-500 p-4">
+                      You currently have no notifications.
                     </div>
-                  ))
-                ) : (
-                  <div className="text-center text-gray-500 p-4">
-                    You currently have no notifications.
-                  </div>
-                )}
-              </div>
-            </PopoverContent>
-          </Popover>
+                  )}
+                </div>
+              </PopoverContent>
+            </Popover>
+          )}
 
-          <Avatar className="w-10 h-10 border-2 border-primary-300">
-            {userImage ? (
-              <AvatarImage src={userImage} className="object-cover" />
-            ) : (
-              <AvatarFallback>{userName?.slice(0, 2) || 'CN'}</AvatarFallback>
-            )}
-          </Avatar>
+      <div id="connect-btn">
+      <radix-connect-button />
+       </div>
         </ul>
       </div>
     </div>
