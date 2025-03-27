@@ -35,7 +35,7 @@ const BrandCard = ({ daos }) => {
         </DialogContent>
       </Dialog>
       <div className="mt-5 grid md:grid-cols-3 grid-cols-1 gap-4 z-30">
-      {daos.slice(0,3).map((dao) => (
+      {daos.map((dao) => (
           <DaoCard
             key={dao.id}
             dao={dao}
