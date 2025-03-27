@@ -2,12 +2,8 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { Banknote, Check, Filter, Users } from 'lucide-react'
 
-// UI Components
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Card } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+
 
 import {
   Dialog,
@@ -17,17 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
+
 
 // Store and Context
 import useViewStore from '@/store/view'
@@ -53,12 +39,10 @@ const SORT_OPTIONS = [
 
 const ExploreSection = () => {
   const { setView } = useViewStore()
-  const { accounts } = useAccount()
-  const navigate = useNavigate()
+
 
   // State for filter and dialogs
   const [selectedOption, setSelectedOption] = useState('participants')
-  const [filterPopoverOpen, setFilterPopoverOpen] = useState(false)
   const [walletDialogOpen, setWalletDialogOpen] = useState(false)
 
   // Set active view on component mount
@@ -75,36 +59,11 @@ const ExploreSection = () => {
   })
 
   // Handle filter option selection
-  const handleOptionSelect = (optionId) => {
-    setSelectedOption(optionId)
-    setFilterPopoverOpen(false)
-  }
+ 
 
   // Check wallet connection before navigation
-  const handleNavigation = (path) => {
-    if (accounts && accounts.length > 0) {
-      navigate(path)
-    } else {
-      setWalletDialogOpen(true)
-    }
-  }
+ 
 
-  // Render DAO stats with tooltip
-  const renderStat = (icon, value, tooltip) => (
-    <div className="flex items-center gap-2 border-2 px-2 rounded-md shadow-sm bg-[#5228A4] border-[#7F42F9]">
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger className="flex items-center gap-1">
-            {icon}
-            <p className="text-sm text-white">{value}</p>
-          </TooltipTrigger>
-          <TooltipContent side="bottom">
-            <p>{tooltip}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    </div>
-  )
 
   return (
     <div>
