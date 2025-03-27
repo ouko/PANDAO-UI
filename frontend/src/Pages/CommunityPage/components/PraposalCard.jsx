@@ -5,7 +5,7 @@ export default function TotalProposalsCard() {
   const params = useParams();
 
   return (
-    <div className="bg-[rgba(169,126,255,0.15)] rounded-lg border border-[#5228A4] pt-3 pr-6 pb-3 pl-6 self-stretch shrink-0 h-[135px] relative overflow-hidden backdrop-blur-[6.7px]">
+    <div className="bg-[rgba(169,126,255,0.08)] rounded-lg border border-[#5228A4] pt-3 pr-6 pb-3 pl-6 self-stretch shrink-0 h-[135px] relative overflow-hidden backdrop-blur-[6.7px]">
       {/* Header Section */}
       <div className="bg-[#39246b] px-4 flex items-center w-[561px] h-[53px] absolute left-0 top-0">
         <div className="text-white text-2xl font-medium font-[ClashDisplayVariable-Medium, sans-serif]">

@@ -75,7 +75,7 @@ const TokenCard = ({  data, handleBuyToken, handleSellToken, loading }) => {
         </div>
       )}
 
-      {/* Buy Token Button */}
+    
       {data.total_token > data.token_bought && (
         <div>
           <Dialog open={openBuyModal} onOpenChange={setBuyModal}>
@@ -127,9 +127,9 @@ const TokenCard = ({  data, handleBuyToken, handleSellToken, loading }) => {
         </div>
       </div>
 
-      {/* Token Details */}
+     
       <div className="flex flex-col gap-[25px] items-start justify-start w-80 absolute left-[33px] top-[92px]">
-        {/* Token Info */}
+     
         <div className="flex items-center gap-[26px] w-full">
           <div className="rounded-full w-[45px] h-[45px] overflow-hidden">
             <img
@@ -141,14 +141,14 @@ const TokenCard = ({  data, handleBuyToken, handleSellToken, loading }) => {
           <div className="text-white text-4xl font-medium">{data.total_token} Tokens</div>
         </div>
 
-        {/* Pricing Info */}
+     
         <div className="flex flex-col gap-5">
-          {/* Token Price */}
+        
           <div className="flex gap-[11px]">
             <div className="text-[#5228A4] text-xl uppercase">Token Price:</div>
             <div className="text-white text-xl">{data.token_price}</div>
           </div>
-          {/* Buy Back Price */}
+      
           <div className="flex gap-[11px]">
             <div className="text-[#5228A4] text-xl uppercase">Token Buy Back Price:</div>
             <div className="text-white text-xl">{data.token_buy_back_price}</div>

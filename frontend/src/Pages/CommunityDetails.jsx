@@ -59,6 +59,7 @@ import TotalProposalsCard from './CommunityPage/components/PraposalCard'
 import TotalFund from './CommunityPage/components/TotalFund'
 import WithdrawCard from './CommunityPage/components/WithdrawCard'
 import DiscussionCard from './CommunityPage/components/DiscussionCard'
+import ExecutiveMember from './CommunityPage/components/ExecutiveMember'
 
 ChartJS.register(
   LineElement,
@@ -723,7 +724,14 @@ const CommunityDetails = () => {
         {data && (
           <div className="space-y-6 md:w-[100%] ">
 
-            <DaoCard daoData={data} />
+           <DaoCard daoData={data} isUserParticipant={isUserParticipant}
+             handleJoinCommunity={handleJoinCommunity} 
+             setQuickStartOpen={setQuickStartOpen}
+           
+             
+
+             
+             />
 
             <div className="flex md:flex-row flex-col md:w-[100%] mx-auto gap-2">
               <div className="md:w-[50%] space-y-3">
@@ -755,7 +763,7 @@ const CommunityDetails = () => {
                 
                 
 
-                <FundHistoryGraph />
+                
                 <div className="bg-transparent w-full mx-auto  flex items-center  ">
                   {/* <Card
                     onClick={() =>
@@ -773,48 +781,10 @@ const CommunityDetails = () => {
                   <div>
                     <TotalProposalsCard />
                   </div>
+                 <ExecutiveMember participants={participants}/>
+                 <FundHistoryGraph />
 
-
-                <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg space-y-2 ">
-                  {participants.length === 0 && <div>No Participants</div>}
-                  {participants.length > 0 &&
-                    participants.slice(0, 4).map((participant, index) => (
-                      <Card
-                        key={index}
-                        onClick={() =>
-                          navigate(
-                            `/userDashboard/userProfile/${participant.public_address}`,
-                          )
-                        }
-                        className="bg-white flex items-center gap-2 md:w-[100%] mx-auto  p-2 border-none shadow-none"
-                      >
-                        <Avatar>
-                          <AvatarImage
-                            alt="Avatar"
-                            src={participant.image_url}
-                          />
-                          <AvatarFallback>JD</AvatarFallback>
-                        </Avatar>
-                        <div className="text-left hover:text-blue-600 cursor-pointer text-ellipsis overflow-hidden w-full">
-                          <div className="font-medium flex items-center justify-between w-full ">
-                            <span>
-                              {participant.name || 'Unnamed Participant'}
-                            </span>
-                            <span>
-                              {participant.is_executive_member ? <Badge>
-                                Executive  Member
-                              </Badge> : ""}
-
-                            </span>
-                          </div>
-                          <div className="text-gray-black dark:text-gray-400 text-sm truncate">
-                            {participant.participant || ''}
-
-                          </div>
-                        </div>
-                      </Card>
-                    ))}
-                </Card>
+               
                 <div className="bg-transparent w-full mx-auto  flex items-center   ">
                  
                 </div>
