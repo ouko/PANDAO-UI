@@ -23,7 +23,7 @@ const TokenCard = ({  data, handleBuyToken, handleSellToken, loading }) => {
 
   return (
     <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-solid border-[#5228A4] border pt-[13px] pr-[25px] pb-[13px] pl-[25px] shrink-0 h-[305px] relative overflow-hidden backdrop-blur-[6.7px]">
-      {/* Header */}
+     
       <div className="bg-[#39246b] px-[13px] flex items-center justify-between w-full h-[63px] absolute left-0 top-0">
         <div className="text-white text-2xl font-medium">{data.name}</div>
         <div className="flex gap-[5px]">

@@ -56,6 +56,9 @@ import TokenCard from './CommunityPage/components/TokenCard'
 import Members from './CommunityPage/Members'
 import MembersCard from './CommunityPage/components/MembersCard'
 import TotalProposalsCard from './CommunityPage/components/PraposalCard'
+import TotalFund from './CommunityPage/components/TotalFund'
+import WithdrawCard from './CommunityPage/components/WithdrawCard'
+import DiscussionCard from './CommunityPage/components/DiscussionCard'
 
 ChartJS.register(
   LineElement,
@@ -726,20 +729,8 @@ const CommunityDetails = () => {
               <div className="md:w-[50%] space-y-3">
 
 
-                {/* <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg flex items-center justify-between ">
-                  <div className="font-semibold tracking-wide">Total Funds</div>
-                  <div className="flex items-center gap-2">
-                    <div className="bg-purple-600 shadow-lg min-w-28 flex items-center justify-center rounded-lg text-white p-1">
-                      {Math.round(data.funds_in_usd * 10000) / 10000} $
-                    </div>{' '}
-                    <div className="bg-purple-600 shadow-lg min-w-28 flex items-center justify-center rounded-lg text-white p-1">
-                      {data.funds} XRD
-                    </div>
-                    <Button onClick={() => setWithDrawModal(true)}>
-                      Withdraw Request
-                    </Button>
-                  </div>
-                </Card> */}
+
+                <TotalFund data={data} setWithDrawModal={setWithDrawModal} /> 
                 <TokenCard data={data}
                   handleSellToken={handleSellToken}
                   handleBuyToken={handleBuyToken}
@@ -753,103 +744,20 @@ const CommunityDetails = () => {
 
                  
                 </div>
-                <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg flex flex-col items-center justify-center">
-                  <div className="font-semibold tracking-wide py-5">Total WithDraw Request</div>
-                  <div className='flex flex-col w-full space-y-4'>
-                    {withDrawRequest.map((request) => (
-                      <Card
-                        key={request.id}
-                        className="bg-white w-full mx-auto md:p-4 p-4 flex-col shadow-lg flex items-center justify-between"
-                      >
-                        <div className='w-full'>
-                          <div className="font-semibold tracking-wide">
-                            Total Withdraw Request: ${request.amount_to_withdraw}
-                          </div>
-                          <div className="text-sm text-gray-500">
-                            Date: {new Date(request.request_date).toLocaleString()}
-                          </div>
-                          <div className="text-sm text-gray-500">
-                            Status:{" "}
-                            <span
-                              className={`${request.status ? "text-green-500" : "text-red-500"
-                                }`}
-                            >
-                              {request.status ? "Completed" : "Pending"}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-4 w-full py-2">
-                          <img
-                            src={request.user_image}
-                            alt="User"
-                            className="w-12 h-12 rounded-full object-cover border-brand3 border-2"
-                          />
-                          <div>
-                            <div className="text-sm font-semibold">
-                              {request.user_name}
-                            </div>
-                            <div className="text-xs text-gray-500">
-                              {request.user_address.slice(0, 8)}...
-                              {request.user_address.slice(-8)}
-                            </div>
-                          </div>
+                <WithdrawCard
+                  withDrawRequest={withDrawRequest}
+                  handleWithDrawSign={handleWithDrawSign}
+                  loading={loading}
+                 
+                />
 
-                        </div>
-                        <div className='flex items-center justify-end w-full'>
-                          <Button disabled={loading} onClick={() => handleWithDrawSign(request.id)}>
-                            Sign Withdraw Request
-                          </Button>
-                        </div>
-                      </Card>
-                    ))}
-                  </div>
-                </Card>
-                <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 shadow-lg ">
-                  <h1 className="font-semibold tracking-wide">Discussions</h1>
-                  {communities.length === 0 && (
-                    <div className="flex items-center justify-center">
-                      No active discussions
-                    </div>
-                  )}
-                  {communities.length > 0 && (
-                    <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
-                      {communities.slice(0, 4).map((community, index) => (
-                        <Card
-                          key={index}
-                          onClick={() =>
-                            navigate(
-                              `/community/detail/${params.id}/discussion`,
-                            )
-                          }
-                          className="p-4 flex flex-col gap-2 hover:shadow-lg shadow-md cursor-pointer"
-                        >
-                          <div className="text-lg font-semibold">
-                            {community.title}
-                          </div>
-                          <div className="text-sm flex items-center gap-2">
-                            <div>Started By - </div>
-                            <div className="flex items-center gap-1">
-                              <div>
-                                <Avatar className="h-6 w-6">
-                                  <AvatarImage src={community.user_image} />
-                                  <AvatarFallback>CN</AvatarFallback>
-                                </Avatar>
-                              </div>
-                              <div>{community.user_name}</div>
-                            </div>
-                          </div>
-                          <div className="w-full border-t-2 pt-2">
-                            {formatStandardDateTime(community.created_at)}
-                          </div>
-                        </Card>
-                      ))}
-                    </div>
-                  )}
-                </Card>
+<DiscussionCard communities={communities} params={params} />
+                
+                
 
                 <FundHistoryGraph />
                 <div className="bg-transparent w-full mx-auto  flex items-center  ">
-                  <Card
+                  {/* <Card
                     onClick={() =>
                       navigate(`/community/detail/${params.id}/discussion`)
                     }
@@ -857,7 +765,7 @@ const CommunityDetails = () => {
                   >
                     <p>See all Discussions </p>
                     <ChevronRight className="h-5 w-5 group-hover:translate-x-1 duration-300 transition-transform" />
-                  </Card>
+                  </Card> */}
                 </div>
               </div>
               <div className="md:w-[40%] space-y-6 w-[100%]  ">
