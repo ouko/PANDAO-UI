@@ -1,6 +1,10 @@
 import React from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
 
-function DiscussionCard({communities , params}) {
+function DiscussionCard({communities}) {
+    const navigate = useNavigate();
+      const params = useParams();
+    
     return (
         <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border border-[#5228A4] pt-[13px] pr-[25px] pb-[13px] pl-[25px] self-stretch shrink-0 h-[152px] relative overflow-hidden">
       

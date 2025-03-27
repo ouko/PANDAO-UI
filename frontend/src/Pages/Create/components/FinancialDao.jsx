@@ -191,7 +191,7 @@ navigate("/");
         <Recipt className="w-full relative bg-red-500" />
       </div>
     ) : (
-      ""
+      ""          
     )}
   </ReceiptModal>
   <div className="max-w-[1000px] mx-auto mt-20">

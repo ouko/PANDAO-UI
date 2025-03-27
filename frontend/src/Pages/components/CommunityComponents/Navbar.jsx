@@ -61,16 +61,11 @@ const Navbar = () => {
     { icon: '/5.svg', label: 'Vote Power', path: `/community/detail/${params.id}/tokenDistribution` },
     { icon: '/6.svg', label: 'Activity', path: `/community/detail/${params.id}/activity` },
     { icon: '/7.svg', label: 'Proposals', path: `/community/detail/${params.id}/proposals` },
-  ];
+    { icon: '/2.svg', label: 'Bond Issue', path: `/community/detail/${params.id}/bondissue` },
+    { icon: '/2.svg', label: 'Purchased Bond', path: `/community/detail/${params.id}/purchasedbond` },
+    { icon: '/2.svg', label: 'Bond Issued', path: `/community/detail/${params.id}/bondissued` }
+];
 
-  const moreItems = slug === 'Insurance' ? [
-    { label: 'Issue ANN Token', path: `/community/detail/${params.id}/annissue` },
-    { label: 'Issued ANN Tokens', path: `/community/detail/${params.id}/annissued` },
-  ] : [
-    { label: 'Bond Issue', path: `/community/detail/${params.id}/bondissue` },
-    { label: 'Purchased Bond', path: `/community/detail/${params.id}/purchasedbond` },
-    { label: 'Bond Issued', path: `/community/detail/${params.id}/bondissued` },
-  ];
 
   return (
     <div className=''>
@@ -90,16 +85,7 @@ const Navbar = () => {
         ))}
 
         {/* More Button */}
-        <div
-          onClick={() => setShowMore(!showMore)}
-          className="flex flex-row py-2 items-center justify-start my-4 cursor-pointer text-primary-100 transition-colors w-[300px] px-3"
-        >
-          <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" d={showMore ? 'M19 9l-7 7-7-7' : 'M5 15l7-7 7 7'}></path>
-          </svg>
-          <div className="font-medium px-3 text-2xl">{showMore ? 'Less' : 'More'}</div>
-          
-        </div>
+       
 
         {/* Additional Tabs */}
         {showMore && moreItems.map((item, index) => (

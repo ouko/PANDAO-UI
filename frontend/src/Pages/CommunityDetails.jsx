@@ -718,7 +718,7 @@ const CommunityDetails = () => {
   )
   console.log(participants, 'hey')
   return (
-    <div className=" pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg- text-black px-2">
+    <div className=" pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden mt-5 text-black px-2">
       <CustomAlert />
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6  md:py-12 max-w-[1440px] mx-auto ">
         {data && (
@@ -727,31 +727,21 @@ const CommunityDetails = () => {
            <DaoCard daoData={data} isUserParticipant={isUserParticipant}
              handleJoinCommunity={handleJoinCommunity} 
              setQuickStartOpen={setQuickStartOpen}
-           
-             
-
-             
              />
 
             <div className="flex md:flex-row flex-col md:w-[100%] mx-auto gap-2">
               <div className="md:w-[50%] space-y-3">
 
 
-
-                <TotalFund data={data} setWithDrawModal={setWithDrawModal} /> 
-                <TokenCard data={data}
+              <TokenCard data={data}
                   handleSellToken={handleSellToken}
                   handleBuyToken={handleBuyToken}
                   loading={loading}
                 />
+                <TotalFund data={data} setWithDrawModal={setWithDrawModal} /> 
+               
 
-                <div className="w-[608px] px-7 py-7 ">
-
-
-
-
-                 
-                </div>
+               
                 <WithdrawCard
                   withDrawRequest={withDrawRequest}
                   handleWithDrawSign={handleWithDrawSign}
@@ -759,21 +749,13 @@ const CommunityDetails = () => {
                  
                 />
 
-<DiscussionCard communities={communities} params={params} />
+             <DiscussionCard communities={communities} />
                 
                 
 
                 
                 <div className="bg-transparent w-full mx-auto  flex items-center  ">
-                  {/* <Card
-                    onClick={() =>
-                      navigate(`/community/detail/${params.id}/discussion`)
-                    }
-                    className=" group  p-3 w-64 text-center flex items-center justify-center hover:text-blue-700 cursor-pointer "
-                  >
-                    <p>See all Discussions </p>
-                    <ChevronRight className="h-5 w-5 group-hover:translate-x-1 duration-300 transition-transform" />
-                  </Card> */}
+                  
                 </div>
               </div>
               <div className="md:w-[40%] space-y-6 w-[100%]  ">

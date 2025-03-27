@@ -4,13 +4,13 @@ function TotalFund({ data, setWithDrawModal }) {
     return (
         <div className="bg-[rgba(169,126,255,0.08)] rounded-lg border border-[#5228A4] pt-3 pr-6 pb-3 pl-6 self-stretch shrink-0 h-[155px] relative overflow-hidden backdrop-blur-[6.7px]">
 
-            <div className="bg-[#39246b] px-4 flex items-center w-[661px] h-[53px] absolute left-0 top-0">
+            <div className="bg-[#39246b] px-4 flex items-center w-[761px] h-[53px] absolute left-0 top-0">
                 <div className="text-white text-2xl font-medium font-[ClashDisplayVariable-Medium, sans-serif]">
                     Total Funds:
                 </div>
             </div>
 
-            <div className="flex flex-col gap-[11px] absolute left-[39px] top-20">
+            <div className="flex flex-col flex-wrap gap-[11px] absolute left-[39px] top-20">
                 <div className="flex gap-[11px]">
                     <div className="text-[#5228A4] text-xl uppercase"> Funds In USD:</div>
                     <div className="text-white text-xl">{Math.round(data.funds_in_usd * 10000) / 10000} $</div>

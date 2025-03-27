@@ -16,7 +16,7 @@ export default function TotalProposalsCard() {
       {/* New Proposal Button */}
       <button
       onClick={() => navigate(`/community/detail/${params.id}/proposals`)}
-      className="rounded-[26px] px-4 py-2 flex items-center justify-center absolute left-[281px] top-[82px] overflow-hidden bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] cursor-pointer"
+      className="rounded-[26px] px-4 py-2 flex items-center justify-center absolute left-[351px] top-[82px] overflow-hidden bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] cursor-pointer"
     >
       <span className="text-black text-sm leading-5 font-medium font-[ClashDisplayVariable-Medium, sans-serif]">
         New Proposal
