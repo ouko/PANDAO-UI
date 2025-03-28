@@ -31,7 +31,7 @@ const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStar
   return (
     <div
       className="bg-[rgba(169,126,255,0.08)] rounded-[20px] border-solid border-[#5228A4] border pt-[13px] pr-[25px] pb-[13px] pl-[25px] self-stretch shrink-0 h-[295px] relative overflow-hidden"
-      style={{ backdropFilter: 'blur(6.7px)' }}
+      
     >
 
       <div className="flex flex-col gap-3.5 items-center justify-start w-[171px] absolute left-[43px] top-[21px]">

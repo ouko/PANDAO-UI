@@ -63,7 +63,7 @@ const Navbar = () => {
     { icon: '/7.svg', label: 'Proposals', path: `/community/detail/${params.id}/proposals` },
     { icon: '/2.svg', label: 'Bond Issue', path: `/community/detail/${params.id}/bondissue` },
     { icon: '/2.svg', label: 'Purchased Bond', path: `/community/detail/${params.id}/purchasedbond` },
-    { icon: '/2.svg', label: 'Bond Issued', path: `/community/detail/${params.id}/bondissued` }
+    { icon: '/8.svg', label: 'Bond Issued', path: `/community/detail/${params.id}/bondissued` }
 ];
 
 
@@ -82,13 +82,8 @@ const Navbar = () => {
             <img className="shrink-0 w-[40px] h-[30px] px-3" src={item.icon} alt={item.label} />
             <div className="font-medium text-2xl">{item.label}</div>
           </NavLink>
-        ))}
-
-        {/* More Button */}
-       
-
-        {/* Additional Tabs */}
-        {showMore && moreItems.map((item, index) => (
+        ))}  
+                {showMore && moreItems.map((item, index) => (
           <NavLink
             key={`more-${index}`}
             to={item.path}

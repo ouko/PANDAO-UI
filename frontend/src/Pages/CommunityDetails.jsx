@@ -718,7 +718,7 @@ const CommunityDetails = () => {
   )
   console.log(participants, 'hey')
   return (
-    <div className=" pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden mt-5 text-black px-2">
+    <div className=" pb-10 items-start font-clash gap-3 justify-start min-h-screen overflow-hidden mt-5 text-black px-2">
       <CustomAlert />
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6  md:py-12 max-w-[1440px] mx-auto ">
         {data && (
@@ -758,7 +758,7 @@ const CommunityDetails = () => {
                   
                 </div>
               </div>
-              <div className="md:w-[40%] space-y-6 w-[100%]  ">
+              <div className=" px-4 md:w-[50%] space-y-6   ">
               <MembersCard participants={participants} />
                   <div>
                     <TotalProposalsCard />

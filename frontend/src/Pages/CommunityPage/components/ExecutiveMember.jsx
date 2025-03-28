@@ -12,7 +12,7 @@ function ExecutiveMember({ participants }) {
         <div className="bg-[rgba(169,126,255,0.08)] rounded-lg border border-[#5228A4] p-4 h-auto relative overflow-hidden">
 
             <div className="bg-[#39246b] px-4 flex flex-row items-center justify-between w-full h-[53px] absolute left-0 top-0 rounded-t-lg">
-                <div className="text-[#ffffff] text-left font-['ClashDisplayVariable-Medium',_sans-serif] text-2xl font-medium flex items-center gap-2">
+                <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
 
                     Executive Member:
                 </div>

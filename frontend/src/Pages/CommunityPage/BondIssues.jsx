@@ -175,8 +175,7 @@ const BondIssue = () => {
   const fetchNfts = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/users/wallets/assets/${
-          accounts[0].address
+        `${import.meta.env.VITE_BACKEND_URL}/users/wallets/assets/${accounts[0].address
         }`,
       )
 
@@ -265,167 +264,263 @@ const BondIssue = () => {
     return null
   }
   return (
-    <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
+    <div className="  items-start gap-3 justify-start min-h-screen overflow-hidden bg-[#100821] z-50 text-brand6px-2">
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
         <div className="space-y-6 md:w-[100%] ">
           <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
             <div className="md:w-[100%] space-y-6  ">
-              <Card className="bg-white md:w-[100%] mx-auto md:p-10 p-4  space-y-10 flex flex-col items-center">
-                <div className="flex items-center justify-center">
-                  <div className="bg-slate-200 w-fit p-2 rounded-full">
-                    <BookDown className=" text-blue-700" />
-                  </div>
-                  {/* <div>
-                      <Button variant="radix" >
-                        Manage members
-                      </Button>
-                    </div> */}
+              <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-5 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
+                <div className="  text-[40px] leading-[130%] z-50 font-semibold text-start">
+
+
+                  <span>
+                    
+                    <span className="step-2-describe-your-dao-span2"></span>
+                    <span className="step-2-describe-your-dao-span3 text-amber-50">Create a Bond</span>
+                  </span>
                 </div>
-                <div className="text-3xl font-semibold text-center">
-                  Create Bond
+                <div className="text-[#ffffff]  z-50 text-xl leading-[130%] font-normal text-center">
+                  Start simple and learn as you go. You can always evolve your DAO in the future
                 </div>
-              </Card>
-              <Card className="p-5">
+              </div>
+
+
+
+              <div className="p-5 z-50">
                 <div className="flex flex-col w-full space-y-4">
-                  <div className="grid grid-cols-2 gap-5">
-                    <FormInput
-                      label={<span className="font-bold">Community ID</span>}
-                      name="community_id"
-                      value={params.id}
-                      disabled="true"
-                      onChange={handleChange}
-                      tooltipText="Unique identifier for the community"
-                    />
-                    <FormInput
-                      label={<span className="font-bold">Bond Name</span>}
-                      name="bond_name"
-                      value={bond.bond_name}
-                      onChange={handleChange}
-                      tooltipText="Name of the bond"
-                    />
-                    <FormInput
-                      label={<span className="font-bold">Bond Symbol</span>}
-                      name="bond_symbol"
-                      value={bond.bond_symbol}
-                      onChange={handleChange}
-                      tooltipText="Symbol for the bond"
-                    />
-                    <FormInput
-                      label={<span className="font-bold">Bond Identity</span>}
-                      name="bond_identity"
-                      value={bond.bond_identity}
-                      onChange={handleChange}
-                      tooltipText="Identity of the bond"
-                    />
-                    <FormInput
-                      label={
-                        <span className="font-bold">Nominal Interest Rate</span>
-                      }
-                      type="number"
-                      name="nominal_interest_rate"
-                      value={bond.nominal_interest_rate}
-                      onChange={handleChange}
-                      tooltipText="Interest rate of the bond"
-                    />
-                    <FormInput
-                      label={<span className="font-bold">Currency</span>}
-                      name="currency"
-                      value={bond.currency}
-                      onChange={handleChange}
-                      disabled="true"
-                      tooltipText="Currency type (e.g., XRD)"
-                    />
-                    <FormInput
-                      label={
-                        <span className="font-bold">Initial Exchange Date</span>
-                      }
-                      type="date"
-                      name="initial_exchange_date"
-                      value={bond.initial_exchange_date}
-                      onChange={handleChange}
-                      tooltipText="Start date of bond exchange"
-                      min={new Date().toISOString().split('T')[0]}
-                    />
-                    <FormInput
-                      label={<span className="font-bold">Maturity Date</span>}
-                      type="date"
-                      name="maturity_date"
-                      value={bond.maturity_date}
-                      onChange={handleChange}
-                      tooltipText="Date the bond matures"
-                      min={bond.initial_exchange_date || ''}
-                    />
-                    <FormInput
-                      label={<span className="font-bold">Bond Price</span>}
-                      type="number"
-                      name="bond_price"
-                      value={bond.bond_price}
-                      onChange={handleChange}
-                      tooltipText="Current price of the bond"
-                    />
-                    <FormInput
-                      label={<span className="font-bold">Discount</span>}
-                      type="number"
-                      name="discount"
-                      value={bond.discount}
-                      onChange={handleChange}
-                      tooltipText="Discount applied to bond"
-                    />
-                    <FormInput
-                      label={
-                        <span className="font-bold">Notional Principal</span>
-                      }
-                      type="number"
-                      disabled="true"
-                      name="notional_principal"
-                      value={bond.notional_principal}
-                      onChange={handleChange}
-                      tooltipText="Principal amount of the bond"
-                    />
-                    <FormInput
-                      label={<span className="font-bold">Number of Bonds</span>}
-                      type="number"
-                      name="number_of_bonds"
-                      value={bond.number_of_bonds}
-                      onChange={handleChange}
-                      tooltipText="Total quantity of bonds"
-                      disabled="true"
-                    />
-                    <FormInput
-                      label={<span className="font-bold">User Address</span>}
-                      name="user_address"
-                      value={accounts[0].address}
-                      disabled="true"
-                      onChange={handleChange}
-                      tooltipText="Address associated with the bond"
-                    />
-                    <FormInput
-                      label={<span className="font-bold">Description</span>}
-                      name="description"
-                      value={bond.description}
-                      onChange={handleChange}
-                      tooltipText="Detailed description of the bond"
-                    />
-                    <Select
-                      className="flex items-center justify-center"
-                      onValueChange={(value) =>
-                        updateBond('bond_position', value)
-                      }
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select Position" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="long">Long</SelectItem>
-                        <SelectItem value="short">Short</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  <div className="grid grid-cols-2 z-50 gap-5">
+                    <div className="flex flex-col w-full space-y-4">
+                      <label
+                        className="text-brand6 text-left text-xl leading-[120%] font-medium relative self-stretch"
+                      >
+                        Community ID:
+                      </label>
+                      <input
+                        className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        name="community_id"
+                        value={params.id}
+                        disabled
+                        placeholder="Community ID"
+                      />
+                    </div>
+
+
+
+
+
+                    <div className="flex flex-col w-full space-y-4">
+                      <label
+                        className="text-brand6 text-left text-xl leading-[120%] font-medium relative self-stretch">
+                        Bond Name:
+                      </label>
+                      <input
+                        className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        name="bond_name"
+                        value={bond.bond_name}
+                        onChange={handleChange}
+                        placeholder="Name of the bond"
+                      />
+                    </div>
+
+
+
+
+
+                    <div className="flex flex-col w-full space-y-4">
+                      <label
+                        className="text-brand6 text-left text-xl leading-[120%] font-medium relative self-stretch"
+                      >
+                        Bond Symbol:
+                      </label>
+                      <input
+                        className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        name="bond_symbol"
+                        value={bond.bond_symbol}
+                        onChange={handleChange}
+                        placeholder="Symbol of the bond"
+                      />
+                    </div>
+
+
+
+                    <div className="flex flex-col w-full space-y-4">
+                      <label
+                        className="text-brand6 text-left text-xl leading-[120%] font-medium relative self-stretch"
+                      >
+                        Bond Identity:
+                      </label>
+                      <input
+                        className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        name="bond_identity"
+                        value={bond.bond_identity}
+                        onChange={handleChange}
+                        placeholder="Identity of the bond"
+                      />
+                    </div>
+
+                    <div className="flex flex-col w-full space-y-4">
+                      <label
+                        className="text-brand6 text-left text-xl leading-[120%] font-medium relative self-stretch"
+                      >
+                        Nominal Interest Rate:
+                      </label>
+                      <input
+                        type="number"
+                        className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        name="nominal_interest_rate"
+                        value={bond.nominal_interest_rate}
+                        onChange={handleChange}
+                        placeholder="Interest rate of the bond"
+                        min={0}
+                      />
+                    </div>
+
+                    <div className="flex flex-col w-full space-y-4">
+                      <label
+                        className="text-brand6 text-left text-xl leading-[120%] font-medium relative self-stretch"
+                      >
+                        Currency:
+                      </label>
+                      <input
+                        className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        name="currency"
+                        value={bond.currency}
+                        onChange={handleChange}
+                        placeholder="Currency type (e.g., XRD)"
+                        disabled
+                      />
+                    </div>
+
+                    <div className="flex flex-col w-full space-y-4">
+                      <label
+                        className="text-brand6 text-left text-xl leading-[120%] font-medium relative self-stretch"
+                      >
+                        Initial Exchange Date:
+                      </label>
+                      <input
+                        type="date"
+                        className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        name="initial_exchange_date"
+                        value={bond.initial_exchange_date}
+                        onChange={handleChange}
+                        min={new Date().toISOString().split('T')[0]}
+                        placeholder="Start date of bond exchange"
+                      />
+                    </div>
+
+                    <div className="flex flex-col w-full space-y-4">
+                      <label
+                        className="text-brand6 text-left text-xl leading-[120%] font-medium relative self-stretch"
+                      >
+                        Maturity Date:
+                      </label>
+                      <input
+                        type="date"
+                        className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        name="maturity_date"
+                        value={bond.maturity_date}
+                        onChange={handleChange}
+                        min={bond.initial_exchange_date || ''}
+                        placeholder="Date the bond matures"
+                      />
+                    </div>
+
+                    <div className="flex flex-col w-full space-y-4">
+                      <label
+                        className="text-brand6 text-left text-xl leading-[120%] font-medium relative self-stretch"
+                      >
+                        Bond Price:
+                      </label>
+                      <input
+                        type="number"
+                        className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        name="bond_price"
+                        value={bond.bond_price}
+                        onChange={handleChange}
+                        placeholder="Current price of the bond"
+                        min={0}
+                      />
+                    </div>
+
+
+
+
+                    <div className="flex flex-col w-full space-y-4">
+                      <label
+                        className="text-brand6 text-left text-xl leading-[120%] font-medium relative self-stretch"
+                      >
+                        Discount:
+                      </label>
+                      <input
+                        type="number"
+                        className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        name="discount"
+                        value={bond.discount}
+                        onChange={handleChange}
+                        placeholder="Discount applied to bond"
+                        min={0}
+                      />
+                    </div>
+
+
+                    <div className="flex flex-col w-full space-y-4">
+                      <label
+                        className="text-brand6 text-left text-xl leading-[120%] font-medium relative self-stretch"
+                      >
+                        Notional Principal:
+                      </label>
+                      <input
+                        type="number"
+                        className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        name="notional_principal"
+                        value={bond.notional_principal}
+                        onChange={handleChange}
+                        placeholder="Principal amount of the bond"
+                        disabled
+                      />
+                    </div>
+
+                    <div className="flex flex-col w-full z-50 space-y-4">
+                      <label
+                        className="text-brand6 text-left text-xl leading-[120%] font-medium relative self-stretch"
+                      >
+                        Number of Bonds:
+                      </label>
+                      <input
+                        type="number"
+                        className="w-full p-4 border bg-[#1B0D37] z-50 border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        name="number_of_bonds"
+                        value={bond.number_of_bonds}
+                        onChange={handleChange}
+                        placeholder="Total quantity of bonds"
+                        disabled
+                      />
+                    </div>
+
+                    <div className="flex flex-col w-full space-y-4">
+                      <label
+                        className="text-brand6 text-left text-xl leading-[120%] font-medium relative self-stretch"
+                      >
+                        User Address:
+                      </label>
+                      <input
+                        className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        name="user_address"
+                        value={accounts[0].address}
+                        onChange={handleChange}
+                        placeholder="Address associated with the bond"
+                        disabled
+                      />
+                    </div>
+
+                  
                     <Select
                       className="flex items-center justify-center"
                       onValueChange={(value) => updateBond('nft', value)}
                     >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select NFT" />
+                      <SelectTrigger className="w-full p-4 border bg-[#1B0D37] mt-10 h-[57px] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+                       >
+                        <SelectValue  placeholder="Select NFT"  />
                       </SelectTrigger>
                       <SelectContent>
                         {nfts.length > 0 ? (
@@ -456,8 +551,11 @@ const BondIssue = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="flex items-center justify-end">
+
+                  <div className="flex items-center pt-5 justify-end">
                     <Button
+                     className="flex-1 rounded-2xl p-3 py-3 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner"
+            
                       onClick={() => setOpen(!open)}
                       disabled={!isFormComplete}
                     >
@@ -465,7 +563,7 @@ const BondIssue = () => {
                     </Button>
                   </div>
                 </div>
-              </Card>
+              </div>
             </div>
           </div>
         </div>
@@ -542,7 +640,8 @@ const BondIssue = () => {
             </div>
 
             <div className="flex items-center justify-end space-x-4">
-              <Button
+              <Button 
+               className="flex-1 rounded-2xl p-3 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner"
                 variant="radix"
                 disabled={loading}
                 onClick={handleformSubmit}

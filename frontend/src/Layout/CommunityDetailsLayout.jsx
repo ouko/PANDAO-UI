@@ -10,7 +10,7 @@ const CommunityDetailsLayout = ({ children }) => {
   return (
     <div> 
        <TopBar />
-    <div className="flex bg-[#100821] Z-50">
+    <div className="flex bg-[#100821] font-clash Z-50">
 
 
      
