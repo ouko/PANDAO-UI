@@ -11,7 +11,7 @@ const BondCard = ({ bond }) => {
     return (
         <div className="bg-[#1B0D37] rounded-2xl border-2 border-[#5228A4] hover:scale-105 transition-transform duration-300 ease-in-out h-[428px] relative overflow-hidden backdrop-blur-md">
             <div className="bg-black/50 border-b border-[#5228a4] w-full h-[149px] absolute top-0"></div>
-            <div className="flex gap-8 items-start absolute w-[1000px] top-6 translate-x-20">
+              <div className="flex gap-8 items-start absolute w-[1000px] top-6 translate-x-20">
                 {bond.asset_url && (
                     <img
                         className="rounded-lg w-[179px] h-[105px] object-cover"
@@ -37,9 +37,9 @@ const BondCard = ({ bond }) => {
                         </span>
                     </div>
                 </div>
-            </div>
+              </div>
 
-            <div className="flex justify-start items-start transform px-8 py-4 gap-40 translate-x-10 translate-y-40">
+             <div className="flex justify-start items-start transform px-8 py-4 gap-40 translate-x-10 translate-y-40">
                 <div className="flex flex-col space-y-4">
                     <p className="text-[#5228A4] uppercase">Contract Identity: <span className="text-white">{bond.contract_identity || 'N/A'}</span></p>
                     <p className="text-[#5228A4] uppercase">Currency: <span className="text-white">{bond.currency || 'N/A'}</span></p>

@@ -75,7 +75,15 @@ const BondIssued = (props) => {
               </div>
 
               {/* Issued Bonds Section */}
-              <div className="">
+
+              <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] h-full relative overflow-hidden">
+                <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
+                  <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
+
+                    Bonds:
+                  </div>
+                  
+                </div>
                 {loading ? (
                   <div className="flex items-center justify-center h-96">
                     {[...Array(3)].map((_, i) => (
@@ -87,7 +95,7 @@ const BondIssued = (props) => {
                 ) : issuedBonds.length === 0 ? (
                   <div className="text-center">No bonds issued yet</div>
                 ) : (
-                  <div className="space-y-4 ">
+                  <div className="space-y-4 px-6 py-6">
                     {issuedBonds.map((bond) => (
                       <BondCard key={bond.id} bond={bond} />
                     ))}
