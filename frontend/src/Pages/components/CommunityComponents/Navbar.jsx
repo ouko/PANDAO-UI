@@ -4,7 +4,7 @@ import { useRdt } from '@/hooks/useRdt'
 import axios from 'axios'
 
 
-const Navbar = () => {
+const Sidebar = () => {
   const rdt = useRdt()
   const navigate = useNavigate()
   const params = useParams()
@@ -72,4 +72,4 @@ const Navbar = () => {
   );
 }
 
-export default Navbar;
+export default Sidebar;

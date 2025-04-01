@@ -1,6 +1,6 @@
 import TileEffect4 from "@/components/ui/myComponents/grid-bg-4";
 import TopBar from "@/Pages/CommunityPage/components/TopBar";
-import Navbar from "@/Pages/components/CommunityComponents/Navbar";
+import Sidebar from "@/Pages/components/CommunityComponents/Navbar";
 import PropTypes from "prop-types";
 import { Outlet } from "react-router-dom";
 
@@ -15,7 +15,7 @@ const CommunityDetailsLayout = ({ children }) => {
 
 
         <div className="sticky top-0 z-50 mt-20">
-          <Navbar />
+          <Sidebar />
         </div>
         <div className="bg-black/50 absolute inset-0"></div>
         <div className="absolute bottom-[100px] left-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px]"></div>
