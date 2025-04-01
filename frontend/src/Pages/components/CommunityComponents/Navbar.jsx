@@ -1,27 +1,14 @@
-import React, { useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
-import { Button } from '../../../components/ui/button'
-import MobileSidebar from '../MobileSidebar'
-import { ChevronLeft } from 'lucide-react'
+
 import { useRdt } from '@/hooks/useRdt'
 import axios from 'axios'
-import MobileNav from './MobileNav'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import useBluePrintSlugStore from '@/store/blueprintSlug'
-import { IoHomeOutline } from "react-icons/io5";
+
 
 const Navbar = () => {
   const rdt = useRdt()
   const navigate = useNavigate()
   const params = useParams()
-  const { slug } = useBluePrintSlugStore()
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [showMore, setShowMore] = useState(false);
+
 
   rdt.walletApi.provideConnectResponseCallback(async (result) => {
     if (result.isErr()) {
@@ -47,10 +34,6 @@ const Navbar = () => {
   })
   
 
-  const handleSelect = (action) => {
-    action();
-    setIsDropdownOpen(false);
-  };
 
 
   const navItems = [
@@ -83,18 +66,7 @@ const Navbar = () => {
             <div className="font-medium text-2xl">{item.label}</div>
           </NavLink>
         ))}  
-                {showMore && moreItems.map((item, index) => (
-          <NavLink
-            key={`more-${index}`}
-            to={item.path}
-            className={({ isActive }) =>
-              `flex flex-row py-2 items-center justify-start my-4 cursor-pointer transition-colors ${isActive ? 'bg-[#5228A4] text-white rounded-lg w-[300px] px-3' : 'text-primary-100'}`
-            }
-            end
-          >
-            <div className="font-medium text-2xl pl-3">{item.label}</div>
-          </NavLink>
-        ))}
+
       </div>
     </div>
   );
