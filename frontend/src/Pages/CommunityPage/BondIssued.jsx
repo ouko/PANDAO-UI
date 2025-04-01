@@ -52,7 +52,7 @@ const BondIssued = (props) => {
                
                 <div className="flex flex-row  gap-10 items-center w-full">
                   <div
-                    className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
+                    className="bg-[#321e58] rounded-full p-5 z-50 flex items-center justify-center w-24 h-24">
                     <img
                       className="w-14 h-14"
                       src="/8.svg"

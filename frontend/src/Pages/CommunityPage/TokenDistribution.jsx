@@ -116,15 +116,15 @@ const TokenDistribution = () => {
                 <Table>
                   {/* <TableCaption>A list of your recent .</TableCaption> */}
                   <TableHeader>
-                    <TableRow className="bg-[#39246b] h-[65px] text- ">
-                      <TableHead className="w-[150px] ">User Name</TableHead>
-                      <TableHead>Token Owned</TableHead>
-                      <TableHead>Address</TableHead>
+                    <TableRow className="bg-[#39246b] h-[65px] text-white text-[20px] ">
+                      <TableHead className="w-[150px] text-white  ">User Name</TableHead>
+                      <TableHead className="w-[150px] text-white  " >Token Owned</TableHead>
+                      <TableHead className="w-[150px] text-white  " >Address</TableHead>
                       {/* <TableHead className="text-right">Amount</TableHead> */}
                     </TableRow>
                   </TableHeader>
 
-                  <TableBody className="text-2xl bg-gradient-to-br from-[rgba(24,18,45,0.59)]  via-transparent to-brand1 border-2 border-brand2 px-2 py-2 text-brand7">
+                  <TableBody className="text-[18px] bg-gradient-to-br from-[rgba(24,18,45,0.59)]  via-transparent to-brand1 border-2 border-brand2 px-2 py-2 text-brand7">
                     {tokens.map((token, index) => (
                       <TableRow key={index}>
                         <TableCell className="font-medium ">
