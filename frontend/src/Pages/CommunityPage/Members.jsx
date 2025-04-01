@@ -66,44 +66,67 @@ const Members = () => {
   }
   console.log(participants.length)
   return (
-    <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50 z-50 text-black px-2">
+    <div className=" items-start gap-3 justify-start min-h-screen overflow-hidden bg-brand1 z-50 text-black px-2">
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
         <div className="space-y-6 md:w-[100%] ">
-          <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
+          <div className="flex md:flex-row flex-col md:w-[95%] mx-auto gap-2">
             <div className="md:w-[100%] space-y-6  ">
-              <Card className="bg-white md:w-[100%] mx-auto md:p-10 p-4  space-y-10">
-                <div className="flex items-center justify-between">
-                  <div className="bg-slate-200 w-fit p-2 rounded-full">
-                    <Users className=" text-blue-700" />
-                  </div>
-                  {/* <div>
-                      <Button variant="radix" >
-                        Manage members
-                      </Button>
-                    </div> */}
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="text-3xl font-semibold">
-                    {participants.length} Members
-                  </div>
-                  {participants.length > 4 && (
-                    <AvatarCircles
-                      numPeople={participants.length - 3}
-                      src1={participants[0].image_url}
+
+              <div
+                class="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden"
+              >
+                
+                <div class="flex flex-row  gap-10 items-center w-full">
+                  <div
+                    class="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
+                    <img
+                      class="w-14 h-14"
+                      src="/member.svg"
+                      alt="User Icon"
                     />
-                  )}
+                  </div>
+                  <div class="flex flex-col gap-1.5">
+                    <div
+                      class="text-[#5228A4] font-semibold uppercase text-xl"
+                    >
+                      Total Issued Bonds:
+                    </div>
+                    <div
+                      class="text-white text-[56px] font-medium text-center"
+                    >
+                      {participants.length} Members
+                    </div>
+                    {participants.length > 4 && (
+                      <AvatarCircles
+                        numPeople={participants.length - 3}
+                        src1={participants[0].image_url}
+                      />
+                    )}
+                  </div>
                 </div>
-              </Card>
+              </div>
 
 
-              <Card className="bg-white md:w-[70%] mx-auto md:p-4 p-4 space-y-2">
-                <div className="p-2 border-b-2 -translate-x-2">Members</div>
+
+
+              <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] h-full relative overflow-hidden">
+                <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
+                  <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
+
+                    Members:
+                  </div>
+                  
+                </div>
+
+
+
+
                 {loading ? (
-                  <div className="flex flex-col h-auto items-center justify-center text-center mt-5">
-                  {[...Array(4)].map((_, i) => (
-                    <SkeletonCard key={i} />
-                  ))}
-                </div>
+                  <div className="flex flex-col h-auto items-center  justify-center text-center mt-5">
+                    {[...Array(4)].map((_, i) => (
+                      <SkeletonCard key={i} />
+                    ))}
+                  </div>
                 ) : participants.length === 0 ? (
                   <div className="flex items-center justify-center h-20">
                     Be the first one to join the community
@@ -111,10 +134,11 @@ const Members = () => {
                 ) : (
                   participants.map((participant, index) => (
 
-                    <Card
+                    <div
 
                       key={index}
-                      className="bg-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-2 md:w-full mx-auto p-4 border border-gray-200 rounded-lg shadow-sm"
+                      className="bg-gradient-to-br from-[rgba(24,18,45,0.59)] via-transparent to-brand1 hover:scale-95 transition-transform duration-300 
+                        flex flex-col my-4  md:flex-row items-start md:items-center justify-between gap-4 md:gap-2  mx-4 p-4 border border-brand2 rounded-lg shadow-sm"
                     >
                       <div className="flex items-center gap-3">
                         <Avatar>
@@ -125,7 +149,7 @@ const Members = () => {
                           <AvatarFallback>JD</AvatarFallback>
                         </Avatar>
                         <div className="text-left cursor-pointer text-ellipsis overflow-hidden">
-                          <p className="font-medium text-lg">
+                          <p className="font-medium text-brand7 text-lg">
                             {participant.name || 'Unnamed Participant'}
                           </p>
                           <div className="text-gray-600 dark:text-gray-400 text-sm truncate">
@@ -134,10 +158,10 @@ const Members = () => {
                         </div>
                       </div>
 
-                      <div className="flex flex-col md:flex-row items-start md:items-center  gap-4">
+                      <div className="flex flex-col md:flex-row z-20 items-start md:items-center  gap-4">
                         <Dialog>
                           <DialogTrigger>
-                            <div className="text-left group border-2 px-3 py-2 rounded-md hover:text-blue-600 cursor-pointer hover:shadow-sm text-ellipsis overflow-hidden flex items-center text-sm">
+                            <div className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium">
                               View Details
                             </div>
                           </DialogTrigger>
@@ -153,7 +177,7 @@ const Members = () => {
                                     />
                                     <AvatarFallback>JD</AvatarFallback>
                                   </Avatar>
-                                  <div className="text-left cursor-pointer text-ellipsis overflow-hidden">
+                                  <div className="text-left cursor-pointer text-ellipsis  overflow-hidden">
                                     <p className="font-medium text-lg">
                                       {participant.name ||
                                         'Unnamed Participant'}
@@ -282,20 +306,19 @@ const Members = () => {
                         </Dialog>
 
                         <div
-                          onClick={() =>
-                            navigate(
-                              `/userDashboard/userProfile/${participant.public_address}`,
-                            )
-                          }
-                          className="text-left group border-2 px-3 py-2 rounded-md hover:text-blue-600 cursor-pointer hover:shadow-sm text-ellipsis overflow-hidden flex items-center text-sm"
-                        >
-                          Visit Profile{' '}
-                          <ChevronRight className="h-5 w-5 group-hover:translate-x-1 duration-300 transition-transform" />
-                        </div>
+  onClick={() =>
+    navigate(`/userDashboard/userProfile/${participant.public_address}`)
+  }
+  className="rounded-[26px] py-2 px-[15px]  bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium flex items-center justify-between"
+>
+  Visit Profile
+  <ChevronRight className="h-5 w-5 group-hover:translate-x-1 duration-300 transition-transform" />
+</div>
+
                       </div>
-                    </Card>
+                    </div>
                   )))}
-              </Card>
+              </div>
 
 
 
