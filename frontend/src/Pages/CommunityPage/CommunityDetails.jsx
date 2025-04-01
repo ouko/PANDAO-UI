@@ -694,20 +694,19 @@ const CommunityDetails = () => {
   const isUserParticipant = participants.some(
     (participant) => participant.public_address === accounts[0].address,
   )
-  console.log(participants, 'hey')
   return (
     <div className=" pb-10 items-start font-clash gap-3 justify-start min-h-screen overflow-hidden mt-5 text-black px-2">
       <CustomAlert />
-      <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6  md:py-12 max-w-[1440px] mx-auto ">
+      <div className="flex md:flex-row flex-col   md:py-12  ">
         {data && (
-          <div className="space-y-6 md:w-[100%] ">
+          <div className="space-y-6 w-full  ">
 
            <DaoCard daoData={data} isUserParticipant={isUserParticipant}
              handleJoinCommunity={handleJoinCommunity} 
              setQuickStartOpen={setQuickStartOpen}
              />
 
-            <div className="flex md:flex-row flex-col md:w-[100%] mx-auto gap-2">
+            <div className="flex md:flex-row flex-col w-full mx-auto gap-2">
               <div className="md:w-[50%] space-y-3">
 
 

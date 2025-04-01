@@ -30,7 +30,7 @@ const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStar
 
   return (
     <div
-      className="bg-[rgba(169,126,255,0.08)] rounded-[20px] border-solid border-[#5228A4] border pt-[13px] pr-[25px] pb-[13px] pl-[25px] self-stretch shrink-0 h-[295px] relative overflow-hidden"
+      className="bg-[rgba(169,126,255,0.08)] rounded-[20px] border-solid border-[#5228A4] border pt-[13px]  pb-[13px] pl-[25px] self-stretch shrink-0 h-[295px] relative overflow-hidden"
       
     >
 
