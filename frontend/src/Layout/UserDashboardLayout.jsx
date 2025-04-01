@@ -1,5 +1,4 @@
-import Footer from "@/Pages/components/CommunityComponents/Footer";
-import Navbar from "@/Pages/components/UserDashboardComponents/Navbar";
+
 import PropTypes from "prop-types";
 import { Outlet } from "react-router-dom";
 
