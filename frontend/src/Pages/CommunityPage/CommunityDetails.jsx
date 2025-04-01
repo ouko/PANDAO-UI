@@ -31,16 +31,16 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import FundHistoryGraph from '../CommunityPage/ChatHistory'
+import FundHistoryGraph from './ChatHistory'
 import { DialogDescription } from '@radix-ui/react-dialog'
-import DaoCard from '../CommunityPage/components/DaoCard'
-import TokenCard from '../CommunityPage/components/TokenCard'
-import MembersCard from '../CommunityPage/components/MembersCard'
-import TotalProposalsCard from '../CommunityPage/components/PraposalCard'
-import TotalFund from '../CommunityPage/components/TotalFund'
-import WithdrawCard from '../CommunityPage/components/WithdrawCard'
-import DiscussionCard from '../CommunityPage/components/DiscussionCard'
-import ExecutiveMember from '../CommunityPage/components/ExecutiveMember'
+import DaoCard from './components/DaoCard'
+import TokenCard from './components/TokenCard'
+import MembersCard from './components/MembersCard'
+import TotalProposalsCard from './components/PraposalCard'
+import TotalFund from './components/TotalFund'
+import WithdrawCard from './components/WithdrawCard'
+import DiscussionCard from './components/DiscussionCard'
+import ExecutiveMember from './components/ExecutiveMember'
 
 ChartJS.register(
   LineElement,
