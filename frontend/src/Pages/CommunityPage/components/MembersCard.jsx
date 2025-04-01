@@ -1,8 +1,7 @@
-import React from 'react';
+
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import AvatarCircles from '@/components/ui/myComponents/avatarCircle'
-import { Users } from 'lucide-react';
+
 
 const MembersCard = ({ participants }) => {
   const navigate = useNavigate();
@@ -19,7 +18,7 @@ const MembersCard = ({ participants }) => {
         < button className="text-[#a7a7a7] text-left  text-[14px] leading-5 font-medium"
       
           onClick={() => navigate(`/community/detail/${params.id}/members`)}
-          variant="radix"
+         
         >
           View All &gt;
         </button>

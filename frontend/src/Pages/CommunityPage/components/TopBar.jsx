@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import useScrollTop from '@/hooks/useScroll';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { Card } from '@/components/ui/card';
+
 import { Dialog, DialogTrigger, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { useEffect, useState } from 'react';
 import axios from 'axios';

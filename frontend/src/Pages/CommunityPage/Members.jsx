@@ -1,9 +1,8 @@
 import { useAccount } from '@/AccountContext'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+
 import AvatarCircles from '@/components/ui/myComponents/avatarCircle'
-import { Textarea } from '@/components/ui/textarea'
+
 import {
   FiActivity,
   FiDollarSign,
@@ -16,18 +15,15 @@ import {
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import axios from 'axios'
 import {
-  ArrowBigLeft,
-  ArrowRight,
-  ChevronLeft,
+
   ChevronRight,
-  Users,
+
 } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogHeader,
-  DialogTitle,
+
   DialogTrigger,
 } from '@/components/ui/dialog'
 
@@ -73,26 +69,26 @@ const Members = () => {
             <div className="md:w-[100%] space-y-6  ">
 
               <div
-                class="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden"
+                className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden"
               >
                 
-                <div class="flex flex-row  gap-10 items-center w-full">
+                <div className="flex flex-row  gap-10 items-center w-full">
                   <div
-                    class="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
+                    className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
                     <img
-                      class="w-14 h-14"
+                      className="w-14 h-14"
                       src="/member.svg"
                       alt="User Icon"
                     />
                   </div>
-                  <div class="flex flex-col gap-1.5">
+                  <div className="flex flex-col gap-1.5">
                     <div
-                      class="text-[#5228A4] font-semibold uppercase text-xl"
+                     className="text-[#5228A4] font-semibold uppercase text-xl"
                     >
                       Total Issued Bonds:
                     </div>
                     <div
-                      class="text-white text-[56px] font-medium text-center"
+                      className="text-white text-[56px] font-medium text-center"
                     >
                       {participants.length} Members
                     </div>

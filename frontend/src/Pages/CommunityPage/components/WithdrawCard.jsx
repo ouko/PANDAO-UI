@@ -5,8 +5,8 @@ function WithdrawCard({ withDrawRequest, handleWithDrawSign, loading }) {
         <div className="bg-[rgba(169,126,255,0.08)] rounded-lg border border-[#5228A4] p-6 overflow-hidden backdrop-blur-[6.7px]">
            
             <div className="bg-[#39246b]  px-4 flex items-center w-full  h-[53px] absolute left-0 top-0">
-        <div className="text-white text-2xl font-medium font-[ClashDisplayVariable-Medium, sans-serif]">
-        Total Withdraw Request:
+            <div className="text-white text-2xl font-medium font-[ClashDisplayVariable-Medium, sans-serif]">
+         Total Withdraw Request:
         </div>
       </div>
            

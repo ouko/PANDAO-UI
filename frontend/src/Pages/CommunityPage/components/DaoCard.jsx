@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
-import { useAccount } from "@/AccountContext";
 import { Check, Copy } from 'lucide-react';
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
+
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { DialogDescription } from '@radix-ui/react-dialog'
 import { Card } from '@/components/ui/card'
-
-
 
 
 const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStartOpen, quickStartOpen }) => {

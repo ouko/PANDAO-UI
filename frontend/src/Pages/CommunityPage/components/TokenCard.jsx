@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
+
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
@@ -64,7 +64,7 @@ const TokenCard = ({ data, handleBuyToken, handleSellToken, loading }) => {
                       </button>
                     ) : (
                       <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
-                        variant="radix"
+                       
                         onClick={() => handleSellToken(tokenToSell)}
                         disabled={!tokenToSell || tokenToSell <= 0}
                       >
@@ -113,7 +113,7 @@ const TokenCard = ({ data, handleBuyToken, handleSellToken, loading }) => {
                       </button>
                     ) : (
                       <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
-                        variant="radix"
+                     
                         onClick={() => handleBuyToken(token)}
                         disabled={!token || token <= 0}
                       >

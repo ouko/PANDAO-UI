@@ -1,7 +1,7 @@
-import React from 'react';
+
 import { useNavigate, useParams } from 'react-router-dom';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { Card } from '@/components/ui/card';
+
 import { Badge } from '@/components/ui/badge';
 
 function ExecutiveMember({ participants }) {

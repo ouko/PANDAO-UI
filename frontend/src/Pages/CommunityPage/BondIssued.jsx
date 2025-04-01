@@ -1,16 +1,9 @@
 import { useAccount } from '@/AccountContext'
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { toast } from 'sonner'
+
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { BookDownIcon } from 'lucide-react'
-import { SkeletonCard } from '../GlobalComponents/Skeleton'
+
 import BondCard from './components/BondCard'
 
 const BondIssued = (props) => {
@@ -20,7 +13,7 @@ const BondIssued = (props) => {
   const [issuedBonds, setIssuedBonds] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [expandedBonds, setExpandedBonds] = useState({}) // Track expanded descriptions
+
 
   const fetchIssuedBond = async () => {
     try {
@@ -40,12 +33,7 @@ const BondIssued = (props) => {
     fetchIssuedBond()
   }, [])
 
-  const toggleDescription = (id) => {
-    setExpandedBonds((prev) => ({
-      ...prev,
-      [id]: !prev[id], // Toggle the expanded state for the bond
-    }))
-  }
+  
 
   if (!accounts || accounts.length === 0) {
     navigate('/')
@@ -59,26 +47,26 @@ const BondIssued = (props) => {
           <div className="flex md:flex-row flex-col md:w-[95%] mx-auto gap-2">
             <div className="md:w-[100%] w-full  space-y-6">
               <div
-                class=" rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden "
+                className =" rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden "
                >
                
-                <div class="flex flex-row  gap-10 items-center w-full">
+                <div className="flex flex-row  gap-10 items-center w-full">
                   <div
-                    class="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
+                    className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
                     <img
-                      class="w-14 h-14"
+                      className="w-14 h-14"
                       src="/8.svg"
                       alt="User Icon"
                     />
                   </div>
-                  <div class="flex flex-col gap-1.5">
+                  <div className="flex flex-col gap-1.5">
                     <div
-                      class="text-[#5228A4] font-semibold uppercase text-xl"
+                      className="text-[#5228A4] font-semibold uppercase text-xl"
                     >
                       Total Issued Bonds:
                     </div>
                     <div
-                      class="text-white text-[56px] font-medium text-center"
+                      className="text-white text-[56px] font-medium text-center"
                     >
                       Issued Bonds
                     </div>

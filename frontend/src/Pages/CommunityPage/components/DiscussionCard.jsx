@@ -1,4 +1,4 @@
-import React from 'react'
+import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function DiscussionCard({communities}) {
