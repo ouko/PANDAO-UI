@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Check, Copy, Info } from 'lucide-react';
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import { Button } from '@/components/ui/button';
@@ -16,12 +16,20 @@ import { Card } from '@/components/ui/card'
 
 const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStartOpen, quickStartOpen }) => {
   const [copied, setCopied] = useState(false);
+  const [copied1, setCopied1] = useState(false);
 
   const handleCopy = (address) => {
     navigator.clipboard.writeText(address);
     setCopied(true);
     setTimeout(() => {
       setCopied(false);
+    }, 1000);
+  };
+  const handleCopy2 = (address) => {
+    navigator.clipboard.writeText(address);
+    setCopied1(true);
+    setTimeout(() => {
+      setCopied1(false);
     }, 1000);
   };
 
@@ -60,7 +68,7 @@ const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStar
           </div>
         </div>
 
-        <div className="flex flex-col gap-1.5 items-start justify-start shrink-0 relative">
+        <div className="flex flex-col gap-1.5 items-start justify-start shrink-0 relative z-30">
           <div className="text-[#AE85FF] text-left text-base font-normal uppercase relative self-stretch">
             Owner address:
           </div>
@@ -73,24 +81,34 @@ const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStar
               onClick={() => handleCopy(daoData.owner_address)}
             >
               {copied ? (
-                <Check className="h-4 w-4" />
+                <Check className="h-4 w-4 text-white" />
               ) : (
-                <Copy className="h-4 w-4" />
+                <Copy className="h-4 w-4 text-white" />
               )}
             </p>
           </div>
         </div>
 
-        <div className="flex flex-col gap-1.5 items-start justify-start self-stretch shrink-0 relative">
+        <div className="flex flex-col gap-1.5 items-start justify-start self-stretch shrink-0 relative z-30">
           <div className="text-[#AE85FF] text-left text-base font-normal uppercase relative self-stretch">
             Component Address:
           </div>
-          <div className="flex flex-row gap-4 items-center justify-start self-stretch shrink-0 relative">
-            <div className="text-[#ffffff] text-center text-base font-normal relative">
-              {daoData.component_address}
-            </div>
-
+          <div className="flex items-center gap-2">
+            <p className="text-[#ffffff] text-center text-xl font-normal overflow-hidden text-ellipsis">
+            {clipAddress(daoData.component_address)}
+            </p>
+            <p
+              className="cursor-pointer"
+              onClick={() => handleCopy2(daoData.component_address)}
+            >
+              {copied1 ? (
+                <Check className="h-4 w-4 text-white" />
+              ) : (
+                <Copy className="h-4 w-4 text-white" />
+              )}
+            </p>
           </div>
+         
         </div>
       </div>
 
