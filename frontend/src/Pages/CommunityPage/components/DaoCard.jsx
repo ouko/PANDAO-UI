@@ -139,7 +139,7 @@ const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStar
         <div className="absolute bottom-4 right-4 flex gap-2">
           {!isUserParticipant && (
             <Button
-              className="bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] px-5 py-2 text-black font-semibold rounded-full"
+              className="bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] px-5 py-2 text-white font-semibold rounded-full"
               variant="radix"
               onClick={handleJoinCommunity}
             >
@@ -156,7 +156,7 @@ const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStar
           Mint Executive Badge
         </Button> */}
               <Button
-                className="bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] px-5 py-2 text-black font-semibold rounded-full"
+                className="bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] px-5 py-2 text-white font-semibold rounded-full"
                 variant="radix"
                 onClick={() => setQuickStartOpen(true)}>
                 Quick Start
