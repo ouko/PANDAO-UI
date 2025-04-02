@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, Copy } from 'lucide-react';
+import { Check, Copy, Info } from 'lucide-react';
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import { Button } from '@/components/ui/button';
 import {
@@ -96,24 +96,24 @@ const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStar
 
       <div className="flex justify-end items-start relative w-full h-full p-4">
         {/* First Box */}
-        <div className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)] w-[197px] h-[75px] p-2">
+        <Card className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)]  px-5 py-3">
           <div className="flex flex-row gap-[11px] items-center">
-            <img className="w-4 h-4" src="/Error.svg" alt="Error Icon" />
+           <Info className='text-purple-400'/>
             <div className="text-[#AE85FF] text-base font-normal uppercase">DAO TYPE:</div>
           </div>
           <div className="text-white text-xl font-normal">{daoData.blueprint_slug} DAO</div>
-        </div>
+        </Card>
 
         {/* Second Box */}
-        <div className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)] w-[238px] h-[75px] p-2 ml-4">
+        <Card className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)] px-5 py-3 ">
           <div className="flex flex-row gap-[11px] items-center">
-            <img className="w-4 h-4" src="/Error.svg" alt="Error Icon" />
+           <Info className='text-purple-400'/>
             <div className="text-[#AE85FF] text-base font-normal uppercase">Proposal rights:</div>
           </div>
           <div className="text-white text-xl font-normal">
             {daoData.proposal_rights === "EVERYONE" ? "Creation is open to all" : "Restricted Access"}
           </div>
-        </div>
+        </Card>
       </div>
 
 
