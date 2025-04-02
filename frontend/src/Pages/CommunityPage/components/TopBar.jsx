@@ -56,11 +56,10 @@ const TopBar = ({ userImage, userName, accounts }) => {
   return (
     <div className="flex items-center flex-wrap justify-center">
       <div
-        className={`mx-auto flex bg-brand1/80 text-white fixed w-full z-20 transition-all duration-300 items-center justify-between h-16 p-5 ${
-          scrolled
+        className={`mx-auto flex bg-brand1/80 text-white fixed w-full z-20 transition-all duration-300 items-center justify-between h-16 p-5 ${scrolled
             ? 'top-6 max-w-[1300px] rounded-[77px] border border-violet-900 pt-[13px] pr-[25px] pb-[13px] pl-[25px]'
             : 'top-0 max-w-full border-violet-900'
-        }`}
+          }`}
       >
         <div className="w-auto">
           <Link to="/">
@@ -70,15 +69,15 @@ const TopBar = ({ userImage, userName, accounts }) => {
 
         <ul className="md:flex hidden items-center gap-4 font-semibold text-lg">
           <Dialog>
-          <DialogTrigger asChild>
-  <button className="p-2 rounded-full  transition group">
-    <img 
-      src="/BELL.svg" 
-      alt="Notifications" 
-      className="h-6 w-6 group-hover:animate-bell-wiggle"
-    />
-  </button>
-</DialogTrigger>
+            <DialogTrigger asChild>
+              <button className="p-2 rounded-full  transition group">
+                <img
+                  src="/BELL.svg"
+                  alt="Notifications"
+                  className="h-6 w-6 group-hover:animate-bell-wiggle"
+                />
+              </button>
+            </DialogTrigger>
 
             <DialogContent className="max-w-[600px] bg-brand2">
               <DialogTitle>User Notifications</DialogTitle>
@@ -122,16 +121,12 @@ const TopBar = ({ userImage, userName, accounts }) => {
               </div>
             </DialogContent>
           </Dialog>
-
-          <Avatar className="w-10 h-10 border-2 border-primary-300">
-            {userImage ? (
-              <AvatarImage src={userImage} className="object-cover" />
-            ) : (
-              <AvatarFallback>{userName?.slice(0, 2) || 'CN'}</AvatarFallback>
-            )}
-          </Avatar>
+          <div id="connect-btn">
+      <radix-connect-button />
+    </div>
         </ul>
       </div>
+      
     </div>
   );
 };

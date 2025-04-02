@@ -89,7 +89,7 @@ const Activity = () => {
     return null
   }
   return (
-    <div className=" items-start gap-3 justify-start min-h-screen overflow-hidden bg-brand1  text-black px-2">
+    <div className=" items-start gap-3 justify-start min-h-screen overflow-hidden  text-black px-2">
       {showExpenses ? (
         <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
           <div className="space-y-6 md:w-[100%] ">
@@ -161,7 +161,7 @@ const Activity = () => {
                                 </div>
                               </div>
                               <div className="py-2">
-                                <p className={`text-sm text-xl font-semibold ${transaction.xrd_added > 0 ? 'text-green-500' : 'text-red-500'}`}>XRD Added: {transaction.xrd_added}</p>
+                                <p className={` text-xl font-semibold ${transaction.xrd_added > 0 ? 'text-green-500' : 'text-red-500'}`}>XRD Added: {transaction.xrd_added}</p>
                                
 
                               </div>
@@ -239,7 +239,7 @@ const Activity = () => {
 
                     </div>
                     {!loading && (
-                      <div className="space-y-4 px-3 py-3 rounded-2xl">
+                      <div className="space-y-4 px-3 py-3 rounded-2xl h-[600px] overflow-y-auto">
                         {activity &&
                           activity.map((ac, index) => (
                             <div
