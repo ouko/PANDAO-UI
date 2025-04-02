@@ -46,10 +46,7 @@ const BondIssued = (props) => {
         <div className="space-y-6 md:w-[100%]">
           <div className="flex md:flex-row flex-col md:w-[95%] mx-auto gap-2">
             <div className="md:w-[100%] w-full  space-y-6">
-              <div
-                className =" rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden "
-               >
-               
+              <div className =" rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden ">  
                 <div className="flex flex-row  gap-10 items-center w-full">
                   <div
                     className="bg-[#321e58] rounded-full p-5 z-50 flex items-center justify-center w-24 h-24">
