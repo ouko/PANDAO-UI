@@ -13,6 +13,7 @@ import { BookDownIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useSendTransaction } from '@/hooks/useSendTransaction'
 import { SkeletonCard } from '../GlobalComponents/Skeleton'
+import BondCard from './components/BondCard'
 
 const PurchasedBond = (props) => {
   const { accounts } = useAccount()
@@ -122,189 +123,96 @@ const PurchasedBond = (props) => {
   }
 
   return (
-    <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50 text-black px-2">
+    <div className="items-start gap-3 justify-start min-h-screen overflow-hidden bg-brand1 text-black px-2">
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto">
         <div className="space-y-6 md:w-[100%]">
           <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
             <div className="md:w-[100%] space-y-6">
               {/* Heading Card */}
-              <Card className="bg-white md:w-[100%] mx-auto md:p-10 p-4 space-y-10">
-                <div className="flex items-center justify-between">
-                  <div className="bg-slate-200 w-fit p-2 rounded-full">
-                    <BookDownIcon className="text-blue-700" />
+
+              <div
+                className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden"
+              >
+
+                <div className="flex flex-row  gap-10 items-center w-full">
+                  <div
+                    className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
+                    <img
+                      className="w-14 h-14"
+                      src="/member.svg"
+                      alt="User Icon"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <div
+                      className="text-[#5228A4] font-semibold uppercase text-xl"
+                    >
+                      Total Purchased Bonds:
+                    </div>
+                    <div
+                      className="text-white text-[56px] font-medium text-center"
+                    >
+                      Purchased Bonds
+                    </div>
+
                   </div>
                 </div>
-                <div className="text-3xl font-semibold">Purchased Bonds</div>
-              </Card>
+              </div>
 
-              {/* Issued Bonds Section */}
-              <Card className="p-5">
+
+              <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] z-50 border-2 border-[#5228A4]  relative overflow-hidden">
+                <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
+                  <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
+
+                  Bonds:
+                  </div>
+                  
+                </div>
+
                 {loading ? (
-                  <div className="flex items-center justify-center h-96"> {[...Array(3)].map((_, i) => (
-                    <SkeletonCard key={i} />
-                  ))} </div>
+                  <div className="flex items-center justify-center h-96">
+                    {[...Array(3)].map((_, i) => (
+                      <SkeletonCard key={i} />
+                    ))}
+                  </div>
                 ) : error ? (
                   <div className="text-center text-red-500">{error}</div>
                 ) : issuedBonds.length === 0 ? (
-                  <div className="text-center">No bonds purchased yet</div>
+                  <div className="text-center my-10 text-white">No bonds purchased yet</div>
                 ) : (
-                  <div className="grid gap-6 grid-cols-1 h-full md:grid-cols-2 lg:grid-cols-3">
+                  <div className="mx-2  my-6">
                     {issuedBonds.map((bond) => (
-                      <Card
-                        key={bond.id}
-                        className="bg-green-100/50 shadow-lg rounded-lg p-6  hover:shadow-xl ring-2 ring-emerald-600"
-                      >
-                        {/* Bond Title */}
-                        <CardTitle className="text-2xl font-bold text-blue-800 capitalize py-2">
-                          {bond.name}
-                        </CardTitle>
-
-                        {/* Bond Image */}
-                        {bond.asset_url && (
-                          <div className="mb-4">
-                            <img
-                              src={bond.asset_url}
-                              alt={bond.asset_name || 'Asset'}
-                              className="w-full h-48 object-cover rounded-md ring-2 ring-purple-400"
-                            />
-                          </div>
-                        )}
-
-                        <p>
-                          <strong>Asset Name:</strong>{' '}
-                          {bond.asset_name || 'N/A'}
-                        </p>
-
-                        {/* Bond Description */}
-                        <CardDescription className="text-gray-600 mb-4">
-                          {bond.description ? (
-                            <div>
-                              <div
-                                className={`${expandedBonds[bond.id] ? '' : 'line-clamp-3'
-                                  }`}
-                              >
-                                {bond.description}
-                              </div>
-                              {/* <button
-                                className="mt-2 text-blue-500 hover:text-blue-700"
-                                onClick={() => toggleDescription(bond.id)}
-                              >
-                                {expandedBonds[bond.id]
-                                  ? 'Show less'
-                                  : 'Show more'}
-                              </button> */}
-                            </div>
-                          ) : (
-                            <p>No description provided</p>
-                          )}
-                        </CardDescription>
-
-                        {/* Bond Details */}
-                        <div className="space-y-2 text-sm text-gray-700">
-                          <p>
-                            <strong>Contract Identity:</strong>{' '}
-                            {bond.contract_identity || 'N/A'}
-                          </p>
-                          <p>
-                            <strong>Creator By:</strong>{' '}
-                            {bond.creator_name}
-                          </p>
-                          <p>
-                            <strong>Number of Bonds:</strong>{' '}
-                            {bond.number_of_bonds}
-                          </p>
-                          <p>
-                            <strong>Currency:</strong> {bond.currency}
-                          </p>
-                          <p>
-                            <strong>Interest Rate:</strong> {bond.interest_rate}
-                            %
-                          </p>
-                          <p>
-                            <strong>Discount:</strong> {bond.discount}
-                          </p>
-                          <p>
-                            <strong>Price:</strong>{' '}
-                            {bond.price ? (
-                              <>
-                                {bond.price} <strong>XRD</strong>
-                              </>
-                            ) : (
-                              'Not available'
-                            )}
-                          </p>
-                          <p>
-                            <strong>Notional Principle:</strong>{' '}
-                            {bond.notional_principle}
-                          </p>
-                          <p>
-                            <strong>Bond Position:</strong> {bond.bond_position}
-                          </p>
-                          <p>
-                            <strong>Contract Type:</strong> {bond.contract_type}
-                          </p>
-                          <p>
-                            <strong>Contract Role:</strong> {bond.contract_role}
-                          </p>
-                          <p>
-                            <span className="font-semibold text-xl">
-                              Expected Return:
-                            </span>{' '}
-                            {bond.amount_own} XRD
-                          </p>
-                        </div>
-
-                        {/* Dates and Blockchain Details */}
-                        <div className="mt-4 space-y-2 text-sm text-gray-500">
-                          <p
-                            className={
-                              new Date(bond.initial_exchange_date) < new Date()
-                                ? 'text-red-500'
-                                : ''
-                            }
-                          >
-                            <strong>Initial Exchange Date:</strong>{' '}
-                            {new Date(
-                              bond.initial_exchange_date,
-                            ).toLocaleDateString()}
-                          </p>
-                          <p>
-                            <strong>Maturity Date:</strong>{' '}
-                            {new Date(bond.maturity_date).toLocaleDateString()}
-                          </p>
-                          <p>
-                            <strong>Created on Blockchain:</strong>{' '}
-                            {bond.created_on_blockchain ? 'Yes' : 'No'}
-                          </p>
-                          <p className="truncate">
-                            <strong>Creator Address:</strong>{' '}
-                            <span
-                              className="cursor-pointer hover:underline"
-                              onClick={() => {
-                                navigator.clipboard.writeText(bond.creator)
-                                toast.success('Copied address')
-                              }}
-                            >
-                              {bond.creator}
-                            </span>
-                          </p>
-                        </div>
+                      <div key={bond.id}  
+                      className='flex flex-col relative items-end '       >
+                        <BondCard bond={bond} />
                         {bond.maturity_date && (
                           bond.claimed ? (
-                            <Button disabled className="w-full mt-3 bg-gray-200 text-gray-600 cursor-not-allowed">
+                            
+                            <Button
+                              disabled
+                              className="rounded-[26px] py-2 text-[20px] top-3 right-2 px-[35px]  absolute bg-brand3 shadow-inner text-black  leading-5 font-medium"
+                            >
                               Already Claimed
                             </Button>
                           ) : (
-                            <Button disabled={loading2} onClick={() => handleClaim(bond)} className="w-full mt-3">
+                            
+                            <Button
+                              disabled={loading2}
+                              onClick={() => handleClaim(bond)}
+                              className="rounded-[26px]  text-[18px] top-3 right-2 px-[35px]  absolute bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black  leading-5 font-medium"
+                            >
                               Claim
                             </Button>
+                           
                           )
+
                         )}
-                      </Card>
+                      </div>
                     ))}
                   </div>
                 )}
-              </Card>
+              </div>
+
             </div>
           </div>
         </div>

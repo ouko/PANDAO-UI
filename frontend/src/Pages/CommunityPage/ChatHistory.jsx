@@ -31,7 +31,7 @@ const FundHistoryGraph = () => {
   return (
     <div className="bg-[rgba(169,126,255,0.08)] rounded-lg border border-[#5228A4] p-6 overflow-hidden backdrop-blur-[6.7px]">
       {/* Header */}
-      <div className="bg-[#39246b]  px-4 flex items-center w-[661px] h-[53px] absolute left-0 top-0">
+      <div className="bg-[#39246b]  px-4 flex items-center w-full h-[53px] absolute left-0 top-0">
         <div className="text-white text-2xl font-medium font-[ClashDisplayVariable-Medium, sans-serif]">
           Total Withdraw Request:
         </div>

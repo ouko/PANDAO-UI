@@ -76,7 +76,7 @@ const BondIssued = (props) => {
 
               {/* Issued Bonds Section */}
 
-              <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] h-full relative overflow-hidden">
+              <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4]  relative overflow-hidden">
                 <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
                   <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
 

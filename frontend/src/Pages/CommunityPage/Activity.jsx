@@ -33,8 +33,7 @@ const Activity = () => {
   const fetchParticipant = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/participant/${
-          params.id
+        `${import.meta.env.VITE_BACKEND_URL}/community/participant/${params.id
         }`,
       )
       setParticipants(res.data)
@@ -45,21 +44,19 @@ const Activity = () => {
   }
   const fetchComments = async () => {
     try {
-let res
-      if(address == null){
+      let res
+      if (address == null) {
         res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/activity/${
-            params.id
+          `${import.meta.env.VITE_BACKEND_URL}/activity/${params.id
           }`,
         )
-      }else {
+      } else {
         res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/activity/${
-            params.id
+          `${import.meta.env.VITE_BACKEND_URL}/activity/${params.id
           }?user_address=${address}`,
         )
       }
-   
+
       setActivity(res.data)
       setLoading(false)
     } catch (error) {
@@ -69,8 +66,7 @@ let res
   const fetchActivity = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/funds-history/${
-          params.id
+        `${import.meta.env.VITE_BACKEND_URL}/community/funds-history/${params.id
         }`,
       )
 
@@ -93,72 +89,97 @@ let res
     return null
   }
   return (
-    <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
+    <div className=" items-start gap-3 justify-start min-h-screen overflow-hidden bg-brand1  text-black px-2">
       {showExpenses ? (
         <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
           <div className="space-y-6 md:w-[100%] ">
             <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
               <div className="md:w-[100%] space-y-6  ">
-                <Card className="bg-white md:w-[100%] mx-auto md:p-10 p-4  space-y-10">
-                  <div className="flex items-center justify-between">
-                    <div className="bg-slate-200 w-fit p-2 rounded-full">
-                      <ActivityIcon className=" text-blue-700" />
-                    </div>
-                    <div>
-                      <Button
-                        variant="radix"
-                        onClick={() => setShowExpenses(!showExpenses)}
-                      >
-                        Show Activity
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="text-3xl font-semibold">
-                    {expenses.length} Expenses so far.
-                  </div>
-                </Card>
-                <FundHistoryGraph />
-                <div className="bg-transparent md:w-[70%] mx-auto md:p-4 p-4 space-y-2 flex items-center flex-col">
-                  <Card className="w-full p-3 mb-5">
-                    <div className="text-2xl font-semibold py-3">
-                      All Funds History
-                    </div>
 
-                    {expenses.map((transaction) => (
-                      <Card
-                        key={transaction.id}
-                        className="w-full p-4 mb-4 overflow-hidden"
+
+                <div className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden">
+
+                  <div className="flex flex-row  gap-10 items-center w-full">
+                    <div
+                      className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
+                      <img
+                        className="w-14 h-14"
+                        src="/6.svg"
+                        alt="User Icon"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <div
+                        className="text-[#5228A4] font-semibold uppercase text-xl"
                       >
-                        <div className="flex items-center">
-                          <img
-                            src={transaction.image_url}
-                            alt={transaction.user_name}
-                            className="w-16 h-16 rounded-full mr-4"
-                          />
-                          <div>
-                            <h3 className="font-bold text-lg">
-                              {transaction.user_name}
-                            </h3>
-                            <p className="text-sm text-gray-600">
-                              Date:{' '}
-                              {new Date(transaction.date).toLocaleString()}
-                            </p>
-                            <p
-                              className={`text-sm font-semibold ${
-                                transaction.xrd_added > 0
-                                  ? 'text-green-500'
-                                  : 'text-red-500'
-                              }`}
-                            >
-                              XRD Added:{transaction.xrd_added}
-                            </p>
-                            <p className="text-sm text-gray-600">
-                              Transaction Hash: {transaction.tx_hash}
-                            </p>
-                          </div>
-                        </div>
-                      </Card>
-                    ))}
+                        Total Activities:
+                      </div>
+                      <div
+                        className="text-white text-[56px] font-medium text-center"
+                      >
+                        {expenses.length} Expenses so far.
+                      </div>
+
+                    </div>
+                  </div>
+                  <div className='absolute bottom-0 right-0 p-4'>
+                    <Button className="rounded-[26px] py-2 px-[15px]  bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                      onClick={() => setShowExpenses(!showExpenses)}
+                    >
+                      Show Activity
+                    </Button>
+                  </div>
+                </div>
+                <FundHistoryGraph />
+                <div className="">
+                  <Card className="bg-brand1 rounded-[10px] border-2 border-[#5228A4] h-full w-full relative overflow-hidden mb-5">
+                    <div className="bg-[#39246b] pr-[15px] pl-[15px] flex z-50 flex-row items-center justify-between w-full h-[63px] sticky left-0 top-0">
+                      <div className="text-[#ffffff] text-2xl font-medium">All Funds History</div>
+                    </div>
+                    {!loading && (
+                      <div className="space-y-4 px-3 py-3 rounded-2xl">
+                        {expenses && expenses.map((transaction) => (
+                          <Card
+                            key={transaction.id}
+                            className="flex items-start gap-4 bg-brand1 hover:scale-95 transition-transform duration-300 border-[1px] border-[#5228A4] rounded-2xl p-3 text-white"
+                          >
+                            <Avatar className="h-16 w-20 object-cover rounded-lg mt-1 overflow-hidden shadow-md">
+                              <img
+                                src={transaction.image_url}
+                                alt={transaction.user_name}
+                                className="w-full h-full object-cover"
+                              />
+                            </Avatar>
+                            <div className="flex-1 space-y-2">
+                              <div className="flex items-center justify-between">
+                                <div className="group">
+                                  <div className="font-medium text-brand7 text-xl group-hover:underline cursor-pointer">
+                                    {transaction.user_name}
+                                  </div>
+                                  <p className="text-sm text-gray-300">Transaction Hash: {transaction.tx_hash}</p>
+                                 
+                                </div>
+                              </div>
+                              <div className="py-2">
+                                <p className={`text-sm text-xl font-semibold ${transaction.xrd_added > 0 ? 'text-green-500' : 'text-red-500'}`}>XRD Added: {transaction.xrd_added}</p>
+                               
+
+                              </div>
+                              <div className="font-light text-gray-300 items-end justify-end  flex group-hover:underline cursor-pointer">
+                                    Date: {new Date(transaction.date).toLocaleString()}
+                                  </div>
+                            </div>
+                          </Card>
+                        ))}
+                      </div>
+                    )}
+                    {loading && (
+                      <div className="flex flex-col h-auto items-center justify-center text-center mt-5">
+                        {[...Array(8)].map((_, i) => (
+                          <div key={i} className="h-16 w-full bg-gray-700 rounded-2xl animate-pulse mb-4"></div>
+                        ))}
+                      </div>
+                    )}
                   </Card>
                 </div>
               </div>
@@ -170,40 +191,67 @@ let res
           <div className="space-y-6 md:w-[100%] ">
             <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
               <div className="md:w-[100%] space-y-6  ">
-                <Card className="bg-white md:w-[100%] mx-auto md:p-10 p-4  space-y-10 ">
-                  <div className="flex items-center justify-between">
-                    <div className="bg-slate-200 w-fit p-2 rounded-full">
-                      <ActivityIcon className=" text-blue-700" />
+
+
+                <div className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden">
+
+                  <div className="flex flex-row  gap-10 items-center w-full">
+                    <div
+                      className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
+                      <img
+                        className="w-14 h-14"
+                        src="/6.svg"
+                        alt="User Icon"
+                      />
                     </div>
-                    <div>
-                      <Button
-                        variant="radix"
-                        onClick={() => setShowExpenses(!showExpenses)}
+                    <div className="flex flex-col gap-1.5">
+                      <div
+                        className="text-[#5228A4] font-semibold uppercase text-xl"
                       >
-                        Show Fund History
-                      </Button>
+                        Total Activities:
+                      </div>
+                      <div
+                        className="text-white text-[56px] font-medium text-center"
+                      >
+                        {activity.length} Activities so far.
+                      </div>
+
                     </div>
                   </div>
-                  <div className="text-3xl font-semibold">
-                    {activity.length} Activities so far.
+                  <div className='absolute bottom-0 right-0 p-4'>
+                    <Button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                      onClick={() => setShowExpenses(!showExpenses)}
+                    >
+                      Show Fund History
+                    </Button>
                   </div>
-                </Card>
-                <div className="flex gap-4">
-                  <Card className="bg-white md:w-[70%] mx-auto md:p-4 p-4 space-y-2 h-fit ">
-                    <div className="p-2 border-b-2 -translate-x-2">
-                      Activity
+                </div>
+
+
+
+                <div className="flex gap-10">
+                  <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] h-full w-[610px] relative overflow-hidden ">
+                    <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
+                      <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
+
+                        Activity:
+                      </div>
+
                     </div>
                     {!loading && (
-                      <div className="space-y-4">
+                      <div className="space-y-4 px-3 py-3 rounded-2xl">
                         {activity &&
                           activity.map((ac, index) => (
                             <div
                               key={index}
-                              className="flex items-start gap-4 bg-white border-b-2 rounded-none p-3  text-black"
+                              className="flex items-start gap-4 bg-gradient-to-br from-[rgba(17,12,36,0.85)] via-transparent to-brand1 hover:scale-95 transition-transform duration-300  border-[1px] border-[#5228A4] rounded-2xl p-3  text-white"
                             >
-                              <Avatar className="shrink-0 object-cover">
-                                <img src={ac.user_image_url} alt="Avatar" />
-                                <AvatarFallback>JD</AvatarFallback>
+                              <Avatar className="h-16 w-20 object-cover rounded-lg mt-1 overflow-hidden shadow-md">
+                                <img
+                                  src={ac.user_image_url}
+                                  alt="Avatar"
+                                  className="w-full h-full object-cover"
+                                />
                               </Avatar>
                               <div className="flex-1 space-y-2">
                                 <div className="flex items-center justify-between">
@@ -215,21 +263,20 @@ let res
                                       )
                                     }
                                   >
-                                    <div className="font-medium group-hover:underline cursor-pointer">
+                                    <div className="font-medium text-brand7 group-hover:underline cursor-pointer">
                                       {ac.user_name}
                                     </div>
-                                    <div className="font-light group-hover:underline cursor-pointer">
+                                    <div className="font-light group-hover:underline text-gray-300 cursor-pointer">
                                       {clipAddress(ac.user_address)}
                                     </div>
                                   </div>
                                   {/* <div className="text-xs text-gray-700 dark:text-gray-700">2 days ago</div> */}
                                 </div>
-                                <p className="text-gray-800 dark:text-gray-400 font-medium">
-                                  {ac.info}
-                                </p>
-                                <div className="py-2 flex items-center gap-2 hover:text-slate-600">
+
+                                <div className="py-2 flex justify-end gap-2 hover:text-brand6 items-end">
                                   <ClockIcon className="h-5 w-5" />{' '}
                                   <p>{formatStandardDateTime(ac.created_at)}</p>
+
                                 </div>
                               </div>
                             </div>
@@ -243,9 +290,16 @@ let res
                         ))}
                       </div>
                     )}
-                  </Card>
-                  <Card className="bg-white md:w-[30%] mx-auto md:p-4 p-4 space-y-2 h-fit">
-                    <div className="p-2 border-b-2 -translate-x-2">Members</div>
+                  </div>
+
+                  <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] h-full  w-[340px] relative overflow-hidden ">
+                    <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
+                      <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
+
+                        Members:
+                      </div>
+
+                    </div>
                     {loading ? (
                       <div className="flex flex-col h-auto items-center justify-center text-center mt-5">
                         {[...Array(4)].map((_, i) => (
@@ -258,14 +312,13 @@ let res
                       </div>
                     ) : (
                       participants.map((participant, index) => (
-                        <Card
+                        <div
                           key={index}
-                          className={`bg-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-2 md:w-full mx-auto p-4 border border-gray-200 rounded-lg shadow-sm ${
-                            participant.public_address === address ? "bg-purple-200" : ""
-                          }`}
-                          
+                          className={`bg-gradient-to-br from-[rgba(17,12,36,0.85)]  to-brand3 hover:scale-95 transition-transform duration-300 flex flex-col  items-start md:items-center justify-between gap-4 md:gap-2 mx-2 my-2 p-4 border-[1px] border-[#5228A4] rounded-lg shadow-sm ${participant.public_address === address ? "bg-gradient-to-br from-[rgba(103,103,133,0.85)] via-transparent to-brand1" : ""
+                            }`}
+
                           onClick={() => {
-                            setAddress((prevAddress) => 
+                            setAddress((prevAddress) =>
                               prevAddress === participant.public_address ? null : participant.public_address
                             );
                           }}
@@ -278,19 +331,19 @@ let res
                               />
                               <AvatarFallback>JD</AvatarFallback>
                             </Avatar>
-                            <div className="text-left cursor-pointer text-ellipsis overflow-hidden">
+                            <div className="text-left text-brand7 cursor-pointer text-ellipsis overflow-hidden">
                               <p className="font-medium text-lg">
                                 {participant.name || 'Unnamed Participant'}
                               </p>
-                              <div className="text-gray-600 dark:text-gray-400 text-sm truncate">
+                              <div className="text-gray-300 dark:text-gray-400 text-sm truncate">
                                 {clipAddress(participant.public_address || '')}
                               </div>
                             </div>
                           </div>
-                        </Card>
+                        </div>
                       ))
                     )}
-                  </Card>
+                  </div>
                 </div>
               </div>
             </div>
