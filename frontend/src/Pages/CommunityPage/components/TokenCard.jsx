@@ -14,7 +14,7 @@ import { useState } from 'react';
 import { PieChart } from 'react-minimal-pie-chart';
 
 
-const TokenCard = ({ data, handleBuyToken, handleSellToken, loading }) => {
+const TokenCard = ({ data , handleBuyToken, handleSellToken, loading }) => {
   const [openSellModal, setSellModal] = useState(false);
   const [openBuyModal, setBuyModal] = useState(false);
   const [tokenToSell, setTokenToSell] = useState('');

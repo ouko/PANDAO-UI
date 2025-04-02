@@ -37,7 +37,7 @@ const Sidebar = () => {
 
 
   const navItems = [
-    { icon: '/1.svg', label: 'Home', path: '/' },
+    
     { icon: '/2.svg', label: 'Dashboard', path: `/community/detail/${params.id}` },
     { icon: '/3.svg', label: 'Members', path: `/community/detail/${params.id}/members` },
     { icon: '/4.svg', label: 'Discussion', path: `/community/detail/${params.id}/discussion` },
@@ -46,7 +46,8 @@ const Sidebar = () => {
     { icon: '/7.svg', label: 'Proposals', path: `/community/detail/${params.id}/proposals` },
     { icon: '/2.svg', label: 'Bond Issue', path: `/community/detail/${params.id}/bondissue` },
     { icon: '/2.svg', label: 'Purchased Bond', path: `/community/detail/${params.id}/purchasedbond` },
-    { icon: '/8.svg', label: 'Bond Issued', path: `/community/detail/${params.id}/bondissued` }
+    { icon: '/8.svg', label: 'Bond Issued', path: `/community/detail/${params.id}/bondissued` },
+    { icon: '/1.svg', label: 'Back', path: '/' }
 ];
 
 

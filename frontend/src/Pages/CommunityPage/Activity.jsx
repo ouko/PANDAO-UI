@@ -112,7 +112,7 @@ const Activity = () => {
                       <div
                         className="text-[#5228A4] font-semibold uppercase text-xl"
                       >
-                        Total Activities:
+                        Total Expenses:
                       </div>
                       <div
                         className="text-white text-[56px] font-medium text-center"
