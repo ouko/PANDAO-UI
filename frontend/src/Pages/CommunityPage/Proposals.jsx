@@ -752,7 +752,7 @@ const Proposals = () => {
                   className="w-full py-5"
                   onValueChange={setActiveTab}
                 >
-                  <TabsList className=" z-50 bg-bra space-x-2">
+                  <TabsList className=" z-50 bg-brand1 space-x-2">
                     <TabsTrigger value="PENDING" disabled={false} className="tab-trigger">
                       Pending
                     </TabsTrigger>
@@ -763,8 +763,8 @@ const Proposals = () => {
 
 
 
-                  <TabsContent value="PENDING">
-                    <div>
+                  <TabsContent value="PENDING" >
+                    <div >
                       <ProposalPending
                         proposals={proposal}
                         loading={loading}
@@ -795,22 +795,25 @@ const Proposals = () => {
         </div>
       ) : activeProposal ? (
         <div className="flex  flex-col  px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
+          
+          <Card className="bg-white md:w-[100%] z-50 mx-auto border-2 border-[#5228A4] md:p-4 p-4 space-y-2 ">
           <div
             onClick={() => {
               setActiveProposal(null) // Reset active proposal
               setShowForm(false) // Ensure the form is hidden
             }}
-            className="w-full cursor-pointer flex items-start m-2"
+            className="w-full cursor-pointer text-white flex text-[20px] items-end justify-end px-4"
           >
             <ChevronLeft /> <span>Back</span>
           </div>
-          <Card className="bg-white md:w-[100%] z-50 mx-auto border-2 border-[#5228A4] md:p-4 p-4 space-y-2 ">
-            <div className="p-2  -translate-x-2 font-bold capitalize text-white text-4xl">
+            <div className="p-4  -translate-x-2 font-bold capitalize text-white text-4xl">
               {activeProposal.proposal}
             </div>
-            <div className="p-2 border-b-2 -translate-x-2 font-bold text-white capitalize text-md">
+            
+            <div className="p-4 border-[1px] rounded-sm border-[#5228A4] -translate-x-2 font-bold text-white capitalize text-md">
               {activeProposal.description}
             </div>
+            
             <div className="flex space-x-2">
               {activeProposal.proposed_token_buy_back_price && (
                 <Badge>

@@ -24,7 +24,7 @@ function ProposalPending({ proposals, loading, setActiveProposal, setShowForm, c
       )}
 
       {!loading && proposals && (
-        <div className="flex flex-col gap-4 px-5 py-5 bg-brand1 rounded-lg overflow-y-clip">
+        <div className="flex flex-col gap-4 px-5 py-5  rounded-lg overflow-y-clip">
           {proposals.map((proposalItem, index) => (
            <ProposalCard
            key={index}
