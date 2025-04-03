@@ -38,6 +38,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import ProposalPending from './components/ProposalPendiing'
+import ProposalExecuted from './components/ProposalExecuted'
 
 const formatTime = (duration) => {
   const hours = Math.floor(
@@ -152,10 +154,8 @@ const Proposals = () => {
   const fetchVoted = async () => {
     try {
       const res2 = await axios.get(
-        `${
-          import.meta.env.VITE_BACKEND_URL
-        }/community/proposal/is-voted?proposal_id=${
-          activeProposal.id
+        `${import.meta.env.VITE_BACKEND_URL
+        }/community/proposal/is-voted?proposal_id=${activeProposal.id
         }&user_address=${accounts[0]?.address}`,
       )
 
@@ -170,8 +170,7 @@ const Proposals = () => {
   const fetchProposals = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/proposal/all/${
-          params.id
+        `${import.meta.env.VITE_BACKEND_URL}/community/proposal/all/${params.id
         }?status=${activeTab}`,
       )
       console.log(res.data, 'res.data')
@@ -186,8 +185,7 @@ const Proposals = () => {
   const fetchBondNames = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/bonds-names/all/${
-          params.id
+        `${import.meta.env.VITE_BACKEND_URL}/community/bonds-names/all/${params.id
         }`,
       )
       console.log(res.data, 'res.dataaaaaaaa')
@@ -203,8 +201,7 @@ const Proposals = () => {
     }
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/proposal/comments/${
-          activeProposal.id
+        `${import.meta.env.VITE_BACKEND_URL}/community/proposal/comments/${activeProposal.id
         }`,
       )
       setComments(res.data)
@@ -222,8 +219,7 @@ const Proposals = () => {
     }
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/proposal/zcb/${
-          activeProposal.id
+        `${import.meta.env.VITE_BACKEND_URL}/community/proposal/zcb/${activeProposal.id
         }`,
       )
       setIssuedBond(res.data)
@@ -386,8 +382,7 @@ const Proposals = () => {
       }
 
       const res = await axios.post(
-        `${
-          import.meta.env.VITE_BACKEND_URL
+        `${import.meta.env.VITE_BACKEND_URL
         }/manifest/proposal/update-token-price`,
         proposalPayload,
       )
@@ -432,7 +427,7 @@ const Proposals = () => {
       )
       toast.error(
         error.response?.data?.detail?.error?.toUpperCase() ||
-          'Failed to submit proposal',
+        'Failed to submit proposal',
       )
     } finally {
       setLoadingButton(false)
@@ -650,8 +645,7 @@ const Proposals = () => {
   const fetchParticipant = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/participant/${
-          params.id
+        `${import.meta.env.VITE_BACKEND_URL}/community/participant/${params.id
         }`,
       )
       setParticipants(res.data)
@@ -703,216 +697,96 @@ const Proposals = () => {
   console.log(activeProposal, 'activer')
 
   return (
-    <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
+    <div className="items-start gap-3 justify-start z-50  min-h-screen overflow-hidden   text-black px-2">
       {!form && !activeProposal && !showCategories && !tokenChangeform ? (
         <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
           <div className="space-y-6 md:w-[100%] ">
-            <div className="flex md:flex-row flex-col md:w-[100%] mx-auto gap-2">
+            <div className="flex md:flex-row flex-col md:w-[100%] z-50 mx-auto gap-2">
               <div className="md:w-[100%] space-y-2  ">
-                <div className="w-full  flex items-end justify-end">
-                  <Button
-                    onClick={() => {
-                      setActiveProposal(null)
-                      setShowCategories(true)
-                    }}
-                    variant="radix"
-                  >
-                    Create Proposal
-                  </Button>
+                <div
+                  className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden"
+                >
+
+                  <div className="flex flex-row  gap-10 items-center w-full">
+                    <div
+                      className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
+                      <img
+                        className="w-14 h-14"
+                        src="/member.svg"
+                        alt="User Icon"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <div
+                        className="text-[#5228A4] font-semibold uppercase text-xl"
+                      >
+                        Total Proposal:
+                      </div>
+                      <div
+                        className="text-white text-[56px] font-medium text-center"
+                      >
+                        Proposal
+
+                      </div>
+
+                    </div>
+
+                  </div>
+                  <div className="absolute bottom-0 right-0 p-4">
+                    <Button
+                      className="rounded-[26px] py-2 z-50 px-[15px]  bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                      onClick={() => {
+                        setActiveProposal(null)
+                        setShowCategories(true)
+                      }}
+                      variant="radix"
+                    >
+                      Create Proposal
+                    </Button>
+                  </div>
                 </div>
+
                 <Tabs
                   defaultValue="PENDING"
-                  className="w-full"
+                  className="w-full py-5"
                   onValueChange={setActiveTab}
                 >
-                  <TabsList>
-                    <TabsTrigger value="PENDING">Pending</TabsTrigger>
-                    <TabsTrigger value="EXECUTED">Executed</TabsTrigger>
+                  <TabsList className=" z-50 bg-bra space-x-2">
+                    <TabsTrigger value="PENDING" disabled={false} className="tab-trigger">
+                      Pending
+                    </TabsTrigger>
+                    <TabsTrigger value="EXECUTED" disabled={false} className="tab-trigger">
+                      Executed
+                    </TabsTrigger>
                   </TabsList>
+
+
+
                   <TabsContent value="PENDING">
-                    <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
-                      <div className="p-2 border-b-2 -translate-x-2">
-                        All Proposals.
-                      </div>
-                      {!loading && (
-                        <div className="space-y-4">
-                          {!proposal.length > 0 && (
-                            <div className="flex items-center justify-center h-10">
-                              No Pending Proposal
-                            </div>
-                          )}
-                        </div>
-                      )}
-                      {!loading && proposal && (
-                        <div className=" grid md:grid-cols-3 grid-cols-1 gap-5 mt-3">
-                          {proposal.map((proposalItem, index) => (
-                            <Card
-                              key={index}
-                              onClick={() => {
-                                setActiveProposal(proposalItem)
-                                setShowForm(null)
-                              }}
-                              className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-2 bg-white border-b-2 rounded-none p-3 text-black relative"
-                            >
-                              <Badge
-                                variant={
-                                  proposalItem.is_active
-                                    ? ' success'
-                                    : 'destructive'
-                                }
-                                className={`absolute right-2 ${
-                                  proposalItem.is_active
-                                    ? 'bg-green-600 text-white'
-                                    : ''
-                                } `}
-                              >
-                                {proposalItem.is_active
-                                  ? 'Pending'
-                                  : 'Executed'}
-                              </Badge>
-                              {proposalItem.proposal_type && (
-                                <Badge className={`absolute right-20 `}>
-                                  {proposalItem.proposal_type}
-                                </Badge>
-                              )}
-
-                              <div className="capitalize font-semibold text-xl">
-                                {proposalItem.proposal}
-                              </div>
-                              <div className="capitalize font-semibold text-md">
-                                {proposalItem.description}
-                              </div>
-                              <div className="flex flex-col items-center gap-3">
-                                <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
-                                  <span>Start Time :</span>
-                                  <span className="font-semibold">
-                                    {convertUnixTimestamp(
-                                      proposalItem.start_time,
-                                    )}
-                                  </span>
-                                </div>
-                                <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
-                                  <span>End Time :</span>
-                                  <span className="font-semibold">
-                                    {convertUnixTimestamp(
-                                      proposalItem.ends_time,
-                                    )}
-                                  </span>
-                                </div>
-                              </div>
-
-                              <div className="text-xs">
-                                Published by{' '}
-                                <span className="text-purple-700">
-                                  {clipAddress(proposalItem.id)}
-                                </span>
-                              </div>
-                            </Card>
-                          ))}
-                        </div>
-                      )}
-
-                      {loading && (
-                        <div className="grid grid-cols-3 gap-4 mt-5">
-                          {[...Array(3)].map((_, index) => (
-                            <SkeletonCard key={index} className="h-[200px]" />
-                          ))}
-                        </div>
-                      )}
-                    </Card>
+                    <div>
+                      <ProposalPending
+                        proposals={proposal}
+                        loading={loading}
+                        setActiveProposal={setActiveProposal}
+                        setShowForm={setShowForm}
+                        convertUnixTimestamp={convertUnixTimestamp}
+                        clipAddress={clipAddress}
+                      />
+                    </div>
                   </TabsContent>
                   <TabsContent value="EXECUTED">
-                    <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
-                      <div className="p-2 border-b-2 -translate-x-2">
-                        All Proposals.
-                      </div>
-                      {!loading && (
-                        <div className="space-y-4">
-                          {!proposal.length > 0 && (
-                            <div className="flex items-center justify-center h-10">
-                              No Executed Proposal
-                            </div>
-                          )}
-                        </div>
-                      )}
-                      {!loading && proposal && (
-                        <div className=" grid md:grid-cols-3 grid-cols-1 gap-5 mt-3">
-                          {proposal.map((proposalItem, index) => (
-                            <Card
-                              key={index}
-                              onClick={() => {
-                                setActiveProposal(proposalItem)
-                                setShowForm(null)
-                              }}
-                              className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-2 bg-white border-b-2 rounded-none p-3 text-black relative"
-                            >
-                              <Badge
-                                variant={
-                                  proposalItem.is_active
-                                    ? ' success'
-                                    : 'destructive'
-                                }
-                                className={`absolute right-2 ${
-                                  proposalItem.is_active
-                                    ? 'bg-green-600 text-white'
-                                    : ''
-                                } `}
-                              >
-                                {proposalItem.is_active
-                                  ? 'Pending'
-                                  : 'Executed'}
-                              </Badge>
-                              {proposalItem.proposal_type && (
-                                <Badge className={`absolute right-20 `}>
-                                  {proposalItem.proposal_type}
-                                </Badge>
-                              )}
-
-                              <div className="capitalize font-semibold text-xl">
-                                {proposalItem.proposal}
-                              </div>
-                              <div className="capitalize font-semibold text-md">
-                                {proposalItem.description}
-                              </div>
-                              <div className="flex flex-col items-center gap-3">
-                                <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
-                                  <span>Start Time :</span>
-                                  <span className="font-semibold">
-                                    {convertUnixTimestamp(
-                                      proposalItem.start_time,
-                                    )}
-                                  </span>
-                                </div>
-                                <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
-                                  <span>End Time :</span>
-                                  <span className="font-semibold">
-                                    {convertUnixTimestamp(
-                                      proposalItem.ends_time,
-                                    )}
-                                  </span>
-                                </div>
-                              </div>
-
-                              <div className="text-xs">
-                                Published by{' '}
-                                <span className="text-purple-700">
-                                  {clipAddress(proposalItem.id)}
-                                </span>
-                              </div>
-                            </Card>
-                          ))}
-                        </div>
-                      )}
-
-                      {loading && (
-                        <div className="grid grid-cols-3 gap-4 mt-5">
-                          {[...Array(3)].map((_, index) => (
-                            <SkeletonCard key={index} className="h-[200px]" />
-                          ))}
-                        </div>
-                      )}
-                    </Card>
+                    <div>
+                      <ProposalExecuted
+                        proposals={proposal}
+                        loading={loading}
+                        setActiveProposal={setActiveProposal}
+                        setShowForm={setShowForm}
+                        convertUnixTimestamp={convertUnixTimestamp}
+                        clipAddress={clipAddress}
+                      />
+                    </div>
                   </TabsContent>
+
                 </Tabs>
               </div>
             </div>
@@ -1066,8 +940,8 @@ const Proposals = () => {
 
                       <div>
                         {activeProposal.minimum_quorum <=
-                        activeProposal.number_of_people_voted >
-                        0 ? (
+                          activeProposal.number_of_people_voted >
+                          0 ? (
                           <Button
                             onClick={handleExecuteActiveProposal}
                             disabled={
@@ -1080,8 +954,8 @@ const Proposals = () => {
                             {execute
                               ? 'Executing....'
                               : activeProposal.is_active === false
-                              ? 'Already Executed'
-                              : 'Execute Proposal'}
+                                ? 'Already Executed'
+                                : 'Execute Proposal'}
                           </Button>
                         ) : (
                           <Button disabled>
@@ -1640,31 +1514,31 @@ const Proposals = () => {
             <ChevronLeft /> <span>Back</span>
           </div>
           <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
-          <div className="p-2 border-b-2 -translate-x-2 flex items-center justify-between">
+            <div className="p-2 border-b-2 -translate-x-2 flex items-center justify-between">
               <div>What kind of proposal do you want to create?</div>
               <div>
                 <Dialog>
                   <DialogTrigger className='flex gap-1 items-center text-xs font-light'>
                     <span>
-                    Not able to create proposal?
+                      Not able to create proposal?
 
                     </span>
 
-                 <CircleHelp className='size-3'/>
+                    <CircleHelp className='size-3' />
 
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
                       <DialogTitle>Please review the following points ?</DialogTitle>
                       <DialogDescription>
-                      Ensure you have reviewed the following points before creating a proposal:
-                      <ul className="list-disc marker:text-green-500 marker:text-1xl px-5 py-3 text font-semibold ">
-                        
-                        <li>You should be a member of the community.</li>
-                        <li>You should buy at least one token.</li>
-                        <li>There should be a bond for sale in Issued Bond menu.</li>
-                        <li>The proposal must be written in a clear and concise manner.</li>
-                      </ul>
+                        Ensure you have reviewed the following points before creating a proposal:
+                        <ul className="list-disc marker:text-green-500 marker:text-1xl px-5 py-3 text font-semibold ">
+
+                          <li>You should be a member of the community.</li>
+                          <li>You should buy at least one token.</li>
+                          <li>There should be a bond for sale in Issued Bond menu.</li>
+                          <li>The proposal must be written in a clear and concise manner.</li>
+                        </ul>
 
                       </DialogDescription>
                     </DialogHeader>

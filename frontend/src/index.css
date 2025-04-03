@@ -186,4 +186,24 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 
+.tab-trigger {
+  border-radius: 26px;
+  z-index: 50;
+  padding: 12px 25px;
+  font-size: 18px;
+  line-height: 1.25rem;
+  font-weight: 500;
+  box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+  color: white;
+  background: linear-gradient(to bottom, rgba(192, 161, 255, 1), rgba(130, 69, 255, 1));
+}
+
+.tab-trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tab-trigger[data-state="active"] {
+  background: linear-gradient(to bottom, #7c3aed, #6d28d9);
+}
 

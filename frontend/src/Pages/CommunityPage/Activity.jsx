@@ -17,6 +17,7 @@ import { toast } from 'sonner'
 import { SkeletonCard } from '../GlobalComponents/Skeleton'
 import { formatStandardDateTime } from '@/utils/functions/convertActivityData'
 import FundHistoryGraph from './ChatHistory'
+import { useQuery } from '@tanstack/react-query'
 
 const Activity = () => {
   const { accounts } = useAccount()
