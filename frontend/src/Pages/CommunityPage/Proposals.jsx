@@ -1071,7 +1071,7 @@ const Proposals = () => {
 
 
 
-          <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full z-50 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
+          <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] mt-8 w-full z-50 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
             <div className="  text-[40px] leading-[130%] z-50 font-semibold text-start">
               <span className="step-2-describe-your-dao-span3 text-amber-50">Proposal Form</span>
 
@@ -1397,7 +1397,7 @@ const Proposals = () => {
                     </label>
                   </div>
                 </div>
-                <div className="flex flex-col z-50 gap-2">
+                <div className="flex flex-col  gap-2">
                   <Label className="text-2xl p-1">Minimum Quorum</Label>
                   <Input
                     placeholder="Enter Minimum quorum"
@@ -1417,14 +1417,14 @@ const Proposals = () => {
                     max={participants.length}
                   />
                 </div>
-                <div className="flex flex-col z-50 gap-2">
+                <div className="flex flex-col gap-2">
                   <Label className="text-2xl p-1">Vote Type</Label>
                   <Select
                     onValueChange={(value) =>
                       handleInputChange('voteType', value)
                     }
                   >
-                    <SelectTrigger className="w-full z-50">
+                    <SelectTrigger className="w-full ">
                       <SelectValue placeholder="Select Vote Type" />
                     </SelectTrigger>
                     <SelectContent>
