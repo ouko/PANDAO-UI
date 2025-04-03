@@ -40,6 +40,7 @@ import {
 } from '@/components/ui/dialog'
 import ProposalPending from './components/ProposalPendiing'
 import ProposalExecuted from './components/ProposalExecuted'
+import BondCard from './components/BondCard'
 
 const formatTime = (duration) => {
   const hours = Math.floor(
@@ -803,7 +804,7 @@ const Proposals = () => {
           >
             <ChevronLeft /> <span>Back</span>
           </div>
-          <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
+          <Card className="bg-white md:w-[100%] z-50 mx-auto border-2 border-[#5228A4] md:p-4 p-4 space-y-2 ">
             <div className="p-2  -translate-x-2 font-bold capitalize text-white text-4xl">
               {activeProposal.proposal}
             </div>
@@ -868,7 +869,7 @@ const Proposals = () => {
                     </div>
 
                     {/* Voting buttons (commented out) */}
-                    <div className="flex items-center justify-between w-full">
+                    <div className="flex items-center z-50 justify-between w-full">
                       <div className="flex flex-col items-center gap-3">
                         {voted && (
                           <div className="flex items-center gap-2 ">
@@ -887,7 +888,7 @@ const Proposals = () => {
                             You have already voted.
                           </Button>
                         ) : (
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center z-50 gap-3">
                             {loadingButtonFor ? (
                               <Button
                                 size="sm"
@@ -905,7 +906,7 @@ const Proposals = () => {
                                   timeLeft === 'Time is up!' ||
                                   voted === true
                                 }
-                                className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800"
+                                className="flex items-center gap-1 z-50 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800"
                               >
                                 <span>Voted For :</span>
                                 <span>{activeProposal.voted_for}</span>
@@ -916,7 +917,7 @@ const Proposals = () => {
                               <Button
                                 size="sm"
                                 disabled
-                                className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
+                                className="flex items-center z-50 gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
                               >
                                 Voting...
                               </Button>
@@ -928,7 +929,7 @@ const Proposals = () => {
                                   activeProposal.is_active === false ||
                                   timeLeft === 'Time is up!'
                                 }
-                                className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
+                                className="flex items-center z-50 gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
                               >
                                 <span>Voted Against :</span>
                                 <span>{activeProposal.voted_against}</span>
@@ -949,7 +950,7 @@ const Proposals = () => {
                               activeProposal.is_active === false ||
                               timeLeft !== 'Time is up!'
                             }
-                            className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500 to-blue-700 hover:to-blue-800"
+                            className="flex items-center  gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500 to-blue-700 hover:to-blue-800"
                           >
                             {execute
                               ? 'Executing....'
@@ -964,15 +965,35 @@ const Proposals = () => {
                           </Button>
                         )}
                       </div>
+
                     </div>
 
-                    <div className="text-xs">
+                    <div className="text-ms">
                       Published by{' '}
                       <span className="text-purple-700">
                         {clipAddress(activeProposal.id)}
                       </span>
                     </div>
+                    <div className="w-full">
+                      <Textarea
+                        placeholder="Add a new comment..."
+                        className="flex-1 z-50 text-brand7"
+                        value={comment}
+                        required
+                        onChange={(e) => setComment(e.target.value)}
+                      />
+                      <Button
+                        className="rounded-[26px] z-50 py-4 mt-4 px-[35px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                        onClick={handleAddComment}
+                        variant="radix"
+                        disabled={loadingCom}
+                      >
+                        {loadingCom ? 'Submiting...' : ' Submit'}
+                      </Button>
+                    </div>
+
                   </div>
+
                 )}
               </div>
             )}
@@ -991,18 +1012,23 @@ const Proposals = () => {
                     <SkeletonCard />
                   </div>
                 ) : (
+
                   <>
+                    <div className="w-[1000px] flex flex-col items-center">
+                      {issuedBond && <BondCard bond={issuedBond} />}
+                    </div>
+
                     {comments &&
                       comments.map((comment, index) => (
                         <div
                           key={index}
-                          className="flex items-start gap-4 bg-white border-b-2 rounded-none p-3  text-brand7"
+                          className="my-3 flex gap-4 bg-white border-2 border-brand3 z-50 rounded-xl p-3  text-brand7"
                         >
-                          <Avatar className="shrink-0 object-cover">
-                            <img src={comment.image_url} alt="Avatar" />
-                            <AvatarFallback>JD</AvatarFallback>
+                          <Avatar className="w-12 h-12 overflow-hidden rounded-sm">
+                            <img src={comment.image_url} alt="Avatar" className="w-full h-full object-cover" />
                           </Avatar>
-                          <div className="flex-1 space-y-2">
+
+                          <div className="flex-1 z-50 space-y-2">
                             <div className="flex items-center justify-between">
                               <div
                                 className="group"
@@ -1012,18 +1038,18 @@ const Proposals = () => {
                                   )
                                 }
                               >
-                                <div className="font-medium group-hover:underline cursor-pointer">
+                                <div className="font-medium  group-hover:underline cursor-pointer">
                                   {comment.user_name}
                                 </div>
                                 <div className="font-light group-hover:underline cursor-pointer">
                                   {clipAddress(comment.public_address)}
                                 </div>
                               </div>
-                              <div className="text-xs text-gray-700 dark:text-gray-700">
+                              <div className="text-xs text-white  ">
                                 {formatStandardDateTime(comment.timestamp)}
                               </div>
                             </div>
-                            <p className="text-gray-800 dark:text-gray-400 font-medium">
+                            <p className="text-white   font-medium">
                               {comment.comment}
                             </p>
                             <div></div>
@@ -1033,136 +1059,10 @@ const Proposals = () => {
                   </>
                 )}
 
-                <div className="flex flex-col items-end gap-2 mt-1">
-                  <Textarea
-                    placeholder="Add a new comment..."
-                    className="flex-1 text-brand7"
-                    value={comment}
-                    required
-                    onChange={(e) => setComment(e.target.value)}
-                  />
-                  <Button
-                    onClick={handleAddComment}
-                    variant="radix"
-                    disabled={loadingCom}
-                  >
-                    {loadingCom ? 'Submiting...' : ' Submit'}
-                  </Button>
-                </div>
+
               </div>
             </div>
-            <div className="col-span-1 bg-white shadow-sm flex items-center justify-center p-4 rounded-md">
-              {issuedBond && (
-                <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-lg transition-transform transform hover:scale-105 hover:shadow-xl">
-                  {/* Bond Title */}
-                  <div className="text-2xl font-bold text-blue-800 mb-4 text-center">
-                    {issuedBond.name}
-                  </div>
 
-                  {/* Bond Image */}
-                  {issuedBond.asset_url && (
-                    <div className="mb-4">
-                      <img
-                        src={issuedBond.asset_url}
-                        alt={issuedBond.asset_name || 'Asset'}
-                        className="w-full h-48 object-cover rounded-md"
-                      />
-                    </div>
-                  )}
-
-                  <p>
-                    <strong>Asset Name:</strong>
-                    {issuedBond.asset_name || 'N/A'}
-                  </p>
-
-                  {/* Bond Description */}
-                  <div className="mb-4 text-gray-700">
-                    <strong>Description:</strong>
-                    <p>{issuedBond.description}</p>
-                  </div>
-                  {/* Bond Details */}
-                  <div className="space-y-2 text-sm text-gray-700">
-                    <p>
-                      <strong>Contract Identity:</strong>{' '}
-                      {issuedBond.contract_identity || 'N/A'}
-                    </p>
-                    <p>
-                      <strong>Number of Bonds:</strong>{' '}
-                      {issuedBond.number_of_bonds}
-                    </p>
-                    <p>
-                      <strong>Currency:</strong> {issuedBond.currency}
-                    </p>
-                    <p>
-                      <strong>Interest Rate:</strong> {issuedBond.interest_rate}
-                      %
-                    </p>
-                    <p>
-                      <strong>Discount:</strong> {issuedBond.discount}
-                    </p>
-                    <p>
-                      <strong>Price:</strong>{' '}
-                      {issuedBond.price ? (
-                        <>
-                          {issuedBond.price} <strong>XRD</strong>
-                        </>
-                      ) : (
-                        'Not available'
-                      )}
-                    </p>
-                    <p>
-                      <strong>Notional Principle:</strong>{' '}
-                      {issuedBond.notional_principle}
-                    </p>
-                    <p>
-                      <strong>Bond Position:</strong> {issuedBond.bond_position}
-                    </p>
-                    <p>
-                      <strong>Contract Type:</strong> {issuedBond.contract_type}
-                    </p>
-                    <p>
-                      <strong>Contract Role:</strong> {issuedBond.contract_role}
-                    </p>
-                  </div>
-
-                  {/* Dates and Blockchain Details */}
-                  <div className="mt-4 space-y-2 text-sm text-gray-500">
-                    <p
-                      className={
-                        new Date(issuedBond.initial_exchange_date) < new Date()
-                          ? 'text-red-500'
-                          : ''
-                      }
-                    >
-                      <strong>Initial Exchange Date:</strong>{' '}
-                      {new Date(
-                        issuedBond.initial_exchange_date,
-                      ).toLocaleDateString()}
-                    </p>
-                    <p>
-                      <strong>Maturity Date:</strong>{' '}
-                      {new Date(issuedBond.maturity_date).toLocaleDateString()}
-                    </p>
-                    <p>
-                      <strong>Created on Blockchain:</strong>{' '}
-                      {issuedBond.created_on_blockchain ? 'Yes' : 'No'}
-                    </p>
-                    <p className="truncate">
-                      <strong>Creator Address:</strong>{' '}
-                      <span
-                        className="cursor-pointer hover:underline"
-                        onClick={() => {
-                          navigator.clipboard.writeText(issuedBond.creator)
-                          toast.success('Copied address')
-                        }}
-                      >
-                        {issuedBond.creator}
-                      </span>
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
         </div>
       ) : form ? (
@@ -1385,8 +1285,8 @@ const Proposals = () => {
               </div>
               {loadingButton ? (
                 <Button variant="radix"
-                 disabled 
-                className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                  disabled
+                  className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
                 >
                   Submitting....
                 </Button>
@@ -1413,7 +1313,7 @@ const Proposals = () => {
         </div>
       ) : tokenChangeform ? (
         <div>
-        <div className="bg-[rgba(169,126,255,0.08)] mt-16 rounded-[20px]  z-50 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
+          <div className="bg-[rgba(169,126,255,0.08)] mt-16 rounded-[20px]  z-50 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
             <div className="  text-[40px] leading-[130%] z-50 font-semibold text-start">
               <span className="step-2-describe-your-dao-span3 text-amber-50">Token Price Change Form</span>
 
@@ -1566,9 +1466,9 @@ const Proposals = () => {
                 </div>
               </div>
               {loadingButton ? (
-                <Button variant="radix" disabled 
-                className="rounded-[26px] z-50 py-4 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
->
+                <Button variant="radix" disabled
+                  className="rounded-[26px] z-50 py-4 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                >
                   Submitting....
                 </Button>
               ) : (
