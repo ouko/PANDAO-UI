@@ -697,7 +697,7 @@ const Proposals = () => {
   console.log(activeProposal, 'activer')
 
   return (
-    <div className="items-start gap-3 justify-start z-50  min-h-screen overflow-hidden   text-black px-2">
+    <div className="items-start gap-3 justify-start z-50  min-h-screen overflow-hidden   text-brand7 px-2">
       {!form && !activeProposal && !showCategories && !tokenChangeform ? (
         <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
           <div className="space-y-6 md:w-[100%] ">
@@ -734,7 +734,7 @@ const Proposals = () => {
                   </div>
                   <div className="absolute bottom-0 right-0 p-4">
                     <Button
-                      className="rounded-[26px] py-2 z-50 px-[15px]  bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                      className="rounded-[26px] py-2 z-50 px-[15px]  bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-brand7 text-[14px] leading-5 font-medium"
                       onClick={() => {
                         setActiveProposal(null)
                         setShowCategories(true)
@@ -804,10 +804,10 @@ const Proposals = () => {
             <ChevronLeft /> <span>Back</span>
           </div>
           <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
-            <div className="p-2  -translate-x-2 font-bold capitalize text-4xl">
+            <div className="p-2  -translate-x-2 font-bold capitalize text-white text-4xl">
               {activeProposal.proposal}
             </div>
-            <div className="p-2 border-b-2 -translate-x-2 font-bold capitalize text-md">
+            <div className="p-2 border-b-2 -translate-x-2 font-bold text-white capitalize text-md">
               {activeProposal.description}
             </div>
             <div className="flex space-x-2">
@@ -825,7 +825,7 @@ const Proposals = () => {
             </div>
 
             {!loading && (
-              <div className="space-y-4">
+              <div className="space-y-2">
                 {!proposal && (
                   <div className="flex items-center justify-center h-10">
                     No Active Proposal
@@ -834,9 +834,9 @@ const Proposals = () => {
               </div>
             )}
             {!loading && activeProposal && (
-              <div className="  gap-5 mt-3">
+              <div className="  gap-5 mt-3 z-50">
                 {activeProposal && (
-                  <div className="flex flex-col  items-start gap-4 bg-white  rounded-none p-3 text-black">
+                  <div className="flex flex-col  items-start gap-4 z-50  rounded-none p-3 text-brand7">
                     {/* <div className="capitalize font-semibold text-xl">
                         {activeProposal.proposal}
                       </div> */}
@@ -848,20 +848,20 @@ const Proposals = () => {
                         </span>
                       </div>
                     )}
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
+                    <div className="flex items-center text-white z-50 gap-3">
+                      <div className="flex items-center gap-2 text-[20px] bg-brand5 rounded-md shadow-md p-2">
                         <span>Start Time :</span>
                         <span className="font-semibold">
                           {convertUnixTimestamp(activeProposal.start_time)}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
+                      <div className="flex items-center gap-2 text-[20px] bg-brand5 rounded-md shadow-md p-2">
                         <span>End Time :</span>
                         <span className="font-semibold">
                           {convertUnixTimestamp(activeProposal.ends_time)}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
+                      <div className="flex items-center gap-2 text-[20px] bg-brand5 rounded-md shadow-md p-2">
                         <span>Time Left:</span>
                         <span className="font-semibold">{timeLeft}</span>
                       </div>
@@ -872,7 +872,7 @@ const Proposals = () => {
                       <div className="flex flex-col items-center gap-3">
                         {voted && (
                           <div className="flex items-center gap-2 ">
-                            <Badge className="bg-green-600">
+                            <Badge className="bg-green-500">
                               {' '}
                               Total Vote For : {activeProposal.voted_for}
                             </Badge>
@@ -996,7 +996,7 @@ const Proposals = () => {
                       comments.map((comment, index) => (
                         <div
                           key={index}
-                          className="flex items-start gap-4 bg-white border-b-2 rounded-none p-3  text-black"
+                          className="flex items-start gap-4 bg-white border-b-2 rounded-none p-3  text-brand7"
                         >
                           <Avatar className="shrink-0 object-cover">
                             <img src={comment.image_url} alt="Avatar" />
@@ -1036,7 +1036,7 @@ const Proposals = () => {
                 <div className="flex flex-col items-end gap-2 mt-1">
                   <Textarea
                     placeholder="Add a new comment..."
-                    className="flex-1 text-black"
+                    className="flex-1 text-brand7"
                     value={comment}
                     required
                     onChange={(e) => setComment(e.target.value)}
@@ -1167,139 +1167,212 @@ const Proposals = () => {
         </div>
       ) : form ? (
         <div className="flex flex-col items-center justify-center max-w-[1440px] mx-auto my-6 p-2">
-          <div
-            onClick={() => {
-              setShowForm(false) // Hide the form and return to the list
-              setActiveProposal(null) // Ensure no proposal is active
-            }}
-            className="w-full cursor-pointer flex items-start m-2"
-          >
-            <ChevronLeft /> <span>Back</span>
+
+
+
+
+          <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full z-50 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
+            <div className="  text-[40px] leading-[130%] z-50 font-semibold text-start">
+              <span className="step-2-describe-your-dao-span3 text-amber-50">Proposal Form</span>
+
+
+            </div>
+            <div className="w-full cursor-pointer items-end  justify-end text-[22px] flex  m-2"
+              onClick={() => {
+                setShowForm(false) // Hide the form and return to the list
+                setActiveProposal(null) // Ensure no proposal is active
+              }}>
+              <ChevronLeft /> <span >Back</span>
+            </div>
+
           </div>
-          <div className="text-4xl font-semibold p-4  bg-white w-full text-center">
-            Proposal Form
-          </div>
-          <div className="flex items-center justify-center p-2 w-full mx-auto">
-            <form className="w-1/2 flex flex-col gap-2" onSubmit={handleSubmit}>
-              <div className="flex flex-col gap-2">
-                <Label className="text-2xl p-1">Proposal</Label>
-                <Textarea
+          <div className="flex items-center justify-center z-50 p-2 w-full mx-auto">
+            <form className="w-[900px] flex z-50 flex-col py-5 space-y-4  gap-2" onSubmit={handleSubmit}>
+              <div className="flex flex-col w-full space-y-2 ">
+                <label
+                  className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
+                >
+                  Proposal:
+                </label>
+                <textarea
+                  className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400 resize-none"
                   placeholder="Type your proposal here ..."
                   value={proposalText}
                   onChange={(e) => setProposalText(e.target.value)}
-                />
+                  rows="4"
+                ></textarea>
               </div>
-              <div className="flex flex-col gap-2">
-                <Label className="text-lg p-1">Proposal Description</Label>
-                <Textarea
+
+              <div className="flex flex-col w-full space-y-2">
+                <label
+                  className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
+                >
+                  Proposal Description:
+                </label>
+                <textarea
+                  className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400 resize-none"
                   placeholder="Type your proposal description ..."
                   value={proposalDescription}
                   onChange={(e) => setProposalDescription(e.target.value)}
-                />
+                  rows="4"
+                ></textarea>
               </div>
-              <div className="flex flex-col mt-3 gap-3 w-full ">
-                <div className="text-xl p-1">Proposal Timing</div>
-                <div className="flex items-center justify-between space-x-2">
-                  <div className="flex items-center">
-                    <div>From:</div>
-                    <label className=" flex items-center">
-                      <DatePicker
-                        selected={startDate}
-                        onChange={handleStartDateChange}
-                        customInput={<CustomDatePicker />}
-                        minDate={new Date()}
-                      />
-                      <Input
-                        type="time"
-                        value={startTime}
-                        onChange={(e) => setStartTime(e.target.value)}
-                        className="ml-2 w-fit"
-                      />
-                    </label>
+
+
+
+              <div className="flex flex-col mt-3 gap-3 w-full space-y-4  ">
+                <div className="flex flex-col w-full space-y-2">
+                  <div className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch">
+                    Proposal Timing
                   </div>
-                  <div className="flex items-center">
-                    <div>To:</div>
-                    <label className="flex items-center ">
-                      <DatePicker
-                        selected={endDate}
-                        onChange={handleEndDateChange}
-                        customInput={<CustomDatePicker />}
-                        minDate={new Date()}
-                      />
-                      <Input
-                        type="time"
-                        value={endTime}
-                        onChange={(e) => setEndTime(e.target.value)}
-                        className="ml-2 w-fit"
-                      />
-                    </label>
+                  <div className="flex items-center justify-between space-x-4">
+
+                    {/* From Date and Time */}
+                    <div className="flex items-center space-x-2">
+                      <div className="text-white">From:</div>
+                      <label className="flex items-center bg">
+                        <DatePicker
+                          selected={startDate}
+                          onChange={handleStartDateChange}
+                          customInput={<CustomDatePicker />}
+                          minDate={new Date()}
+                          className="p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        />
+                        <input
+                          type="time"
+                          value={startTime}
+                          onChange={(e) => setStartTime(e.target.value)}
+                          className="ml-2 w-fit p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        />
+                      </label>
+                    </div>
+
+                    {/* To Date and Time */}
+                    <div className="flex items-center space-x-2">
+                      <div className="text-white ">To:</div>
+                      <label className="flex items-center">
+                        <DatePicker
+                          selected={endDate}
+                          onChange={handleEndDateChange}
+                          customInput={<CustomDatePicker />}
+                          minDate={new Date()}
+                          className="p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        />
+                        <input
+                          type="time"
+                          value={endTime}
+                          onChange={(e) => setEndTime(e.target.value)}
+                          className="ml-2 w-fit p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        />
+                      </label>
+                    </div>
+
                   </div>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <Label className="text-2xl p-1">Minimum Quorum</Label>
-                  <Input
-                    placeholder="Enter Minimum quorum"
+
+                <div className="flex flex-col w-full space-y-2">
+                  <label
+                    className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
+                  >
+                    Minimum Quorum:
+                  </label>
+                  <input
                     type="number"
+                    placeholder="Enter Minimum quorum"
                     value={minimumQuorum}
                     onChange={(e) => {
-                      const value = parseInt(e.target.value, 10)
+                      const value = parseInt(e.target.value, 10);
                       if (value > participants.length) {
-                        toast.error(
-                          `The minimum quorum cannot exceed ${participants.length}.`,
-                        )
-                        return
+                        toast.error(`The minimum quorum cannot exceed ${participants.length}.`);
+                        return;
                       }
-                      setMinimumQuorum(value)
+                      setMinimumQuorum(value);
                     }}
                     min="0"
                     max={participants.length}
+                    className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
                   />
                 </div>
-                <div className="flex flex-col gap-2">
-                  <Label className="text-2xl p-1">Vote Type</Label>
-                  <Select onValueChange={handleVoteType}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select Vote Type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Equality">Equality</SelectItem>
-                      <SelectItem value="ResourceOwned">
-                        Resource Owned
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Label className="text-2xl p-1">Bond Issuer Address</Label>
-                  <Select onValueChange={handleBondAddress}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select Bond Issuer Address" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {bondIssuerAddresses.length === 0 ? (
-                        <SelectItem value="No issued Bond">
-                          No Issued Bond
+
+                <div className="flex flex-col w-full space-y-2">
+                  <label
+                    className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
+                  >
+                    Vote Type:
+                  </label>
+                  <div className="w-full">
+                    <Select
+                      onValueChange={handleVoteType}
+                      className="w-full bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
+                    >
+                      <SelectTrigger className="w-full p-2 text-white bg-[#1B0D37] rounded-md shadow-xs">
+                        <SelectValue placeholder="Select Vote Type" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-[#1B0D37] text-white rounded-md">
+                        <SelectItem value="Equality" className="p-2 hover:bg-[#5228A4]">
+                          Equality
                         </SelectItem>
-                      ) : (
-                        bondIssuerAddresses.map((bond, index) => (
-                          <SelectItem key={index} value={bond.creator_address}>
-                            {bond.bond_name} - {bond.creator_address}
+                        <SelectItem value="ResourceOwned" className="p-2 hover:bg-[#5228A4]">
+                          Resource Owned
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="flex flex-col w-full space-y-2">
+                  <label
+                    className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
+                  >
+                    Bond Issuer Address:
+                  </label>
+                  <div className="w-full">
+                    <Select
+                      onValueChange={handleBondAddress}
+                      className="w-full bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
+                    >
+                      <SelectTrigger className="w-full p-2 text-white bg-[#1B0D37] rounded-md shadow-xs">
+                        <SelectValue placeholder="Select Bond Issuer Address" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-[#1B0D37] text-white rounded-md">
+                        {bondIssuerAddresses.length === 0 ? (
+                          <SelectItem value="No issued Bond" className="p-2 hover:bg-[#5228A4]">
+                            No Issued Bond
                           </SelectItem>
-                        ))
-                      )}
-                    </SelectContent>
-                  </Select>
+                        ) : (
+                          bondIssuerAddresses.map((bond, index) => (
+                            <SelectItem
+                              key={index}
+                              value={bond.creator_address}
+                              className="p-2 hover:bg-[#5228A4]"
+                            >
+                              {bond.bond_name} - {bond.creator_address}
+                            </SelectItem>
+                          ))
+                        )}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+
 
                   {/* <Input
                       placeholder="Enter Bond Issuer Address"
                       value={bondIssuerAddress}
                       onChange={(e) => setBondIssuerAddress(e.target.value)}
                     /> */}
+
                 </div>
 
-                <div className="flex flex-col gap-2">
-                  <Label className="text-2xl p-1">Target XRD Amount</Label>
-                  <Input
+
+                <div className="flex flex-col w-full space-y-2">
+                  <label
+                    className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
+                  >
+                    Target XRD Amount:
+                  </label>
+                  <input
+                    className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
                     placeholder="Enter Target XRD Amount"
                     type="number"
                     value={targetXrdAmount}
@@ -1308,15 +1381,19 @@ const Proposals = () => {
                     disabled
                   />
                 </div>
+
               </div>
               {loadingButton ? (
-                <Button variant="radix" disabled className="w-full mt-2">
+                <Button variant="radix"
+                 disabled 
+                className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                >
                   Submitting....
                 </Button>
               ) : (
                 <Button
-                  variant="radix"
-                  className="w-full mt-2"
+                  className="rounded-[26px] z-50 py-4 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+
                   disabled={
                     !targetXrdAmount ||
                     !minimumQuorum ||
@@ -1335,25 +1412,28 @@ const Proposals = () => {
           </div>
         </div>
       ) : tokenChangeform ? (
-        <div className="flex flex-col items-center justify-center max-w-[1440px] mx-auto my-6 p-2">
-          <div
-            onClick={() => {
-              setShowTokenChangeForm(false) // Hide the form and return to the list
-              setActiveProposal(null) // Ensure no proposal is active
-            }}
-            className="w-full cursor-pointer flex items-start m-2"
-          >
-            <ChevronLeft /> <span>Back</span>
+        <div>
+        <div className="bg-[rgba(169,126,255,0.08)] mt-16 rounded-[20px]  z-50 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
+            <div className="  text-[40px] leading-[130%] z-50 font-semibold text-start">
+              <span className="step-2-describe-your-dao-span3 text-amber-50">Token Price Change Form</span>
+
+
+            </div>
+            <div className="w-full cursor-pointer items-end z-50 justify-end text-[22px] flex  m-2"
+              onClick={() => {
+                setShowTokenChangeForm(false) // Hide the form and return to the list
+                setActiveProposal(null) // Ensure no proposal is active
+              }}>
+              <ChevronLeft /> <span >Back</span>
+            </div>
+
           </div>
-          <div className="text-4xl font-semibold p-4  bg-white w-full text-center">
-            Token Price Change Form
-          </div>
-          <div className="flex items-center justify-center p-2 w-full mx-auto">
+          <div className="flex items-center justify-center z-50 p-2 w-full mx-auto">
             <form
-              className="w-1/2 flex flex-col gap-2"
+              className="w-[900px] flex flex-col gap-2"
               onSubmit={handleSubmitTokenChangeForm}
             >
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col z-50 gap-2">
                 <Label className="text-2xl p-1">Proposal Name</Label>
                 <Input
                   placeholder="Proposal Name..."
@@ -1363,8 +1443,8 @@ const Proposals = () => {
                   }
                 />
               </div>
-              <div className="flex flex-col gap-2">
-                <Label className="text-lg p-1">Proposal Description</Label>
+              <div className="flex flex-col z-50 gap-2">
+                <Label className="text-2xl p-1">Proposal Description</Label>
                 <Textarea
                   placeholder="Type your proposal description ..."
                   value={tokenPriceChangeForm.proposalDescription}
@@ -1373,8 +1453,8 @@ const Proposals = () => {
                   }
                 />
               </div>
-              <div className="flex flex-col mt-3 gap-3 w-full ">
-                <div className="text-xl p-1">Proposal Timing</div>
+              <div className="flex flex-col mt-3 z-50 gap-3 w-full ">
+                <div className="text-2xl p-1">Proposal Timing</div>
                 <div className="flex items-center justify-between space-x-2">
                   <div className="flex items-center">
                     <div>From:</div>
@@ -1417,7 +1497,7 @@ const Proposals = () => {
                     </label>
                   </div>
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col z-50 gap-2">
                   <Label className="text-2xl p-1">Minimum Quorum</Label>
                   <Input
                     placeholder="Enter Minimum quorum"
@@ -1437,14 +1517,14 @@ const Proposals = () => {
                     max={participants.length}
                   />
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col z-50 gap-2">
                   <Label className="text-2xl p-1">Vote Type</Label>
                   <Select
                     onValueChange={(value) =>
                       handleInputChange('voteType', value)
                     }
                   >
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full z-50">
                       <SelectValue placeholder="Select Vote Type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -1456,7 +1536,7 @@ const Proposals = () => {
                   </Select>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label className="text-lg p-1">Desired Token Price</Label>
+                  <Label className="text-2xl p-1">Desired Token Price</Label>
                   <Input
                     placeholder="Enter desired token price"
                     type="number"
@@ -1467,8 +1547,8 @@ const Proposals = () => {
                     }
                   />
                 </div>
-                <div className="flex flex-col gap-2">
-                  <Label className="text-lg p-1">
+                <div className="flex flex-col gap-2 mb-10">
+                  <Label className="text-2xl p-1">
                     Desired Token Buy Back Price
                   </Label>
                   <Input
@@ -1486,13 +1566,16 @@ const Proposals = () => {
                 </div>
               </div>
               {loadingButton ? (
-                <Button variant="radix" disabled className="w-full mt-2">
+                <Button variant="radix" disabled 
+                className="rounded-[26px] z-50 py-4 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+>
                   Submitting....
                 </Button>
               ) : (
                 <Button
                   variant="radix"
-                  className="w-full mt-2"
+                  className="rounded-[26px] z-50 py-4 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+
                   disabled={Object.values(tokenPriceChangeForm).some(
                     (value) => !value,
                   )}
@@ -1504,27 +1587,24 @@ const Proposals = () => {
           </div>
         </div>
       ) : (
-        <div className="flex  flex-col  px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
-          <div
-            onClick={() => {
-              setShowCategories(false)
-            }}
-            className="w-full cursor-pointer flex items-start m-2"
-          >
-            <ChevronLeft /> <span>Back</span>
-          </div>
-          <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
-            <div className="p-2 border-b-2 -translate-x-2 flex items-center justify-between">
-              <div>What kind of proposal do you want to create?</div>
+        <div className="flex flex-col mt-5  px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
+
+
+          <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4]  relative overflow-hidden ">
+            <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
+              <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
+
+                What kind of proposal do you want to create?
+              </div>
               <div>
                 <Dialog>
-                  <DialogTrigger className='flex gap-1 items-center text-xs font-light'>
+                  <DialogTrigger className='flex gap-1 items-center text-brand7 text-[16px] font-light'>
                     <span>
                       Not able to create proposal?
 
                     </span>
 
-                    <CircleHelp className='size-3' />
+                    <CircleHelp className='size-4' />
 
                   </DialogTrigger>
                   <DialogContent>
@@ -1547,17 +1627,17 @@ const Proposals = () => {
               </div>
             </div>
 
-            <div className=" grid md:grid-cols-3 grid-cols-1 gap-5 mt-3">
+            <div className=" flex h-[250px] gap-10 px-5 py-5 justify-center">
               {ProposalTypes.map((proposal, index) => (
                 <Card
                   key={index}
-                  className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-2 bg-white border-b-2 rounded-none p-3 text-black relative justify-between"
+                  className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-2 bg-brand1 border-b-2 border-[#5228A4] rounded-lg p-3 text-brand7 relative justify-between"
                 >
-                  <div className="font-bold">{proposal.title}</div>
-                  <div className="text-sm">{proposal.description}</div>
+                  <div className="font-bold  text-brand7 text-[22px] ">{proposal.title}</div>
+                  <div className="text-sm w-[400px]  text-gray-400 text-[16px] ">{proposal.description}</div>
                   <div className="flex items-center justify-end w-full">
                     <Button
-                      variant="radix"
+                      className="rounded-[26px] py-2 px-[30px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-brand7 text-[14px] leading-5 font-medium"
                       onClick={() => {
                         if (proposal.title === 'Custom Proposal') {
                           setShowForm(true)
@@ -1574,7 +1654,22 @@ const Proposals = () => {
                 </Card>
               ))}
             </div>
-          </Card>
+          </div>
+
+          <div className="w-full cursor-pointer z-50 flex items-end justify-end m-2">
+            <button
+              onClick={() => setShowCategories(false)}
+              type="button"
+              className="w-[120px] cursor-pointer z-50 flex justify-center items-center  m-2 text-2xl rounded-full p-3 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483]"
+            >
+              <ChevronLeft /> <span >Back</span>
+            </button>
+
+          </div>
+
+
+
+
         </div>
       )}
     </div>

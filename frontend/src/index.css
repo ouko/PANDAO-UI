@@ -207,3 +207,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background: linear-gradient(to bottom, #7c3aed, #6d28d9);
 }
 
+.bg-background {
+  background-color: #1B0D37 !important;
+}
+.bg-white {
+  --tw-bg-opacity: 0;
+  background-color: #1b0d3727 !important;
+  
+}
+
+.border-input {
+  border: 1px solid #5228A4 !important;
+}
+
+.ring-offset-background {
+  --tw-ring-offset-color: #5228A4;
+}
