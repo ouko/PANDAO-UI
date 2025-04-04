@@ -35,12 +35,12 @@ const TokenCard = ({ data , handleBuyToken, handleSellToken, loading }) => {
                 <DialogTrigger asChild>
                   <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" variant="radix">Sell Token</button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:max-w-[425px] bg-[rgba(169,126,255,0.34)] text-white  border-[1px] border-brand3 ">
                   <DialogHeader>
                     <DialogTitle>Sell Token</DialogTitle>
                   </DialogHeader>
                   <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
+                    <div className="grid grid-cols-4 text-white items-center gap-4">
                       <Label htmlFor="sell-token" className="text-right">
                         Token
                       </Label>
@@ -84,7 +84,7 @@ const TokenCard = ({ data , handleBuyToken, handleSellToken, loading }) => {
                 <DialogTrigger asChild>
                   <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" variant="radix">Buy Token</button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:max-w-[425px] bg-[rgba(169,126,255,0.34)] text-white  border-[1px] border-brand3  ">
                   <DialogHeader>
                     <DialogTitle>Buy Token</DialogTitle>
                   </DialogHeader>

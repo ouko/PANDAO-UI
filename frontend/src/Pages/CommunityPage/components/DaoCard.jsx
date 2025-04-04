@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { Check, Copy, Info } from 'lucide-react';
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import { Button } from '@/components/ui/button';
@@ -14,7 +14,7 @@ import { DialogDescription } from '@radix-ui/react-dialog'
 import { Card } from '@/components/ui/card'
 
 
-const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStartOpen, quickStartOpen }) => {
+const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStartOpen, quickStartOpen, setTransferOpen, setExecOpen }) => {
   const [copied, setCopied] = useState(false);
   const [copied1, setCopied1] = useState(false);
 
@@ -36,7 +36,7 @@ const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStar
   return (
     <div
       className="bg-[rgba(169,126,255,0.08)] rounded-[20px] border-solid border-[#5228A4] border pt-[13px]  pb-[13px] pl-[25px] self-stretch shrink-0 h-[295px] relative overflow-hidden"
-      
+
     >
 
       <div className="flex flex-col gap-3.5 items-center justify-start w-[171px] absolute left-[43px] top-[21px]">
@@ -95,7 +95,7 @@ const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStar
           </div>
           <div className="flex items-center gap-2">
             <p className="text-[#ffffff] text-center text-xl font-normal overflow-hidden text-ellipsis">
-            {clipAddress(daoData.component_address)}
+              {clipAddress(daoData.component_address)}
             </p>
             <p
               className="cursor-pointer"
@@ -108,7 +108,7 @@ const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStar
               )}
             </p>
           </div>
-         
+
         </div>
       </div>
 
@@ -116,7 +116,7 @@ const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStar
         {/* First Box */}
         <Card className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)]  px-5 py-3">
           <div className="flex flex-row gap-[11px] items-center">
-           <Info className='text-purple-400'/>
+            <Info className='text-purple-400' />
             <div className="text-[#AE85FF] text-base font-normal uppercase">DAO TYPE:</div>
           </div>
           <div className="text-white text-xl font-normal">{daoData.blueprint_slug} DAO</div>
@@ -125,7 +125,7 @@ const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStar
         {/* Second Box */}
         <Card className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)] px-5 py-3 ">
           <div className="flex flex-row gap-[11px] items-center">
-           <Info className='text-purple-400'/>
+            <Info className='text-purple-400' />
             <div className="text-[#AE85FF] text-base font-normal uppercase">Proposal rights:</div>
           </div>
           <div className="text-white text-xl font-normal">
@@ -149,15 +149,21 @@ const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStar
 
           {isUserParticipant && (
             <div className='flex items-center gap-2'>
-              {/* <Button variant="radix" onClick={() => setTransferOpen(true)}>
-          Transfer Executive Badge
-        </Button>
-        <Button variant="radix" onClick={() => setExecOpen(true)}>
-          Mint Executive Badge
-        </Button> */}
               <Button
                 className="bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] px-5 py-2 text-white font-semibold rounded-full"
-                variant="radix"
+
+                onClick={() => setTransferOpen(true)}>
+                Transfer Executive Badge
+              </Button>
+              <Button
+                className="bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] px-5 py-2 text-white font-semibold rounded-full"
+
+                onClick={() => setExecOpen(true)}>
+                Mint Executive Badge
+              </Button>
+              <Button
+                className="bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] px-5 py-2 text-white font-semibold rounded-full"
+
                 onClick={() => setQuickStartOpen(true)}>
                 Quick Start
               </Button>

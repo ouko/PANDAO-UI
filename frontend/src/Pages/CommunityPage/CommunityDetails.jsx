@@ -251,6 +251,8 @@ const CommunityDetails = () => {
   }
 
 
+
+
   const handleWithDrawSign = async (id) => {
     console.log("id", id)
     const data = {
@@ -320,6 +322,8 @@ const CommunityDetails = () => {
       setSelectedId("")
     }
   }
+
+
   const handleSellToken = async () => {
     const data = {
       community_id: params.id,
@@ -401,6 +405,7 @@ const CommunityDetails = () => {
       setTokenToSell(0)
     }
   }
+
 
   const fetchDetails = async () => {
     try {
@@ -531,6 +536,7 @@ const CommunityDetails = () => {
       setLoadingMint(false)
     }
   }
+
   const handleTransfer = async () => {
     if (transferAddress.trim() === "") {
 
@@ -605,6 +611,8 @@ const CommunityDetails = () => {
       setLoadingMint(false)
     }
   }
+
+
   const handleWithdrawRequest = async () => {
     if (withdrawAmount.trim() === "") {
 
@@ -679,6 +687,7 @@ const CommunityDetails = () => {
       setLoadingMint(false)
     }
   }
+  
   useEffect(() => {
     fetchDetails()
     fetchParticipant()
@@ -704,6 +713,9 @@ const CommunityDetails = () => {
            <DaoCard daoData={data} isUserParticipant={isUserParticipant}
              handleJoinCommunity={handleJoinCommunity} 
              setQuickStartOpen={setQuickStartOpen}
+             setTransferOpen={setTransferOpen}
+             setExecOpen={setExecOpen}
+             
              />
 
             <div className="flex md:flex-row flex-col w-full mx-auto gap-2">
@@ -754,35 +766,35 @@ const CommunityDetails = () => {
       </div>
       <Dialog open={quickStartOpen} onOpenChange={setQuickStartOpen}>
         <DialogTrigger></DialogTrigger>
-        <DialogContent className="max-w-xl p-6 bg-white rounded-lg shadow-lg">
+        <DialogContent className="max-w-2xl p-6 bg-[rgba(169,126,255,0.34)]  border-[1px] border-brand3 rounded-lg shadow-lg">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-semibold text-gray-800 w-full text-center">
+            <DialogTitle className="text-2xl font-semibold text-brand7 w-full text-center">
               Quick Start
             </DialogTitle>
             <DialogDescription className="flex  items-center gap-4 mt-4 w-full">
               <Card
-                className="w-full p-6 bg-gray-100 hover:bg-gray-200 transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
+                className="w-full p-6 bg-[rgba(121,84,196,0.8)] border-[1px] border-brand2 hover:bg-[rgba(169,126,255,0.34)] transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
                 onClick={() =>
                   navigate(`/community/detail/${params.id}/proposals?state="proposal"`)
                 }
               >
-                <h3 className="text-xl font-medium text-gray-800">
+                <h3 className="text-xl font-medium text-gray-300">
                   Create a Proposal
                 </h3>
-                <p className="text-sm text-gray-600 mt-1">
+                <p className="text-sm text-gray-400 mt-1">
                   Start a new project by creating a detailed proposal.
                 </p>
               </Card>
               <Card
-                className="w-full p-6 bg-gray-100 hover:bg-gray-200 transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
+                className="w-full p-6 bg-[rgba(121,84,196,0.8)] border-[1px] border-brand2 hover:bg-[rgba(169,126,255,0.34)]  transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
                 onClick={() =>
                   navigate(`/community/detail/${params.id}/bondissue`)
                 }
               >
-                <h3 className="text-xl font-medium text-gray-800">
+                <h3 className="text-xl font-medium text-gray-300">
                   Create a Bond
                 </h3>
-                <p className="text-sm text-gray-600 mt-1">
+                <p className="text-sm text-gray-400 mt-1">
                   Secure your projects with a reliable bond.
                 </p>
               </Card>
@@ -792,7 +804,7 @@ const CommunityDetails = () => {
       </Dialog>
       <Dialog open={execOpen} onOpenChange={setExecOpen}>
         <DialogTrigger></DialogTrigger>
-        <DialogContent className="w-full  p-6 bg-white rounded-lg shadow-lg ">
+        <DialogContent className="w-full  p-6 bg-[rgba(169,126,255,0.34)] text-gray-300  border-[1px] border-brand3 rounded-lg shadow-lg ">
           <DialogHeader className="max-w-4xl w-full">
             <DialogTitle className="text-2xl font-semibold text-gray-800 w-full text-center">
               Mint Executive Badges
@@ -822,7 +834,7 @@ const CommunityDetails = () => {
                 />
               </div>
               <Button
-                variant="radix"
+              className="bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] px-5 py-2 text-white font-semibold rounded-full"
                 onClick={handleClickMint}
                 disabled={loadingMint}
               >
@@ -834,18 +846,18 @@ const CommunityDetails = () => {
       </Dialog>
       <Dialog open={transferOpen} onOpenChange={setTransferOpen}>
         <DialogTrigger></DialogTrigger>
-        <DialogContent className="w-half pt-10 bg-white rounded-lg shadow-lg max-w-5xl overflow-y-auto max-h-[80vh]">
+        <DialogContent className="w-half pt-10 bg-[rgba(169,126,255,0.34)] text-gray-300  border-[1px] border-brand3 rounded-lg shadow-lg max-w-5xl overflow-y-auto max-h-[80vh]">
           <DialogHeader className="w-full overflow-auto">
-            <DialogTitle className="text-2xl font-semibold text-gray-800 w-full text-center">
+            <DialogTitle className="text-2xl font-semibold text-gray-300 w-full text-center">
               Transfer Executive Badges
             </DialogTitle>
             <DialogDescription className="flex flex-col justify-center items-center gap-4 mt-4 w-full overflow-y-auto">
               {participants.map((participant, index) => (
                 <div key={index} className="w-full text-center border-b pb-4 mb-4">
-                  <p className="text-lg font-medium text-gray-700">
+                  <p className="text-lg font-medium text-gray-300">
                     Name:{participant.name}</p>
                   <p
-                    className="text-sm text-gray-500 break-all cursor-pointer hover:text-blue-500"
+                    className="text-sm text-gray-300 break-all cursor-pointer hover:text-blue-500"
                     onClick={() => setTransferAddress(participant.public_address)}
                   >
                     {participant.public_address}
@@ -864,7 +876,9 @@ const CommunityDetails = () => {
                 />
               </div>
 
-              <Button variant="radix" onClick={handleTransfer} disabled={loadingMint}>
+              <Button 
+              className="bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] px-5 py-2 text-white font-semibold rounded-full"
+               onClick={handleTransfer} disabled={loadingMint}>
                 Transfer Executive Badge
               </Button>
             </DialogDescription>
@@ -874,9 +888,9 @@ const CommunityDetails = () => {
       </Dialog>
       <Dialog open={withDrawModal} onOpenChange={setWithDrawModal}>
         <DialogTrigger></DialogTrigger>
-        <DialogContent className="w-half pt-10 bg-white rounded-lg shadow-lg max-w-5xl overflow-y-auto max-h-[80vh]">
+        <DialogContent className="w-[600px] pt-10 bg-[rgba(169,126,255,0.34)] text-white  border-[1px] border-brand3 rounded-lg shadow-lg max-w-5xl overflow-y-auto max-h-[80vh]">
           <DialogHeader className="w-full overflow-auto">
-            <DialogTitle className="text-2xl font-semibold text-gray-800 w-full text-center">
+            <DialogTitle className="text-2xl font-semibold text-gray-300 w-full text-center">
               Fund Withdraw Request
             </DialogTitle>
             <DialogDescription className="flex flex-col justify-center items-center gap-4 mt-4 w-full overflow-y-auto">
@@ -886,10 +900,13 @@ const CommunityDetails = () => {
                   type="number"
                   value={withdrawAmount}
                   onChange={(e) => setwithdrawAmout(e.target.value)}
+                  min={0}
                 />
               </div>
 
-              <Button variant="radix" onClick={handleWithdrawRequest} disabled={loadingMint}>
+              <Button
+              className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" 
+               onClick={handleWithdrawRequest} disabled={loadingMint}>
                 Withdraw Request
               </Button>
             </DialogDescription>

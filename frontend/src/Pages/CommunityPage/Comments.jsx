@@ -186,14 +186,16 @@ const Comments = () => {
                         </Button>
                       </DialogTrigger>
                     )}
-                    <DialogContent>
+                    <DialogContent className="  h-[250px] bg-[rgba(169,126,255,0.34)] text-gray-300  border-[1px] border-brand3">
                       <DialogTitle>Discussion Title</DialogTitle>
                       <Input
                         placeholder="Enter the discussion title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                       />
-                      <Button variant="radix" onClick={handleAddDiscussion}>
+                      <Button 
+                      className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                       onClick={handleAddDiscussion}>
                         Start
                       </Button>
                     </DialogContent>

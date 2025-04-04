@@ -38,6 +38,7 @@ const Members = () => {
 
   const [participants, setParticipants] = useState([])
   const [loading, setLoading] = useState(true)
+  
 
   const fetchParticipant = async () => {
     try {
@@ -62,7 +63,7 @@ const Members = () => {
   }
   console.log(participants.length)
   return (
-    <div className=" items-start gap-3 justify-start min-h-screen overflow-hidden z-50 text-black px-2">
+    <div className=" items-start gap-3 justify-start min-h-screen overflow-hidden z-50 text-brand7 px-2">
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
         <div className="space-y-6 md:w-[100%] ">
           <div className="flex md:flex-row flex-col md:w-[95%] mx-auto gap-2">
@@ -88,7 +89,7 @@ const Members = () => {
                       Total Issued Bonds:
                     </div>
                     <div
-                      className="text-white text-[56px] font-medium text-center"
+                      className="text-gray-300 text-[56px] font-medium text-center"
                     >
                       {participants.length} Members
                     </div>
@@ -148,7 +149,7 @@ const Members = () => {
                           <p className="font-medium text-brand7 text-lg">
                             {participant.name || 'Unnamed Participant'}
                           </p>
-                          <div className="text-gray-600 dark:text-gray-400 text-sm truncate">
+                          <div className="text-gray-200 dark:text-gray-400 text-sm truncate">
                             {clipAddress(participant.public_address || '')}
                           </div>
                         </div>
@@ -157,11 +158,11 @@ const Members = () => {
                       <div className="flex flex-col md:flex-row z-20 items-start md:items-center  gap-4">
                         <Dialog>
                           <DialogTrigger>
-                            <div className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium">
+                            <div className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-brand1 text-[14px] leading-5 font-medium">
                               View Details
                             </div>
                           </DialogTrigger>
-                          <DialogContent className="max-w-[800px] ">
+                          <DialogContent className="max-w-[800px] bg-[rgba(169,126,255,0.34)] text-gray-300  border-[1px] border-brand3 ">
 
                             <DialogDescription>
                               <div className="">
@@ -178,7 +179,7 @@ const Members = () => {
                                       {participant.name ||
                                         'Unnamed Participant'}
                                     </p>
-                                    <div className="text-gray-600 dark:text-gray-400 text-sm truncate">
+                                    <div className="text-gray-200 dark:text-gray-200 text-sm truncate">
                                       {clipAddress(
                                         participant.public_address || '',
                                       )}
@@ -188,18 +189,18 @@ const Members = () => {
 
                                 <div className="grid grid-cols-2 gap-3 mt-10">
                                   <div className="flex items-start gap-2">
-                                    <FiActivity className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiActivity className="text-gray-200 dark:text-gray-200" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Activities:
                                     </p>
-                                    <span className="text-black">
+                                    <span className="text-brand7">
                                       {participant.activities}
                                     </span>
                                   </div>
 
                                   <div className="flex items-start gap-2">
-                                    <FiDollarSign className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiDollarSign className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Total Invested:
                                     </p>
                                     <span
@@ -216,81 +217,81 @@ const Members = () => {
                                   </div>
 
                                   <div className="flex items-center gap-2">
-                                    <FiTag className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiTag className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Times Tokens Bought:
                                     </p>
-                                    <span className="font-medium text-black">
+                                    <span className="font-medium text-brand7">
                                       {participant.token_bought}
                                     </span>
                                   </div>
 
                                   <div className="flex items-center gap-2">
-                                    <FiTag className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiTag className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Times Tokens Sold:
                                     </p>
-                                    <span className="font-medium text-black">
+                                    <span className="font-medium text-brand7">
                                       {participant.token_sold}
                                     </span>
                                   </div>
 
                                   <div className="flex items-center gap-2">
-                                    <FiThumbsUp className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiThumbsUp className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Proposals Voted:
                                     </p>
-                                    <span className="font-medium text-black">
+                                    <span className="font-medium text-brand7">
                                       {participant.proposal_voted}
                                     </span>
                                   </div>
 
                                   <div className="flex items-center gap-2">
-                                    <FiMessageSquare className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiMessageSquare className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Comments on Proposals:
                                     </p>
-                                    <span className="font-medium text-black">
+                                    <span className="font-medium text-brand7">
                                       {participant.commented_on_proposal}
                                     </span>
                                   </div>
 
                                   <div className="flex items-center gap-2">
-                                    <FiMessageSquare className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiMessageSquare className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Discussion Comments:
                                     </p>
-                                    <span className="font-medium text-black">
+                                    <span className="font-medium text-brand7">
                                       {participant.discussion_comment}
                                     </span>
                                   </div>
 
                                   <div className="flex items-center gap-2">
-                                    <FiFileText className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiFileText className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Proposals Created:
                                     </p>
-                                    <span className="font-medium text-black">
+                                    <span className="font-medium text-brand7">
                                       {participant.proposal_created}
                                     </span>
                                   </div>
 
                                   <div className="flex items-center gap-2">
-                                    <FiFileText className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiFileText className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Zero Coupon Bonds Created:
                                     </p>
-                                    <span className="font-medium text-black">
+                                    <span className="font-medium text-brand7">
                                       {participant.zero_coupon_bond_created}
                                     </span>
                                   </div>
 
                                   <div className="flex items-center gap-2">
-                                    <FiFileText className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiFileText className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Discussions:
                                     </p>
-                                    <span className="font-medium text-black">
+                                    <span className="font-medium text-brand7">
                                       {participant.discussion}
                                     </span>
                                   </div>
@@ -305,7 +306,7 @@ const Members = () => {
   onClick={() =>
     navigate(`/userDashboard/userProfile/${participant.public_address}`)
   }
-  className="rounded-[26px] py-2 px-[15px]  bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium flex items-center justify-between"
+  className="rounded-[26px] py-2 px-[15px]  bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-brand1 text-[14px] leading-5 font-medium flex items-center justify-between"
 >
   Visit Profile
   <ChevronRight className="h-5 w-5 group-hover:translate-x-1 duration-300 transition-transform" />
