@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { SkeletonCard } from "@/Pages/GlobalComponents/Skeleton";
 import { Badge } from '@/components/ui/badge'
 import ProposalCard from "./ProposalCard";
+import { SkeletonProposal } from "@/Pages/GlobalComponents/SkeletonProposal";
 
 function ProposalExecuted({ proposals, loading, setActiveProposal, setShowForm, convertUnixTimestamp, clipAddress }) {
   return (
@@ -40,9 +41,9 @@ function ProposalExecuted({ proposals, loading, setActiveProposal, setShowForm, 
 )}
 
       {loading && (
-        <div className="grid grid-cols-3 gap-4 mt-5">
+        <div className="flex flex-col h-auto items-center px-5 py-5 justify-center text-center mt-5">
           {[...Array(3)].map((_, index) => (
-            <SkeletonCard key={index} className="h-[200px]" />
+            <SkeletonProposal key={index} className="h-[200px]" />
           ))}
         </div>
       )}

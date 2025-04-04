@@ -2,6 +2,7 @@
 import { SkeletonCard } from "@/Pages/GlobalComponents/Skeleton";
 
 import ProposalCard from "./ProposalCard";
+import { SkeletonProposal } from "@/Pages/GlobalComponents/SkeletonProposal";
 
 
 function ProposalPending({ proposals, loading, setActiveProposal, setShowForm, convertUnixTimestamp, clipAddress }) {
@@ -41,9 +42,9 @@ function ProposalPending({ proposals, loading, setActiveProposal, setShowForm, c
       )}
 
       {loading && (
-        <div className="grid grid-cols-3 gap-4 mt-5">
+        <div className="flex flex-col h-auto items-center px-5 py-5 justify-center text-center mt-5">
           {[...Array(3)].map((_, index) => (
-            <SkeletonCard key={index} className="h-[200px]" />
+            <SkeletonProposal key={index} className="h-[200px]" />
           ))}
         </div>
       )}

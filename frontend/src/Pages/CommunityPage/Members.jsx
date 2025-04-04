@@ -118,7 +118,7 @@ const Members = () => {
 
 
                 {loading ? (
-                  <div className="flex flex-col h-auto items-center  justify-center text-center mt-5">
+                  <div className="flex flex-col h-auto items-center px-5  justify-center text-center mt-5">
                     {[...Array(4)].map((_, i) => (
                       <SkeletonCard key={i} />
                     ))}

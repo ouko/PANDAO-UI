@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button'
 import { useSendTransaction } from '@/hooks/useSendTransaction'
 import { SkeletonCard } from '../GlobalComponents/Skeleton'
 import BondCard from './components/BondCard'
+import SkeletonBond from '../GlobalComponents/SkeletonBond'
 
 const PurchasedBond = (props) => {
   const { accounts } = useAccount()
@@ -170,11 +171,11 @@ const PurchasedBond = (props) => {
                 </div>
 
                 {loading ? (
-                  <div className="flex items-center justify-center h-96">
-                    {[...Array(3)].map((_, i) => (
-                      <SkeletonCard key={i} />
-                    ))}
-                  </div>
+                   <div className="flex flex-col h-auto items-center px-5  justify-center text-center mt-5">
+                   {[...Array(2)].map((_, i) => (
+                     <SkeletonBond key={i} />
+                   ))}
+                 </div>
                 ) : error ? (
                   <div className="text-center text-red-500">{error}</div>
                 ) : issuedBonds.length === 0 ? (

@@ -18,6 +18,7 @@ import { SkeletonCard } from '../GlobalComponents/Skeleton'
 import { formatStandardDateTime } from '@/utils/functions/convertActivityData'
 import FundHistoryGraph from './ChatHistory'
 import { useQuery } from '@tanstack/react-query'
+import { SkeletonActivity } from '../GlobalComponents/SkeletonActivity'
 
 const Activity = () => {
   const { accounts } = useAccount()
@@ -287,7 +288,7 @@ const Activity = () => {
                     {loading && (
                       <div className="flex flex-col h-auto items-center justify-center text-center mt-5">
                         {[...Array(8)].map((_, i) => (
-                          <SkeletonCard key={i} />
+                          <SkeletonActivity key={i} />
                         ))}
                       </div>
                     )}
@@ -302,7 +303,7 @@ const Activity = () => {
 
                     </div>
                     {loading ? (
-                      <div className="flex flex-col h-auto items-center justify-center text-center mt-5">
+                      <div className="flex flex-col h-auto W-[800px] px-4 items-center justify-center text-center mt-5">
                         {[...Array(4)].map((_, i) => (
                           <SkeletonCard key={i} />
                         ))}

@@ -253,15 +253,15 @@ const Comments = () => {
                     </div>
                   )}
                   {loading && (
-                    <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-5">
-                      {[...Array(4)].map((_, index) => (
-                        <SkeletonCard
-                          key={index}
-                          className="p-4 h-[150px] bg-gray-200 rounded shadow-md"
-                        />
-                      ))}
-                    </div>
-                  )}
+  <div className="flex flex-col h-auto items-center px-5  justify-center text-center mt-5">
+    {[...Array(4)].map((_, index) => (
+      <SkeletonCard
+        key={index}
+        className="p-4 h-[150px] bg-gray-200 rounded shadow-md"
+      />
+    ))}
+  </div>
+)}
                 </div>
               )}
               {selectedDiscussion && (
