@@ -195,10 +195,9 @@ const handleOnEdit=()=>{
     }
   });
 
-  const handleRetreiveBond = (bond) => {
+  const handleRetrieveBond = (bond) => {
     retrieveBondMutation.mutate(bond);
   };
-
   const handleDeposit = (bond) => {
     depositMutation.mutate(bond);
   };
@@ -281,7 +280,7 @@ const handleOnEdit=()=>{
                 check={check}
                 setCheck={setCheck}
                 loading={retrieveBondMutation.isPending || depositMutation.isPending}
-                handleRetrieveBond={handleRetreiveBond}
+                handleRetrieveBond={handleRetrieveBond}
                 setOpenPay={setOpenPay}
                 setSelectedBond={setSelectedBond}
                 setSelectedInfo={setSelectedInfo}
