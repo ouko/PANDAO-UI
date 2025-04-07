@@ -300,7 +300,7 @@ const BondIssue = () => {
                         className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
                         name="community_id"
                         value={params.id}
-                        disabled
+                        disabled={true}
                         placeholder="Community ID"
                       />
                     </div>
@@ -388,7 +388,7 @@ const BondIssue = () => {
                         value={bond.currency}
                         onChange={handleChange}
                         placeholder="Currency type (e.g., XRD)"
-                        disabled
+                        disabled={true}
                       />
                     </div>
 
@@ -477,7 +477,7 @@ const BondIssue = () => {
                         value={bond.notional_principal}
                         onChange={handleChange}
                         placeholder="Principal amount of the bond"
-                        disabled
+                        disabled={true}
                       />
                     </div>
 
@@ -494,7 +494,7 @@ const BondIssue = () => {
                         value={bond.number_of_bonds}
                         onChange={handleChange}
                         placeholder="Total quantity of bonds"
-                        disabled
+                        disabled={true}
                       />
                     </div>
 
@@ -510,7 +510,7 @@ const BondIssue = () => {
                         value={accounts[0].address}
                         onChange={handleChange}
                         placeholder="Address associated with the bond"
-                        disabled
+                        disabled={true}
                       />
                     </div>
 
@@ -583,9 +583,9 @@ const BondIssue = () => {
                     </Select>
                   </div>
 
-                  <div className="flex items-center justify-end">
+                  <div className="flex items-center py-4 justify-end">
                     <Button
-                     className="flex-1 rounded-2xl p-3 py-3 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner"
+                     className="flex-1 rounded-2xl p-3 py-4 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner"
             
                       onClick={() => setOpen(!open)}
                       disabled={!isFormComplete}
