@@ -172,6 +172,7 @@ const BondIssue = () => {
   const closeModal = () => {
     setModalOpen(false)
   }
+
   const fetchNfts = async () => {
     try {
       const response = await axios.get(
@@ -248,11 +249,14 @@ const BondIssue = () => {
       'bond_price',
       'number_of_bonds',
       'description',
-    ]
-
-    const allFieldsFilled = requiredFields.every((field) => bond[field])
-    setIsFormComplete(allFieldsFilled)
-  }, [bond])
+    ];
+  
+    const allFieldsFilled = requiredFields.every(
+      (field) => bond[field] !== undefined && bond[field] !== ''
+    );
+    setIsFormComplete(allFieldsFilled);
+  }, [bond]);
+  
   useEffect(() => {
     // Only fetch NFTs if accounts are available
     if (accounts && accounts.length > 0) {
@@ -583,9 +587,9 @@ const BondIssue = () => {
                     </Select>
                   </div>
 
-                  <div className="flex items-center py-4 justify-end">
+                  <div className="flex items-center z-50 py-4 justify-end">
                     <Button
-                     className="flex-1 rounded-2xl p-3 py-4 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner"
+                     className="flex-1 rounded-2xl p-3 z-50 py-4 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner"
             
                       onClick={() => setOpen(!open)}
                       disabled={!isFormComplete}
@@ -600,13 +604,13 @@ const BondIssue = () => {
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger></DialogTrigger>
-          <DialogContent className="max-w-2xl ">
+          <DialogContent className="max-w-2xl  bg-[rgba(169,126,255,0.34)] text-white  border-[1px] border-brand3 ">
             <h2 className="text-xl font-bold">Confirm Submission</h2>
             <p>Review the details below before submitting:</p>
 
             {/* Display the submitted data */}
-            <div className="bg-gray-100 p-4 rounded-lg text-left max-h-96 overflow-auto">
-              <ul className="space-y-2">
+            <div className=" p-4 rounded-lg text-left max-h-96 overflow-auto">
+              <ul className="space-y-2 bg-[rgba(169,126,255,0.34)] text-black ">
                 <li>
                   <strong>Community ID:</strong> {params.id}
                 </li>
