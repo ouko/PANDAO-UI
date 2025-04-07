@@ -806,7 +806,7 @@ const CommunityDetails = () => {
         <DialogTrigger></DialogTrigger>
         <DialogContent className="w-full  p-6 bg-[rgba(169,126,255,0.34)] text-gray-300  border-[1px] border-brand3 rounded-lg shadow-lg ">
           <DialogHeader className="max-w-4xl w-full">
-            <DialogTitle className="text-2xl font-semibold text-gray-800 w-full text-center">
+            <DialogTitle className="text-2xl font-semibold text-gray-100 w-full text-center">
               Mint Executive Badges
             </DialogTitle>
             <DialogDescription className="flex flex-col justify-center items-center gap-4 mt-4 ">
@@ -853,7 +853,7 @@ const CommunityDetails = () => {
             </DialogTitle>
             <DialogDescription className="flex flex-col justify-center items-center gap-4 mt-4 w-full overflow-y-auto">
               {participants.map((participant, index) => (
-                <div key={index} className="w-full text-center border-b pb-4 mb-4">
+                <div key={index} className="w-[500px] text-center border-b pb-4 mb-4">
                   <p className="text-lg font-medium text-gray-300">
                     Name:{participant.name}</p>
                   <p

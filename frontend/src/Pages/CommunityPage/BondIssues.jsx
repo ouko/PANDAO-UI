@@ -264,7 +264,8 @@ const BondIssue = () => {
     return null
   }
   return (
-    <div className="  items-start gap-3 justify-start min-h-screen overflow-hidden z-50 text-brand6px-2">
+    <div className="items-start gap-3 justify-start min-h-screen overflow-auto z-50 text-brand6 px-2">
+
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
         <div className="space-y-6 md:w-[100%] ">
           <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
@@ -274,7 +275,7 @@ const BondIssue = () => {
 
 
                   <span>
-                    
+
                     <span className="step-2-describe-your-dao-span2"></span>
                     <span className="step-2-describe-your-dao-span3 text-amber-50">Create a Bond</span>
                   </span>
@@ -513,14 +514,44 @@ const BondIssue = () => {
                       />
                     </div>
 
-                  
+                    <div className="flex flex-col w-full space-y-4">
+                      <label
+                        className="text-brand6 text-left text-xl leading-[120%] font-medium relative self-stretch"
+                      >
+                        Description:
+                      </label>
+                      <input
+                        className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        name="description"
+                        value={bond.description}
+                        onChange={handleChange}
+                        placeholder="Detailed description of the bond"
+                      />
+                    </div>
+
+
+
+
+                    <Select
+                      className="flex items-center justify-center"
+                      onValueChange={(value) =>
+                        updateBond('bond_position', value)
+                      }
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select Position" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="long">Long</SelectItem>
+                        <SelectItem value="short">Short</SelectItem>
+                      </SelectContent>
+                    </Select>
                     <Select
                       className="flex items-center justify-center"
                       onValueChange={(value) => updateBond('nft', value)}
                     >
-                      <SelectTrigger className="w-full p-4 border bg-[#1B0D37] mt-10 h-[57px] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
-                       >
-                        <SelectValue  placeholder="Select NFT"  />
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select NFT" />
                       </SelectTrigger>
                       <SelectContent>
                         {nfts.length > 0 ? (
@@ -552,7 +583,7 @@ const BondIssue = () => {
                     </Select>
                   </div>
 
-                  <div className="flex items-center pt-5 justify-end">
+                  <div className="flex items-center justify-end">
                     <Button
                      className="flex-1 rounded-2xl p-3 py-3 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner"
             
@@ -640,8 +671,8 @@ const BondIssue = () => {
             </div>
 
             <div className="flex items-center justify-end space-x-4">
-              <Button 
-               className="flex-1 rounded-2xl p-3 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner"
+              <Button
+                className="flex-1 rounded-2xl p-3 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner"
                 variant="radix"
                 disabled={loading}
                 onClick={handleformSubmit}
