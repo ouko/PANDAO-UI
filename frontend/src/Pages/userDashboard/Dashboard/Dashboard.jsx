@@ -286,6 +286,8 @@ const handleOnEdit=()=>{
                 setSelectedBond={setSelectedBond}
                 setSelectedInfo={setSelectedInfo}
                 setShowInfo={setShowInfo}
+                showInfo={showInfo}
+                selectedInfo={selectedInfo}
               />
             </section>
           )}
