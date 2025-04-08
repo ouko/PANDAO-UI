@@ -487,44 +487,7 @@ const CommunityDetails = () => {
           </div>
         )}
       </div>
-      <Dialog open={quickStartOpen} onOpenChange={setQuickStartOpen}>
-        <DialogTrigger></DialogTrigger>
-        <DialogContent className="max-w-2xl p-6 bg-[rgba(169,126,255,0.34)]  border-[1px] border-brand3 rounded-lg shadow-lg">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-semibold text-brand7 w-full text-center">
-              Quick Start
-            </DialogTitle>
-            <DialogDescription className="flex  items-center gap-4 mt-4 w-full">
-              <Card
-                className="w-full p-6 bg-[rgba(121,84,196,0.8)] border-[1px] border-brand2 hover:bg-[rgba(169,126,255,0.34)] transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
-                onClick={() =>
-                  navigate(`/community/detail/${params.id}/proposals?state="proposal"`)
-                }
-              >
-                <h3 className="text-xl font-medium text-gray-300">
-                  Create a Proposal
-                </h3>
-                <p className="text-sm text-gray-400 mt-1">
-                  Start a new project by creating a detailed proposal.
-                </p>
-              </Card>
-              <Card
-                className="w-full p-6 bg-[rgba(121,84,196,0.8)] border-[1px] border-brand2 hover:bg-[rgba(169,126,255,0.34)]  transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
-                onClick={() =>
-                  navigate(`/community/detail/${params.id}/bondissue`)
-                }
-              >
-                <h3 className="text-xl font-medium text-gray-300">
-                  Create a Bond
-                </h3>
-                <p className="text-sm text-gray-400 mt-1">
-                  Secure your projects with a reliable bond.
-                </p>
-              </Card>
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+   
       <Dialog open={execOpen} onOpenChange={setExecOpen}>
         <DialogTrigger></DialogTrigger>
         <DialogContent className="w-full  p-6 bg-[rgba(169,126,255,0.34)] text-gray-300  border-[1px] border-brand3 rounded-lg shadow-lg ">
