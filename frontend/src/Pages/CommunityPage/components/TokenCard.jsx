@@ -10,6 +10,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { PieChart } from 'react-minimal-pie-chart';
 import { useAccount } from '@/AccountContext';
 import { useParams } from 'react-router-dom';
@@ -204,7 +205,7 @@ const TokenCard = ({ data }) => {
             <div>
               <Dialog open={openSellModal} onOpenChange={setSellModal}>
                 <DialogTrigger asChild>
-                  <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" variant="radix">Sell Token</button>
+                  <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" >Sell Token</button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px] bg-[rgba(169,126,255,0.34)] text-white  border-[1px] border-brand3 ">
                   <DialogHeader>
@@ -230,7 +231,7 @@ const TokenCard = ({ data }) => {
                   </div>
                   <DialogFooter>
                     {loading ? (
-                      <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" variant="radix" disabled>
+                      <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" disabled>
                         Selling...
                       </button>
                     ) : (
@@ -253,7 +254,7 @@ const TokenCard = ({ data }) => {
             <div>
               <Dialog open={openBuyModal} onOpenChange={setBuyModal}>
                 <DialogTrigger asChild>
-                  <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" variant="radix">Buy Token</button>
+                  <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" >Buy Token</button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px] bg-[rgba(169,126,255,0.34)] text-white  border-[1px] border-brand3  ">
                   <DialogHeader>
@@ -278,7 +279,7 @@ const TokenCard = ({ data }) => {
                   </div>
                   <DialogFooter>
                     {loading ? (
-                      <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" variant="radix" disabled>
+                      <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" disabled>
                         Buying...
                       </button>
                     ) : (
@@ -370,6 +371,17 @@ const TokenCard = ({ data }) => {
       </div>
     </div>
   );
+};
+TokenCard.propTypes = {
+  data: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    total_token: PropTypes.number.isRequired,
+    token_bought: PropTypes.number.isRequired,
+    token_price: PropTypes.number.isRequired,
+    token_buy_back_price: PropTypes.number.isRequired,
+    token_price_in_usd: PropTypes.number.isRequired,
+    token_buy_back_price_in_usd: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default TokenCard;
