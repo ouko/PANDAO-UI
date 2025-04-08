@@ -12,11 +12,42 @@ import {
 } from '@/components/ui/dialog'
 import { DialogDescription } from '@radix-ui/react-dialog'
 import { Card } from '@/components/ui/card'
+import { useAccount } from '@/AccountContext';
+import { toast } from 'sonner';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
-const DaoCard = ({ daoData, isUserParticipant, handleJoinCommunity, setQuickStartOpen, quickStartOpen, setTransferOpen, setExecOpen }) => {
+const DaoCard = ({ daoData, isUserParticipant, setQuickStartOpen, quickStartOpen, setTransferOpen, setExecOpen }) => {
   const [copied, setCopied] = useState(false);
   const [copied1, setCopied1] = useState(false);
+  const { accounts } = useAccount()
+  const params = useParams()
+  const navigate = useNavigate()
+
+
+  const handleJoinCommunity = async () => {
+    const data = {
+      community_id: params.id,
+      participant_address: accounts[0].address,
+    }
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/community/participant`,
+        data,
+      )
+      if (response.data !== null) {
+        console.log('Response:', response.data)
+        toast.success('Welcome to the Community')
+      } else {
+        toast.error('Something went wrong')
+      }
+    } catch (error) {
+      console.log('Error joining community:', error)
+      toast.error('Something went wrong')
+    }
+  }
 
   const handleCopy = (address) => {
     navigator.clipboard.writeText(address);

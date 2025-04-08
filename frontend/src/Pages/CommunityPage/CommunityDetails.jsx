@@ -74,29 +74,7 @@ const CommunityDetails = () => {
 
 
 
-  const handleJoinCommunity = async () => {
-    const data = {
-      community_id: params.id,
-      participant_address: accounts[0].address,
-    }
 
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/community/participant`,
-        data,
-      )
-      if (response.data !== null) {
-        console.log('Response:', response.data)
-        toast.success('Welcome to the Community')
-        fetchParticipant()
-      } else {
-        toast.error('Something went wrong')
-      }
-    } catch (error) {
-      console.log('Error joining community:', error)
-      toast.error('Something went wrong')
-    }
-  }
   // const handleClaimToken = async () => {
   //   console.log("selectedAccount:", accounts[0].address);
   //   if (!accounts[0].address) {
@@ -459,8 +437,8 @@ const CommunityDetails = () => {
         {data && (
           <div className="space-y-6 w-full  ">
 
-            <DaoCard daoData={data} isUserParticipant={isUserParticipant}
-              handleJoinCommunity={handleJoinCommunity}
+            <DaoCard daoData={data} 
+            isUserParticipant={isUserParticipant}
               setQuickStartOpen={setQuickStartOpen}
               setTransferOpen={setTransferOpen}
               setExecOpen={setExecOpen}
