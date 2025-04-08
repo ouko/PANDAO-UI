@@ -17,14 +17,14 @@ import useCustomAlertStore from "@/store/customAlertStore"
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>
         </AlertDialogTrigger>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-[rgba(169,126,255,0.34)] text-white backdrop-blur-md border-[1px] border-brand3">
           <AlertDialogHeader>
 
-            <AlertDialogDescription>
+            <AlertDialogDescription >
             {alertText}
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
+          <AlertDialogFooter >
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction>Continue</AlertDialogAction>
           </AlertDialogFooter>

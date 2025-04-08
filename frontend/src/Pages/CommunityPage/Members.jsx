@@ -162,7 +162,7 @@ const Members = () => {
                               View Details
                             </div>
                           </DialogTrigger>
-                          <DialogContent className="max-w-[800px] bg-[rgba(169,126,255,0.34)] text-gray-300  border-[1px] border-brand3 ">
+                          <DialogContent className="max-w-[800px] bg-[rgba(169,126,255,0.34)] backdrop-blur-md text-gray-300  border-[1px] border-brand3 ">
 
                             <DialogDescription>
                               <div className="">
