@@ -475,7 +475,7 @@ const CommunityDetails = () => {
 
       <Dialog open={execOpen} onOpenChange={setExecOpen}>
         <DialogTrigger></DialogTrigger>
-        <DialogContent className="w-full  p-6 bg-[rgba(169,126,255,0.34)] text-gray-300  border-[1px] border-brand3 rounded-lg shadow-lg ">
+        <DialogContent className="w-full  p-6 bg-[rgba(169,126,255,0.34)] text-gray-300 backdrop-blur-md border-[1px] border-brand3 rounded-lg shadow-lg ">
           <DialogHeader className="max-w-4xl w-full">
             <DialogTitle className="text-2xl font-semibold text-gray-100 w-full text-center">
               Mint Executive Badges
@@ -517,7 +517,7 @@ const CommunityDetails = () => {
       </Dialog>
       <Dialog open={transferOpen} onOpenChange={setTransferOpen}>
         <DialogTrigger></DialogTrigger>
-        <DialogContent className="w-half pt-10 bg-[rgba(169,126,255,0.34)] text-gray-300  border-[1px] border-brand3 rounded-lg shadow-lg max-w-5xl overflow-y-auto max-h-[80vh]">
+        <DialogContent className="w-half pt-10 bg-[rgba(169,126,255,0.34)] text-gray-300 backdrop-blur-md  border-[1px] border-brand3 rounded-lg shadow-lg max-w-5xl overflow-y-auto max-h-[80vh]">
           <DialogHeader className="w-full overflow-auto">
             <DialogTitle className="text-2xl font-semibold text-gray-300 w-full text-center">
               Transfer Executive Badges
