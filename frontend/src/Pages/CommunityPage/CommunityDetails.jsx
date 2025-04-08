@@ -1,6 +1,5 @@
 import { useAccount } from '@/AccountContext'
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
 
 
 import axios from 'axios'
@@ -63,10 +62,8 @@ const CommunityDetails = () => {
   const [communities, setCommunities] = useState([])
   const [withDrawRequest, setWithDrawRequest] = useState([])
   const sendTransaction = useSendTransaction()
-  const [loading, setLoading] = useState(false)
   const [loadingMint, setLoadingMint] = useState(false)
   const [manifest, setManifest] = useState('')
-  const [selectedId, setSelectedId] = useState("")
   const [transferAddress, setTransferAddress] = useState("");
   // const handleClaimToken = async () => {
   //   console.log("selectedAccount:", accounts[0].address);
@@ -121,75 +118,7 @@ const CommunityDetails = () => {
   //   console.log(recipt);
 
   // };
-  const handleWithDrawSign = async (id) => {
-    console.log("id", id)
-    const data = {
-      community_id: params.id,
-      user_address: accounts[0].address,
-      id,
-    }
-    console.log("id", data)
-    setLoading(true)
 
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL
-        }/manifest/sign-withdraw-request`,
-        data,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-
-      const responseData =
-        typeof response.data === 'string'
-          ? response.data.trim()
-          : JSON.stringify(response.data)
-
-      console.log('Response:', responseData)
-      setManifest(responseData)
-
-      const { receipt } = await sendTransaction(responseData)
-
-      const txId = receipt?.transaction?.intent_hash
-
-      if (txId) {
-        try {
-          const submitResponse = await axios.post(
-            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
-            {
-              tx_id: txId,
-              user_address: accounts[0].address,
-            },
-            {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            },
-          )
-
-          console.log('Submit Transaction Response:', submitResponse.data)
-          toast.success('Sign Withdraw Request Successfully!')
-        } catch (submitError) {
-          console.error('Error submitting transaction:', submitError)
-          toast.error('Failed to submit transaction.')
-        }
-      } else {
-        console.error('Transaction ID not found in receipt:', receipt)
-        toast.error('Transaction failed. Please try again.')
-      }
-    } catch (error) {
-      console.error('Error selling token:', error)
-
-
-      toast.error('Something went wrong while selling tokens.')
-    } finally {
-      setLoading(false)
-      setSelectedId("")
-    }
-  }
   const fetchDetails = async () => {
     try {
       const res = await axios.get(
@@ -441,9 +370,6 @@ const CommunityDetails = () => {
 
                 <WithdrawCard
                   withDrawRequest={withDrawRequest}
-                  handleWithDrawSign={handleWithDrawSign}
-                  loading={loading}
-
                 />
 
                 <DiscussionCard communities={communities} />
