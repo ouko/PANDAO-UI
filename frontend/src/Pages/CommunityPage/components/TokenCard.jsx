@@ -20,7 +20,7 @@ import { toast } from 'sonner';
 import useCustomAlertStore from '@/store/customAlertStore';
 
 
-const TokenCard = ({ data,onSuccess }) => {
+const TokenCard = ({ data, onSuccess }) => {
   const [openSellModal, setSellModal] = useState(false);
   const [openBuyModal, setBuyModal] = useState(false);
   const [tokenToSell, setTokenToSell] = useState(0);
@@ -197,7 +197,7 @@ const TokenCard = ({ data,onSuccess }) => {
 
 
   return (
-    <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-solid border-[#5228A4] border pt-[13px] pr-[25px] pb-[13px] pl-[25px] shrink-0 h-[345px] relative overflow-hidden backdrop-blur-[6.7px]">
+    <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-solid border-[#5228A4] border pt-[13px] pr-[25px] pb-[13px] pl-[25px] shrink-0 min-h-[345px] relative overflow-hidden backdrop-blur-[6.7px]">
 
       <div className="bg-[#39246b] px-[13px] flex items-center justify-between w-full h-[63px]  absolute left-0 top-0">
         <div className="text-white text-2xl font-medium">{data.name}</div>
@@ -304,7 +304,7 @@ const TokenCard = ({ data,onSuccess }) => {
       </div>
 
 
-      <div className="flex flex-col gap-[25px] items-start justify-start w-80 absolute left-[33px] top-[92px]">
+      <div className="flex flex-col gap-[25px] items-start justify-start mt-20 ">
 
         <div className="flex items-center gap-[26px] w-full">
           <div className="rounded-full w-[45px] h-[45px] overflow-hidden">
@@ -318,42 +318,35 @@ const TokenCard = ({ data,onSuccess }) => {
         </div>
 
 
-        <div className="flex flex-col ">
-
-          <div className="flex gap-[11px]">
-            <div className="text-[#5228A4] text-xl uppercase">Token Price:</div>
-            <div className="text-white text-xl">{data.token_price}</div>
-          </div>
-
-          <div className="flex gap-[11px]">
-            <div className="text-[#5228A4] text-xl uppercase">Token Buy Back Price:</div>
-            <div className="text-white text-xl">{data.token_buy_back_price}</div>
-          </div>
-
-          <div className="flex gap-[11px]">
-            <div className="text-[#5228A4] text-xl uppercase">Token Price in USD:</div>
-            <div className="text-white text-xl">{Math.round(data.token_price_in_usd * 10000) / 10000}{' '}$
-            </div>
-          </div>
-
-
-          <div className="flex gap-[11px]">
-            <div className="text-[#5228A4] text-xl uppercase">Token Buy Back Price in USD:</div>
-            <div className="text-white text-xl"> {Math.round(
-              data.token_buy_back_price_in_usd * 10000,
-            ) / 10000}{' '}
-              $
-            </div>
-          </div>
-
-
-
-
+        <div className="w-full text-left">
+          <table className="table-auto w-full text-lg">
+            <tbody className="text-white">
+              <tr>
+                <td className=" pr-4 text-purple-400 uppercase font-medium">Token Price:</td>
+                <td className="">{data.token_price}</td>
+              </tr>
+              <tr>
+                <td className=" pr-4 text-purple-400 uppercase font-medium">Token Buy Back Price:</td>
+                <td className="">{data.token_buy_back_price}</td>
+              </tr>
+              <tr>
+                <td className=" pr-4 text-purple-400 uppercase font-medium">Token Price in USD:</td>
+                <td className="">{(Math.round(data.token_price_in_usd * 10000) / 10000).toFixed(4)} $</td>
+              </tr>
+              <tr>
+                <td className=" pr-4 text-purple-400 uppercase font-medium">Token Buy Back Price in USD:</td>
+                <td className="">
+                  {(Math.round(data.token_buy_back_price_in_usd * 10000) / 10000).toFixed(4)} $
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
 
+
       </div>
-      <div className="flex flex-col gap-[25px] items-start justify-start h-[235px] absolute left-[373px] top-[95px]">
+      <div className="flex flex-col gap-[25px] items-start justify-start h-[235px] mt-10 ">
         <PieChart
           data={[
             {
