@@ -30,15 +30,19 @@ import {
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { SkeletonCard } from '../GlobalComponents/Skeleton'
+import { Button } from '@/components/ui/button'
+import { toast } from 'sonner'
+import { useSendTransaction } from '@/hooks/useSendTransaction'
 
 const Members = () => {
   const { accounts } = useAccount()
   const navigate = useNavigate()
   const params = useParams()
-
+  const sendTransaction = useSendTransaction()
+  const [loading2, setLoading2] = useState(false)
   const [participants, setParticipants] = useState([])
   const [loading, setLoading] = useState(true)
-  
+
 
   const fetchParticipant = async () => {
     try {
@@ -52,6 +56,78 @@ const Members = () => {
       console.error('Error fetching blueprint data:', error)
     }
   }
+  const handleTransfer = async (transferAddress) => {
+    if (transferAddress.trim() === "") {
+
+      toast.error("Fill Fields")
+      return
+    }
+    setLoading2(true)
+    const data = {
+      user_address: accounts[0].address,
+      community_id: params.id,
+      recipient: transferAddress
+
+    }
+
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL
+        }/manifest/transfer-executive-token`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+
+      const responseData =
+        typeof response.data === 'string'
+          ? response.data.trim()
+          : JSON.stringify(response.data)
+
+      console.log('Response:', responseData)
+
+      const { receipt } = await sendTransaction(responseData)
+
+      const txId = receipt?.transaction?.intent_hash
+
+      if (txId) {
+        try {
+          const submitResponse = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+            {
+              tx_id: txId,
+              user_address: accounts[0].address,
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+
+          console.log('Submit Transaction Response:', submitResponse.data)
+          toast.success('Transfer Token Successfully!')
+
+        } catch (submitError) {
+          console.error('Error submitting transaction:', submitError)
+          toast.error('Failed to submit transaction.')
+        }
+      } else {
+        console.error('Transaction ID not found in receipt:', receipt)
+        toast.error('Transaction failed. Please try again.')
+
+      }
+    } catch (error) {
+      console.error('Error selling token:', error.response.data.detail)
+      toast.error('Something went wrong.')
+    } finally {
+      setLoading2(false)
+    }
+  }
 
   useEffect(() => {
     fetchParticipant()
@@ -61,7 +137,6 @@ const Members = () => {
     navigate('/')
     return null
   }
-  console.log(participants.length)
   return (
     <div className=" items-start gap-3 justify-start min-h-screen overflow-hidden z-50 text-brand7 px-2">
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
@@ -72,7 +147,7 @@ const Members = () => {
               <div
                 className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden"
               >
-                
+
                 <div className="flex flex-row  gap-10 items-center w-full">
                   <div
                     className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
@@ -84,7 +159,7 @@ const Members = () => {
                   </div>
                   <div className="flex flex-col gap-1.5">
                     <div
-                     className="text-[#5228A4] font-semibold uppercase text-xl"
+                      className="text-[#5228A4] font-semibold uppercase text-xl"
                     >
                       Total Issued Bonds:
                     </div>
@@ -112,7 +187,7 @@ const Members = () => {
 
                     Members:
                   </div>
-                  
+
                 </div>
 
 
@@ -166,26 +241,34 @@ const Members = () => {
 
                             <DialogDescription>
                               <div className="">
-                                <div className="flex items-center gap-3">
-                                  <Avatar>
-                                    <AvatarImage
-                                      alt="Avatar"
-                                      src={participant.image_url}
-                                    />
-                                    <AvatarFallback>JD</AvatarFallback>
-                                  </Avatar>
-                                  <div className="text-left cursor-pointer text-ellipsis  overflow-hidden">
-                                    <p className="font-medium text-lg">
-                                      {participant.name ||
-                                        'Unnamed Participant'}
-                                    </p>
-                                    <div className="text-gray-200 dark:text-gray-200 text-sm truncate">
-                                      {clipAddress(
-                                        participant.public_address || '',
-                                      )}
+                                <div className='flex items-center justify-between'>
+                                  <div className="flex items-center gap-3 ">
+                                    <Avatar>
+                                      <AvatarImage
+                                        alt="Avatar"
+                                        src={participant.image_url}
+                                      />
+                                      <AvatarFallback>JD</AvatarFallback>
+                                    </Avatar>
+                                    <div className="text-left cursor-pointer text-ellipsis  overflow-hidden">
+                                      <p className="font-medium text-lg">
+                                        {participant.name ||
+                                          'Unnamed Participant'}
+                                      </p>
+                                      <div className="text-gray-200 dark:text-gray-200 text-sm truncate">
+                                        {clipAddress(
+                                          participant.public_address || '',
+                                        )}
+                                      </div>
                                     </div>
                                   </div>
+                                  <div>
+                                    <Button variant="brand" className="text-white" onClick={() => handleTransfer(participant.public_address)} disabled={loading2}>
+                                      Transfer Excutive Badge
+                                    </Button>
+                                  </div>
                                 </div>
+
 
                                 <div className="grid grid-cols-2 gap-3 mt-10">
                                   <div className="flex items-start gap-2">
@@ -303,14 +386,14 @@ const Members = () => {
                         </Dialog>
 
                         <div
-  onClick={() =>
-    navigate(`/userDashboard/userProfile/${participant.public_address}`)
-  }
-  className="rounded-[26px] py-2 px-[15px]  bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-brand1 text-[14px] leading-5 font-medium flex items-center justify-between"
->
-  Visit Profile
-  <ChevronRight className="h-5 w-5 group-hover:translate-x-1 duration-300 transition-transform" />
-</div>
+                          onClick={() =>
+                            navigate(`/userDashboard/userProfile/${participant.public_address}`)
+                          }
+                          className="rounded-[26px] py-2 px-[15px]  bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-brand1 text-[14px] leading-5 font-medium flex items-center justify-between"
+                        >
+                          Visit Profile
+                          <ChevronRight className="h-5 w-5 group-hover:translate-x-1 duration-300 transition-transform" />
+                        </div>
 
                       </div>
                     </div>
