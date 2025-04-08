@@ -34,7 +34,6 @@ import FundHistoryGraph from './ChatHistory'
 import { DialogDescription } from '@radix-ui/react-dialog'
 import DaoCard from './components/DaoCard'
 import TokenCard from './components/TokenCard'
-import MembersCard from './components/MembersCard'
 import TotalProposalsCard from './components/PraposalCard'
 import TotalFund from './components/TotalFund'
 import WithdrawCard from './components/WithdrawCard'
@@ -69,11 +68,6 @@ const CommunityDetails = () => {
   const [manifest, setManifest] = useState('')
   const [selectedId, setSelectedId] = useState("")
   const [transferAddress, setTransferAddress] = useState("");
-
-
-
-
-
   // const handleClaimToken = async () => {
   //   console.log("selectedAccount:", accounts[0].address);
   //   if (!accounts[0].address) {
@@ -127,12 +121,6 @@ const CommunityDetails = () => {
   //   console.log(recipt);
 
   // };
-
-
-
-
-
-
   const handleWithDrawSign = async (id) => {
     console.log("id", id)
     const data = {
@@ -202,10 +190,6 @@ const CommunityDetails = () => {
       setSelectedId("")
     }
   }
-
-
-
-
   const fetchDetails = async () => {
     try {
       const res = await axios.get(
@@ -224,7 +208,6 @@ const CommunityDetails = () => {
       console.error('Error fetching blueprint data:', error)
     }
   }
-
   const fetchParticipant = async () => {
     try {
       const res = await axios.get(
@@ -437,7 +420,7 @@ const CommunityDetails = () => {
       <CustomAlert />
       <div className="flex md:flex-row flex-col   md:py-12  ">
         {data && (
-          <div className="space-y-6 w-full  ">
+          <div className=" w-full  ">
 
             <DaoCard daoData={data}
               isUserParticipant={isUserParticipant}
@@ -447,8 +430,8 @@ const CommunityDetails = () => {
 
             />
 
-            <div className="flex md:flex-row flex-col w-full mx-auto gap-2">
-              <div className="md:w-[50%] space-y-3">
+            <div className="flex md:flex-row flex-col w-full mx-auto gap-[16px] ">
+              <div className=" w-full space-y-4">
 
 
                 <TokenCard data={data} onSuccess={handleSuccess} />
@@ -472,8 +455,8 @@ const CommunityDetails = () => {
 
                 </div>
               </div>
-              <div className=" px-4 md:w-[50%] space-y-6   ">
-                <MembersCard participants={participants} />
+              <div className=" w-full space-y-4 ">
+                {/* <MembersCard participants={participants} /> */}
                 <div>
                   <TotalProposalsCard />
                 </div>

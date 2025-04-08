@@ -33,7 +33,7 @@ const FundHistoryGraph = () => {
       {/* Header */}
       <div className="bg-[#39246b]  px-4 flex items-center w-full h-[53px] absolute left-0 top-0">
         <div className="text-white text-2xl font-medium font-[ClashDisplayVariable-Medium, sans-serif]">
-          Total Withdraw Request:
+          Fund History:
         </div>
       </div>
 
