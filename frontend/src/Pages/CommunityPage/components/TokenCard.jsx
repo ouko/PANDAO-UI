@@ -18,7 +18,7 @@ const TokenCard = ({ data , handleBuyToken, handleSellToken, loading }) => {
   const [openSellModal, setSellModal] = useState(false);
   const [openBuyModal, setBuyModal] = useState(false);
   const [tokenToSell, setTokenToSell] = useState('');
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState(0);
 
   if (!data) return null;
 
@@ -90,11 +90,11 @@ const TokenCard = ({ data , handleBuyToken, handleSellToken, loading }) => {
                   </DialogHeader>
                   <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="buy-token" className="text-right">
+                      <Label htmlFor="name" className="text-right">
                         Token
                       </Label>
                       <Input
-                        id="buy-token"
+                        id="name"
                         className="col-span-3"
                         placeholder="How many tokens to buy"
                         type="number"
@@ -102,7 +102,6 @@ const TokenCard = ({ data , handleBuyToken, handleSellToken, loading }) => {
                         onChange={(e) => setToken(e.target.value)}
                         required
                         min={0}
-                        max={data.total_token - data.token_bought}
                       />
                     </div>
                   </div>
@@ -114,8 +113,10 @@ const TokenCard = ({ data , handleBuyToken, handleSellToken, loading }) => {
                     ) : (
                       <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
                      
-                        onClick={() => handleBuyToken(token)}
-                        disabled={!token || token <= 0}
+                      onClick={handleBuyToken}
+
+                      disabled={!token}
+
                       >
                         Buy Token
                       </button>
