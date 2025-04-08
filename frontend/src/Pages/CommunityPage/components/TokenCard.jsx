@@ -20,7 +20,7 @@ import { toast } from 'sonner';
 import useCustomAlertStore from '@/store/customAlertStore';
 
 
-const TokenCard = ({ data }) => {
+const TokenCard = ({ data,onSuccess }) => {
   const [openSellModal, setSellModal] = useState(false);
   const [openBuyModal, setBuyModal] = useState(false);
   const [tokenToSell, setTokenToSell] = useState(0);
@@ -168,6 +168,7 @@ const TokenCard = ({ data }) => {
           setText('Token Bought')
           setOpen(true)
           setBuyModal(false)
+          onSuccess()
         } catch (submitError) {
           console.error('Error submitting transaction:', submitError)
           toast.error('Failed to submit transaction.')
@@ -382,6 +383,7 @@ TokenCard.propTypes = {
     token_price_in_usd: PropTypes.number.isRequired,
     token_buy_back_price_in_usd: PropTypes.number.isRequired,
   }).isRequired,
+  onSuccess: PropTypes.func.isRequired,
 };
 
 export default TokenCard;

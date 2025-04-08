@@ -509,7 +509,9 @@ const CommunityDetails = () => {
       setLoadingMint(false)
     }
   }
-
+const handleSuccess=()=>{
+  fetchDetails()
+}
   useEffect(() => {
     fetchDetails()
     fetchParticipant()
@@ -544,7 +546,7 @@ const CommunityDetails = () => {
               <div className="md:w-[50%] space-y-3">
 
 
-                <TokenCard data={data} />
+                <TokenCard data={data} onSuccess={handleSuccess}/>
                 <TotalFund data={data} setWithDrawModal={setWithDrawModal} />
 
 
