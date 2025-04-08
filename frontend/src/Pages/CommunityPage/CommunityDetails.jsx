@@ -18,7 +18,6 @@ import {
 } from '@/components/ui/dialog'
 import { Label } from '@radix-ui/react-label'
 import { Input } from '@/components/ui/input'
-import useCustomAlertStore from '@/store/customAlertStore'
 import { CustomAlert } from '../GlobalComponents/CustomAlert'
 import useBluePrintSlugStore from '@/store/blueprintSlug'
 
@@ -54,46 +53,28 @@ ChartJS.register(
 
 const CommunityDetails = () => {
   const { accounts } = useAccount()
-  const [openBuyModal, setBuyModal] = useState(false)
   const [quickStartOpen, setQuickStartOpen] = useState(false)
   const [execOpen, setExecOpen] = useState(false)
   const [transferOpen, setTransferOpen] = useState(false)
-  const [openSellModal, setSellModal] = useState(false)
-  const { setOpen, setText } = useCustomAlertStore()
   const { setSlug } = useBluePrintSlugStore()
-  const [executiveId, setExecutiveId] = useState("")
   const [executiveName, setExecutiveName] = useState("")
-  const [tranferAddress, setTranferAddress] = useState("")
   const navigate = useNavigate()
   const params = useParams()
   const [data, setData] = useState([])
   const [participants, setParticipants] = useState([])
   const [communities, setCommunities] = useState([])
   const [withDrawRequest, setWithDrawRequest] = useState([])
-  const [copied, setCopied] = useState(false)
   const sendTransaction = useSendTransaction()
   const [loading, setLoading] = useState(false)
   const [loadingMint, setLoadingMint] = useState(false)
   const [manifest, setManifest] = useState('')
-  const [token, setToken] = useState(0)
-  const [tokenToSell, setTokenToSell] = useState(0)
   const [selectedId, setSelectedId] = useState("")
-  const [fundHistory, setFundHistory] = useState([]) // New state for fund history
   const [transferAddress, setTransferAddress] = useState("");
   const [withDrawModal, setWithDrawModal] = useState(false);
   const [withdrawAmount, setwithdrawAmout] = useState(0)
-  const handleTrans = () => {
-    console.log("Transferring badge to:", transferAddress);
-    // Implement transfer logic here
-  };
 
-  const handleCopy = (address) => {
-    navigator.clipboard.writeText(address)
-    setCopied(true)
-    setTimeout(() => {
-      setCopied(false)
-    }, 1000)
-  }
+
+
 
   const handleJoinCommunity = async () => {
     const data = {
@@ -262,9 +243,7 @@ const CommunityDetails = () => {
         setData(res.data)
 
         // Fetch fund history data
-        if (res.data.fund_history) {
-          setFundHistory(res.data.fund_history) // Populate fund history data
-        }
+       
       }
     } catch (error) {
       console.error('Error fetching blueprint data:', error)
