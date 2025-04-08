@@ -9,7 +9,7 @@ const BondCard = ({ bond }) => {
     };
 
     return (
-        <div className="bg-[#1B0D37] rounded-2xl border-2 border-[#5228A4] hover:scale-95 transition-transform duration-300 ease-in-out w-full h-[428px] relative overflow-hidden backdrop-blur-md">
+        <div className="bg-[#1B0D37] rounded-2xl border-2 border-[#5228A4]  transition-transform duration-300 ease-in-out w-full h-[428px] relative overflow-hidden backdrop-blur-md">
             <div className="bg-black/50 border-b border-[#5228a4] w-full h-[159px] absolute top-0"></div>
               <div className="flex gap-8 items-start absolute w-[1000px] top-4 translate-x-20">
                 {bond.asset_url && (
