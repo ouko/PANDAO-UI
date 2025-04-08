@@ -59,11 +59,11 @@ const Sidebar = () => {
             key={index}
             to={item.path}
             className={({ isActive }) =>
-              `flex flex-row py-2 items-center justify-start my-4 cursor-pointer transition-colors ${isActive ? 'bg-[#5228A4] text-white rounded-lg w-[300px] px-3' : 'text-primary-100'}`
+              `flex flex-row py-2 items-center justify-start my-4 cursor-pointer px-1 transition-colors ${isActive ? 'bg-[#5228A4] text-white rounded-lg w-[300px] ' : 'text-primary-100'}`
             }
             end
           >
-            <img className="shrink-0 w-[40px] h-[30px] px-3" src={item.icon} alt={item.label} />
+            <img className="shrink-0 size-[45px] px-3" src={item.icon} alt={item.label} />
             <div className="font-medium text-2xl">{item.label}</div>
           </NavLink>
         ))}  
