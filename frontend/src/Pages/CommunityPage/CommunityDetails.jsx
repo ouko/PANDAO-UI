@@ -53,7 +53,6 @@ ChartJS.register(
 
 const CommunityDetails = () => {
   const { accounts } = useAccount()
-  const [quickStartOpen, setQuickStartOpen] = useState(false)
   const [execOpen, setExecOpen] = useState(false)
   const [transferOpen, setTransferOpen] = useState(false)
   const { setSlug } = useBluePrintSlugStore()
@@ -415,6 +414,9 @@ const CommunityDetails = () => {
   const handleSuccess = () => {
     fetchDetails()
   }
+  const handleSuccess2 = () => {
+    fetchParticipant()
+  }
   useEffect(() => {
     fetchDetails()
     fetchParticipant()
@@ -437,11 +439,11 @@ const CommunityDetails = () => {
         {data && (
           <div className="space-y-6 w-full  ">
 
-            <DaoCard daoData={data} 
-            isUserParticipant={isUserParticipant}
-              setQuickStartOpen={setQuickStartOpen}
+            <DaoCard daoData={data}
+              isUserParticipant={isUserParticipant}
               setTransferOpen={setTransferOpen}
               setExecOpen={setExecOpen}
+              onSuccess={handleSuccess2}
 
             />
 
@@ -487,7 +489,7 @@ const CommunityDetails = () => {
           </div>
         )}
       </div>
-   
+
       <Dialog open={execOpen} onOpenChange={setExecOpen}>
         <DialogTrigger></DialogTrigger>
         <DialogContent className="w-full  p-6 bg-[rgba(169,126,255,0.34)] text-gray-300  border-[1px] border-brand3 rounded-lg shadow-lg ">
