@@ -18,7 +18,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
 
-const DaoCard = ({ daoData, isUserParticipant,   setTransferOpen, setExecOpen,onSuccess }) => {
+const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onSuccess }) => {
   const [copied, setCopied] = useState(false);
   const [copied1, setCopied1] = useState(false);
   const [quickStartOpen, setQuickStartOpen] = useState(false)
@@ -198,12 +198,14 @@ const DaoCard = ({ daoData, isUserParticipant,   setTransferOpen, setExecOpen,on
                   Mint Executive Badge
                 </Button>
                 <Button
-                  className="bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] px-5 py-2 text-white font-semibold rounded-full"
+                  variant="brand"
+                  className="text-white"
+
 
                   onClick={() => setQuickStartOpen(true)}>
                   Quick Start
                 </Button>
-               
+
               </div>
             )}
           </div>
