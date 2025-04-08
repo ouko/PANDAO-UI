@@ -3,6 +3,7 @@ import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { useParams } from "react-router-dom";
 import { Card } from "@/components/ui/card";
+import { ChartComponent } from "@/components/ui/myComponents/test-char";
 
 const FundHistoryGraph = () => {
   const [expenses, setExpenses] = useState([]);
@@ -36,7 +37,6 @@ const FundHistoryGraph = () => {
           Fund History:
         </div>
       </div>
-
       <div className="mt-10">
 
       {expenses.length === 0 ? (

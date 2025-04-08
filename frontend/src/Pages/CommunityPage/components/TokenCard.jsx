@@ -9,15 +9,16 @@ import {
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { PieChart } from 'react-minimal-pie-chart';
 import { useAccount } from '@/AccountContext';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSendTransaction } from '@/hooks/useSendTransaction';
 import { toast } from 'sonner';
 import useCustomAlertStore from '@/store/customAlertStore';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { Label as Label2, Pie, PieChart } from "recharts"
 
 
 const TokenCard = ({ data, onSuccess }) => {
@@ -191,10 +192,34 @@ const TokenCard = ({ data, onSuccess }) => {
     }
   }
 
+  const chartData = [
+    {
+      browser: "Total Token",
+      visitors: data.total_token - data.token_bought,
+      fill: "#CBB2F0", // light purple
+    },
+    {
+      browser: "Token Bought",
+      visitors: data.token_bought,
+      fill: "#9268E4", // slightly darker purple
+    },
+  ]
+
+  const chartConfig = {
+    "Total Token": {
+      label: `Remaining Token  ${data.total_token - data.token_bought}`,
+      color: "#CBB2F0",
+    },
+    "Token Bought": {
+      label: `Token Bought  ${data.token_bought}`,
+      color: "#9268E4",
+    },
+  }
 
 
   if (!data) return null;
 
+  console.log(typeof (data.total_token), "fsdi");
 
   return (
     <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-solid border-[#5228A4] border pt-[13px] pr-[25px] pb-[13px] pl-[25px] shrink-0 min-h-[345px] relative overflow-hidden backdrop-blur-[6.7px]">
@@ -346,23 +371,61 @@ const TokenCard = ({ data, onSuccess }) => {
 
 
       </div>
-      <div className="flex flex-col gap-[25px] items-start justify-start h-[235px] mt-10 ">
-        <PieChart
-          data={[
-            {
-              title: 'Total Token',
-              value: data.total_token - data.token_bought,
-              color: '#2a164d',
-            },
-            {
-              title: 'Token Bought',
-              value: data.token_bought,
-              color: '#9268E4',
-            },
-          ]}
-        />
+      {data && <div className="mt-10 ">
+        <div className="flex-1 pb-0 ">
+          <ChartContainer
+            config={chartConfig}
+            className="mx-auto aspect-square max-h-[300px]"
+          >
+            <PieChart>
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              />
+              <Pie
+                data={chartData}
+                dataKey="visitors"
+                nameKey="browser"
+                innerRadius={60}
+                strokeWidth={5}
+              >
+                <Label2
+                  content={({ viewBox }) => {
+                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                      return (
+                        <text
+                          x={viewBox.cx}
+                          y={viewBox.cy}
+                          textAnchor="middle"
+                          dominantBaseline="middle"
+                        >
+                          <tspan
+                            x={viewBox.cx}
+                            y={viewBox.cy}
+                            className="fill-white text-xl font-bold "
+                          >
+                            {data.total_token ? data.total_token.toLocaleString() : '0'}
+                          </tspan>
+                          <tspan
+                            x={viewBox.cx}
+                            y={(viewBox.cy || 0) + 24}
+                            className="fill-muted-foreground"
+                          >
+                            Total Tokens
+                          </tspan>
+                        </text>
+                      )
+                    }
+                  }}
+                />
+              </Pie>
+            </PieChart>
+          </ChartContainer>
+        </div>
 
-      </div>
+
+
+      </div>}
     </div>
   );
 };
