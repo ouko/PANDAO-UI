@@ -1,6 +1,5 @@
 import HomeSection from "./homeSectionComponents/HomeSection";
 import Footer from "./homeSectionComponents/Footer";
-import PriceSection from "./homeSectionComponents/PriceSection";
 import Question from "./homeSectionComponents/Question";
 import Reviews from "./homeSectionComponents/Reviews";
 import ExploreSection from "./homeSectionComponents/ExploreSection";

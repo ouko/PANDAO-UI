@@ -1,26 +1,14 @@
-import React, { useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
-import { Button } from '../../../components/ui/button'
-import MobileSidebar from '../MobileSidebar'
-import { ChevronLeft } from 'lucide-react'
+
 import { useRdt } from '@/hooks/useRdt'
 import axios from 'axios'
-import MobileNav from './MobileNav'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import useBluePrintSlugStore from '@/store/blueprintSlug'
-import { IoHomeOutline } from "react-icons/io5";
 
-const Navbar = () => {
+
+const Sidebar = () => {
   const rdt = useRdt()
   const navigate = useNavigate()
   const params = useParams()
-  const { slug } = useBluePrintSlugStore()
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+
 
   rdt.walletApi.provideConnectResponseCallback(async (result) => {
     if (result.isErr()) {
@@ -46,178 +34,43 @@ const Navbar = () => {
   })
   
 
-  const handleSelect = (callback) => {
-    setIsDropdownOpen(false) // Close dropdown
-    callback() // Perform any additional actions, like navigation
-  }
+
+
+  const navItems = [
+    
+    { icon: '/2.svg', label: 'Dashboard', path: `/community/detail/${params.id}` },
+    { icon: '/3.svg', label: 'Members', path: `/community/detail/${params.id}/members` },
+    { icon: '/4.svg', label: 'Discussion', path: `/community/detail/${params.id}/discussion` },
+    { icon: '/5.svg', label: 'Vote Power', path: `/community/detail/${params.id}/tokenDistribution` },
+    { icon: '/6.svg', label: 'Activity', path: `/community/detail/${params.id}/activity` },
+    { icon: '/7.svg', label: 'Proposals', path: `/community/detail/${params.id}/proposals` },
+    { icon: '/2.svg', label: 'Bond Issue', path: `/community/detail/${params.id}/bondissue` },
+    { icon: '/2.svg', label: 'Purchased Bond', path: `/community/detail/${params.id}/purchasedbond` },
+    { icon: '/8.svg', label: 'Bond Issued', path: `/community/detail/${params.id}/bondissued` },
+    { icon: '/1.svg', label: 'Back', path: '/' }
+];
+
 
   return (
-    <div className="z-50 p-4 w-full rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-80 bg-purple-50 text-black fixed">
-      <div className="max-w-[1440px] mx-auto flex items-center justify-between h-10 md:px-10">
-        <ul className="md:flex hidden items-center justify-start gap-5 w-full font-semibold text-lg">
+    <div className=''>
+      <div className="bg-[rgba(169,126,255,0.08)]  rounded-[20px] text-white border-solid border-[#5228A4] border py-10 pt-[13px] px-[15px] shrink-0  min-h-[737px] relative overflow-hidden">
+        {navItems.map((item, index) => (
           <NavLink
-            to="/"
-            className="bg-white p-2 rounded-xl hover:text-sky-600 group"
-            end
-          >
-            <IoHomeOutline className="group-hover:scale-110 duration-300 transition-transform" />
-            
-          </NavLink>
-          <NavLink
-            to={`/community/detail/${params.id}`}
+            key={index}
+            to={item.path}
             className={({ isActive }) =>
-              isActive
-                ? 'bg-white text-blue-800 w-32 text-center py-2 px-4 rounded-lg font-semibold'
-                : 'bg-transparent text-black w-32 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
+              `flex flex-row py-2 items-center justify-start my-4 cursor-pointer px-1 transition-colors ${isActive ? 'bg-[#5228A4] text-white rounded-lg w-[300px] ' : 'text-primary-100'}`
             }
             end
           >
-            <li>Dashboard</li>
+            <img className="shrink-0 size-[45px] px-3" src={item.icon} alt={item.label} />
+            <div className="font-medium text-2xl">{item.label}</div>
           </NavLink>
-          <NavLink
-            to={`/community/detail/${params.id}/members`}
-            className={({ isActive }) =>
-              isActive
-                ? 'bg-white text-blue-800 w-32 text-center py-2 px-4 rounded-lg font-semibold'
-                : 'bg-transparent text-black w-32 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
-            }
-            end
-          >
-            <li>Members</li>
-          </NavLink>
-          <NavLink
-            to={`/community/detail/${params.id}/discussion`}
-            className={({ isActive }) =>
-              isActive
-                ? 'bg-white text-blue-800 w-32 text-center py-2 px-4 rounded-lg font-semibold'
-                : 'bg-transparent text-black w-32 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
-            }
-            end
-          >
-            <li>Discussion</li>
-          </NavLink>
-          <NavLink
-            to={`/community/detail/${params.id}/tokenDistribution`}
-            className={({ isActive }) =>
-              isActive
-                ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
-            }
-            end
-          >
-            <li>Vote Power</li>
-          </NavLink>
-          <NavLink
-            to={`/community/detail/${params.id}/activity`}
-            className={({ isActive }) =>
-              isActive
-                ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
-            }
-            end
-          >
-            <li>Activity</li>
-          </NavLink>
-          <NavLink
-            to={`/community/detail/${params.id}/proposals`}
-            className={({ isActive }) =>
-              isActive
-                ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
-            }
-            end
-          >
-            <li>Proposals</li>
-          </NavLink>
-          <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
-            <DropdownMenuTrigger>More</DropdownMenuTrigger>
-            <DropdownMenuContent>
-              {slug === 'Insurance' ? (
-                <DropdownMenuItem
-                 onSelect={() => handleSelect(() => navigate(`/community/detail/${params.id}/annissue`))}
-                  className={({ isActive }) =>
-                    isActive
-                      ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                      : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
-                  }
-                    end
-                >
-                 <li>Issue ANN Token</li>
-                </DropdownMenuItem>
-              ) : (
-                <>
-                  <DropdownMenuItem
-                    onSelect={() => handleSelect(() => navigate(`/community/detail/${params.id}/bondissue`))}
-                    className={({ isActive }) =>
-                      isActive
-                        ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                        : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
-                    }
-                      end
-                  >
-                   <li>Bond Issue</li>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onSelect={() => handleSelect(() => navigate(`/community/detail/${params.id}/purchasedbond`))}
-                    className={({ isActive }) =>
-                      isActive
-                        ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                        : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
-                    }
-                  >
-                   <li>Purchased Bond</li>
-                  </DropdownMenuItem>
-                </>
-              )}
-              {slug === 'Insurance' ? (
-                <DropdownMenuItem
-                  onSelect={() => handleSelect(() => navigate(`/community/detail/${params.id}/annissued`))}
-                  className={({ isActive }) =>
-                    isActive
-                      ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                      : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
-                  }
-                    end
-                >
-                  <li>Issued ANN Tokens</li>
-                </DropdownMenuItem>
-              ) : (
-                <DropdownMenuItem
-                  onSelect={() => handleSelect(() => navigate(`/community/detail/${params.id}/bondissued`))}
-                  className={({ isActive }) =>
-                    isActive
-                      ? 'bg-white text-blue-800 w-36 text-center py-2 px-4 rounded-lg font-semibold'
-                      : 'bg-transparent text-black w-36 text-center py-2 px-4 rounded-lg hover:text-[#003bf5]'
-                  }
-                    end
-                >
-                 <li>Bond Issued</li>
-                </DropdownMenuItem>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </ul>
-        <div className="w-full md:flex items-center justify-end gap-4 hidden">
-          <radix-connect-button />
-        </div>
-        <div className="md:hidden gap-3 flex items-center justify-between w-full">
-          <NavLink
-            to="/"
-            className="bg-white p-2 rounded-xl hover:text-sky-600"
-            end
-          >
-            <ChevronLeft />
-          </NavLink>
-          <MobileNav />
-        </div>
+        ))}  
+
       </div>
     </div>
-  )
+  );
 }
 
-export default Navbar
-
-//const image_url = "https://github.com/shadcn.png";
-//  public_address: result.value.accounts[0].address,
-//         name: result.value.persona.label,
-//         image_url,
+export default Sidebar;

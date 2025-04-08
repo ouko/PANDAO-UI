@@ -9,7 +9,6 @@ const CommunityDetailsLayout = lazy(() => import('../Layout/CommunityDetailsLayo
 
 // Public Pages
 const HomePage = lazy(() => import('../Pages/HomeSection/home-section'));
-const SignupPage = lazy(() => import('../Pages/SignUpPage'));
 const Product = lazy(() => import('../Pages/product'));
 const OurStory = lazy(() => import('../Pages/OurStory'));
 const PrivacyPolicy = lazy(() => import('../Pages/PrivacyPolicy'));
@@ -32,7 +31,7 @@ const UserPublicProfile = lazy(() => import('../Pages/UsersPublicProfile'));
 const MyCommunity = lazy(() => import('../Pages/MyCommunites'));
 const Create = lazy(() => import('../Pages/Create/Create'));
 const Deploy = lazy(() => import('../Pages/Deploy'));
-const CommunityDetails = lazy(() => import('../Pages/CommunityDetails'));
+const CommunityDetails = lazy(() => import('../Pages/CommunityPage/CommunityDetails'));
 const Members = lazy(() => import('../Pages/CommunityPage/Members'));
 const Comments = lazy(() => import('../Pages/CommunityPage/Comments'));
 const TokenDistribution = lazy(() => import('../Pages/CommunityPage/TokenDistribution'));

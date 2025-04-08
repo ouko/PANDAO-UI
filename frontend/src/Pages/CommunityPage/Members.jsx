@@ -1,9 +1,8 @@
 import { useAccount } from '@/AccountContext'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+
 import AvatarCircles from '@/components/ui/myComponents/avatarCircle'
-import { Textarea } from '@/components/ui/textarea'
+
 import {
   FiActivity,
   FiDollarSign,
@@ -16,18 +15,15 @@ import {
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import axios from 'axios'
 import {
-  ArrowBigLeft,
-  ArrowRight,
-  ChevronLeft,
+
   ChevronRight,
-  Users,
+
 } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogHeader,
-  DialogTitle,
+
   DialogTrigger,
 } from '@/components/ui/dialog'
 
@@ -42,6 +38,7 @@ const Members = () => {
 
   const [participants, setParticipants] = useState([])
   const [loading, setLoading] = useState(true)
+  
 
   const fetchParticipant = async () => {
     try {
@@ -66,44 +63,67 @@ const Members = () => {
   }
   console.log(participants.length)
   return (
-    <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
+    <div className=" items-start gap-3 justify-start min-h-screen overflow-hidden z-50 text-brand7 px-2">
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
         <div className="space-y-6 md:w-[100%] ">
-          <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
+          <div className="flex md:flex-row flex-col md:w-[95%] mx-auto gap-2">
             <div className="md:w-[100%] space-y-6  ">
-              <Card className="bg-white md:w-[100%] mx-auto md:p-10 p-4  space-y-10">
-                <div className="flex items-center justify-between">
-                  <div className="bg-slate-200 w-fit p-2 rounded-full">
-                    <Users className=" text-blue-700" />
-                  </div>
-                  {/* <div>
-                      <Button variant="radix" >
-                        Manage members
-                      </Button>
-                    </div> */}
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="text-3xl font-semibold">
-                    {participants.length} Members
-                  </div>
-                  {participants.length > 4 && (
-                    <AvatarCircles
-                      numPeople={participants.length - 3}
-                      src1={participants[0].image_url}
+
+              <div
+                className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden"
+              >
+                
+                <div className="flex flex-row  gap-10 items-center w-full">
+                  <div
+                    className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
+                    <img
+                      className="w-14 h-14"
+                      src="/member.svg"
+                      alt="User Icon"
                     />
-                  )}
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <div
+                     className="text-[#5228A4] font-semibold uppercase text-xl"
+                    >
+                      Total Issued Bonds:
+                    </div>
+                    <div
+                      className="text-gray-300 text-[56px] font-medium text-center"
+                    >
+                      {participants.length} Members
+                    </div>
+                    {participants.length > 4 && (
+                      <AvatarCircles
+                        numPeople={participants.length - 3}
+                        src1={participants[0].image_url}
+                      />
+                    )}
+                  </div>
                 </div>
-              </Card>
+              </div>
 
 
-              <Card className="bg-white md:w-[70%] mx-auto md:p-4 p-4 space-y-2">
-                <div className="p-2 border-b-2 -translate-x-2">Members</div>
+
+
+              <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4]  relative overflow-hidden">
+                <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
+                  <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
+
+                    Members:
+                  </div>
+                  
+                </div>
+
+
+
+
                 {loading ? (
-                  <div className="flex flex-col h-auto items-center justify-center text-center mt-5">
-                  {[...Array(4)].map((_, i) => (
-                    <SkeletonCard key={i} />
-                  ))}
-                </div>
+                  <div className="flex flex-col h-auto items-center px-5  justify-center text-center mt-5">
+                    {[...Array(4)].map((_, i) => (
+                      <SkeletonCard key={i} />
+                    ))}
+                  </div>
                 ) : participants.length === 0 ? (
                   <div className="flex items-center justify-center h-20">
                     Be the first one to join the community
@@ -111,10 +131,11 @@ const Members = () => {
                 ) : (
                   participants.map((participant, index) => (
 
-                    <Card
+                    <div
 
                       key={index}
-                      className="bg-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-2 md:w-full mx-auto p-4 border border-gray-200 rounded-lg shadow-sm"
+                      className="bg-gradient-to-br from-[rgba(24,18,45,0.59)] via-transparent to-brand1 hover:scale-95 transition-transform duration-300 
+                        flex flex-col my-4  md:flex-row items-start md:items-center justify-between gap-4 md:gap-2  mx-4 p-4 border border-brand2 rounded-lg shadow-sm"
                     >
                       <div className="flex items-center gap-3">
                         <Avatar>
@@ -125,23 +146,23 @@ const Members = () => {
                           <AvatarFallback>JD</AvatarFallback>
                         </Avatar>
                         <div className="text-left cursor-pointer text-ellipsis overflow-hidden">
-                          <p className="font-medium text-lg">
+                          <p className="font-medium text-brand7 text-lg">
                             {participant.name || 'Unnamed Participant'}
                           </p>
-                          <div className="text-gray-600 dark:text-gray-400 text-sm truncate">
+                          <div className="text-gray-200 dark:text-gray-400 text-sm truncate">
                             {clipAddress(participant.public_address || '')}
                           </div>
                         </div>
                       </div>
 
-                      <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                      <div className="flex flex-col md:flex-row z-20 items-start md:items-center  gap-4">
                         <Dialog>
                           <DialogTrigger>
-                            <div className="text-left group border-2 px-3 py-2 rounded-md hover:text-blue-600 cursor-pointer hover:shadow-sm text-ellipsis overflow-hidden flex items-center text-sm">
+                            <div className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-brand1 text-[14px] leading-5 font-medium">
                               View Details
                             </div>
                           </DialogTrigger>
-                          <DialogContent className="max-w-[800px] ">
+                          <DialogContent className="max-w-[800px] bg-[rgba(169,126,255,0.34)] backdrop-blur-md text-gray-300  border-[1px] border-brand3 ">
 
                             <DialogDescription>
                               <div className="">
@@ -153,12 +174,12 @@ const Members = () => {
                                     />
                                     <AvatarFallback>JD</AvatarFallback>
                                   </Avatar>
-                                  <div className="text-left cursor-pointer text-ellipsis overflow-hidden">
+                                  <div className="text-left cursor-pointer text-ellipsis  overflow-hidden">
                                     <p className="font-medium text-lg">
                                       {participant.name ||
                                         'Unnamed Participant'}
                                     </p>
-                                    <div className="text-gray-600 dark:text-gray-400 text-sm truncate">
+                                    <div className="text-gray-200 dark:text-gray-200 text-sm truncate">
                                       {clipAddress(
                                         participant.public_address || '',
                                       )}
@@ -168,18 +189,18 @@ const Members = () => {
 
                                 <div className="grid grid-cols-2 gap-3 mt-10">
                                   <div className="flex items-start gap-2">
-                                    <FiActivity className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiActivity className="text-gray-200 dark:text-gray-200" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Activities:
                                     </p>
-                                    <span className="text-black">
+                                    <span className="text-brand7">
                                       {participant.activities}
                                     </span>
                                   </div>
 
                                   <div className="flex items-start gap-2">
-                                    <FiDollarSign className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiDollarSign className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Total Invested:
                                     </p>
                                     <span
@@ -196,81 +217,81 @@ const Members = () => {
                                   </div>
 
                                   <div className="flex items-center gap-2">
-                                    <FiTag className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiTag className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Times Tokens Bought:
                                     </p>
-                                    <span className="font-medium text-black">
+                                    <span className="font-medium text-brand7">
                                       {participant.token_bought}
                                     </span>
                                   </div>
 
                                   <div className="flex items-center gap-2">
-                                    <FiTag className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiTag className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Times Tokens Sold:
                                     </p>
-                                    <span className="font-medium text-black">
+                                    <span className="font-medium text-brand7">
                                       {participant.token_sold}
                                     </span>
                                   </div>
 
                                   <div className="flex items-center gap-2">
-                                    <FiThumbsUp className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiThumbsUp className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Proposals Voted:
                                     </p>
-                                    <span className="font-medium text-black">
+                                    <span className="font-medium text-brand7">
                                       {participant.proposal_voted}
                                     </span>
                                   </div>
 
                                   <div className="flex items-center gap-2">
-                                    <FiMessageSquare className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiMessageSquare className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Comments on Proposals:
                                     </p>
-                                    <span className="font-medium text-black">
+                                    <span className="font-medium text-brand7">
                                       {participant.commented_on_proposal}
                                     </span>
                                   </div>
 
                                   <div className="flex items-center gap-2">
-                                    <FiMessageSquare className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiMessageSquare className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Discussion Comments:
                                     </p>
-                                    <span className="font-medium text-black">
+                                    <span className="font-medium text-brand7">
                                       {participant.discussion_comment}
                                     </span>
                                   </div>
 
                                   <div className="flex items-center gap-2">
-                                    <FiFileText className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiFileText className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Proposals Created:
                                     </p>
-                                    <span className="font-medium text-black">
+                                    <span className="font-medium text-brand7">
                                       {participant.proposal_created}
                                     </span>
                                   </div>
 
                                   <div className="flex items-center gap-2">
-                                    <FiFileText className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiFileText className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Zero Coupon Bonds Created:
                                     </p>
-                                    <span className="font-medium text-black">
+                                    <span className="font-medium text-brand7">
                                       {participant.zero_coupon_bond_created}
                                     </span>
                                   </div>
 
                                   <div className="flex items-center gap-2">
-                                    <FiFileText className="text-gray-600 dark:text-gray-400" />
-                                    <p className="text-sm font-medium">
+                                    <FiFileText className="text-gray-200 dark:text-gray-400" />
+                                    <p className="text-sm text-gray-300 font-medium">
                                       Discussions:
                                     </p>
-                                    <span className="font-medium text-black">
+                                    <span className="font-medium text-brand7">
                                       {participant.discussion}
                                     </span>
                                   </div>
@@ -282,20 +303,19 @@ const Members = () => {
                         </Dialog>
 
                         <div
-                          onClick={() =>
-                            navigate(
-                              `/userDashboard/userProfile/${participant.public_address}`,
-                            )
-                          }
-                          className="text-left group border-2 px-3 py-2 rounded-md hover:text-blue-600 cursor-pointer hover:shadow-sm text-ellipsis overflow-hidden flex items-center text-sm"
-                        >
-                          Visit Profile{' '}
-                          <ChevronRight className="h-5 w-5 group-hover:translate-x-1 duration-300 transition-transform" />
-                        </div>
+  onClick={() =>
+    navigate(`/userDashboard/userProfile/${participant.public_address}`)
+  }
+  className="rounded-[26px] py-2 px-[15px]  bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-brand1 text-[14px] leading-5 font-medium flex items-center justify-between"
+>
+  Visit Profile
+  <ChevronRight className="h-5 w-5 group-hover:translate-x-1 duration-300 transition-transform" />
+</div>
+
                       </div>
-                    </Card>
+                    </div>
                   )))}
-              </Card>
+              </div>
 
 
 

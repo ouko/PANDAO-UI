@@ -1,23 +1,21 @@
 import { useAccount } from "@/AccountContext";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+
 import {
   Table,
   TableBody,
-  TableCaption,
+
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Textarea } from "@/components/ui/textarea";
+
 import { clipAddress } from "@/utils/functions/ClipAddress";
 import axios from "axios";
-import { MessageCircle, Vote } from "lucide-react";
+
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "sonner";
+
 
 const TokenDistribution = () => {
   const { accounts } = useAccount();
@@ -75,60 +73,80 @@ const TokenDistribution = () => {
   }
   console.log(tokens);
   return (
-    <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
+    <div className=" items-start gap-3 justify-start z-50 min-h-screen overflow-hidden  text-black px-2">
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
         <div className="space-y-6 md:w-[100%] ">
           <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
             <div className="md:w-[100%] space-y-6  ">
-              <Card className="bg-white md:w-[100%] mx-auto md:p-10 p-4  space-y-10">
-                <div className="flex items-center justify-between">
-                  <div className="bg-slate-200 w-fit p-2 rounded-full">
-                    <Vote className=" text-blue-700" />
+
+              <div
+                className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden"
+              >
+
+                <div className="flex flex-row  gap-10 items-center w-full">
+                  <div
+                    className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
+                    <img
+                      className="w-14 h-14"
+                      src="/5.svg"
+                      alt="User Icon"
+                    />
                   </div>
-                  {/* <div>
-                    <Button variant="radix">
+                  <div className="flex flex-col gap-1.5">
+                    <div
+                      className="text-[#5228A4] font-semibold uppercase text-xl"
+                    >
+                      Total Vote Power:
+                    </div>
+                    <div
+                      className="text-white text-[56px] font-medium text-center"
+                    >
+                      Voters
+                    </div>
+                    {/* <Button variant="radix">
                       Manage Vote
-                    </Button>
-                  </div> */}
+                    </Button> */}
+
+                  </div>
                 </div>
-                <div className="text-3xl font-semibold">Vote Power</div>
-              </Card>
-              <Card className="bg-white md:w-[70%] mx-auto md:p-4 p-4 space-y-2 ">
-                
+              </div>
+
+              <div className=" bg-[rgba(169,126,255,0.08)] rounded-[10px] z-50 border-2 border-[#5228A4] h-full relative  overflow-hidden">
+
                 <Table>
                   {/* <TableCaption>A list of your recent .</TableCaption> */}
                   <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-[150px]">User Name</TableHead>
-                      <TableHead>Token Owned</TableHead>
-                      <TableHead>Address</TableHead>
+                    <TableRow className="bg-[#39246b] h-[65px] text-white text-[20px] ">
+                      <TableHead className="w-[150px] text-white  ">User Name</TableHead>
+                      <TableHead className="w-[150px] text-white  " >Token Owned</TableHead>
+                      <TableHead className="w-[150px] text-white  " >Address</TableHead>
                       {/* <TableHead className="text-right">Amount</TableHead> */}
                     </TableRow>
                   </TableHeader>
-                
-                  <TableBody>
+
+                  <TableBody className="text-[18px] bg-gradient-to-br from-[rgba(24,18,45,0.59)]  via-transparent to-brand1 border-2 border-brand2 px-2 py-2 text-brand7">
                     {tokens.map((token, index) => (
                       <TableRow key={index}>
-                        <TableCell className="font-medium">
+                        <TableCell className="font-medium ">
                           {" "}
                           {token.user_name}
                         </TableCell>
                         <TableCell>{token.token_owned}</TableCell>
-                        <TableCell  onClick={() =>
-                                  navigate(
-                                    `/userDashboard/userProfile/${token.public_address}`
-                                  )
-                                }  >
+                        <TableCell onClick={() =>
+                          navigate(
+                            `/userDashboard/userProfile/${token.public_address}`
+                          )
+                        }  >
                           {clipAddress(token.public_address)}
                         </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
-                {tokens.length===0 && <div className="flex items-center justify-center h-20">
-                    No trade happend yet.
-                  </div>}
-              </Card>
+                {tokens.length === 0 && <div className="flex items-center justify-center h-20">
+                  No trade happend yet.
+                </div>}
+              </div>
             </div>
           </div>
         </div>

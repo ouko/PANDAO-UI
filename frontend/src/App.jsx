@@ -1,6 +1,6 @@
 import {  Routes, Route, BrowserRouter } from 'react-router-dom'
 import './App.css'
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect,  } from 'react'
 import { toast } from 'sonner'
 import { useAccount } from './AccountContext'
 import axios from 'axios'

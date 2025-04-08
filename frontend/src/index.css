@@ -63,6 +63,11 @@
       --ring: 222.2 84% 4.9%;
 
       --radius: 0.5rem;
+      --chart-1: 12 76% 61%;
+      --chart-2: 173 58% 39%;
+      --chart-3: 197 37% 24%;
+      --chart-4: 43 74% 66%;
+      --chart-5: 27 87% 67%;
     }
 
     .dark {
@@ -93,6 +98,11 @@
       --border: 217.2 32.6% 17.5%;
       --input: 217.2 32.6% 17.5%;
       --ring: 212.7 26.8% 83.9%;
+      --chart-1: 220 70% 50%;
+      --chart-2: 160 60% 45%;
+      --chart-3: 30 80% 55%;
+      --chart-4: 280 65% 60%;
+      --chart-5: 340 75% 55%;
     }
   }
 
@@ -186,4 +196,40 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 
+.tab-trigger {
+  border-radius: 26px;
+  z-index: 50;
+  padding: 12px 25px;
+  font-size: 18px;
+  line-height: 1.25rem;
+  font-weight: 500;
+  box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+  color: white;
+  background: linear-gradient(to bottom, rgba(192, 161, 255, 1), rgba(130, 69, 255, 1));
+}
 
+.tab-trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tab-trigger[data-state="active"] {
+  background: linear-gradient(to bottom, #7c3aed, #6d28d9);
+}
+
+.bg-background {
+  background-color: #1B0D37 !important;
+}
+.bg-white {
+  --tw-bg-opacity: 0;
+  background-color: #1b0d3727 !important;
+  
+}
+
+.border-input {
+  border: 1px solid #5228A4 !important;
+}
+
+.ring-offset-background {
+  --tw-ring-offset-color: #5228A4;
+}

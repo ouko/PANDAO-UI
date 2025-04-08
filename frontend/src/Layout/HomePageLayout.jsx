@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 
 const HomePageLayout = ({ children }) => {
   return (
-    <div>
+    <div className="font-clash">
       <Navbar />
       <div className="home-page-content">
         {children || <Outlet />}

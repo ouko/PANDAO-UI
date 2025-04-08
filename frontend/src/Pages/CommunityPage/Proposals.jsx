@@ -38,6 +38,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import ProposalPending from './components/ProposalPendiing'
+import ProposalExecuted from './components/ProposalExecuted'
+import BondCard from './components/BondCard'
 
 const formatTime = (duration) => {
   const hours = Math.floor(
@@ -152,10 +155,8 @@ const Proposals = () => {
   const fetchVoted = async () => {
     try {
       const res2 = await axios.get(
-        `${
-          import.meta.env.VITE_BACKEND_URL
-        }/community/proposal/is-voted?proposal_id=${
-          activeProposal.id
+        `${import.meta.env.VITE_BACKEND_URL
+        }/community/proposal/is-voted?proposal_id=${activeProposal.id
         }&user_address=${accounts[0]?.address}`,
       )
 
@@ -170,8 +171,7 @@ const Proposals = () => {
   const fetchProposals = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/proposal/all/${
-          params.id
+        `${import.meta.env.VITE_BACKEND_URL}/community/proposal/all/${params.id
         }?status=${activeTab}`,
       )
       console.log(res.data, 'res.data')
@@ -186,8 +186,7 @@ const Proposals = () => {
   const fetchBondNames = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/bonds-names/all/${
-          params.id
+        `${import.meta.env.VITE_BACKEND_URL}/community/bonds-names/all/${params.id
         }`,
       )
       console.log(res.data, 'res.dataaaaaaaa')
@@ -203,8 +202,7 @@ const Proposals = () => {
     }
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/proposal/comments/${
-          activeProposal.id
+        `${import.meta.env.VITE_BACKEND_URL}/community/proposal/comments/${activeProposal.id
         }`,
       )
       setComments(res.data)
@@ -222,8 +220,7 @@ const Proposals = () => {
     }
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/proposal/zcb/${
-          activeProposal.id
+        `${import.meta.env.VITE_BACKEND_URL}/community/proposal/zcb/${activeProposal.id
         }`,
       )
       setIssuedBond(res.data)
@@ -386,8 +383,7 @@ const Proposals = () => {
       }
 
       const res = await axios.post(
-        `${
-          import.meta.env.VITE_BACKEND_URL
+        `${import.meta.env.VITE_BACKEND_URL
         }/manifest/proposal/update-token-price`,
         proposalPayload,
       )
@@ -432,7 +428,7 @@ const Proposals = () => {
       )
       toast.error(
         error.response?.data?.detail?.error?.toUpperCase() ||
-          'Failed to submit proposal',
+        'Failed to submit proposal',
       )
     } finally {
       setLoadingButton(false)
@@ -650,8 +646,7 @@ const Proposals = () => {
   const fetchParticipant = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/participant/${
-          params.id
+        `${import.meta.env.VITE_BACKEND_URL}/community/participant/${params.id
         }`,
       )
       setParticipants(res.data)
@@ -703,216 +698,96 @@ const Proposals = () => {
   console.log(activeProposal, 'activer')
 
   return (
-    <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
+    <div className="items-start gap-3 justify-start z-50  min-h-screen overflow-hidden   text-brand7 px-2">
       {!form && !activeProposal && !showCategories && !tokenChangeform ? (
         <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
           <div className="space-y-6 md:w-[100%] ">
-            <div className="flex md:flex-row flex-col md:w-[100%] mx-auto gap-2">
+            <div className="flex md:flex-row flex-col md:w-[100%] z-50 mx-auto gap-2">
               <div className="md:w-[100%] space-y-2  ">
-                <div className="w-full  flex items-end justify-end">
-                  <Button
-                    onClick={() => {
-                      setActiveProposal(null)
-                      setShowCategories(true)
-                    }}
-                    variant="radix"
-                  >
-                    Create Proposal
-                  </Button>
+                <div
+                  className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden"
+                >
+
+                  <div className="flex flex-row  gap-10 items-center w-full">
+                    <div
+                      className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
+                      <img
+                        className="w-14 h-14"
+                        src="/member.svg"
+                        alt="User Icon"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <div
+                        className="text-[#5228A4] font-semibold uppercase text-xl"
+                      >
+                        Total Proposal:
+                      </div>
+                      <div
+                        className="text-white text-[56px] font-medium text-center"
+                      >
+                        Proposal
+
+                      </div>
+
+                    </div>
+
+                  </div>
+                  <div className="absolute bottom-0 right-0 p-4">
+                    <Button
+                      className="rounded-[26px] py-2 z-50 px-[15px]  bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-brand7 text-[14px] leading-5 font-medium"
+                      onClick={() => {
+                        setActiveProposal(null)
+                        setShowCategories(true)
+                      }}
+                      variant="radix"
+                    >
+                      Create Proposal
+                    </Button>
+                  </div>
                 </div>
+
                 <Tabs
                   defaultValue="PENDING"
-                  className="w-full"
+                  className="w-full py-5"
                   onValueChange={setActiveTab}
                 >
-                  <TabsList>
-                    <TabsTrigger value="PENDING">Pending</TabsTrigger>
-                    <TabsTrigger value="EXECUTED">Executed</TabsTrigger>
+                  <TabsList className=" z-50 bg-brand1 space-x-2">
+                    <TabsTrigger value="PENDING" disabled={false} className="tab-trigger">
+                      Pending
+                    </TabsTrigger>
+                    <TabsTrigger value="EXECUTED" disabled={false} className="tab-trigger">
+                      Executed
+                    </TabsTrigger>
                   </TabsList>
-                  <TabsContent value="PENDING">
-                    <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
-                      <div className="p-2 border-b-2 -translate-x-2">
-                        All Proposals.
-                      </div>
-                      {!loading && (
-                        <div className="space-y-4">
-                          {!proposal.length > 0 && (
-                            <div className="flex items-center justify-center h-10">
-                              No Pending Proposal
-                            </div>
-                          )}
-                        </div>
-                      )}
-                      {!loading && proposal && (
-                        <div className=" grid md:grid-cols-3 grid-cols-1 gap-5 mt-3">
-                          {proposal.map((proposalItem, index) => (
-                            <Card
-                              key={index}
-                              onClick={() => {
-                                setActiveProposal(proposalItem)
-                                setShowForm(null)
-                              }}
-                              className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-2 bg-white border-b-2 rounded-none p-3 text-black relative"
-                            >
-                              <Badge
-                                variant={
-                                  proposalItem.is_active
-                                    ? ' success'
-                                    : 'destructive'
-                                }
-                                className={`absolute right-2 ${
-                                  proposalItem.is_active
-                                    ? 'bg-green-600 text-white'
-                                    : ''
-                                } `}
-                              >
-                                {proposalItem.is_active
-                                  ? 'Pending'
-                                  : 'Executed'}
-                              </Badge>
-                              {proposalItem.proposal_type && (
-                                <Badge className={`absolute right-20 `}>
-                                  {proposalItem.proposal_type}
-                                </Badge>
-                              )}
 
-                              <div className="capitalize font-semibold text-xl">
-                                {proposalItem.proposal}
-                              </div>
-                              <div className="capitalize font-semibold text-md">
-                                {proposalItem.description}
-                              </div>
-                              <div className="flex flex-col items-center gap-3">
-                                <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
-                                  <span>Start Time :</span>
-                                  <span className="font-semibold">
-                                    {convertUnixTimestamp(
-                                      proposalItem.start_time,
-                                    )}
-                                  </span>
-                                </div>
-                                <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
-                                  <span>End Time :</span>
-                                  <span className="font-semibold">
-                                    {convertUnixTimestamp(
-                                      proposalItem.ends_time,
-                                    )}
-                                  </span>
-                                </div>
-                              </div>
 
-                              <div className="text-xs">
-                                Published by{' '}
-                                <span className="text-purple-700">
-                                  {clipAddress(proposalItem.id)}
-                                </span>
-                              </div>
-                            </Card>
-                          ))}
-                        </div>
-                      )}
 
-                      {loading && (
-                        <div className="grid grid-cols-3 gap-4 mt-5">
-                          {[...Array(3)].map((_, index) => (
-                            <SkeletonCard key={index} className="h-[200px]" />
-                          ))}
-                        </div>
-                      )}
-                    </Card>
+                  <TabsContent value="PENDING" >
+                    <div >
+                      <ProposalPending
+                        proposals={proposal}
+                        loading={loading}
+                        setActiveProposal={setActiveProposal}
+                        setShowForm={setShowForm}
+                        convertUnixTimestamp={convertUnixTimestamp}
+                        clipAddress={clipAddress}
+                      />
+                    </div>
                   </TabsContent>
                   <TabsContent value="EXECUTED">
-                    <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
-                      <div className="p-2 border-b-2 -translate-x-2">
-                        All Proposals.
-                      </div>
-                      {!loading && (
-                        <div className="space-y-4">
-                          {!proposal.length > 0 && (
-                            <div className="flex items-center justify-center h-10">
-                              No Executed Proposal
-                            </div>
-                          )}
-                        </div>
-                      )}
-                      {!loading && proposal && (
-                        <div className=" grid md:grid-cols-3 grid-cols-1 gap-5 mt-3">
-                          {proposal.map((proposalItem, index) => (
-                            <Card
-                              key={index}
-                              onClick={() => {
-                                setActiveProposal(proposalItem)
-                                setShowForm(null)
-                              }}
-                              className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-2 bg-white border-b-2 rounded-none p-3 text-black relative"
-                            >
-                              <Badge
-                                variant={
-                                  proposalItem.is_active
-                                    ? ' success'
-                                    : 'destructive'
-                                }
-                                className={`absolute right-2 ${
-                                  proposalItem.is_active
-                                    ? 'bg-green-600 text-white'
-                                    : ''
-                                } `}
-                              >
-                                {proposalItem.is_active
-                                  ? 'Pending'
-                                  : 'Executed'}
-                              </Badge>
-                              {proposalItem.proposal_type && (
-                                <Badge className={`absolute right-20 `}>
-                                  {proposalItem.proposal_type}
-                                </Badge>
-                              )}
-
-                              <div className="capitalize font-semibold text-xl">
-                                {proposalItem.proposal}
-                              </div>
-                              <div className="capitalize font-semibold text-md">
-                                {proposalItem.description}
-                              </div>
-                              <div className="flex flex-col items-center gap-3">
-                                <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
-                                  <span>Start Time :</span>
-                                  <span className="font-semibold">
-                                    {convertUnixTimestamp(
-                                      proposalItem.start_time,
-                                    )}
-                                  </span>
-                                </div>
-                                <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
-                                  <span>End Time :</span>
-                                  <span className="font-semibold">
-                                    {convertUnixTimestamp(
-                                      proposalItem.ends_time,
-                                    )}
-                                  </span>
-                                </div>
-                              </div>
-
-                              <div className="text-xs">
-                                Published by{' '}
-                                <span className="text-purple-700">
-                                  {clipAddress(proposalItem.id)}
-                                </span>
-                              </div>
-                            </Card>
-                          ))}
-                        </div>
-                      )}
-
-                      {loading && (
-                        <div className="grid grid-cols-3 gap-4 mt-5">
-                          {[...Array(3)].map((_, index) => (
-                            <SkeletonCard key={index} className="h-[200px]" />
-                          ))}
-                        </div>
-                      )}
-                    </Card>
+                    <div>
+                      <ProposalExecuted
+                        proposals={proposal}
+                        loading={loading}
+                        setActiveProposal={setActiveProposal}
+                        setShowForm={setShowForm}
+                        convertUnixTimestamp={convertUnixTimestamp}
+                        clipAddress={clipAddress}
+                      />
+                    </div>
                   </TabsContent>
+
                 </Tabs>
               </div>
             </div>
@@ -920,22 +795,25 @@ const Proposals = () => {
         </div>
       ) : activeProposal ? (
         <div className="flex  flex-col  px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
+          
+          <Card className="bg-white md:w-[100%] z-50 mx-auto border-2 border-[#5228A4] md:p-4 p-4 space-y-2 ">
           <div
             onClick={() => {
               setActiveProposal(null) // Reset active proposal
               setShowForm(false) // Ensure the form is hidden
             }}
-            className="w-full cursor-pointer flex items-start m-2"
+            className="w-full cursor-pointer text-white flex text-[20px] items-end justify-end px-4"
           >
             <ChevronLeft /> <span>Back</span>
           </div>
-          <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
-            <div className="p-2  -translate-x-2 font-bold capitalize text-4xl">
+            <div className="p-4  -translate-x-2 font-bold capitalize text-white text-4xl">
               {activeProposal.proposal}
             </div>
-            <div className="p-2 border-b-2 -translate-x-2 font-bold capitalize text-md">
+            
+            <div className="p-4 border-[1px] rounded-sm border-[#5228A4] -translate-x-2 font-bold text-white capitalize text-md">
               {activeProposal.description}
             </div>
+            
             <div className="flex space-x-2">
               {activeProposal.proposed_token_buy_back_price && (
                 <Badge>
@@ -951,7 +829,7 @@ const Proposals = () => {
             </div>
 
             {!loading && (
-              <div className="space-y-4">
+              <div className="space-y-2">
                 {!proposal && (
                   <div className="flex items-center justify-center h-10">
                     No Active Proposal
@@ -960,9 +838,9 @@ const Proposals = () => {
               </div>
             )}
             {!loading && activeProposal && (
-              <div className="  gap-5 mt-3">
+              <div className="  gap-5 mt-3 z-50">
                 {activeProposal && (
-                  <div className="flex flex-col  items-start gap-4 bg-white  rounded-none p-3 text-black">
+                  <div className="flex flex-col  items-start gap-4 z-50  rounded-none p-3 text-brand7">
                     {/* <div className="capitalize font-semibold text-xl">
                         {activeProposal.proposal}
                       </div> */}
@@ -974,31 +852,31 @@ const Proposals = () => {
                         </span>
                       </div>
                     )}
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
+                    <div className="flex items-center text-white z-50 gap-3">
+                      <div className="flex items-center gap-2 text-[20px] bg-brand5 rounded-md shadow-md p-2">
                         <span>Start Time :</span>
                         <span className="font-semibold">
                           {convertUnixTimestamp(activeProposal.start_time)}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
+                      <div className="flex items-center gap-2 text-[20px] bg-brand5 rounded-md shadow-md p-2">
                         <span>End Time :</span>
                         <span className="font-semibold">
                           {convertUnixTimestamp(activeProposal.ends_time)}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 bg-slate-100 shadow-md p-2">
+                      <div className="flex items-center gap-2 text-[20px] bg-brand5 rounded-md shadow-md p-2">
                         <span>Time Left:</span>
                         <span className="font-semibold">{timeLeft}</span>
                       </div>
                     </div>
 
                     {/* Voting buttons (commented out) */}
-                    <div className="flex items-center justify-between w-full">
+                    <div className="flex items-center z-50 justify-between w-full">
                       <div className="flex flex-col items-center gap-3">
                         {voted && (
                           <div className="flex items-center gap-2 ">
-                            <Badge className="bg-green-600">
+                            <Badge className="bg-green-500">
                               {' '}
                               Total Vote For : {activeProposal.voted_for}
                             </Badge>
@@ -1013,7 +891,7 @@ const Proposals = () => {
                             You have already voted.
                           </Button>
                         ) : (
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center z-50 gap-3">
                             {loadingButtonFor ? (
                               <Button
                                 size="sm"
@@ -1031,7 +909,7 @@ const Proposals = () => {
                                   timeLeft === 'Time is up!' ||
                                   voted === true
                                 }
-                                className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800"
+                                className="flex items-center gap-1 z-50 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-500 to-green-700 hover:to-green-800"
                               >
                                 <span>Voted For :</span>
                                 <span>{activeProposal.voted_for}</span>
@@ -1042,7 +920,7 @@ const Proposals = () => {
                               <Button
                                 size="sm"
                                 disabled
-                                className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
+                                className="flex items-center z-50 gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
                               >
                                 Voting...
                               </Button>
@@ -1054,7 +932,7 @@ const Proposals = () => {
                                   activeProposal.is_active === false ||
                                   timeLeft === 'Time is up!'
                                 }
-                                className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
+                                className="flex items-center z-50 gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-700 hover:to-red-800"
                               >
                                 <span>Voted Against :</span>
                                 <span>{activeProposal.voted_against}</span>
@@ -1066,8 +944,8 @@ const Proposals = () => {
 
                       <div>
                         {activeProposal.minimum_quorum <=
-                        activeProposal.number_of_people_voted >
-                        0 ? (
+                          activeProposal.number_of_people_voted >
+                          0 ? (
                           <Button
                             onClick={handleExecuteActiveProposal}
                             disabled={
@@ -1075,13 +953,13 @@ const Proposals = () => {
                               activeProposal.is_active === false ||
                               timeLeft !== 'Time is up!'
                             }
-                            className="flex items-center gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500 to-blue-700 hover:to-blue-800"
+                            className="flex items-center  gap-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500 to-blue-700 hover:to-blue-800"
                           >
                             {execute
                               ? 'Executing....'
                               : activeProposal.is_active === false
-                              ? 'Already Executed'
-                              : 'Execute Proposal'}
+                                ? 'Already Executed'
+                                : 'Execute Proposal'}
                           </Button>
                         ) : (
                           <Button disabled>
@@ -1090,15 +968,35 @@ const Proposals = () => {
                           </Button>
                         )}
                       </div>
+
                     </div>
 
-                    <div className="text-xs">
+                    <div className="text-ms">
                       Published by{' '}
                       <span className="text-purple-700">
                         {clipAddress(activeProposal.id)}
                       </span>
                     </div>
+                    <div className="w-full">
+                      <Textarea
+                        placeholder="Add a new comment..."
+                        className="flex-1 z-50 text-brand7"
+                        value={comment}
+                        required
+                        onChange={(e) => setComment(e.target.value)}
+                      />
+                      <Button
+                        className="rounded-[26px] z-50 py-4 mt-4 px-[35px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                        onClick={handleAddComment}
+                        variant="radix"
+                        disabled={loadingCom}
+                      >
+                        {loadingCom ? 'Submiting...' : ' Submit'}
+                      </Button>
+                    </div>
+
                   </div>
+
                 )}
               </div>
             )}
@@ -1117,18 +1015,23 @@ const Proposals = () => {
                     <SkeletonCard />
                   </div>
                 ) : (
+
                   <>
+                    <div className="w-[1000px] flex flex-col items-center">
+                      {issuedBond && <BondCard bond={issuedBond} />}
+                    </div>
+
                     {comments &&
                       comments.map((comment, index) => (
                         <div
                           key={index}
-                          className="flex items-start gap-4 bg-white border-b-2 rounded-none p-3  text-black"
+                          className="my-3 flex gap-4 bg-white border-2 border-brand3 z-50 rounded-xl p-3  text-brand7"
                         >
-                          <Avatar className="shrink-0 object-cover">
-                            <img src={comment.image_url} alt="Avatar" />
-                            <AvatarFallback>JD</AvatarFallback>
+                          <Avatar className="w-12 h-12 overflow-hidden rounded-sm">
+                            <img src={comment.image_url} alt="Avatar" className="w-full h-full object-cover" />
                           </Avatar>
-                          <div className="flex-1 space-y-2">
+
+                          <div className="flex-1 z-50 space-y-2">
                             <div className="flex items-center justify-between">
                               <div
                                 className="group"
@@ -1138,18 +1041,18 @@ const Proposals = () => {
                                   )
                                 }
                               >
-                                <div className="font-medium group-hover:underline cursor-pointer">
+                                <div className="font-medium  group-hover:underline cursor-pointer">
                                   {comment.user_name}
                                 </div>
                                 <div className="font-light group-hover:underline cursor-pointer">
                                   {clipAddress(comment.public_address)}
                                 </div>
                               </div>
-                              <div className="text-xs text-gray-700 dark:text-gray-700">
+                              <div className="text-xs text-white  ">
                                 {formatStandardDateTime(comment.timestamp)}
                               </div>
                             </div>
-                            <p className="text-gray-800 dark:text-gray-400 font-medium">
+                            <p className="text-white   font-medium">
                               {comment.comment}
                             </p>
                             <div></div>
@@ -1159,273 +1062,220 @@ const Proposals = () => {
                   </>
                 )}
 
-                <div className="flex flex-col items-end gap-2 mt-1">
-                  <Textarea
-                    placeholder="Add a new comment..."
-                    className="flex-1 text-black"
-                    value={comment}
-                    required
-                    onChange={(e) => setComment(e.target.value)}
-                  />
-                  <Button
-                    onClick={handleAddComment}
-                    variant="radix"
-                    disabled={loadingCom}
-                  >
-                    {loadingCom ? 'Submiting...' : ' Submit'}
-                  </Button>
-                </div>
+
               </div>
             </div>
-            <div className="col-span-1 bg-white shadow-sm flex items-center justify-center p-4 rounded-md">
-              {issuedBond && (
-                <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-lg transition-transform transform hover:scale-105 hover:shadow-xl">
-                  {/* Bond Title */}
-                  <div className="text-2xl font-bold text-blue-800 mb-4 text-center">
-                    {issuedBond.name}
-                  </div>
 
-                  {/* Bond Image */}
-                  {issuedBond.asset_url && (
-                    <div className="mb-4">
-                      <img
-                        src={issuedBond.asset_url}
-                        alt={issuedBond.asset_name || 'Asset'}
-                        className="w-full h-48 object-cover rounded-md"
-                      />
-                    </div>
-                  )}
-
-                  <p>
-                    <strong>Asset Name:</strong>
-                    {issuedBond.asset_name || 'N/A'}
-                  </p>
-
-                  {/* Bond Description */}
-                  <div className="mb-4 text-gray-700">
-                    <strong>Description:</strong>
-                    <p>{issuedBond.description}</p>
-                  </div>
-                  {/* Bond Details */}
-                  <div className="space-y-2 text-sm text-gray-700">
-                    <p>
-                      <strong>Contract Identity:</strong>{' '}
-                      {issuedBond.contract_identity || 'N/A'}
-                    </p>
-                    <p>
-                      <strong>Number of Bonds:</strong>{' '}
-                      {issuedBond.number_of_bonds}
-                    </p>
-                    <p>
-                      <strong>Currency:</strong> {issuedBond.currency}
-                    </p>
-                    <p>
-                      <strong>Interest Rate:</strong> {issuedBond.interest_rate}
-                      %
-                    </p>
-                    <p>
-                      <strong>Discount:</strong> {issuedBond.discount}
-                    </p>
-                    <p>
-                      <strong>Price:</strong>{' '}
-                      {issuedBond.price ? (
-                        <>
-                          {issuedBond.price} <strong>XRD</strong>
-                        </>
-                      ) : (
-                        'Not available'
-                      )}
-                    </p>
-                    <p>
-                      <strong>Notional Principle:</strong>{' '}
-                      {issuedBond.notional_principle}
-                    </p>
-                    <p>
-                      <strong>Bond Position:</strong> {issuedBond.bond_position}
-                    </p>
-                    <p>
-                      <strong>Contract Type:</strong> {issuedBond.contract_type}
-                    </p>
-                    <p>
-                      <strong>Contract Role:</strong> {issuedBond.contract_role}
-                    </p>
-                  </div>
-
-                  {/* Dates and Blockchain Details */}
-                  <div className="mt-4 space-y-2 text-sm text-gray-500">
-                    <p
-                      className={
-                        new Date(issuedBond.initial_exchange_date) < new Date()
-                          ? 'text-red-500'
-                          : ''
-                      }
-                    >
-                      <strong>Initial Exchange Date:</strong>{' '}
-                      {new Date(
-                        issuedBond.initial_exchange_date,
-                      ).toLocaleDateString()}
-                    </p>
-                    <p>
-                      <strong>Maturity Date:</strong>{' '}
-                      {new Date(issuedBond.maturity_date).toLocaleDateString()}
-                    </p>
-                    <p>
-                      <strong>Created on Blockchain:</strong>{' '}
-                      {issuedBond.created_on_blockchain ? 'Yes' : 'No'}
-                    </p>
-                    <p className="truncate">
-                      <strong>Creator Address:</strong>{' '}
-                      <span
-                        className="cursor-pointer hover:underline"
-                        onClick={() => {
-                          navigator.clipboard.writeText(issuedBond.creator)
-                          toast.success('Copied address')
-                        }}
-                      >
-                        {issuedBond.creator}
-                      </span>
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
         </div>
       ) : form ? (
         <div className="flex flex-col items-center justify-center max-w-[1440px] mx-auto my-6 p-2">
-          <div
-            onClick={() => {
-              setShowForm(false) // Hide the form and return to the list
-              setActiveProposal(null) // Ensure no proposal is active
-            }}
-            className="w-full cursor-pointer flex items-start m-2"
-          >
-            <ChevronLeft /> <span>Back</span>
+
+
+
+
+          <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] mt-8 w-full z-50 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
+            <div className="  text-[40px] leading-[130%] z-50 font-semibold text-start">
+              <span className="step-2-describe-your-dao-span3 text-amber-50">Proposal Form</span>
+
+
+            </div>
+            <div className="w-full cursor-pointer items-end  justify-end text-[22px] flex  m-2"
+              onClick={() => {
+                setShowForm(false) // Hide the form and return to the list
+                setActiveProposal(null) // Ensure no proposal is active
+              }}>
+              <ChevronLeft /> <span >Back</span>
+            </div>
+
           </div>
-          <div className="text-4xl font-semibold p-4  bg-white w-full text-center">
-            Proposal Form
-          </div>
-          <div className="flex items-center justify-center p-2 w-full mx-auto">
-            <form className="w-1/2 flex flex-col gap-2" onSubmit={handleSubmit}>
-              <div className="flex flex-col gap-2">
-                <Label className="text-2xl p-1">Proposal</Label>
-                <Textarea
+          <div className="flex items-center justify-center z-50 p-2 w-full mx-auto">
+            <form className="w-[900px] flex z-50 flex-col py-5 space-y-4  gap-2" onSubmit={handleSubmit}>
+              <div className="flex flex-col w-full space-y-2 ">
+                <label
+                  className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
+                >
+                  Proposal:
+                </label>
+                <textarea
+                  className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400 resize-none"
                   placeholder="Type your proposal here ..."
                   value={proposalText}
                   onChange={(e) => setProposalText(e.target.value)}
-                />
+                  rows="4"
+                ></textarea>
               </div>
-              <div className="flex flex-col gap-2">
-                <Label className="text-lg p-1">Proposal Description</Label>
-                <Textarea
+
+              <div className="flex flex-col w-full space-y-2">
+                <label
+                  className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
+                >
+                  Proposal Description:
+                </label>
+                <textarea
+                  className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400 resize-none"
                   placeholder="Type your proposal description ..."
                   value={proposalDescription}
                   onChange={(e) => setProposalDescription(e.target.value)}
-                />
+                  rows="4"
+                ></textarea>
               </div>
-              <div className="flex flex-col mt-3 gap-3 w-full ">
-                <div className="text-xl p-1">Proposal Timing</div>
-                <div className="flex items-center justify-between space-x-2">
-                  <div className="flex items-center">
-                    <div>From:</div>
-                    <label className=" flex items-center">
-                      <DatePicker
-                        selected={startDate}
-                        onChange={handleStartDateChange}
-                        customInput={<CustomDatePicker />}
-                        minDate={new Date()}
-                      />
-                      <Input
-                        type="time"
-                        value={startTime}
-                        onChange={(e) => setStartTime(e.target.value)}
-                        className="ml-2 w-fit"
-                      />
-                    </label>
+
+
+
+              <div className="flex flex-col mt-3 gap-3 w-full space-y-4  ">
+                <div className="flex flex-col w-full space-y-2">
+                  <div className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch">
+                    Proposal Timing
                   </div>
-                  <div className="flex items-center">
-                    <div>To:</div>
-                    <label className="flex items-center ">
-                      <DatePicker
-                        selected={endDate}
-                        onChange={handleEndDateChange}
-                        customInput={<CustomDatePicker />}
-                        minDate={new Date()}
-                      />
-                      <Input
-                        type="time"
-                        value={endTime}
-                        onChange={(e) => setEndTime(e.target.value)}
-                        className="ml-2 w-fit"
-                      />
-                    </label>
+                  <div className="flex items-center justify-between space-x-4">
+
+                    {/* From Date and Time */}
+                    <div className="flex items-center space-x-2">
+                      <div className="text-white">From:</div>
+                      <label className="flex items-center bg">
+                        <DatePicker
+                          selected={startDate}
+                          onChange={handleStartDateChange}
+                          customInput={<CustomDatePicker />}
+                          minDate={new Date()}
+                          className="p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        />
+                        <input
+                          type="time"
+                          value={startTime}
+                          onChange={(e) => setStartTime(e.target.value)}
+                          className="ml-2 w-fit p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        />
+                      </label>
+                    </div>
+
+                    {/* To Date and Time */}
+                    <div className="flex items-center space-x-2">
+                      <div className="text-white ">To:</div>
+                      <label className="flex items-center">
+                        <DatePicker
+                          selected={endDate}
+                          onChange={handleEndDateChange}
+                          customInput={<CustomDatePicker />}
+                          minDate={new Date()}
+                          className="p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        />
+                        <input
+                          type="time"
+                          value={endTime}
+                          onChange={(e) => setEndTime(e.target.value)}
+                          className="ml-2 w-fit p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
+                        />
+                      </label>
+                    </div>
+
                   </div>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <Label className="text-2xl p-1">Minimum Quorum</Label>
-                  <Input
-                    placeholder="Enter Minimum quorum"
+
+                <div className="flex flex-col w-full space-y-2">
+                  <label
+                    className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
+                  >
+                    Minimum Quorum:
+                  </label>
+                  <input
                     type="number"
+                    placeholder="Enter Minimum quorum"
                     value={minimumQuorum}
                     onChange={(e) => {
-                      const value = parseInt(e.target.value, 10)
+                      const value = parseInt(e.target.value, 10);
                       if (value > participants.length) {
-                        toast.error(
-                          `The minimum quorum cannot exceed ${participants.length}.`,
-                        )
-                        return
+                        toast.error(`The minimum quorum cannot exceed ${participants.length}.`);
+                        return;
                       }
-                      setMinimumQuorum(value)
+                      setMinimumQuorum(value);
                     }}
                     min="0"
                     max={participants.length}
+                    className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
                   />
                 </div>
-                <div className="flex flex-col gap-2">
-                  <Label className="text-2xl p-1">Vote Type</Label>
-                  <Select onValueChange={handleVoteType}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select Vote Type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Equality">Equality</SelectItem>
-                      <SelectItem value="ResourceOwned">
-                        Resource Owned
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Label className="text-2xl p-1">Bond Issuer Address</Label>
-                  <Select onValueChange={handleBondAddress}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select Bond Issuer Address" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {bondIssuerAddresses.length === 0 ? (
-                        <SelectItem value="No issued Bond">
-                          No Issued Bond
+
+                <div className="flex flex-col w-full space-y-2">
+                  <label
+                    className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
+                  >
+                    Vote Type:
+                  </label>
+                  <div className="w-full">
+                    <Select
+                      onValueChange={handleVoteType}
+                      className="w-full bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
+                    >
+                      <SelectTrigger className="w-full p-2 text-white bg-[#1B0D37] rounded-md shadow-xs">
+                        <SelectValue placeholder="Select Vote Type" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-[#1B0D37] text-white rounded-md">
+                        <SelectItem value="Equality" className="p-2 hover:bg-[#5228A4]">
+                          Equality
                         </SelectItem>
-                      ) : (
-                        bondIssuerAddresses.map((bond, index) => (
-                          <SelectItem key={index} value={bond.creator_address}>
-                            {bond.bond_name} - {bond.creator_address}
+                        <SelectItem value="ResourceOwned" className="p-2 hover:bg-[#5228A4]">
+                          Resource Owned
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="flex flex-col w-full space-y-2">
+                  <label
+                    className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
+                  >
+                    Bond Issuer Address:
+                  </label>
+                  <div className="w-full">
+                    <Select
+                      onValueChange={handleBondAddress}
+                      className="w-full bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
+                    >
+                      <SelectTrigger className="w-full p-2 text-white bg-[#1B0D37] rounded-md shadow-xs">
+                        <SelectValue placeholder="Select Bond Issuer Address" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-[#1B0D37] text-white rounded-md">
+                        {bondIssuerAddresses.length === 0 ? (
+                          <SelectItem value="No issued Bond" className="p-2 hover:bg-[#5228A4]">
+                            No Issued Bond
                           </SelectItem>
-                        ))
-                      )}
-                    </SelectContent>
-                  </Select>
+                        ) : (
+                          bondIssuerAddresses.map((bond, index) => (
+                            <SelectItem
+                              key={index}
+                              value={bond.creator_address}
+                              className="p-2 hover:bg-[#5228A4]"
+                            >
+                              {bond.bond_name} - {bond.creator_address}
+                            </SelectItem>
+                          ))
+                        )}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+
 
                   {/* <Input
                       placeholder="Enter Bond Issuer Address"
                       value={bondIssuerAddress}
                       onChange={(e) => setBondIssuerAddress(e.target.value)}
                     /> */}
+
                 </div>
 
-                <div className="flex flex-col gap-2">
-                  <Label className="text-2xl p-1">Target XRD Amount</Label>
-                  <Input
+
+                <div className="flex flex-col w-full space-y-2">
+                  <label
+                    className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
+                  >
+                    Target XRD Amount:
+                  </label>
+                  <input
+                    className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
                     placeholder="Enter Target XRD Amount"
                     type="number"
                     value={targetXrdAmount}
@@ -1434,15 +1284,19 @@ const Proposals = () => {
                     disabled
                   />
                 </div>
+
               </div>
               {loadingButton ? (
-                <Button variant="radix" disabled className="w-full mt-2">
+                <Button variant="radix"
+                  disabled
+                  className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                >
                   Submitting....
                 </Button>
               ) : (
                 <Button
-                  variant="radix"
-                  className="w-full mt-2"
+                  className="rounded-[26px] z-50 py-4 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+
                   disabled={
                     !targetXrdAmount ||
                     !minimumQuorum ||
@@ -1461,25 +1315,28 @@ const Proposals = () => {
           </div>
         </div>
       ) : tokenChangeform ? (
-        <div className="flex flex-col items-center justify-center max-w-[1440px] mx-auto my-6 p-2">
-          <div
-            onClick={() => {
-              setShowTokenChangeForm(false) // Hide the form and return to the list
-              setActiveProposal(null) // Ensure no proposal is active
-            }}
-            className="w-full cursor-pointer flex items-start m-2"
-          >
-            <ChevronLeft /> <span>Back</span>
+        <div>
+          <div className="bg-[rgba(169,126,255,0.08)] mt-16 rounded-[20px]  z-50 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
+            <div className="  text-[40px] leading-[130%] z-50 font-semibold text-start">
+              <span className="step-2-describe-your-dao-span3 text-amber-50">Token Price Change Form</span>
+
+
+            </div>
+            <div className="w-full cursor-pointer items-end z-50 justify-end text-[22px] flex  m-2"
+              onClick={() => {
+                setShowTokenChangeForm(false) // Hide the form and return to the list
+                setActiveProposal(null) // Ensure no proposal is active
+              }}>
+              <ChevronLeft /> <span >Back</span>
+            </div>
+
           </div>
-          <div className="text-4xl font-semibold p-4  bg-white w-full text-center">
-            Token Price Change Form
-          </div>
-          <div className="flex items-center justify-center p-2 w-full mx-auto">
+          <div className="flex items-center justify-center z-50 p-2 w-full mx-auto">
             <form
-              className="w-1/2 flex flex-col gap-2"
+              className="w-[900px] flex flex-col gap-2"
               onSubmit={handleSubmitTokenChangeForm}
             >
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col z-50 gap-2">
                 <Label className="text-2xl p-1">Proposal Name</Label>
                 <Input
                   placeholder="Proposal Name..."
@@ -1489,8 +1346,8 @@ const Proposals = () => {
                   }
                 />
               </div>
-              <div className="flex flex-col gap-2">
-                <Label className="text-lg p-1">Proposal Description</Label>
+              <div className="flex flex-col z-50 gap-2">
+                <Label className="text-2xl p-1">Proposal Description</Label>
                 <Textarea
                   placeholder="Type your proposal description ..."
                   value={tokenPriceChangeForm.proposalDescription}
@@ -1499,8 +1356,8 @@ const Proposals = () => {
                   }
                 />
               </div>
-              <div className="flex flex-col mt-3 gap-3 w-full ">
-                <div className="text-xl p-1">Proposal Timing</div>
+              <div className="flex flex-col mt-3 z-50 gap-3 w-full ">
+                <div className="text-2xl p-1">Proposal Timing</div>
                 <div className="flex items-center justify-between space-x-2">
                   <div className="flex items-center">
                     <div>From:</div>
@@ -1543,7 +1400,7 @@ const Proposals = () => {
                     </label>
                   </div>
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col  gap-2">
                   <Label className="text-2xl p-1">Minimum Quorum</Label>
                   <Input
                     placeholder="Enter Minimum quorum"
@@ -1570,7 +1427,7 @@ const Proposals = () => {
                       handleInputChange('voteType', value)
                     }
                   >
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full ">
                       <SelectValue placeholder="Select Vote Type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -1582,7 +1439,7 @@ const Proposals = () => {
                   </Select>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label className="text-lg p-1">Desired Token Price</Label>
+                  <Label className="text-2xl p-1">Desired Token Price</Label>
                   <Input
                     placeholder="Enter desired token price"
                     type="number"
@@ -1593,8 +1450,8 @@ const Proposals = () => {
                     }
                   />
                 </div>
-                <div className="flex flex-col gap-2">
-                  <Label className="text-lg p-1">
+                <div className="flex flex-col gap-2 mb-10">
+                  <Label className="text-2xl p-1">
                     Desired Token Buy Back Price
                   </Label>
                   <Input
@@ -1612,13 +1469,16 @@ const Proposals = () => {
                 </div>
               </div>
               {loadingButton ? (
-                <Button variant="radix" disabled className="w-full mt-2">
+                <Button variant="radix" disabled
+                  className="rounded-[26px] z-50 py-4 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                >
                   Submitting....
                 </Button>
               ) : (
                 <Button
                   variant="radix"
-                  className="w-full mt-2"
+                  className="rounded-[26px] z-50 py-4 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+
                   disabled={Object.values(tokenPriceChangeForm).some(
                     (value) => !value,
                   )}
@@ -1630,41 +1490,38 @@ const Proposals = () => {
           </div>
         </div>
       ) : (
-        <div className="flex  flex-col  px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
-          <div
-            onClick={() => {
-              setShowCategories(false)
-            }}
-            className="w-full cursor-pointer flex items-start m-2"
-          >
-            <ChevronLeft /> <span>Back</span>
-          </div>
-          <Card className="bg-white md:w-[100%] mx-auto md:p-4 p-4 space-y-2 ">
-          <div className="p-2 border-b-2 -translate-x-2 flex items-center justify-between">
-              <div>What kind of proposal do you want to create?</div>
+        <div className="flex flex-col mt-5  px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
+
+
+          <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4]  relative overflow-hidden ">
+            <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
+              <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
+
+                What kind of proposal do you want to create?
+              </div>
               <div>
                 <Dialog>
-                  <DialogTrigger className='flex gap-1 items-center text-xs font-light'>
+                  <DialogTrigger className='flex gap-1 items-center text-brand7 text-[16px] font-light'>
                     <span>
-                    Not able to create proposal?
+                      Not able to create proposal?
 
                     </span>
 
-                 <CircleHelp className='size-3'/>
+                    <CircleHelp className='size-4' />
 
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
                       <DialogTitle>Please review the following points ?</DialogTitle>
                       <DialogDescription>
-                      Ensure you have reviewed the following points before creating a proposal:
-                      <ul className="list-disc marker:text-green-500 marker:text-1xl px-5 py-3 text font-semibold ">
-                        
-                        <li>You should be a member of the community.</li>
-                        <li>You should buy at least one token.</li>
-                        <li>There should be a bond for sale in Issued Bond menu.</li>
-                        <li>The proposal must be written in a clear and concise manner.</li>
-                      </ul>
+                        Ensure you have reviewed the following points before creating a proposal:
+                        <ul className="list-disc marker:text-green-500 marker:text-1xl px-5 py-3 text font-semibold ">
+
+                          <li>You should be a member of the community.</li>
+                          <li>You should buy at least one token.</li>
+                          <li>There should be a bond for sale in Issued Bond menu.</li>
+                          <li>The proposal must be written in a clear and concise manner.</li>
+                        </ul>
 
                       </DialogDescription>
                     </DialogHeader>
@@ -1673,17 +1530,17 @@ const Proposals = () => {
               </div>
             </div>
 
-            <div className=" grid md:grid-cols-3 grid-cols-1 gap-5 mt-3">
+            <div className=" flex h-[250px] gap-10 px-5 py-5 justify-center">
               {ProposalTypes.map((proposal, index) => (
                 <Card
                   key={index}
-                  className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-2 bg-white border-b-2 rounded-none p-3 text-black relative justify-between"
+                  className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-2 bg-brand1 border-b-2 border-[#5228A4] rounded-lg p-3 text-brand7 relative justify-between"
                 >
-                  <div className="font-bold">{proposal.title}</div>
-                  <div className="text-sm">{proposal.description}</div>
+                  <div className="font-bold  text-brand7 text-[22px] ">{proposal.title}</div>
+                  <div className="text-sm w-[400px]  text-gray-400 text-[16px] ">{proposal.description}</div>
                   <div className="flex items-center justify-end w-full">
                     <Button
-                      variant="radix"
+                      className="rounded-[26px] py-2 px-[30px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-brand7 text-[14px] leading-5 font-medium"
                       onClick={() => {
                         if (proposal.title === 'Custom Proposal') {
                           setShowForm(true)
@@ -1700,7 +1557,22 @@ const Proposals = () => {
                 </Card>
               ))}
             </div>
-          </Card>
+          </div>
+
+          <div className="w-full cursor-pointer z-50 flex items-end justify-end m-2">
+            <button
+              onClick={() => setShowCategories(false)}
+              type="button"
+              className="w-[120px] cursor-pointer z-50 flex justify-center items-center  m-2 text-2xl rounded-full p-3 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483]"
+            >
+              <ChevronLeft /> <span >Back</span>
+            </button>
+
+          </div>
+
+
+
+
         </div>
       )}
     </div>

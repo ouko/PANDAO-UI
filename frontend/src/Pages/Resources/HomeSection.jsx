@@ -6,14 +6,14 @@ const HomeSection = () => {
   // const some2="bg-gradient-to-r from-[#375e91] from-0%  to-[#68237b]"
   return (
     <>
-      <div className="relative">
+      <div className="relative ">
         <AnimatedGridPattern/>
         <div className="h-[600px] flex md:flex-row flex-col items-center  justify-center  text-black max-w-[1440px] mx-auto">
           <div className="flex flex-col  items-start  gap-5 justify-center  p-5 w-full h-full object-cover bg-no-repeat md:bg-none">
             <div className="md:text-7xl text-3xl font-semibold tracking-wider md:leading-[55px] leading-[40px] ">
               Resource Library{" "}
             </div>
-            <p className="text-xl">
+            <p className="text-xl font-clash">
               Making Blockchain Accessible and DAO Governance Effortless.
             </p>
           </div>
