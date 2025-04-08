@@ -1,17 +1,16 @@
-import React from 'react';
 
 function WithdrawCard({ withDrawRequest, handleWithDrawSign, loading }) {
     return (
-        <div className="bg-[rgba(169,126,255,0.08)] rounded-lg border border-[#5228A4] p-6 overflow-hidden backdrop-blur-[6.7px]">
+        <div className="bg-[rgba(169,126,255,0.08)] rounded-lg border border-[#5228A4]  overflow-hidden backdrop-blur-[6.7px]">
            
-            <div className="bg-[#39246b]  px-4 flex items-center w-full  h-[53px] absolute left-0 top-0">
+            <div className="bg-[#39246b] px-3   flex items-center w-full  h-[53px] ">
             <div className="text-white text-2xl font-medium font-[ClashDisplayVariable-Medium, sans-serif]">
          Total Withdraw Request:
         </div>
       </div>
            
 
-<div className="flex flex-col py-8 gap-6 mt-6">
+<div className="flex flex-col  gap-6  p-6">
     {withDrawRequest.length === 0 ? (
         <div className="text-center text-white text-lg font-semibold">
             No active withdrawal requests.
@@ -20,7 +19,7 @@ function WithdrawCard({ withDrawRequest, handleWithDrawSign, loading }) {
         withDrawRequest.map((request) => (
             <div 
                 key={request.id} 
-                className="bg-gradient-to-br from-[rgba(31,18,55,0.6)] via-transparent to-brand1 border border-brand3 backdrop-blur-xl shadow-lg p-6 rounded-2xl transition-all hover:scale-105 hover:shadow-2xl"
+                className="bg-gradient-to-br from-[rgba(31,18,55,0.6)] via-transparent to-brand1 border border-brand3 backdrop-blur-xl shadow-lg p-6 rounded-2xl transition-all   hover:shadow-2xl"
             >
                 <div className="flex flex-col gap-3 text-white">
                     <div className="flex gap-2 text-lg font-semibold">
