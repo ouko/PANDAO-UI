@@ -735,12 +735,12 @@ const Proposals = () => {
                   </div>
                   <div className="absolute bottom-0 right-0 p-4">
                     <Button
-                      className="rounded-[26px] py-2 z-50 px-[15px]  bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-brand7 text-[14px] leading-5 font-medium"
+                      variant="brand"
                       onClick={() => {
                         setActiveProposal(null)
                         setShowCategories(true)
                       }}
-                      variant="radix"
+                     
                     >
                       Create Proposal
                     </Button>
@@ -986,9 +986,9 @@ const Proposals = () => {
                         onChange={(e) => setComment(e.target.value)}
                       />
                       <Button
-                        className="rounded-[26px] z-50 py-4 mt-4 px-[35px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
                         onClick={handleAddComment}
-                        variant="radix"
+                        variant="brand"
+                        className="mt-4"
                         disabled={loadingCom}
                       >
                         {loadingCom ? 'Submiting...' : ' Submit'}
@@ -1287,9 +1287,9 @@ const Proposals = () => {
 
               </div>
               {loadingButton ? (
-                <Button variant="radix"
+                <Button variant="brand"
                   disabled
-                  className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                  
                 >
                   Submitting....
                 </Button>
@@ -1469,16 +1469,14 @@ const Proposals = () => {
                 </div>
               </div>
               {loadingButton ? (
-                <Button variant="radix" disabled
-                  className="rounded-[26px] z-50 py-4 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                <Button variant="brand" disabled
+                 
                 >
                   Submitting....
                 </Button>
               ) : (
                 <Button
-                  variant="radix"
-                  className="rounded-[26px] z-50 py-4 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
-
+                  variant="brand"
                   disabled={Object.values(tokenPriceChangeForm).some(
                     (value) => !value,
                   )}
@@ -1510,7 +1508,7 @@ const Proposals = () => {
                     <CircleHelp className='size-4' />
 
                   </DialogTrigger>
-                  <DialogContent>
+                  <DialogContent className='bg-[rgba(169,126,255,0.34)] text-gray-300 backdrop-blur-md border-[1px] border-brand3 rounded-lg shadow-lg'>
                     <DialogHeader>
                       <DialogTitle>Please review the following points ?</DialogTitle>
                       <DialogDescription>
@@ -1540,7 +1538,7 @@ const Proposals = () => {
                   <div className="text-sm w-[400px]  text-gray-400 text-[16px] ">{proposal.description}</div>
                   <div className="flex items-center justify-end w-full">
                     <Button
-                      className="rounded-[26px] py-2 px-[30px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-brand7 text-[14px] leading-5 font-medium"
+                      variant="brand"
                       onClick={() => {
                         if (proposal.title === 'Custom Proposal') {
                           setShowForm(true)
@@ -1560,13 +1558,15 @@ const Proposals = () => {
           </div>
 
           <div className="w-full cursor-pointer z-50 flex items-end justify-end m-2">
-            <button
+            <Button
               onClick={() => setShowCategories(false)}
               type="button"
-              className="w-[120px] cursor-pointer z-50 flex justify-center items-center  m-2 text-2xl rounded-full p-3 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483]"
+              variant="brand"
+              className="flex items-center text-[20px] "
+             
             >
               <ChevronLeft /> <span >Back</span>
-            </button>
+            </Button>
 
           </div>
 

@@ -125,8 +125,9 @@ const Activity = () => {
                     </div>
                   </div>
                   <div className='absolute bottom-0 right-0 p-4'>
-                    <Button className="rounded-[26px] py-2 px-[15px]  bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
-                      onClick={() => setShowExpenses(!showExpenses)}
+                    <Button 
+                     variant="brand"
+                     onClick={() => setShowExpenses(!showExpenses)}
                     >
                       Show Activity
                     </Button>
@@ -221,7 +222,7 @@ const Activity = () => {
                     </div>
                   </div>
                   <div className='absolute bottom-0 right-0 p-4'>
-                    <Button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                    <Button variant="brand"
                       onClick={() => setShowExpenses(!showExpenses)}
                     >
                       Show Fund History

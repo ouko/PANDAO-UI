@@ -100,31 +100,31 @@ const TotalFund = ({ data }) => {
                         Total Funds:
                     </div>
                 </div>
-<div className="flex items-center justify-between">
-{/* Fund Details */}
-<div className="flex flex-col gap-2 mt-2 p-5">
-                    <div className="flex gap-2">
-                        <div className="text-purple-300 text-xl uppercase">Funds In USD:</div>
-                        <div className="text-white text-xl">{Math.round(data.funds_in_usd * 10000) / 10000} $</div>
+                <div className="flex items-center justify-between">
+                    {/* Fund Details */}
+                    <div className="flex flex-col gap-2 mt-2 p-5">
+                        <div className="flex gap-2">
+                            <div className="text-purple-300 text-xl uppercase">Funds In USD:</div>
+                            <div className="text-white text-xl">{Math.round(data.funds_in_usd * 10000) / 10000} $</div>
+                        </div>
+
+                        <div className="flex gap-2">
+                            <div className="text-purple-300 text-xl uppercase">Total Funds:</div>
+                            <div className="text-white text-xl">{data.funds} XRD</div>
+                        </div>
                     </div>
 
-                    <div className="flex gap-2">
-                        <div className="text-purple-300 text-xl uppercase">Total Funds:</div>
-                        <div className="text-white text-xl">{data.funds} XRD</div>
+                    {/* Withdraw Button */}
+                    <div className="flex items-center px-5  ">
+                        <button
+                            onClick={() => setWithDrawModal(true)}
+                            className="rounded-[26px] px-4 py-2 bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] text-black text-sm leading-5 font-medium"
+                        >
+                            Withdraw Request
+                        </button>
                     </div>
                 </div>
 
-                {/* Withdraw Button */}
-                <div className="flex items-center px-5  ">
-                    <button
-                        onClick={() => setWithDrawModal(true)}
-                        className="rounded-[26px] px-4 py-2 bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] text-black text-sm leading-5 font-medium"
-                    >
-                        Withdraw Request
-                    </button>
-                </div>
-</div>
-                
             </div>
 
             <Dialog open={withDrawModal} onOpenChange={setWithDrawModal}>
@@ -146,7 +146,7 @@ const TotalFund = ({ data }) => {
                             </div>
 
                             <Button
-                                className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                                variant="brand"
                                 onClick={handleWithdrawRequest} disabled={loadingMint}>
                                 Withdraw Request
                             </Button>
@@ -156,9 +156,6 @@ const TotalFund = ({ data }) => {
 
             </Dialog>
         </>
-
-
-
     )
 }
 

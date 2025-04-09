@@ -172,11 +172,10 @@ const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onS
 
 
         <div className=" w-full h-full">
-          <div className="absolute bottom-4 right-4 flex gap-2">
+          <div className="absolute bottom-4 text-white right-4 flex gap-2">
             {!isUserParticipant && (
               <Button
-                className="bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] px-5 py-2 text-white font-semibold rounded-full"
-                variant="radix"
+               variant="brand"
                 onClick={handleJoinCommunity}
               >
                 Join Community
@@ -192,8 +191,7 @@ const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onS
                   Transfer Executive Badge
                 </Button> */}
                 <Button
-                  className="bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] px-5 py-2 text-white font-semibold rounded-full"
-
+                 variant="brand"
                   onClick={() => setExecOpen(true)}>
                   Mint Executive Badge
                 </Button>
@@ -218,7 +216,7 @@ const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onS
       </div>
       <Dialog open={quickStartOpen} onOpenChange={setQuickStartOpen}>
         <DialogTrigger></DialogTrigger>
-        <DialogContent className="max-w-2xl p-6 bg-[rgba(169,126,255,0.34)]  border-[1px] border-brand3 rounded-lg shadow-lg">
+        <DialogContent className="max-w-2xl w-full  p-6 bg-[rgba(169,126,255,0.34)] text-gray-300 backdrop-blur-md border-[1px] border-brand3 rounded-lg shadow-lg">
           <DialogHeader>
             <DialogTitle className="text-2xl font-semibold text-brand7 w-full text-center">
               Quick Start

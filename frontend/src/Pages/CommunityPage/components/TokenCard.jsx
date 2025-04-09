@@ -19,6 +19,7 @@ import { toast } from 'sonner';
 import useCustomAlertStore from '@/store/customAlertStore';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Label as Label2, Pie, PieChart } from "recharts"
+import { Button } from '@/components/ui/button';
 
 
 const TokenCard = ({ data, onSuccess }) => {
@@ -231,7 +232,7 @@ const TokenCard = ({ data, onSuccess }) => {
             <div>
               <Dialog open={openSellModal} onOpenChange={setSellModal}>
                 <DialogTrigger asChild>
-                  <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" >Sell Token</button>
+                  <Button variant="brand" >Sell Token</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px] bg-[rgba(169,126,255,0.34)] backdrop-blur-md text-white  border-[1px] border-brand3 ">
                   <DialogHeader>
@@ -257,17 +258,17 @@ const TokenCard = ({ data, onSuccess }) => {
                   </div>
                   <DialogFooter>
                     {loading ? (
-                      <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" disabled>
+                      <Button  variant="brand" disabled>
                         Selling...
-                      </button>
+                      </Button>
                     ) : (
-                      <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
-
+                      <Button 
+                        variant="brand"
                         onClick={() => handleSellToken(tokenToSell)}
                         disabled={!tokenToSell || tokenToSell <= 0}
                       >
                         Sell Token
-                      </button>
+                      </Button>
                     )}
                   </DialogFooter>
                 </DialogContent>
@@ -305,19 +306,16 @@ const TokenCard = ({ data, onSuccess }) => {
                   </div>
                   <DialogFooter>
                     {loading ? (
-                      <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" disabled>
+                      <Button variant="brand" disabled>
                         Buying...
-                      </button>
+                      </Button>
                     ) : (
-                      <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
-
+                      <Button variant="brand" 
                         onClick={handleBuyToken}
-
                         disabled={!token}
-
                       >
                         Buy Token
-                      </button>
+                      </Button>
                     )}
                   </DialogFooter>
                 </DialogContent>

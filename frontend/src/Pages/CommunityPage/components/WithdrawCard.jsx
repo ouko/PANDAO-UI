@@ -1,4 +1,5 @@
 import { useAccount } from "@/AccountContext";
+import { Button } from "@/components/ui/button";
 import { useSendTransaction } from "@/hooks/useSendTransaction";
 import axios from "axios";
 import { useState } from "react";
@@ -133,13 +134,13 @@ const WithdrawCard = ({ withDrawRequest }) => {
                                 </div>
                             </div>
                             <div className="flex justify-end mt-4">
-                                <button
+                                <Button
+                                variant="brand"
                                     disabled={loading}
                                     onClick={() => handleWithDrawSign(request.id)}
-                                    className="bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] px-5 py-2 text-black font-semibold rounded-full z-50 cursor-pointer"
                                 >
                                     Sign Withdraw Request
-                                </button>
+                                </Button>
                             </div>
                         </div>
                     ))

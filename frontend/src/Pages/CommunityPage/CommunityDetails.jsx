@@ -431,7 +431,7 @@ const CommunityDetails = () => {
                 />
               </div>
               <Button
-                className="bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] px-5 py-2 text-white font-semibold rounded-full"
+                variant="brand"
                 onClick={handleClickMint}
                 disabled={loadingMint}
               >
@@ -474,8 +474,7 @@ const CommunityDetails = () => {
               </div>
 
               <Button
-                className="bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] px-5 py-2 text-white font-semibold rounded-full"
-                onClick={handleTransfer} disabled={loadingMint}>
+                variant="brand" onClick={handleTransfer} disabled={loadingMint}>
                 Transfer Executive Badge
               </Button>
             </DialogDescription>

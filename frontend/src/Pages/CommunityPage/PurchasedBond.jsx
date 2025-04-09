@@ -191,8 +191,8 @@ const PurchasedBond = (props) => {
                             
                             <Button
                               disabled
-                              className="rounded-[26px] py-2 text-[20px] top-3 right-2 px-[35px]  absolute bg-brand3 shadow-inner text-black  leading-5 font-medium"
-                            >
+                              variant="brand"
+                              >
                               Already Claimed
                             </Button>
                           ) : (
@@ -200,7 +200,8 @@ const PurchasedBond = (props) => {
                             <Button
                               disabled={loading2}
                               onClick={() => handleClaim(bond)}
-                              className="rounded-[26px]  text-[18px] top-3 right-2 px-[35px]  absolute bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black  leading-5 font-medium"
+                              className="rounded-[26px]  text-[18px] top-3 right-2 px-[35px]  absolute "
+                              variant="brand"
                             >
                               Claim
                             </Button>

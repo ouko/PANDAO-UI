@@ -250,13 +250,13 @@ const BondIssue = () => {
       'number_of_bonds',
       'description',
     ];
-  
+
     const allFieldsFilled = requiredFields.every(
       (field) => bond[field] !== undefined && bond[field] !== ''
     );
     setIsFormComplete(allFieldsFilled);
   }, [bond]);
-  
+
   useEffect(() => {
     // Only fetch NFTs if accounts are available
     if (accounts && accounts.length > 0) {
@@ -589,8 +589,8 @@ const BondIssue = () => {
 
                   <div className="flex items-center z-50 py-4 justify-end">
                     <Button
-                     className="flex-1 rounded-2xl p-3 z-50 py-4 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner"
-            
+                      className="flex-1 rounded-2xl p-3 z-50 py-4 text-white "
+                      variant="brand"
                       onClick={() => setOpen(!open)}
                       disabled={!isFormComplete}
                     >
@@ -676,8 +676,7 @@ const BondIssue = () => {
 
             <div className="flex items-center justify-end space-x-4">
               <Button
-                className="flex-1 rounded-2xl p-3 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner"
-                variant="radix"
+                variant="brand"
                 disabled={loading}
                 onClick={handleformSubmit}
               >

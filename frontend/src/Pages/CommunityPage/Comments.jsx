@@ -179,8 +179,7 @@ const Comments = () => {
                     {!selectedDiscussion && (
                       <DialogTrigger>
                         <Button
-                          variant="radix"
-                          className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                          variant="brand"
                         >
                           Start new discussion
                         </Button>
@@ -194,7 +193,7 @@ const Comments = () => {
                         onChange={(e) => setTitle(e.target.value)}
                       />
                       <Button 
-                      className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                       variant="brand"
                        onClick={handleAddDiscussion}>
                         Start
                       </Button>
@@ -332,7 +331,7 @@ const Comments = () => {
                     />
 
                     <div className="flex items-center w-fit">
-                      <Button variant="radix" className="rounded-r-none hover:scale-110  " onClick={handleAddComment}>
+                      <Button variant="brand" className="rounded-r-none hover:scale-110  " onClick={handleAddComment}>
                         Add Comment
                       </Button>
                       <CommnetImageUpdater onUploadSuccess={handleCommentId} />
