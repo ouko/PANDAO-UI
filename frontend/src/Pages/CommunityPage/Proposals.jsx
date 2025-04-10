@@ -1315,20 +1315,22 @@ const Proposals = () => {
           </div>
         </div>
       ) : tokenChangeform ? (
-        <div>
-          <div className="bg-[rgba(169,126,255,0.08)] mt-16 rounded-[20px]  z-50 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
-            <div className="  text-[40px] leading-[130%] z-50 font-semibold text-start">
-              <span className="step-2-describe-your-dao-span3 text-amber-50">Token Price Change Form</span>
-
-
-            </div>
-            <div className="w-full cursor-pointer items-end z-50 justify-end text-[22px] flex  m-2"
+        <div className=''>
+       
+          <div className="bg-[rgba(169,126,255,0.08)] mb-2 mt-20 rounded-[20px]  z-50 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
+          <div className="w-full cursor-pointer items-center z-[999] justify-start text-[22px] flex  "
               onClick={() => {
                 setShowTokenChangeForm(false) // Hide the form and return to the list
                 setActiveProposal(null) // Ensure no proposal is active
               }}>
               <ChevronLeft /> <span >Back</span>
             </div>
+            <div className="  text-[40px] leading-[130%] z-50 font-semibold text-start">
+              <span className="step-2-describe-your-dao-span3 text-amber-50">Token Price Change Form</span>
+
+
+            </div>
+            
 
           </div>
           <div className="flex items-center justify-center z-50 p-2 w-full mx-auto">
