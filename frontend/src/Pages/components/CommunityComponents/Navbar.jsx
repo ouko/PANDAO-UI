@@ -1,4 +1,5 @@
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
+import { motion } from 'framer-motion';
 
 import { useRdt } from '@/hooks/useRdt'
 import axios from 'axios'
@@ -81,22 +82,57 @@ const getNavItems = () => {
 
 
 
+const itemVariants = {
+  hidden: { x: -20, opacity: 0 },
+  visible: { 
+    x: 0, 
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100
+    }
+  }
+};
+
+
   return (
     <div className=''>
-      <div className="bg-[rgba(169,126,255,0.08)]  rounded-[20px] text-white border-solid border-[#5228A4] border py-10 pt-[13px] px-[15px] shrink-0  min-h-[737px] relative overflow-hidden">
+      <div className="bg-[rgba(169,126,255,0.08)]  rounded-[20px] text-white border-solid border-[#5228A4] border py-10 pt-[13px] px-[15px] shrink-0  w-[300px] min-h-[737px] relative overflow-hidden">
+   
         {getNavItems().map((item, index) => (
           <NavLink
             key={index}
             to={item.path}
             className={({ isActive }) =>
-              `flex flex-row py-2 items-center justify-start my-4 cursor-pointer px-1 transition-colors ${isActive ? 'bg-[#5228A4] text-white rounded-lg w-[300px] ' : 'text-primary-100'}`
+              `flex flex-row py-2 items-center justify-start my-4 cursor-pointer px-1 transition-colors ${
+                isActive ? 'bg-brand3 text-white rounded-lg w-full' : 'text-purple-100'
+              }`
             }
             end
           >
-            <img className="shrink-0 size-[45px] px-3" src={item.icon} alt={item.label} />
-            <div className="font-medium text-2xl">{item.label}</div>
+            {({ isActive }) => (
+              <motion.div
+                className="flex items-center w-full"
+                variants={itemVariants}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <img 
+                  className="shrink-0 size-10 px-3" 
+                  src={item.icon} 
+                  alt={item.label} 
+                />
+                <motion.div 
+                  className="font-medium text-xl"
+                  initial={{ opacity: 0.8 }}
+                  animate={{ opacity: isActive ? 1 : 0.8 }}
+                >
+                  {item.label}
+                </motion.div>
+              </motion.div>
+            )}
           </NavLink>
-        ))}  
+        ))}
 
       </div>
     </div>
