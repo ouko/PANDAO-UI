@@ -73,10 +73,10 @@ const WithdrawCard = ({ withDrawRequest }) => {
             toast.error('Transaction failed. Please try again.')
           }
         } catch (error) {
-          console.error('Error selling token:', error)
+          console.error('Error :', error)
   
   
-          toast.error('Something went wrong while selling tokens.')
+          toast.error('Something went wrong.')
         } finally {
           setLoading(false)
         }
