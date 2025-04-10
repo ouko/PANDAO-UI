@@ -138,10 +138,10 @@ const Members = () => {
     return null
   }
   return (
-    <div className=" items-start gap-3 justify-start min-h-screen overflow-hidden z-50 text-brand7 px-2">
+    <div className=" items-start gap-3 justify-start min-h-screen overflow-hidden z-50 text-brand7 ">
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
         <div className="space-y-6 md:w-[100%] ">
-          <div className="flex md:flex-row flex-col md:w-[95%] mx-auto gap-2">
+          <div className="flex md:flex-row flex-col  mx-auto gap-2">
             <div className="md:w-[100%] space-y-6  ">
 
               <div
@@ -209,7 +209,7 @@ const Members = () => {
                     <div
 
                       key={index}
-                      className="bg-gradient-to-br from-[rgba(24,18,45,0.59)] via-transparent to-brand1 hover:scale-95 transition-transform duration-300 
+                      className="bg-gradient-to-br from-[rgba(24,18,45,0.59)] via-transparent to-brand1 hover:border-brand5 transition-transform duration-300 
                         flex flex-col my-4  md:flex-row items-start md:items-center justify-between gap-4 md:gap-2  mx-4 p-4 border border-brand2 rounded-lg shadow-sm"
                     >
                       <div className="flex items-center gap-3">
