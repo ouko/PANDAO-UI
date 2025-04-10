@@ -220,7 +220,6 @@ const TokenCard = ({ data, onSuccess }) => {
 
   if (!data) return null;
 
-  console.log(typeof (data.total_token), "fsdi");
 
   return (
     <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-solid border-[#5228A4] border pt-[13px] pr-[25px] pb-[13px] pl-[25px] shrink-0 min-h-[345px] relative overflow-hidden backdrop-blur-[6.7px]">
