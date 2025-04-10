@@ -1,7 +1,6 @@
 import { useAccount } from '@/AccountContext'
-import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { AlertCircle, BookDown } from 'lucide-react'
+import { AlertCircle} from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import PropTypes from 'prop-types'
@@ -177,43 +176,55 @@ const AnnIssue = () => {
     return null
   }
   return (
-    <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
+    <div className="items-start gap-3 justify-start min-h-screen overflow-hidden z-50 text-black px-2">
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
         <div className="space-y-6 md:w-[100%] ">
           <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
             <div className="md:w-[100%] space-y-6  ">
-              <Card className="bg-white md:w-[100%] mx-auto md:p-10 p-4  space-y-10">
-                <div className="flex items-center justify-between">
-                  <div className="bg-slate-200 w-fit p-2 rounded-full">
-                    <BookDown className=" text-blue-700" />
+              <div className =" rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden ">  
+                <div className="flex flex-row  gap-10 items-center w-full">
+                  <div
+                    className="bg-[#321e58] rounded-full p-5 z-50 flex items-center justify-center w-24 h-24">
+                    <img
+                      className="w-14 h-14"
+                      src="/8.svg"
+                      alt="User Icon"
+                    />
                   </div>
-                  {/* <div>
-                      <Button variant="radix" >
-                        Manage members
-                      </Button>
-                    </div> */}
+                  <div className="flex flex-col gap-1.5">
+                    <div
+                      className="text-[#5228A4] font-semibold uppercase text-xl"
+                    >
+                      Total ANN Token:
+                    </div>
+                    <div
+                      className="text-white text-[56px] font-medium text-center"
+                    >
+                      Issue ANN Token
+                    </div>
+                  </div>
                 </div>
-                <div className="text-3xl font-semibold">Issue ANN Token</div>
-              </Card>
-              <Card className="p-5">
+              </div>
+              <div className="p-5 b py-4 z-50 px-4">
                 <form
                   onSubmit={handleformSubmit}
                   className="flex flex-col w-full space-y-4"
                 >
-                  <div className="grid grid-cols-2 gap-5">
+                  <div className="grid grid-cols-2 z-50 gap-5 mx-5 text-brand7 text-[20px]">
                     <FormInput
                       label="Community ID"
                       name="community_id"
                       value={params.id}
                       disabled="true"
                       tooltipText="Unique identifier for the community"
+                     
                     />
                      <FormInput
                       label="Description"
                       name="description"
                       onChange={handleChange}
                       value={annuity.description}
-                      tooltipText="Description"
+                      placeholder="Enter description here"
                     />
                      <FormInput
                       label="Name"
@@ -313,13 +324,16 @@ const AnnIssue = () => {
                       </Select>
                     </div>
                   </div>
-                  <div className="flex items-center justify-end">
-                    <Button type="submit" disabled={!isFormComplete || loading }>
+                  <div className="flex items-center z-50 justify-center">
+                    <Button type="submit" 
+                    variant="brand"
+                    className="w-1/2 mt-5"
+                     disabled={!isFormComplete || loading }>
                       Submit
                     </Button>
                   </div>
                 </form>
-              </Card>
+              </div>
             </div>
           </div>
         </div>

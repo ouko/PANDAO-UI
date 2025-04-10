@@ -16,6 +16,7 @@ import { clipAddress } from '@/utils/functions/ClipAddress'
 import axios from 'axios'
 import {
 
+  BadgeCheck,
   ChevronRight,
 
 } from 'lucide-react'
@@ -227,6 +228,13 @@ const Members = () => {
                           <div className="text-gray-200 dark:text-gray-400 text-sm truncate">
                             {clipAddress(participant.public_address || '')}
                           </div>
+                        </div>
+                        <div>
+                          {participant.is_executive_member && (
+                            <BadgeCheck className=" px-3 py-1 text-xs rounded-full w-12 h-12">
+                              Executive
+                            </BadgeCheck>
+                          )}
                         </div>
                       </div>
 
