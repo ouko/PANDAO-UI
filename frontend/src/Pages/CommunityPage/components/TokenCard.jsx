@@ -231,7 +231,7 @@ const TokenCard = ({ data, onSuccess }) => {
             <div>
               <Dialog open={openSellModal} onOpenChange={setSellModal}>
                 <DialogTrigger asChild>
-                  <Button variant="brand" >Sell Token</Button>
+                  <Button variant="brand" className="text-white" >Sell Token</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px] bg-[rgba(169,126,255,0.34)] backdrop-blur-md text-white  border-[1px] border-brand3 ">
                   <DialogHeader>
@@ -280,7 +280,8 @@ const TokenCard = ({ data, onSuccess }) => {
             <div>
               <Dialog open={openBuyModal} onOpenChange={setBuyModal}>
                 <DialogTrigger asChild>
-                  <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" >Buy Token</button>
+                <Button variant="brand" className="text-white">Buy Token</Button>
+
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px] bg-[rgba(169,126,255,0.34)] backdrop-blur-md text-white  border-[1px] border-brand3  ">
                   <DialogHeader>
