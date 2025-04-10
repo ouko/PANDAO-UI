@@ -88,7 +88,11 @@ const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onS
               </div>
             </div>
             <div className="text-[#ffffff] text-center font-['ClashDisplayVariable-Semibold',_sans-serif] text-[26px] font-semibold relative self-stretch">
-              {daoData.name}
+            {daoData.name ? (
+                daoData.name
+              ) : (
+                <div className="w-full h-10 bg-purple-300 animate-pulse rounded mx-auto opacity-80" />
+              )}
             </div>
           </div>
         </div>
@@ -100,8 +104,13 @@ const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onS
               Purpose:
             </div>
             <div className="text-[#ffffff] text-center text-xl font-normal relative self-stretch">
-              {daoData.purpose}
+              {daoData.purpose ? (
+                daoData.purpose
+              ) : (
+                <div className="w-full h-4 bg-purple-300 animate-pulse rounded mx-auto opacity-80" />
+              )}
             </div>
+
           </div>
 
           <div className="flex flex-col gap-1.5 items-start justify-start shrink-0 relative z-30">
@@ -109,9 +118,14 @@ const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onS
               Owner address:
             </div>
             <div className="flex items-center gap-2">
-              <p className="text-[#ffffff] text-center text-xl font-normal overflow-hidden text-ellipsis">
-                {clipAddress(daoData.owner_address)}
-              </p>
+              <div className="text-[#ffffff] text-center text-xl font-normal overflow-hidden">
+                {daoData.owner_address ? (
+                  clipAddress(daoData.owner_address)
+                ) : (
+                  <div className="h-5 w-40 bg-purple-300 animate-pulse rounded mx-auto opacity-80" />
+                )}
+              </div>
+
               <p
                 className="cursor-pointer"
                 onClick={() => handleCopy(daoData.owner_address)}
@@ -131,7 +145,11 @@ const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onS
             </div>
             <div className="flex items-center gap-2">
               <p className="text-[#ffffff] text-center text-xl font-normal overflow-hidden text-ellipsis">
-                {clipAddress(daoData.component_address)}
+                {daoData.component_address ? (
+                  clipAddress(daoData.component_address)
+                ) : (
+                  <div className="h-5 w-40 bg-purple-300 animate-pulse rounded mx-auto opacity-80" />
+                )}
               </p>
               <p
                 className="cursor-pointer"
@@ -175,7 +193,7 @@ const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onS
           <div className="absolute bottom-4 text-white right-4 flex gap-2">
             {!isUserParticipant && (
               <Button
-               variant="brand"
+                variant="brand"
                 onClick={handleJoinCommunity}
               >
                 Join Community
@@ -191,7 +209,7 @@ const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onS
                   Transfer Executive Badge
                 </Button> */}
                 <Button
-                 variant="brand"
+                  variant="brand"
                   onClick={() => setExecOpen(true)}>
                   Mint Executive Badge
                 </Button>
