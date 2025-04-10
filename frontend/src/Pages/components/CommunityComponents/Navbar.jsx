@@ -80,7 +80,6 @@ const getNavItems = () => {
 };
 
 
-console.log(slug,"asdfasdf")
 
   return (
     <div className=''>
