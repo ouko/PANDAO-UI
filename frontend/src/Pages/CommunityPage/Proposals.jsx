@@ -740,7 +740,7 @@ const Proposals = () => {
                         setActiveProposal(null)
                         setShowCategories(true)
                       }}
-                     
+
                     >
                       Create Proposal
                     </Button>
@@ -795,25 +795,25 @@ const Proposals = () => {
         </div>
       ) : activeProposal ? (
         <div className="flex  flex-col  px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
-          
+
           <Card className="bg-white md:w-[100%] z-50 mx-auto border-2 border-[#5228A4] md:p-4 p-4 space-y-2 ">
-          <div
-            onClick={() => {
-              setActiveProposal(null) // Reset active proposal
-              setShowForm(false) // Ensure the form is hidden
-            }}
-            className="w-full cursor-pointer text-white flex text-[20px] items-end justify-end px-4"
-          >
-            <ChevronLeft /> <span>Back</span>
-          </div>
+            <div
+              onClick={() => {
+                setActiveProposal(null) // Reset active proposal
+                setShowForm(false) // Ensure the form is hidden
+              }}
+              className="w-full cursor-pointer text-white flex text-[20px] items-end justify-end px-4"
+            >
+              <ChevronLeft /> <span>Back</span>
+            </div>
             <div className="p-4  -translate-x-2 font-bold capitalize text-white text-4xl">
               {activeProposal.proposal}
             </div>
-            
+
             <div className="p-4 border-[1px] rounded-sm border-[#5228A4] -translate-x-2 font-bold text-white capitalize text-md">
               {activeProposal.description}
             </div>
-            
+
             <div className="flex space-x-2">
               {activeProposal.proposed_token_buy_back_price && (
                 <Badge>
@@ -1289,7 +1289,7 @@ const Proposals = () => {
               {loadingButton ? (
                 <Button variant="brand"
                   disabled
-                  
+
                 >
                   Submitting....
                 </Button>
@@ -1316,9 +1316,9 @@ const Proposals = () => {
         </div>
       ) : tokenChangeform ? (
         <div className=''>
-       
+
           <div className="bg-[rgba(169,126,255,0.08)] mb-2 mt-20 rounded-[20px]  z-50 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
-          <div className="w-full cursor-pointer items-center z-[999] justify-start text-[22px] flex  "
+            <div className="w-full cursor-pointer items-center z-[999] justify-start text-[22px] flex  "
               onClick={() => {
                 setShowTokenChangeForm(false) // Hide the form and return to the list
                 setActiveProposal(null) // Ensure no proposal is active
@@ -1330,7 +1330,7 @@ const Proposals = () => {
 
 
             </div>
-            
+
 
           </div>
           <div className="flex items-center justify-center z-50 p-2 w-full mx-auto">
@@ -1472,7 +1472,7 @@ const Proposals = () => {
               </div>
               {loadingButton ? (
                 <Button variant="brand" disabled
-                 
+
                 >
                   Submitting....
                 </Button>
@@ -1495,10 +1495,22 @@ const Proposals = () => {
 
           <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4]  relative overflow-hidden ">
             <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
-              <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
+              <div className='flex items-center gap-2 '>
+                <div
+                  onClick={() => setShowCategories(false)}
+                  type="button"
+                  className="flex items-center text-[20px] cursor-pointer "
 
-                What kind of proposal do you want to create?
+                >
+                  <ChevronLeft /> <span >Back</span>
+                </div>
+                <div className='bg-purple-100 h-7  w-[1px] mx-1'></div>
+                <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
+
+                  What kind of proposal do you want to create?
+                </div>
               </div>
+
               <div>
                 <Dialog>
                   <DialogTrigger className='flex gap-1 items-center text-brand7 text-[16px] font-light'>
@@ -1530,14 +1542,14 @@ const Proposals = () => {
               </div>
             </div>
 
-            <div className=" flex h-[250px] gap-10 px-5 py-5 justify-center">
+            <div className=" grid grid-cols-3 gap-5 h-[250px] p-5  ">
               {ProposalTypes.map((proposal, index) => (
                 <Card
                   key={index}
-                  className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-2 bg-brand1 border-b-2 border-[#5228A4] rounded-lg p-3 text-brand7 relative justify-between"
+                  className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-2  bg-brand1 border-b-2 border-[#5228A4] rounded-lg p-5 text-brand7 relative justify-between"
                 >
                   <div className="font-bold  text-brand7 text-[22px] ">{proposal.title}</div>
-                  <div className="text-sm w-[400px]  text-gray-400 text-[16px] ">{proposal.description}</div>
+                  <div className="text-sm   text-gray-400 text-[16px] ">{proposal.description}</div>
                   <div className="flex items-center justify-end w-full">
                     <Button
                       variant="brand"
@@ -1559,18 +1571,7 @@ const Proposals = () => {
             </div>
           </div>
 
-          <div className="w-full cursor-pointer z-50 flex items-end justify-end m-2">
-            <Button
-              onClick={() => setShowCategories(false)}
-              type="button"
-              variant="brand"
-              className="flex items-center text-[20px] "
-             
-            >
-              <ChevronLeft /> <span >Back</span>
-            </Button>
 
-          </div>
 
 
 
