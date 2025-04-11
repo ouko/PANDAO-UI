@@ -1,16 +1,11 @@
 import { useAccount } from '@/AccountContext'
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-
 import { useNavigate, useParams } from 'react-router-dom'
 
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { BookDownIcon } from 'lucide-react'
+
+import BondCard from './components/BondCard'
+import SkeletonBond from '../GlobalComponents/SkeletonBond'
 
 const AnnIssued = () => {
   const { accounts } = useAccount()
@@ -42,103 +37,61 @@ const AnnIssued = () => {
     return null
   }
   return (
-    <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden bg-blue-50  text-black px-2">
+    <div className="pt-20 pb-10 items-start gap-3 justify-start min-h-screen overflow-hidden z-50  text-black px-2">
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
         <div className="space-y-6 md:w-[100%] ">
           <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
             <div className="md:w-[100%] space-y-6  ">
-              <Card className="bg-white md:w-[100%] mx-auto md:p-10 p-4  space-y-10">
-                <div className="flex items-center justify-between">
-                  <div className="bg-slate-200 w-fit p-2 rounded-full">
-                    <BookDownIcon className=" text-blue-700" />
+            <div className =" rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden ">  
+                <div className="flex flex-row  gap-10 items-center w-full">
+                  <div
+                    className="bg-[#321e58] rounded-full p-5 z-50 flex items-center justify-center w-24 h-24">
+                    <img
+                      className="w-14 h-14"
+                      src="/8.svg"
+                      alt="User Icon"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <div
+                      className="text-[#5228A4] font-semibold uppercase text-xl"
+                    >
+                      Total Issued ANN :
+                    </div>
+                    <div
+                      className="text-white text-[56px] font-medium text-center"
+                    >
+                      Issued ANN Token
+                    </div>
                   </div>
                 </div>
-                <div className="text-3xl font-semibold"> Issued ANN Token </div>
-              </Card>
-              <Card className="p-5">
+              </div>
+              <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4]  relative overflow-hidden">
+                <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
+                  <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
+
+                    Issued ANN :
+                  </div>
+                  
+                </div>
                 {loading ? (
-                  <div className="text-center">Loading...</div>
+                  <div className="flex flex-col h-auto items-center px-5  justify-center text-center mt-5">
+                  {[...Array(2)].map((_, i) => (
+                    <SkeletonBond key={i} />
+                  ))}
+                </div>
                 ) : error ? (
                   <div className="text-center text-red-500">{error}</div>
                 ) : issuedBonds.length === 0 ? (
-                  <div className="text-center">No bonds issued yet</div>
+                  <div className="text-center text-yellow-50 py-20">No bonds issued yet</div>
                 ) : (
-                  <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                  <div className="space-y-4 px-6 py-6">
                     {issuedBonds.map((bond) => (
-                      <Card
-                        key={bond.id}
-                        className="bg-white shadow-md rounded-lg p-4 hover:scale-105 transition duration-300"
-                      >
-                        {/* <div className="flex flex-col justify-between items-center"> */}
-                          <CardTitle className="text-xl font-semibold">
-                            {bond.name}
-                          </CardTitle>
-                          {/* <span className="text-sm text-gray-500">
-                            ID: {bond.id}
-                          </span> */}
-                        {/* </div> */}
-                        <CardDescription className="text-gray-600 mb-2">
-                          {bond.description}
-                        </CardDescription>
-
-                        <div className="mt-4 space-y-2 text-sm text-gray-700">
-                          <p>
-                            <strong>Contract Identity:</strong>{' '}
-                            {bond.contract_identity || 'N/A'}
-                          </p>
-                          <p>
-                            <strong>Number of Bonds:</strong>{' '}
-                            {bond.number_of_bonds}
-                          </p>
-                          <p>
-                            <strong>Currency:</strong> {bond.currency}
-                          </p>
-                          <p>
-                            <strong>Interest Rate:</strong> {bond.interest_rate}
-                            %
-                          </p>
-                          <p>
-                            <strong>Discount:</strong> {bond.discount}
-                          </p>
-                          <p>
-                            <strong>Ann Price:</strong>{' '}
-                            {bond.price ? `$${bond.price}` : 'Not available'}
-                          </p>
-                          <p>
-                            <strong>Notional Principle:</strong>{' '}
-                            {bond.notional_principle}
-                          </p>
-                          <p>
-                            <strong>Ann Position:</strong> {bond.ann_position}
-                          </p>
-                          <p>
-                            <strong>Contract Type:</strong> {bond.contract_type}
-                          </p>
-                          <p>
-                            <strong>Contract Role:</strong> {bond.contract_role}
-                          </p>
-                          <p>
-                            <strong>Creator address:</strong> {bond.creator ?bond.creator :'Not Specified' }
-                          </p>
-                        </div>
-
-                        <div className="mt-4 text-sm text-gray-500">
-                          <p>
-                            <strong>Initial Exchange Date:</strong>{' '}
-                            {new Date(
-                              bond.initial_exchange_date,
-                            ).toLocaleDateString()}
-                          </p>
-                          <p>
-                            <strong>Maturity Date:</strong>{' '}
-                            {new Date(bond.maturity_date).toLocaleDateString()}
-                          </p>
-                        </div>
-                      </Card>
+                    <BondCard key={bond.id} bond={bond} />
                     ))}
                   </div>
                 )}
-              </Card>
+              </div>
             </div>
           </div>
         </div>
