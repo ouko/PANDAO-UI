@@ -148,7 +148,7 @@ const Comments = () => {
     <div className=" items-start gap-3 justify-start z-40 min-h-screen overflow-hidden text-black px-2">
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto">
         <div className="space-y-6 md:w-[100%]">
-          <div className="flex md:flex-row flex-col md:w-[95%] mx-auto gap-2">
+          <div className="flex md:flex-row flex-col  mx-auto gap-2">
             <div className="md:w-[100%] space-y-6">
 
 
