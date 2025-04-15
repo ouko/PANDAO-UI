@@ -217,11 +217,11 @@ const Comments = () => {
                         No Active Discussion
                       </div>}
                       {communities.length > 0 && (
-                        <div className="grid  md:grid-cols-2 grid-cols-1 gap-4">
+                        <div className="grid  md:grid-cols-2 grid-cols-1 gap-4 p-4">
                           {communities.map((community, index) => (
                             <div
                               key={index}
-                              className="p-4 flex text-brand7 py-4 px-4 mx-4 my-4 rounded-lg bg-gradient-to-br from-[rgba(24,18,45,0.59)] via-transparent to-brand1 border-[1px] border-brand4 hover:border-brand5 transition-transform duration-300 flex-col gap-2 hover:shadow-lg shadow-md cursor-pointer"
+                              className="p-4 flex text-brand7 py-4 px-4  rounded-lg bg-gradient-to-br from-[rgba(24,18,45,0.59)] via-transparent to-brand1 border-[1px] border-brand4 hover:border-brand5 transition-transform duration-300 flex-col gap-2 hover:shadow-lg shadow-md cursor-pointer"
                               onClick={() =>
                                 fetchDiscussionComments(
                                   community.id,
