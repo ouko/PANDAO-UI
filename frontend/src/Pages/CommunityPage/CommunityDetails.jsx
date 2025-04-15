@@ -57,6 +57,7 @@ const CommunityDetails = () => {
   const params = useParams()
   const [transferAddress, setTransferAddress] = useState("")
   const queryClient = useQueryClient()
+  const sendTransaction = useSendTransaction()
   const [loadingMint, setLoadingMint] = useState(false)
 
   const { data: communityData, isLoading: isLoadingCommunity } = useQuery({
