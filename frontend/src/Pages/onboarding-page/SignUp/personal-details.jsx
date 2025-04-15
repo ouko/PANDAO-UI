@@ -53,6 +53,14 @@ const PersonalDetail = () => {
     const [isTagsValid, setIsTagsValid] = useState(true);
     const [isDisplayImageValid, setIsDisplayImageValid] = useState(true);
 
+    const [touchedFields, setTouchedFields] = useState({
+        username: false,
+        email: false,
+        bio: false,
+        display_image: false,
+        tags: false,
+    });
+
     // Form validation effect
     useEffect(() => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -179,7 +187,7 @@ const PersonalDetail = () => {
                         <label className="text-white text-xl font-medium">Choose 5 communities you might be interested in</label>
 
                         <DropdownMenuTrigger asChild>
-                            <button className={`bg-[#1B0D37] border p-2 rounded-md w-full flex flex-wrap gap-2 min-h-[40px] items-center mt-2 ${isTagsValid ? 'border-brand5' : 'border-red-500'}`}>
+                            <button className={`bg-[#1B0D37] border p-2 rounded-md w-full flex flex-wrap gap-2 min-h-[40px] items-center mt-2 ${isTagsValid ? 'border-brand5' : 'border-brand5'}`}>
                                 {selectedTags.length > 0 ? (
                                     selectedTags.map((tag) => (
                                         <span key={tag} className="bg-purple-600 text-white px-2 py-1 rounded-md">
@@ -206,7 +214,7 @@ const PersonalDetail = () => {
                                 ))
                             )}
                         </DropdownMenuContent>
-                        {!isTagsValid && <span className="text-red-500 text-sm">Select at least 5 tags.</span>}
+                        {!isTagsValid && <span className="text-brand5 text-sm">Select at least 5 tags.</span>}
                     </div>
                 </DropdownMenu>
               
@@ -220,7 +228,7 @@ const PersonalDetail = () => {
                     Upload your Profile picture here
                 </Label>
                 <ImageUpload onUploadSuccess={handleFileId} imageUrl={display_image} />
-                {!isDisplayImageValid && <span className="text-red-500 text-sm">Profile image is required.</span>}
+                {!isDisplayImageValid && <span className="text-brand5 text-sm">Profile image is required.</span>}
                 </div>
 
                 <button
@@ -246,7 +254,7 @@ const InputField = ({ label, placeholder, isTextArea = false, value, onChange, d
     <div className="flex flex-col gap-2.5 w-full">
         <label className="text-white text-xl font-medium">{label}</label>
         <input
-            className={`bg-[#1B0D37] rounded-md border p-4 w-full ${disabled ? 'opacity-70 cursor-not-allowed' : isValid ? 'border-brand5' : 'border-red-500'}`}
+            className={`bg-[#1B0D37] rounded-md border p-4 w-full ${disabled ? 'opacity-70 cursor-not-allowed' : isValid ? 'border-brand5' : 'border-brand5'}`}
             placeholder={placeholder}
             value={value}
             onChange={onChange}

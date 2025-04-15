@@ -25,7 +25,7 @@ const BrandCard = ({ daos }) => {
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger></DialogTrigger>
-        <DialogContent>
+        <DialogContent className=" h-[110px] bg-[rgba(169,126,255,0.34)] backdrop-blur-md text-white  border-[1px] border-brand3">
           <DialogHeader>
             <DialogTitle>You have not connected your Wallet</DialogTitle>
             <DialogDescription>
