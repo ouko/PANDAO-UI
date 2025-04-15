@@ -66,18 +66,22 @@ const getNavItems = () => {
     { icon: '/7.svg', label: 'Proposals', path: `/community/detail/${params.id}/proposals` },
   ];
 
-  const conditionalItem =
-    slug === 'Investment'
-      ? { icon: '/2.svg', label: 'Ann Issue', path: `/community/detail/${params.id}/annissue` }
-      : { icon: '/2.svg', label: 'Bond Issue', path: `/community/detail/${params.id}/bondissue` };
+  const conditionalItems = slug === 'Investment'
+    ? [
+        { icon: '/2.svg', label: 'ANN Issue', path: `/community/detail/${params.id}/annissue` },
+        { icon: '/2.svg', label: 'ANN Issued', path: `/community/detail/${params.id}/AnnIssued` },
+      ]
+    : [
+        { icon: '/2.svg', label: 'Bond Issue', path: `/community/detail/${params.id}/bondissue` },
+        { icon: '/8.svg', label: 'Bond Issued', path: `/community/detail/${params.id}/bondissued` },
+      ];
 
   const restItems = [
     { icon: '/2.svg', label: 'Purchased Bond', path: `/community/detail/${params.id}/purchasedbond` },
-    { icon: '/8.svg', label: 'Bond Issued', path: `/community/detail/${params.id}/bondissued` },
     { icon: '/1.svg', label: 'Back', path: '/' },
   ];
 
-  return [...baseItems, conditionalItem, ...restItems];
+  return [...baseItems, ...conditionalItems, ...restItems];
 };
 
 
