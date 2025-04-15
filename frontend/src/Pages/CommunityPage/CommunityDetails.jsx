@@ -36,6 +36,7 @@ import TotalFund from './components/TotalFund'
 import WithdrawCard from './components/WithdrawCard'
 import DiscussionCard from './components/DiscussionCard'
 import ExecutiveMember from './components/ExecutiveMember'
+import { CardShimmer } from '@/components/ui/shimmer'
 
 ChartJS.register(
   LineElement,
@@ -58,7 +59,7 @@ const CommunityDetails = () => {
   const queryClient = useQueryClient()
   const [loadingMint, setLoadingMint] = useState(false)
 
-  const { data: communityData } = useQuery({
+  const { data: communityData, isLoading: isLoadingCommunity } = useQuery({
     queryKey: ['community', params.id],
     queryFn: async () => {
       const res = await axios.get(
@@ -72,7 +73,7 @@ const CommunityDetails = () => {
     },
   })
 
-  const { data: participants = [] } = useQuery({
+  const { data: participants = [], isLoading: isLoadingParticipants } = useQuery({
     queryKey: ['participants', params.id],
     queryFn: async () => {
       const res = await axios.get(
@@ -82,7 +83,7 @@ const CommunityDetails = () => {
     },
   })
 
-  const { data: communities = [] } = useQuery({
+  const { data: communities = [], isLoading: isLoadingCommunities } = useQuery({
     queryKey: ['discussions', params.id],
     queryFn: async () => {
       const res = await axios.get(
@@ -92,7 +93,7 @@ const CommunityDetails = () => {
     },
   })
 
-  const { data: withDrawRequest = [] } = useQuery({
+  const { data: withDrawRequest = [], isLoading: isLoadingWithdraw } = useQuery({
     queryKey: ['withdrawRequests', params.id],
     queryFn: async () => {
       const res = await axios.get(
@@ -252,12 +253,31 @@ const CommunityDetails = () => {
     (participant) => participant.public_address === accounts[0].address,
   )
 
+  const isLoading = isLoadingCommunity || isLoadingParticipants || isLoadingCommunities || isLoadingWithdraw
+
   return (
-    <div className=" pb-10 items-start font-clash gap-3 justify-start min-h-screen overflow-hidden mt-5 text-black px-2">
+    <div className="pb-10 items-start font-clash gap-3 justify-start min-h-screen overflow-hidden mt-5 text-black px-2">
       <CustomAlert />
-      <div className="flex md:flex-row flex-col   md:py-12  ">
-        {communityData && (
-          <div className=" w-full  ">
+      <div className="flex md:flex-row flex-col md:py-12">
+        {isLoading ? (
+          <div className="w-full space-y-6">
+            <CardShimmer />
+            <div className="flex md:flex-row flex-col w-full mx-auto gap-[16px]">
+              <div className="w-full space-y-4">
+                <CardShimmer />
+                <CardShimmer />
+                <CardShimmer />
+                <CardShimmer />
+              </div>
+              <div className="w-full space-y-4">
+                <CardShimmer />
+                <CardShimmer />
+                <CardShimmer />
+              </div>
+            </div>
+          </div>
+        ) : communityData ? (
+          <div className="w-full">
             <DaoCard 
               daoData={communityData}
               isUserParticipant={isUserParticipant}
@@ -265,25 +285,23 @@ const CommunityDetails = () => {
               setExecOpen={setExecOpen}
             />
 
-            <div className="flex md:flex-row flex-col w-full mx-auto gap-[16px] ">
-              <div className=" w-full space-y-4">
+            <div className="flex md:flex-row flex-col w-full mx-auto gap-[16px]">
+              <div className="w-full space-y-4">
                 <TokenCard data={communityData} />
                 <TotalFund data={communityData} />
                 <WithdrawCard withDrawRequest={withDrawRequest} />
                 <DiscussionCard communities={communities} />
-                <div className="bg-transparent w-full mx-auto flex items-center"></div>
               </div>
-              <div className=" w-full space-y-4 ">
+              <div className="w-full space-y-4">
                 <div>
                   <TotalProposalsCard />
                 </div>
                 <ExecutiveMember participants={participants} />
                 <FundHistoryGraph />
-                <div className="bg-transparent w-full mx-auto flex items-center"></div>
               </div>
             </div>
           </div>
-        )}
+        ) : null}
       </div>
 
       <Dialog open={execOpen} onOpenChange={setExecOpen}>
