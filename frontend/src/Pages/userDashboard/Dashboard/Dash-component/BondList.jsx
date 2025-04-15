@@ -9,9 +9,9 @@ const BondList = ({ bonds, check, setCheck, loading, handleRetrieveBond, setOpen
     <div>
       <div className="bg-[#39246b] p-3 flex justify-between items-center rounded-md mb-6 ">
         <h2 className="text-white text-2xl font-medium">Created Bonds:</h2>
-        <div className="flex items-center text-brand7 gap-2">
-          <div>Purchased Bonds</div>
-          <Switch checked={check} onCheckedChange={() => setCheck(!check)} />
+        <div className="flex items-cente text-brand7 gap-2">
+          <div >Purchased Bonds</div>
+          <Switch className=" bg-brand5" checked={check} onCheckedChange={() => setCheck(!check)} />
         </div>
       </div>
       <div className="w-full md:col-span-3 flex mt-1 flex-col items-center md:items-start max-w-[1400px] mx-auto p-5 text-black">
@@ -43,7 +43,7 @@ const BondList = ({ bonds, check, setCheck, loading, handleRetrieveBond, setOpen
               <p className="text-sm text-white">Maturity Date: {bond.maturity_date ? new Date(bond.maturity_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Not specified'}</p>
               <div className="flex items-center gap-3 mt-3">
                 {check && (
-                  <Button variant="outline" onClick={() => { setSelectedInfo(bond); setShowInfo(true); }}>Show Info</Button>
+                  <Button variant="brand"  onClick={() => { setSelectedInfo(bond); setShowInfo(true); }}>Show Info</Button>
                 )}
                 {check && !bond.has_withdrawn && (
                 <Button disabled={loading} onClick={() => handleRetrieveBond(bond)}>Withdraw</Button>
