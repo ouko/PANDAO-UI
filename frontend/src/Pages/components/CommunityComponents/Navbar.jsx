@@ -66,7 +66,7 @@ const getNavItems = () => {
     { icon: '/7.svg', label: 'Proposals', path: `/community/detail/${params.id}/proposals` },
   ];
 
-  const conditionalItems = slug === 'Investment'
+  const conditionalItems = slug === 'Insurance'
     ? [
         { icon: '/2.svg', label: 'ANN Issue', path: `/community/detail/${params.id}/annissue` },
         { icon: '/2.svg', label: 'ANN Issued', path: `/community/detail/${params.id}/AnnIssued` },
