@@ -129,7 +129,7 @@ const TokenCard = ({ data, onSuccess }) => {
   
     try {
       const endpoint =
-      slug === 'Investment'
+      slug === 'Insurance'
         ? '/manifest/build/ann/buy_token/token_weighted_dao'
         : '/manifest/build/buy_token/token_weighted_dao';
     
