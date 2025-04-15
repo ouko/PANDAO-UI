@@ -9,16 +9,16 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
   return (
 
     <Tabs defaultValue="account" className="w-full text-white ">
-      <TabsList className="bg-[rgba(169,126,255,0)]">
+      <TabsList className="bg-[rgba(169,126,255,0)] gap-4">
         <TabsTrigger
           value="account"
-          className="rounded-[26px] py-2 px-[25px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+          className="tab-trigger"
         >
           Success
         </TabsTrigger>
         <TabsTrigger
           value="password"
-          className="rounded-[26px] py-2 px-[25px] ms-4 bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+          className="tab-trigger"
         >
           Pending
         </TabsTrigger>
@@ -117,8 +117,8 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
               failedTransaction.map((activity, index) => (
                 <div
                   key={index}
-                  className="p-4 border-2 rounded-lg group overflow-hidden flex flex-col space-y-4"
-                >
+                  className="w-full py-4 px-4 bg-gradient-to-br from-[rgba(39,18,76,0.68)] to-brand1 shadow-lg rounded-lg border border-brand3    items-start md:items-center transition-transform transform hover:scale-95 duration-300"
+                 >
                   {/* Transaction Details */}
                   <div className="flex items-center space-x-4">
                     <div className="flex-1">
@@ -129,19 +129,19 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
                   </div>
 
                   <div className="flex flex-col space-y-2">
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-300">
                       <span className="font-semibold">Creator:</span>{' '}
                       {activity.creator}
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-300">
                       <span className="font-semibold">Event Type:</span>{' '}
                       {activity.event_type}
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-300">
                       <span className="font-semibold">Error:</span>{' '}
                       {activity.error}
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-300">
                       <span className="font-semibold">Transaction Hash:</span>{' '}
                       {activity.tx_hash}
                     </p>
@@ -150,7 +150,7 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
                       {new Date(activity.date).toLocaleString()}
                     </p>
                   </div>
-                  <Button className="w-40">
+                  <Button className="w-40 mt-4">
                     <Link
                       to={`https://stokenet-dashboard.radixdlt.com/transaction/${activity.tx_hash}/summary`}
                     >
