@@ -9,7 +9,7 @@ import {
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useAccount } from '@/AccountContext';
 import { useParams } from 'react-router-dom';
@@ -35,6 +35,7 @@ const TokenCard = ({ data, onSuccess }) => {
   const [loading, setLoading] = useState(false)
   const { accounts } = useAccount()
   const params = useParams()
+  const [slug , setSlug]=useState("")
 
 
   const handleSellToken = async () => {
@@ -118,37 +119,41 @@ const TokenCard = ({ data, onSuccess }) => {
     }
   }
   const handleBuyToken = async () => {
-    const data = {
+    const dataPayload = {
       community_id: params.id,
       userAddress: accounts[0].address,
       tokenSupply: token,
-    }
-    setLoading(true)
-
+    };
+  
+    setLoading(true);
+  
     try {
+      const endpoint =
+      slug === 'Investment'
+        ? '/manifest/build/ann/buy_token/token_weighted_dao'
+        : '/manifest/build/buy_token/token_weighted_dao';
+    
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL
-        }/manifest/build/buy_token/token_weighted_dao`,
-        data,
+        `${import.meta.env.VITE_BACKEND_URL}${endpoint}`,
+        dataPayload,
         {
           headers: {
             'Content-Type': 'application/json',
           },
-        },
-      )
-
+        }
+      );
+  
       const responseData =
         typeof response.data === 'string'
           ? response.data.trim()
-          : JSON.stringify(response.data)
-
-      console.log('Response:', responseData)
-
-
-      const { receipt } = await sendTransaction(responseData)
-
-      const txId = receipt?.transaction?.intent_hash
-
+          : JSON.stringify(response.data);
+  
+      console.log('Response:', responseData);
+  
+      const { receipt } = await sendTransaction(responseData);
+  
+      const txId = receipt?.transaction?.intent_hash;
+  
       if (txId) {
         try {
           const submitResponse = await axios.post(
@@ -161,37 +166,51 @@ const TokenCard = ({ data, onSuccess }) => {
               headers: {
                 'Content-Type': 'application/json',
               },
-            },
-          )
-
-          console.log('Submit Transaction Response:', submitResponse.data)
-
-          toast.success('Token Bought Successfully!')
-          setText('Token Bought')
-          setOpen(true)
-          setBuyModal(false)
-          onSuccess()
+            }
+          );
+  
+          console.log('Submit Transaction Response:', submitResponse.data);
+  
+          toast.success('Token Bought Successfully!');
+          setText('Token Bought');
+          setOpen(true);
+          setBuyModal(false);
+          onSuccess();
         } catch (submitError) {
-          console.error('Error submitting transaction:', submitError)
-          toast.error('Failed to submit transaction.')
+          console.error('Error submitting transaction:', submitError);
+          toast.error('Failed to submit transaction.');
         }
       } else {
-        console.error('Transaction ID not found in receipt:', receipt)
-        toast.error('Transaction failed. Please try again.')
+        console.error('Transaction ID not found in receipt:', receipt);
+        toast.error('Transaction failed. Please try again.');
       }
     } catch (error) {
-      console.error('Error buying token:', error.response.data.detail)
-      if (error.response.data.detail === 'not a community participant') {
-        setText('Please join the community')
-        setOpen(true)
-        return
+      console.error('Error buying token:', error?.response?.data?.detail);
+      if (error?.response?.data?.detail === 'not a community participant') {
+        setText('Please join the community');
+        setOpen(true);
+        return;
       }
-      toast.error('Something went wrong while buying tokens.')
+      toast.error('Something went wrong while buying tokens.');
     } finally {
-      // Ensure loading is stopped regardless of success or failure
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
+  
+  useEffect(() => {
+    const fetchSlug = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/community/detail/${params.id}`);
+        if (res.status === 200) {
+          setSlug(res.data.blueprint_slug);
+        }
+      } catch (error) {
+        console.error('Error fetching slug:', error);
+      }
+    };
+  
+    fetchSlug();
+  }, [params.id]);
 
   const chartData = [
     {
