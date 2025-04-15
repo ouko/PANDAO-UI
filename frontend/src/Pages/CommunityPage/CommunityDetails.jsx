@@ -228,21 +228,29 @@ const CommunityDetails = () => {
 
           console.log('Submit Transaction Response:', submitResponse.data)
           toast.success('Minted Successfully!')
-
+setExecOpen(false)
         } catch (submitError) {
           console.error('Error submitting transaction:', submitError)
           toast.error('Failed to submit transaction.')
+          setExecOpen(false)
+
         }
       } else {
         console.error('Transaction ID not found in receipt:', receipt)
         toast.error('Transaction failed. Please try again.')
+        setExecOpen(false)
+
 
       }
     } catch (error) {
       console.error('Error selling token:', error.response.data.detail)
       toast.error('Something went wrong.')
+      setExecOpen(false)
+
     } finally {
       setLoadingMint(false)
+      setExecOpen(false)
+
     }
   }
 
