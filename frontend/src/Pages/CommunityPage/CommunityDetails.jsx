@@ -63,61 +63,8 @@ const CommunityDetails = () => {
   const [withDrawRequest, setWithDrawRequest] = useState([])
   const sendTransaction = useSendTransaction()
   const [loadingMint, setLoadingMint] = useState(false)
-  const [manifest, setManifest] = useState('')
   const [transferAddress, setTransferAddress] = useState("");
-  // const handleClaimToken = async () => {
-  //   console.log("selectedAccount:", accounts[0].address);
-  //   if (!accounts[0].address) {
-  //     alert("Please select an account first.");
-  //     return;
-  //   }
 
-  //   try {
-  //     const response = await axios.post(
-  //       `${import.meta.env.VITE_BACKEND_URL}/manifest/build/deploy_token_weighted_dao`,
-  //       formFields,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     console.log(response.data);
-  //     setManifest(response.data)
-  //   } catch (error) {
-  //     window.alert(error);
-  //   }
-
-  //   const { receipt } = await sendTransaction(manifest).finally(() =>
-  //     setLoading(false)
-  //   );
-
-  //   let txId = receipt.transaction.intent_hash;
-  //   if (txId) {
-  //     try {
-  //       const response = await axios.post(
-  //         `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
-  //         {
-  //           tx_id: txId,
-  //           user_address: accounts[0].address,
-  //         },
-  //         {
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
-  //       console.log(response.data);
-  //     } catch (error) {
-  //       window.alert(error);
-  //     }
-  //   }
-
-  //   // create a transaction recipt
-  //   const recipt = await extractTransactionsData(txId);
-  //   console.log(recipt);
-
-  // };
 
   const fetchDetails = async () => {
     try {
@@ -205,7 +152,6 @@ const CommunityDetails = () => {
           : JSON.stringify(response.data)
 
       console.log('Response:', responseData)
-      setManifest(responseData)
 
       const { receipt } = await sendTransaction(responseData)
 
@@ -228,21 +174,29 @@ const CommunityDetails = () => {
 
           console.log('Submit Transaction Response:', submitResponse.data)
           toast.success('Minted Successfully!')
-
+setExecOpen(false)
         } catch (submitError) {
           console.error('Error submitting transaction:', submitError)
           toast.error('Failed to submit transaction.')
+          setExecOpen(false)
+
         }
       } else {
         console.error('Transaction ID not found in receipt:', receipt)
         toast.error('Transaction failed. Please try again.')
+        setExecOpen(false)
+
 
       }
     } catch (error) {
       console.error('Error selling token:', error.response.data.detail)
       toast.error('Something went wrong.')
+      setExecOpen(false)
+
     } finally {
       setLoadingMint(false)
+      setExecOpen(false)
+
     }
   }
 
@@ -280,7 +234,6 @@ const CommunityDetails = () => {
           : JSON.stringify(response.data)
 
       console.log('Response:', responseData)
-      setManifest(responseData)
 
       const { receipt } = await sendTransaction(responseData)
 

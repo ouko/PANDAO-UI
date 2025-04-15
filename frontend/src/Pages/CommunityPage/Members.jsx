@@ -34,6 +34,12 @@ import { SkeletonCard } from '../GlobalComponents/Skeleton'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import { useSendTransaction } from '@/hooks/useSendTransaction'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 const Members = () => {
   const { accounts } = useAccount()
@@ -231,9 +237,19 @@ const Members = () => {
                         </div>
                         <div>
                           {participant.is_executive_member && (
-                            <BadgeCheck className=" px-3 py-1 text-xs rounded-full w-12 h-12">
-                              Executive
-                            </BadgeCheck>
+                           
+                            <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger>
+                              <BadgeCheck className=" px-3 py-1 text-xs rounded-full w-12 h-12"/>
+                           
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>This member is Executive Member</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                          
                           )}
                         </div>
                       </div>
