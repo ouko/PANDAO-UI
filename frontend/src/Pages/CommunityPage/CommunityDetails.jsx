@@ -1,13 +1,11 @@
 import { useAccount } from '@/AccountContext'
 import { Button } from '@/components/ui/button'
-
-
 import axios from 'axios'
-
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useSendTransaction } from '@/hooks/useSendTransaction'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   Dialog,
   DialogContent,
@@ -48,7 +46,6 @@ ChartJS.register(
   Tooltip,
 )
 
-
 const CommunityDetails = () => {
   const { accounts } = useAccount()
   const [execOpen, setExecOpen] = useState(false)
@@ -57,69 +54,55 @@ const CommunityDetails = () => {
   const [executiveName, setExecutiveName] = useState("")
   const navigate = useNavigate()
   const params = useParams()
-  const [data, setData] = useState([])
-  const [participants, setParticipants] = useState([])
-  const [communities, setCommunities] = useState([])
-  const [withDrawRequest, setWithDrawRequest] = useState([])
-  const sendTransaction = useSendTransaction()
+  const [transferAddress, setTransferAddress] = useState("")
+  const queryClient = useQueryClient()
   const [loadingMint, setLoadingMint] = useState(false)
-  const [transferAddress, setTransferAddress] = useState("");
 
-
-  const fetchDetails = async () => {
-    try {
+  const { data: communityData } = useQuery({
+    queryKey: ['community', params.id],
+    queryFn: async () => {
       const res = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/community/detail/${params.id}`,
       )
-
-      if (res.status == 200) {
-        console.log(res.data.blueprint_slug, 'res')
+      if (res.status === 200) {
         setSlug(res.data.blueprint_slug)
-        setData(res.data)
-
-        // Fetch fund history data
-
+        return res.data
       }
-    } catch (error) {
-      console.error('Error fetching blueprint data:', error)
-    }
-  }
-  const fetchParticipant = async () => {
-    try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/participant/${params.id
-        }`,
-      )
-      setParticipants(res.data)
-    } catch (error) {
-      console.error('Error fetching blueprint data:', error)
-    }
-  }
+      throw new Error('Failed to fetch community data')
+    },
+  })
 
-  const fetchComments = async () => {
-    try {
+  const { data: participants = [] } = useQuery({
+    queryKey: ['participants', params.id],
+    queryFn: async () => {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/community/participant/${params.id}`,
+      )
+      return res.data
+    },
+  })
+
+  const { data: communities = [] } = useQuery({
+    queryKey: ['discussions', params.id],
+    queryFn: async () => {
       const res = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/community/discussion/${params.id}`,
       )
-      setCommunities(res.data)
-    } catch (error) {
-      console.error('Error fetching blueprint data:', error)
-    }
-  }
-  const fetchWithdrawRequest = async () => {
-    try {
+      return res.data
+    },
+  })
+
+  const { data: withDrawRequest = [] } = useQuery({
+    queryKey: ['withdrawRequests', params.id],
+    queryFn: async () => {
       const res = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/community/token-withdraw/request?c_id=${params.id}`,
       )
-      setWithDrawRequest(res.data)
-    } catch (error) {
-      console.error('Error fetching blueprint data:', error)
-    }
-  }
-
+      return res.data
+    },
+  })
 
   const handleClickMint = async () => {
-
     if (!executiveName) {
       toast.error("Fill Fields")
       return
@@ -129,15 +112,13 @@ const CommunityDetails = () => {
       user_address: accounts[0].address,
       community_id: params.id,
       name: executiveName
-
     }
 
     setLoadingMint(true)
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL
-        }/mint/executive-token`,
+        `${import.meta.env.VITE_BACKEND_URL}/mint/executive-token`,
         data,
         {
           headers: {
@@ -151,15 +132,12 @@ const CommunityDetails = () => {
           ? response.data.trim()
           : JSON.stringify(response.data)
 
-      console.log('Response:', responseData)
-
       const { receipt } = await sendTransaction(responseData)
-
       const txId = receipt?.transaction?.intent_hash
 
       if (txId) {
         try {
-          const submitResponse = await axios.post(
+          await axios.post(
             `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
             {
               tx_id: txId,
@@ -172,37 +150,32 @@ const CommunityDetails = () => {
             },
           )
 
-          console.log('Submit Transaction Response:', submitResponse.data)
           toast.success('Minted Successfully!')
-setExecOpen(false)
+          setExecOpen(false)
+          // Invalidate relevant queries
+          queryClient.invalidateQueries({ queryKey: ['participants', params.id] })
+          queryClient.invalidateQueries({ queryKey: ['community', params.id] })
         } catch (submitError) {
           console.error('Error submitting transaction:', submitError)
           toast.error('Failed to submit transaction.')
           setExecOpen(false)
-
         }
       } else {
         console.error('Transaction ID not found in receipt:', receipt)
         toast.error('Transaction failed. Please try again.')
         setExecOpen(false)
-
-
       }
     } catch (error) {
-      console.error('Error selling token:', error.response.data.detail)
+      console.error('Error selling token:', error.response?.data?.detail)
       toast.error('Something went wrong.')
       setExecOpen(false)
-
     } finally {
       setLoadingMint(false)
-      setExecOpen(false)
-
     }
   }
 
   const handleTransfer = async () => {
     if (transferAddress.trim() === "") {
-
       toast.error("Fill Fields")
       return
     }
@@ -211,15 +184,13 @@ setExecOpen(false)
       user_address: accounts[0].address,
       community_id: params.id,
       recipient: transferAddress
-
     }
 
     setLoadingMint(true)
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL
-        }/manifest/transfer-executive-token`,
+        `${import.meta.env.VITE_BACKEND_URL}/manifest/transfer-executive-token`,
         data,
         {
           headers: {
@@ -233,15 +204,12 @@ setExecOpen(false)
           ? response.data.trim()
           : JSON.stringify(response.data)
 
-      console.log('Response:', responseData)
-
       const { receipt } = await sendTransaction(responseData)
-
       const txId = receipt?.transaction?.intent_hash
 
       if (txId) {
         try {
-          const submitResponse = await axios.post(
+          await axios.post(
             `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
             {
               tx_id: txId,
@@ -254,9 +222,10 @@ setExecOpen(false)
             },
           )
 
-          console.log('Submit Transaction Response:', submitResponse.data)
           toast.success('Transfer Token Successfully!')
-
+          // Invalidate relevant queries
+          queryClient.invalidateQueries({ queryKey: ['participants', params.id] })
+          queryClient.invalidateQueries({ queryKey: ['community', params.id] })
         } catch (submitError) {
           console.error('Error submitting transaction:', submitError)
           toast.error('Failed to submit transaction.')
@@ -264,30 +233,15 @@ setExecOpen(false)
       } else {
         console.error('Transaction ID not found in receipt:', receipt)
         toast.error('Transaction failed. Please try again.')
-
       }
     } catch (error) {
-      console.error('Error selling token:', error.response.data.detail)
+      console.error('Error selling token:', error.response?.data?.detail)
       toast.error('Something went wrong.')
     } finally {
       setLoadingMint(false)
+      setTransferOpen(false)
     }
   }
-
-
-
-  const handleSuccess = () => {
-    fetchDetails()
-  }
-  const handleSuccess2 = () => {
-    fetchParticipant()
-  }
-  useEffect(() => {
-    fetchDetails()
-    fetchParticipant()
-    fetchComments()
-    fetchWithdrawRequest()
-  }, [params.id])
 
   if (!accounts || accounts.length === 0) {
     navigate('/')
@@ -297,55 +251,35 @@ setExecOpen(false)
   const isUserParticipant = participants.some(
     (participant) => participant.public_address === accounts[0].address,
   )
+
   return (
     <div className=" pb-10 items-start font-clash gap-3 justify-start min-h-screen overflow-hidden mt-5 text-black px-2">
       <CustomAlert />
       <div className="flex md:flex-row flex-col   md:py-12  ">
-        {data && (
+        {communityData && (
           <div className=" w-full  ">
-
-            <DaoCard daoData={data}
+            <DaoCard 
+              daoData={communityData}
               isUserParticipant={isUserParticipant}
               setTransferOpen={setTransferOpen}
               setExecOpen={setExecOpen}
-              onSuccess={handleSuccess2}
-
             />
 
             <div className="flex md:flex-row flex-col w-full mx-auto gap-[16px] ">
               <div className=" w-full space-y-4">
-
-
-                <TokenCard data={data} onSuccess={handleSuccess} />
-                <TotalFund data={data} />
-
-
-
-                <WithdrawCard
-                  withDrawRequest={withDrawRequest}
-                />
-
+                <TokenCard data={communityData} />
+                <TotalFund data={communityData} />
+                <WithdrawCard withDrawRequest={withDrawRequest} />
                 <DiscussionCard communities={communities} />
-
-
-
-
-                <div className="bg-transparent w-full mx-auto  flex items-center  ">
-
-                </div>
+                <div className="bg-transparent w-full mx-auto flex items-center"></div>
               </div>
               <div className=" w-full space-y-4 ">
-                {/* <MembersCard participants={participants} /> */}
                 <div>
                   <TotalProposalsCard />
                 </div>
                 <ExecutiveMember participants={participants} />
                 <FundHistoryGraph />
-
-
-                <div className="bg-transparent w-full mx-auto  flex items-center   ">
-
-                </div>
+                <div className="bg-transparent w-full mx-auto flex items-center"></div>
               </div>
             </div>
           </div>
@@ -363,17 +297,6 @@ setExecOpen(false)
               <div>
                 Mint Executive Badges
               </div>
-              {/* <div className='w-full'>
-                <Label>
-                  Executive Id
-                </Label>
-                <Input
-                  value={executiveId}
-                  onChange={(e) => setExecutiveId(e.target.value)}
-                  type="number"
-                  min={0}
-                />
-              </div> */}
               <div className='w-full'>
                 <Label>
                   Executive
