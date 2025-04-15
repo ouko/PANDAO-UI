@@ -269,9 +269,16 @@ const Activity = () => {
                                     <div className="font-medium text-brand7 group-hover:underline cursor-pointer">
                                       {ac.user_name}
                                     </div>
+
                                     <div className="font-light group-hover:underline text-gray-300 cursor-pointer">
                                       {clipAddress(ac.user_address)}
                                     </div>
+
+                                    <div className="font-medium text-brand7 group-hover:underline cursor-pointer">
+                                      {ac.info}
+                                    </div>
+ 
+                                    
                                   </div>
                                   {/* <div className="text-xs text-gray-700 dark:text-gray-700">2 days ago</div> */}
                                 </div>
