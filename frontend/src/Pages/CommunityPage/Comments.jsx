@@ -217,11 +217,11 @@ const Comments = () => {
                         No Active Discussion
                       </div>}
                       {communities.length > 0 && (
-                        <div className="grid  md:grid-cols-2 grid-cols-1 gap-4 p-4">
+                        <div className="grid md:grid-cols-2 grid-cols-1 gap-3 p-6">
                           {communities.map((community, index) => (
                             <div
                               key={index}
-                              className="p-4 flex text-brand7 py-4 px-4  rounded-lg bg-gradient-to-br from-[rgba(24,18,45,0.59)] via-transparent to-brand1 border-[1px] border-brand4 hover:border-brand5 transition-transform duration-300 flex-col gap-2 hover:shadow-lg shadow-md cursor-pointer"
+                              className="group relative flex flex-col justify-between text-brand7 p-5 rounded-xl bg-gradient-to-br from-[rgba(24,18,45,0.59)] via-transparent to-brand1 border border-brand4 hover:border-brand5 transition-all duration-300 shadow-md hover:shadow-xl cursor-pointer backdrop-blur-sm"
                               onClick={() =>
                                 fetchDiscussionComments(
                                   community.id,
@@ -229,22 +229,22 @@ const Comments = () => {
                                 )
                               }
                             >
-                              <div className="text-lg font-semibold">
-                                {community.title}
-                              </div>
-                              <div className="text-sm flex items-center gap-2">
-                                <div>Started By - </div>
-                                <div className="flex items-center gap-1">
-                                  <div>
-                                    <Avatar className="h-6 w-6">
+                              <div className="space-y-4">
+                                <h3 className="text-lg font-semibold line-clamp-2 group-hover:text-brand5 transition-colors">
+                                  {community.title}
+                                </h3>
+                                <div className="flex items-center gap-3 text-sm text-gray-300">
+                                  <span className="text-brand5">Started By</span>
+                                  <div className="flex items-center gap-2">
+                                    <Avatar className="h-7 w-7 ring-2 ring-brand4 ring-offset-1 ring-offset-[rgba(24,18,45,0.59)]">
                                       <AvatarImage src={community.user_image} />
                                       <AvatarFallback>CN</AvatarFallback>
                                     </Avatar>
+                                    <span className="font-medium">{community.user_name}</span>
                                   </div>
-                                  <div>{community.user_name}</div>
                                 </div>
                               </div>
-                              <div className="w-full border-t-2 border-brand5 pt-2">
+                              <div className="mt-4 pt-3 border-t border-brand4/50 text-sm text-gray-400">
                                 {formatStandardDateTime(community.created_at)}
                               </div>
                             </div>
