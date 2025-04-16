@@ -261,7 +261,7 @@ const CommunityDetails = () => {
     <div className="pb-10 items-start font-clash gap-3 justify-start min-h-screen overflow-hidden mt-5 text-black px-2">
       <CustomAlert />
       <div className="flex md:flex-row flex-col md:py-12">
-        {!isLoading ? (
+        {isLoading ? (
           <div className="w-full  space-y-6">
             <CardShimmer />
             <div className="flex md:flex-row flex-col w-full mx-auto gap-[16px]">
