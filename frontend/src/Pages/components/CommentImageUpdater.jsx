@@ -91,7 +91,7 @@ const CommnetImageUpdater = ({ onUploadSuccess }) => {
   };
 
   return (
-    <div className="flex rounded-none flex-col items-center justify-center gap-2">
+    <div className="flex rounded-none border border-brand4 flex-col items-center justify-center gap-2">
       <div className="w-">
         <input
           type="file"
@@ -101,7 +101,7 @@ const CommnetImageUpdater = ({ onUploadSuccess }) => {
         />
         <label
           htmlFor="fileInput"
-          className="flex items-center pl-2 border-2 py-[7px] px-1 border-l-0"
+          className="flex items-center bg-brand4 pl-2  border-[1px] border-brand4 py-[7px] px-1 "
         >
           <Paperclip/>
         </label>
