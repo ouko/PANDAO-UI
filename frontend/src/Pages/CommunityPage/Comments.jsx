@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import ImageUpdater from "../components/ImageUpdater";
 import CommnetImageUpdater from "../components/CommentImageUpdater";
 import { SkeletonCard } from "../GlobalComponents/Skeleton";
+import { SkeletonActivity } from "../GlobalComponents/SkeletonActivity";
 
 const Comments = () => {
   const { accounts } = useAccount();
@@ -255,11 +256,10 @@ const Comments = () => {
                     </div>
                   )}
                   {loading && (
-                    <div className="flex flex-col h-auto items-center px-5  justify-center text-center mt-5">
+                    <div className="grid md:grid-cols-2 h-[400px] rounded-md grid-cols-1 gap-3 p-6">
                       {[...Array(4)].map((_, index) => (
-                        <SkeletonCard
+                        <SkeletonActivity
                           key={index}
-                          className="p-4 h-[150px] bg-gray-200 rounded shadow-md"
                         />
                       ))}
                     </div>
