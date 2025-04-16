@@ -146,7 +146,7 @@ const Comments = () => {
 
   return (
     <div className=" items-start gap-3 justify-start z-40 min-h-screen overflow-hidden text-black px-2">
-      <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto">
+      <div className="flex md:flex-row flex-col gap-6 z-50 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto">
         <div className="space-y-6 md:w-[100%]">
           <div className="flex md:flex-row flex-col md:w-[95%] mx-auto gap-2">
             <div className="md:w-[100%] space-y-6">
@@ -203,7 +203,7 @@ const Comments = () => {
               </div>
 
               {!selectedDiscussion && (
-                <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4]  relative overflow-hidden">
+                <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] z-50 relative overflow-hidden">
                   <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
                     <div className="text-[#ffffff] text-left  text-3xl font-medium flex items-center gap-2">
 
@@ -266,16 +266,25 @@ const Comments = () => {
                 </div>
               )}
               {selectedDiscussion && (
-                <Card className="bg-white md:w-[80%] mx-auto md:p-4 p-4 space-y-2 mt-4">
+                <div>
+                <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] z-50 relative overflow-hidden">
                   <div className="flex items-center justify-between border-b-2">
-                    <div className="p-2 -translate-x-2">Comments</div>
+                  <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
+                    <div className="text-[#ffffff] text-left  text-3xl font-medium flex items-center gap-2">
+
+                      Discussions:
+                    </div>
                     <Button
-                      size="sm"
-                      variant="link"
+                    variant="brand"
+                      
+                      
                       onClick={() => setSelectedDiscussion(null)}
                     >
                       Back
                     </Button>
+
+                  </div>
+                 
                   </div>
 
                   {loading ? (
@@ -321,31 +330,36 @@ const Comments = () => {
                         ))}
                       </div>
                     ) : (
-                      <div className="text-center py-5">No comments yet.</div>
+                      <div className="text-center text-white py-5">No comments yet.</div>
                     )}
-                  <div className="w-full flex flex-col items-end justify-end gap-y-2 py-6">
-                    <Textarea
-                      placeholder="Become part of this discussion"
-                      value={newComment}
-                      onChange={(e) => setNewComment(e.target.value)}
-                    />
+                 
+                </div>
+                 <div className="w-full flex flex-col items-end justify-end gap-y-2 py-6">
+                 <Textarea
+                   placeholder="Become part of this discussion"
+                   value={newComment}
+                   onChange={(e) => setNewComment(e.target.value)}
+                 />
 
-                    <div className="flex items-center w-fit">
-                      <Button variant="brand" className="rounded-r-none hover:scale-110  " onClick={handleAddComment}>
-                        Add Comment
-                      </Button>
-                      <CommnetImageUpdater onUploadSuccess={handleCommentId} />
-                    </div>
-                    {commentUrl !== "" && <img
-                      src={commentUrl}
-                      className="h-40 w-60 object-cover"
-                    />}
+                 <div className="flex items-center w-fit">
+                   <Button variant="brand" className="rounded-r-none hover:scale-110  mx-2 " onClick={handleAddComment}>
+                     Add Comment
+                   </Button>
+                   <CommnetImageUpdater onUploadSuccess={handleCommentId} />
+                 </div>
+                 {commentUrl !== "" && <img
+                   src={commentUrl}
+                   className="h-40 w-60 object-cover"
+                 />}
 
 
-                  </div>
-                </Card>
+               </div>
+               </div>
               )}
+              
             </div>
+
+            
           </div>
         </div>
       </div>
