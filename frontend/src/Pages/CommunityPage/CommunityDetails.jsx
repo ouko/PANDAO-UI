@@ -37,6 +37,7 @@ import WithdrawCard from './components/WithdrawCard'
 import DiscussionCard from './components/DiscussionCard'
 import ExecutiveMember from './components/ExecutiveMember'
 import { CardShimmer } from '@/components/ui/shimmer'
+import { CardShimmer2 } from '@/components/ui/shimmer2'
 
 ChartJS.register(
   LineElement,
@@ -260,17 +261,16 @@ const CommunityDetails = () => {
     <div className="pb-10 items-start font-clash gap-3 justify-start min-h-screen overflow-hidden mt-5 text-black px-2">
       <CustomAlert />
       <div className="flex md:flex-row flex-col md:py-12">
-        {isLoading ? (
-          <div className="w-full space-y-6">
+        {!isLoading ? (
+          <div className="w-full  space-y-6">
             <CardShimmer />
             <div className="flex md:flex-row flex-col w-full mx-auto gap-[16px]">
-              <div className="w-full space-y-4">
-                <CardShimmer />
-                <CardShimmer />
-                <CardShimmer />
-                <CardShimmer />
-              </div>
-              <div className="w-full space-y-4">
+              
+                <CardShimmer2 />
+               
+             
+            
+              <div className="w-full   space-y-4">
                 <CardShimmer />
                 <CardShimmer />
                 <CardShimmer />
