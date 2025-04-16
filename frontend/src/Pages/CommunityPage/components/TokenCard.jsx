@@ -365,11 +365,11 @@ const TokenCard = ({ data, onSuccess }) => {
             <tbody className="text-white">
               <tr>
                 <td className=" pr-4 text-purple-400 uppercase font-medium">Token Price:</td>
-                <td className="">{data.token_price}</td>
+                <td className="">{data.token_price} XRD</td>
               </tr>
               <tr>
                 <td className=" pr-4 text-purple-400 uppercase font-medium">Token Buy Back Price:</td>
-                <td className="">{data.token_buy_back_price}</td>
+                <td className="">{data.token_buy_back_price}XRD</td>
               </tr>
               <tr>
                 <td className=" pr-4 text-purple-400 uppercase font-medium">Token Price in USD:</td>
