@@ -244,7 +244,7 @@ const Members = () => {
                               <BadgeCheck className=" px-3 py-1 text-xs rounded-full w-12 h-12"/>
                            
                               </TooltipTrigger>
-                              <TooltipContent>
+                              <TooltipContent className="bg-[#5228A4] border-[#7F42F9] text-white">
                                 <p>This member is Executive Member</p>
                               </TooltipContent>
                             </Tooltip>
