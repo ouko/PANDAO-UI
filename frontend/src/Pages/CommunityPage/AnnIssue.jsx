@@ -211,7 +211,7 @@ const AnnIssue = () => {
       'ann_position',
       'price',
       'number_of_ann',
-      'nft',
+    
       
       
     ]
@@ -428,7 +428,7 @@ const AnnIssue = () => {
                     <Button type="submit" 
                     variant="brand"
                     className="w-1/2 mt-5"
-                     disabled={isFormComplete || loading }>
+                     disabled={!isFormComplete || loading }>
                       Submit
                     </Button>
                   </div>
