@@ -164,9 +164,10 @@ const Comments = () => {
                     <img className="w-14 h-14" src="/4.svg" alt="User Icon" />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <div className="text-[#5228A4] font-semibold uppercase text-xl">
+                    {!selectedDiscussion &&  <div className="text-brand5 font-semibold uppercase text-xl">
                       Total Discussions:
-                    </div>
+                    </div> }
+                   
                     <div className="text-white text-[56px] font-medium text-center">
                       {selectedDiscussion
                         ? selectedDiscussionTitle
@@ -273,7 +274,7 @@ const Comments = () => {
                       <div className="bg-[#39246b]  pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
                         <div className="text-[#ffffff] text-left  text-3xl font-medium flex items-center gap-2">
 
-                          Discussions:
+                          Comments
                         </div>
                         <Button
                           variant="brand"
