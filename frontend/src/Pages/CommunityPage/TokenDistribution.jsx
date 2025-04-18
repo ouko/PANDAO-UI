@@ -116,7 +116,7 @@ const TokenDistribution = () => {
                 <Table>
                   {/* <TableCaption>A list of your recent .</TableCaption> */}
                   <TableHeader>
-                    <TableRow className="bg-[#39246b] h-[65px] text-white text-[20px] ">
+                    <TableRow className="bg-[#39246b] h-[65px] hover:bg-[#39246b] text-white text-[20px] ">
                       <TableHead className="w-[150px] text-white  ">User Name</TableHead>
                       <TableHead className="w-[150px] text-white  " >Token Owned</TableHead>
                       <TableHead className="w-[150px] text-white  " >Address</TableHead>
@@ -124,14 +124,14 @@ const TokenDistribution = () => {
                     </TableRow>
                   </TableHeader>
 
-                  <TableBody className="text-[18px] bg-gradient-to-br from-[rgba(24,18,45,0.59)]  via-transparent to-brand1 border-2 border-brand2 px-2 py-2 text-brand7">
+                  <TableBody className="text-[18px] bg-gradient-to-br from-[rgba(24,18,45,0.59)]  via-transparent to-brand1  border-2 border-brand2  px-2 py-2 text-brand7">
                     {tokens.map((token, index) => (
-                      <TableRow key={index}>
-                        <TableCell className="font-medium ">
+                      <TableRow key={index} className="hover:bg-[#7057ab] hover:text-white ">
+                        <TableCell className="font-medium  ">
                           {" "}
                           {token.user_name}
                         </TableCell>
-                        <TableCell>{token.token_owned}</TableCell>
+                        <TableCell className>{token.token_owned}</TableCell>
                         <TableCell onClick={() =>
                           navigate(
                             `/userDashboard/userProfile/${token.public_address}`
