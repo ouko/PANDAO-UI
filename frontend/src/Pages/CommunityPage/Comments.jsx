@@ -35,7 +35,7 @@ const Comments = () => {
   const [selectedDiscussionTitle, setSelectedDiscussionTitle] = useState("");
   const [newComment, setNewComment] = useState("");
   const [commentUrl, setCommentUrl] = useState("")
-  
+
 
   const handleAddDiscussion = async () => {
     if (title.trim() === "") {
@@ -164,10 +164,10 @@ const Comments = () => {
                     <img className="w-14 h-14" src="/4.svg" alt="User Icon" />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    {!selectedDiscussion &&  <div className="text-brand5 font-semibold uppercase text-xl">
+                    {!selectedDiscussion && <div className="text-brand5 font-semibold uppercase text-xl">
                       Total Discussions:
-                    </div> }
-                   
+                    </div>}
+
                     <div className="text-white text-[56px] font-medium text-center">
                       {selectedDiscussion
                         ? selectedDiscussionTitle
@@ -298,84 +298,89 @@ const Comments = () => {
                     ) :
                       selectedComments.length > 0 ? (
                         <div className="px-4 py-4">
-                        {selectedComments.map((comment, index) => (
-                          <div
-                            key={index}
-                            className="w-full bg-brand1
+                          {selectedComments.map((comment, index) => (
+                            <div
+                              key={index}
+                              className="w-full bg-brand1
                             hover:border-brand5 transition-transform duration-300 flex flex-col my-4 
                             border border-brand2 rounded-lg shadow-sm p-4"
-                          >
-                       
-                            <div className="text-white font-semibold rounded-sm mb-4" style={{ whiteSpace: 'pre-wrap' }}>
-                              {comment.comment}
-                            </div>
-                      
-                          
-                            {comment.image && comment.image !== "string" && (
-                              <div className="mb-4">
-                                <img
-                                  src={comment.image}
-                                  className="h-[320px] w-[320px] aspect-square object-cover"
-                                />
+                            >
+
+                              <div className="text-white font-semibold rounded-sm mb-4" style={{ whiteSpace: 'pre-wrap' }}>
+                                {comment.comment}
                               </div>
-                            )}
-                      
-                          
-                            <div className="flex items-center justify-between w-full mt-auto">
-                            
-                              <div className="text-sm text-white flex items-center gap-2">
-                                <span>Posted By -</span>
-                                <div className="flex items-center gap-1">
-                                  <Avatar className="h-8 w-8">
-                                    <AvatarImage src={comment.user_image} />
-                                    <AvatarFallback>CN</AvatarFallback>
-                                  </Avatar>
-                                  <span className="font-normal">{comment.user_name}</span>
+
+
+                              {comment.image && comment.image !== "string" && (
+                                <div className="mb-4">
+                                  <img
+                                    src={comment.image}
+                                    className="h-[320px] w-[320px] aspect-square object-cover"
+                                  />
+                                </div>
+                              )}
+
+
+                              <div className="flex items-center justify-between w-full mt-auto">
+
+                                <div className="text-sm text-white flex items-center gap-2">
+                                  <span>Posted By -</span>
+                                  <div className="flex items-center gap-1">
+                                    <Avatar className="h-8 w-8">
+                                      <AvatarImage src={comment.user_image} />
+                                      <AvatarFallback>CN</AvatarFallback>
+                                    </Avatar>
+                                    <span className="font-normal">{comment.user_name}</span>
+                                  </div>
+                                </div>
+
+                                <div className="text-sm text-brand7 font-semibold border-b-2 border-brand4">
+                                  {formatStandardDateTime(comment.created_at)}
                                 </div>
                               </div>
-                  
-                              <div className="text-sm text-brand7 font-semibold border-b-2 border-brand4">
-                                {formatStandardDateTime(comment.created_at)}
-                              </div>
                             </div>
-                          </div>
-                        ))}
-                      </div>
-                      
+                          ))}
+                        </div>
+
                       ) : (
                         <div className="text-center py-20 text-white">No comments yet.</div>
                       )}
 
                   </div>
-                  <div className="w-full flex flex-col items-end justify-end gap-y-4 py-6">
+                  <div className="w-full flex flex-col items-end gap-y-4 py-6">
+                    {/* Textarea */}
                     <Textarea
                       placeholder="Become part of this discussion"
                       value={newComment}
                       onChange={(e) => setNewComment(e.target.value)}
-                      className="w-full z-50 text-brand7 border-brand4"
+                      className="w-full z-10 text-brand7 border-brand4"
                     />
 
-                    <div className="flex z-50 items-center gap-2 relative">
-                      <Button
-                        variant="brand"
-                        className="rounded-md w-44 pr-12 transition-transform"
-                        onClick={handleAddComment}
-                      >
-                        Add Comment
-                      </Button>
-                      <div className="absolute right-2 top-1/2 -translate-y-1/2">
-    <CommnetImageUpdater onUploadSuccess={handleCommentId} />
-  </div>
-                    </div>
-
+                    {/* Small preview image just below textarea */}
                     {commentUrl && (
                       <img
                         src={commentUrl}
                         alt="Comment Attachment"
-                        className="h-40 w-60 object-cover rounded-md shadow-md"
+                        className="h-16 w-24 object-cover rounded-md shadow-md self-start z-50"
                       />
                     )}
+
+                    {/* Button + Upload Icon */}
+                    <div className="relative z-10">
+                      <Button
+                        variant="brand"
+                        className="relative w-44 pr-10 rounded-md transition-transform"
+                        onClick={handleAddComment}
+                      >
+                        Add Comment
+                        <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                          <CommnetImageUpdater onUploadSuccess={handleCommentId} />
+                        </div>
+                      </Button>
+                    </div>
                   </div>
+
+
 
                 </div>
               )}
