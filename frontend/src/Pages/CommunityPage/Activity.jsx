@@ -246,50 +246,46 @@ const Activity = () => {
                         {activity &&
                           activity.map((ac, index) => (
                             <div
-                              key={index}
-                              className="flex items-start gap-4 bg-gradient-to-br from-[rgba(17,12,36,0.85)] via-transparent to-brand1 hover:scale-95 transition-transform duration-300  border-[1px] border-[#5228A4] rounded-2xl p-3  text-white"
-                            >
-                              <Avatar className="h-16 w-20 object-cover rounded-lg mt-1 overflow-hidden shadow-md">
-                                <img
-                                  src={ac.user_image_url}
-                                  alt="Avatar"
-                                  className="w-full h-full object-cover"
-                                />
-                              </Avatar>
-                              <div className="flex-1 space-y-2">
-                                <div className="flex items-center justify-between">
-                                  <div
-                                    className="group"
-                                    onClick={() =>
-                                      navigate(
-                                        `/userDashboard/userProfile/${ac.user_address}`,
-                                      )
-                                    }
-                                  >
-                                    <div className="font-medium text-brand7 group-hover:underline cursor-pointer">
-                                      {ac.user_name}
-                                    </div>
-
-                                    <div className="font-light group-hover:underline text-gray-300 cursor-pointer">
-                                      {clipAddress(ac.user_address)}
-                                    </div>
-
-                                    <div className="font-medium text-brand7 group-hover:underline cursor-pointer">
-                                      {ac.info}
-                                    </div>
- 
-                                    
-                                  </div>
-                                  {/* <div className="text-xs text-gray-700 dark:text-gray-700">2 days ago</div> */}
+                            key={index}
+                            className="flex items-start gap-4 bg-brand1 border border-[#5228A4] rounded-2xl p-4 text-white shadow-md hover:scale-[1.01] transition-transform duration-300"
+                          >
+                            {/* Avatar */}
+                            <Avatar className="h-16 w-16 rounded-lg overflow-hidden shadow-sm ring-2 ring-brand6">
+                              <img
+                                src={ac.user_image_url}
+                                alt="Avatar"
+                                className="w-full h-full object-cover"
+                              />
+                            </Avatar>
+                          
+                            {/* Right Content */}
+                            <div className="flex-1 space-y-2">
+                              {/* Name, Address, Info */}
+                              <div
+                                className="group cursor-pointer space-y-0.5"
+                                onClick={() =>
+                                  navigate(`/userDashboard/userProfile/${ac.user_address}`)
+                                }
+                              >
+                                <div className="text-base font-semibold text-brand6 group-hover:underline">
+                                  {ac.user_name}
                                 </div>
-
-                                <div className="py-2 flex justify-end gap-2 hover:text-brand6 items-end">
-                                  <ClockIcon className="h-5 w-5" />{' '}
-                                  <p>{formatStandardDateTime(ac.created_at)}</p>
-
+                                <div className="text-xs text-gray-400 group-hover:underline">
+                                  {clipAddress(ac.user_address)}
+                                </div>
+                                <div className="text-sm font-medium text-gray-300 group-hover:underline">
+                                  {ac.info}
                                 </div>
                               </div>
+                          
+                              {/* Timestamp */}
+                              <div className="flex items-center gap-1 text-xs text-gray-400 pt-1">
+                                <ClockIcon className="h-4 w-4" />
+                                <p>{formatStandardDateTime(ac.created_at)}</p>
+                              </div>
                             </div>
+                          </div>
+                          
                           ))}
                       </div>
                     )}
