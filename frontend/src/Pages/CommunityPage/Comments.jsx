@@ -301,7 +301,7 @@ const Comments = () => {
                         {selectedComments.map((comment, index) => (
                           <div
                             key={index}
-                            className="w-full bg-gradient-to-br from-[rgba(24,18,45,0.85)] via-transparent tobrand1 
+                            className="w-full bg-brand1
                             hover:border-brand5 transition-transform duration-300 flex flex-col my-4 
                             border border-brand2 rounded-lg shadow-sm p-4"
                           >
@@ -355,16 +355,17 @@ const Comments = () => {
                       className="w-full z-50 text-brand7 border-brand4"
                     />
 
-                    <div className="flex z-50 items-center gap-2">
+                    <div className="flex z-50 items-center gap-2 relative">
                       <Button
                         variant="brand"
-                        className="rounded-md hover:scale-105 transition-transform"
+                        className="rounded-md w-44 pr-12 transition-transform"
                         onClick={handleAddComment}
                       >
                         Add Comment
                       </Button>
-
-                      <CommnetImageUpdater onUploadSuccess={handleCommentId} />
+                      <div className="absolute right-2 top-1/2 -translate-y-1/2">
+    <CommnetImageUpdater onUploadSuccess={handleCommentId} />
+  </div>
                     </div>
 
                     {commentUrl && (

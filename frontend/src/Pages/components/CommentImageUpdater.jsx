@@ -91,27 +91,20 @@ const CommnetImageUpdater = ({ onUploadSuccess }) => {
   };
 
   return (
-    <div className="flex rounded-none border border-brand4 flex-col items-center justify-center gap-2">
-      <div className="w-">
-        <input
-          type="file"
-          id="fileInput"
-          onChange={handleFileChange}
-          className="hidden"
-        />
-        <label
-          htmlFor="fileInput"
-          className="flex items-center bg-brand4 pl-2  border-[1px] border-brand4 py-[7px] px-1 "
-        >
-          <Paperclip/>
-        </label>
-      </div>
-      {/* {uploadStatus && (
-        <p className={`text-sm ${isSuccess ? "text-green-500" : "text-red-500"}`}>
-          {uploadStatus}
-        </p>
-      )}
-      {loading && <p className="text-sm text-blue-500">Uploading...</p>} */}
+    <div className="flex items-center justify-center">
+      <input
+        type="file"
+        id="fileInput"
+        onChange={handleFileChange}
+        className="hidden"
+      />
+      <label
+        htmlFor="fileInput"
+        className="cursor-pointer text-white hover:text-foreground"
+        title="Attach file"
+      >
+        <Paperclip className="w-5 h-5" />
+      </label>
     </div>
   );
 };
