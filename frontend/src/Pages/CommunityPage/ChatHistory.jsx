@@ -57,13 +57,13 @@ const FundHistoryGraph = () => {
               <Line
                 type="monotone"
                 dataKey="xrd_added"
-                stroke="#9268E4"
+                stroke="#86efac"
                 name="XRD Added"
               />
               <Line
                 type="monotone"
                 dataKey="current_xrd"
-                stroke="#B59AEC"
+                stroke="#7c3aed"
                 name="Current XRD"
               />
             </LineChart>
