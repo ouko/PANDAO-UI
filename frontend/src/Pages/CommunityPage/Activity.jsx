@@ -95,7 +95,7 @@ const Activity = () => {
       {showExpenses ? (
         <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
           <div className="space-y-6 md:w-[100%] ">
-            <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
+            <div className="flex md:flex-row flex-col  mx-auto gap-2">
               <div className="md:w-[100%] space-y-6  ">
 
 
@@ -192,7 +192,7 @@ const Activity = () => {
       ) : (
         <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
           <div className="space-y-6 md:w-[100%] ">
-            <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
+            <div className="flex md:flex-row flex-col w-full  mx-auto gap-2">
               <div className="md:w-[100%] space-y-6  ">
 
 
@@ -232,9 +232,9 @@ const Activity = () => {
 
 
 
-                <div className="flex gap-10">
-                  <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] h-full w-[610px] relative overflow-hidden ">
-                    <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
+                <div className="flex gap-4">
+                  <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] h-full  relative overflow-hidden w-full">
+                    <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0 " >
                       <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
 
                         Activity:
@@ -242,7 +242,7 @@ const Activity = () => {
 
                     </div>
                     {!loading && (
-                      <div className="space-y-4 px-3 py-3 rounded-2xl h-[600px] overflow-y-auto">
+                      <div className="space-y-4 px-3 py-3 rounded-2xl h-[600px] overflow-y-auto ">
                         {activity &&
                           activity.map((ac, index) => (
                             <div
@@ -302,7 +302,7 @@ const Activity = () => {
                     )}
                   </div>
 
-                  <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] h-full  w-[340px] relative overflow-hidden ">
+                  <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] h-full    relative overflow-hidden w-[45%] ">
                     <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
                       <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
 
