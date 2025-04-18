@@ -125,9 +125,9 @@ const Activity = () => {
                     </div>
                   </div>
                   <div className='absolute bottom-0 right-0 p-4'>
-                    <Button 
-                     variant="brand"
-                     onClick={() => setShowExpenses(!showExpenses)}
+                    <Button
+                      variant="brand"
+                      onClick={() => setShowExpenses(!showExpenses)}
                     >
                       Show Activity
                     </Button>
@@ -160,17 +160,17 @@ const Activity = () => {
                                     {transaction.user_name}
                                   </div>
                                   <p className="text-sm text-gray-300">Transaction Hash: {transaction.tx_hash}</p>
-                                 
+
                                 </div>
                               </div>
                               <div className="py-2">
                                 <p className={` text-xl font-semibold ${transaction.xrd_added > 0 ? 'text-green-500' : 'text-red-500'}`}>XRD Added: {transaction.xrd_added}</p>
-                               
+
 
                               </div>
                               <div className="font-light text-gray-300 items-end justify-end  flex group-hover:underline cursor-pointer">
-                                    Date: {new Date(transaction.date).toLocaleString()}
-                                  </div>
+                                Date: {new Date(transaction.date).toLocaleString()}
+                              </div>
                             </div>
                           </Card>
                         ))}
@@ -246,46 +246,46 @@ const Activity = () => {
                         {activity &&
                           activity.map((ac, index) => (
                             <div
-                            key={index}
-                            className="flex items-start gap-4 bg-brand1 border border-[#5228A4] rounded-2xl p-4 text-white shadow-md hover:scale-[1.01] transition-transform duration-300"
-                          >
-                            {/* Avatar */}
-                            <Avatar className="h-16 w-16 rounded-lg overflow-hidden shadow-sm ring-2 ring-brand6">
-                              <img
-                                src={ac.user_image_url}
-                                alt="Avatar"
-                                className="w-full h-full object-cover"
-                              />
-                            </Avatar>
-                          
-                            {/* Right Content */}
-                            <div className="flex-1 space-y-2">
-                              {/* Name, Address, Info */}
-                              <div
-                                className="group cursor-pointer space-y-0.5"
-                                onClick={() =>
-                                  navigate(`/userDashboard/userProfile/${ac.user_address}`)
-                                }
-                              >
-                                <div className="text-base font-semibold text-brand6 group-hover:underline">
-                                  {ac.user_name}
+                              key={index}
+                              className="flex items-start gap-4 bg-brand1 border border-[#5228A4] rounded-2xl p-4 text-white shadow-md hover:scale-[1.01] transition-transform duration-300"
+                            >
+                              {/* Avatar */}
+                              <Avatar className="h-16 w-16 rounded-lg overflow-hidden shadow-sm ring-2 ring-brand6">
+                                <img
+                                  src={ac.user_image_url}
+                                  alt="Avatar"
+                                  className="w-full h-full object-cover"
+                                />
+                              </Avatar>
+
+                              {/* Right Content */}
+                              <div className="flex-1 space-y-2">
+                                {/* Name, Address, Info */}
+                                <div
+                                  className="group cursor-pointer space-y-0.5"
+                                  onClick={() =>
+                                    navigate(`/userDashboard/userProfile/${ac.user_address}`)
+                                  }
+                                >
+                                  <div className="text-base font-semibold text-brand6 group-hover:underline">
+                                    {ac.user_name}
+                                  </div>
+                                  <div className="text-xs text-gray-400 group-hover:underline">
+                                    {clipAddress(ac.user_address)}
+                                  </div>
+                                  <div className="text-sm font-medium text-gray-300 group-hover:underline">
+                                    {ac.info}
+                                  </div>
                                 </div>
-                                <div className="text-xs text-gray-400 group-hover:underline">
-                                  {clipAddress(ac.user_address)}
+
+                                {/* Timestamp */}
+                                <div className="flex items-center gap-1 text-xs text-gray-400 pt-1">
+                                  <ClockIcon className="h-4 w-4" />
+                                  <p>{formatStandardDateTime(ac.created_at)}</p>
                                 </div>
-                                <div className="text-sm font-medium text-gray-300 group-hover:underline">
-                                  {ac.info}
-                                </div>
-                              </div>
-                          
-                              {/* Timestamp */}
-                              <div className="flex items-center gap-1 text-xs text-gray-400 pt-1">
-                                <ClockIcon className="h-4 w-4" />
-                                <p>{formatStandardDateTime(ac.created_at)}</p>
                               </div>
                             </div>
-                          </div>
-                          
+
                           ))}
                       </div>
                     )}
@@ -320,33 +320,41 @@ const Activity = () => {
                       participants.map((participant, index) => (
                         <div
                           key={index}
-                          className={`bg-gradient-to-br from-[rgba(17,12,36,0.85)]  to-brand3 hover:scale-95 transition-transform duration-300 flex flex-col  items-start md:items-center justify-between gap-4 md:gap-2 mx-2 my-2 p-4 border-[1px] border-[#5228A4] rounded-lg shadow-sm ${participant.public_address === address ? "bg-gradient-to-br from-[rgba(103,103,133,0.85)] via-transparent to-brand1" : ""
+                          className={`bg-gradient-to-br from-[rgba(17,12,36,0.85)] to-brand3 hover:scale-[0.98] transition-transform duration-300 
+                                    flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-2 
+                                    mx-2 my-2 p-4 border border-[#5228A4] rounded-lg shadow-md cursor-pointer 
+                                    ${participant.public_address === address
+                              ? "bg-gradient-to-br from-[rgba(103,103,133,0.85)] via-transparent to-brand1"
+                              : ""
                             }`}
-
                           onClick={() => {
                             setAddress((prevAddress) =>
                               prevAddress === participant.public_address ? null : participant.public_address
                             );
                           }}
                         >
-                          <div className="flex items-center gap-3">
-                            <Avatar>
+                          {/* Avatar + Info */}
+                          <div className="flex items-center gap-4 w-full md:w-auto">
+                            <Avatar className="w-12 h-12 ring-2 ring-brand6 shadow-sm">
                               <AvatarImage
                                 alt="Avatar"
                                 src={participant.image_url}
+                                className="object-cover"
                               />
-                              <AvatarFallback>JD</AvatarFallback>
+                              <AvatarFallback className="text-xs bg-brand6 text-white">👤</AvatarFallback>
                             </Avatar>
-                            <div className="text-left text-brand7 cursor-pointer text-ellipsis overflow-hidden">
-                              <p className="font-medium text-lg">
+
+                            <div className="text-left flex-1 min-w-0">
+                              <p className="font-semibold text-lg text-brand7 truncate">
                                 {participant.name || 'Unnamed Participant'}
                               </p>
-                              <div className="text-gray-300 dark:text-gray-400 text-sm truncate">
+                              <p className="text-sm text-gray-300 truncate">
                                 {clipAddress(participant.public_address || '')}
-                              </div>
+                              </p>
                             </div>
                           </div>
                         </div>
+
                       ))
                     )}
                   </div>
