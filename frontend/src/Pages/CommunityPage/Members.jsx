@@ -257,7 +257,7 @@ const Members = () => {
                       <div className="flex flex-col md:flex-row z-20 items-start md:items-center  gap-4">
                         <Dialog>
                           <DialogTrigger>
-                            <div className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-brand1 text-[14px] leading-5 font-medium">
+                            <div className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-white text-[14px] leading-5 font-medium">
                               View Details
                             </div>
                           </DialogTrigger>
@@ -413,7 +413,7 @@ const Members = () => {
                           onClick={() =>
                             navigate(`/userDashboard/userProfile/${participant.public_address}`)
                           }
-                          className="rounded-[26px] py-2 px-[15px]  cursor-pointer bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-brand1 text-[14px] leading-5 font-medium flex items-center justify-between"
+                          className="rounded-[26px] py-2 px-[15px]  cursor-pointer bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-white text-[14px] leading-5 font-medium flex items-center justify-between"
                         >
                           Visit Profile
                           <ChevronRight className="h-5 w-5 group-hover:translate-x-1 duration-300 transition-transform" />
