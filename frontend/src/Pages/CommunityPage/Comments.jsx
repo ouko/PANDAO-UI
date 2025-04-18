@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import ImageUpdater from "../components/ImageUpdater";
 import CommnetImageUpdater from "../components/CommentImageUpdater";
 import { SkeletonCard } from "../GlobalComponents/Skeleton";
+import { SkeletonActivity } from "../GlobalComponents/SkeletonActivity";
 
 const Comments = () => {
   const { accounts } = useAccount();
@@ -34,6 +35,7 @@ const Comments = () => {
   const [selectedDiscussionTitle, setSelectedDiscussionTitle] = useState("");
   const [newComment, setNewComment] = useState("");
   const [commentUrl, setCommentUrl] = useState("")
+  
 
   const handleAddDiscussion = async () => {
     if (title.trim() === "") {
@@ -146,7 +148,7 @@ const Comments = () => {
 
   return (
     <div className=" items-start gap-3 justify-start z-40 min-h-screen overflow-hidden text-black px-2">
-      <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto">
+      <div className="flex md:flex-row flex-col gap-6 z-50 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto">
         <div className="space-y-6 md:w-[100%]">
           <div className="flex md:flex-row flex-col  mx-auto gap-2">
             <div className="md:w-[100%] space-y-6">
@@ -203,7 +205,7 @@ const Comments = () => {
               </div>
 
               {!selectedDiscussion && (
-                <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4]  relative overflow-hidden">
+                <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] z-50 relative overflow-hidden">
                   <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
                     <div className="text-[#ffffff] text-left  text-3xl font-medium flex items-center gap-2">
 
@@ -254,11 +256,10 @@ const Comments = () => {
                     </div>
                   )}
                   {loading && (
-                    <div className="flex flex-col h-auto items-center px-5  justify-center text-center mt-5">
+                    <div className="grid md:grid-cols-2 h-[400px] rounded-md grid-cols-1 gap-3 p-6">
                       {[...Array(4)].map((_, index) => (
-                        <SkeletonCard
+                        <SkeletonActivity
                           key={index}
-                          className="p-4 h-[150px] bg-gray-200 rounded shadow-md"
                         />
                       ))}
                     </div>
@@ -266,86 +267,120 @@ const Comments = () => {
                 </div>
               )}
               {selectedDiscussion && (
-                <Card className="bg-white md:w-[80%] mx-auto md:p-4 p-4 space-y-2 mt-4">
-                  <div className="flex items-center justify-between border-b-2">
-                    <div className="p-2 -translate-x-2">Comments</div>
-                    <Button
-                      size="sm"
-                      variant="link"
-                      onClick={() => setSelectedDiscussion(null)}
-                    >
-                      Back
-                    </Button>
-                  </div>
+                <div>
+                  <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] z-50 relative overflow-hidden">
+                    <div className="flex items-center justify-between ">
+                      <div className="bg-[#39246b]  pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
+                        <div className="text-[#ffffff] text-left  text-3xl font-medium flex items-center gap-2">
 
-                  {loading ? (
-                    <div className="flex flex-col h-auto items-center justify-center text-center mt-5">
-                      {[...Array(4)].map((_, i) => (
-                        <SkeletonCard key={i} />
-                      ))}
+                          Discussions:
+                        </div>
+                        <Button
+                          variant="brand"
+
+
+                          onClick={() => setSelectedDiscussion(null)}
+                        >
+                          Back
+                        </Button>
+
+                      </div>
+
                     </div>
-                  ) :
-                    selectedComments.length > 0 ? (
-                      <div className="space-y-4">
+
+                    {loading ? (
+                      <div className="flex flex-col h-auto items-center justify-center text-center mt-5">
+                        {[...Array(4)].map((_, i) => (
+                          <SkeletonCard key={i} />
+                        ))}
+                      </div>
+                    ) :
+                      selectedComments.length > 0 ? (
+                        <div className="px-4 py-4">
                         {selectedComments.map((comment, index) => (
-                          <Card
+                          <div
                             key={index}
-                            className="p-2 flex flex-col gap-2 shadow-md "
+                            className="w-full bg-gradient-to-br from-[rgba(24,18,45,0.85)] via-transparent tobrand1 
+                            hover:border-brand5 transition-transform duration-300 flex flex-col my-4 
+                            border border-brand2 rounded-lg shadow-sm p-4"
                           >
-                            <div className="bg-purple-50 p-2 font-semibold rounded-sm" style={{ whiteSpace: 'pre-wrap' }}>{comment.comment}</div>
-                            <div>
-                              {comment.image && comment.image !== "string" &&
+                       
+                            <div className="text-white font-semibold rounded-sm mb-4" style={{ whiteSpace: 'pre-wrap' }}>
+                              {comment.comment}
+                            </div>
+                      
+                          
+                            {comment.image && comment.image !== "string" && (
+                              <div className="mb-4">
                                 <img
                                   src={comment.image}
                                   className="h-[320px] w-[320px] aspect-square object-cover"
                                 />
-
-                              }
-                            </div>
-                            <div className="text-sm flex items-center gap-2">
-                              <div>Posted By - </div>
-                              <div className="flex items-center gap-1">
-                                <div>
-                                  <Avatar className="h-6 w-6">
+                              </div>
+                            )}
+                      
+                          
+                            <div className="flex items-center justify-between w-full mt-auto">
+                            
+                              <div className="text-sm text-white flex items-center gap-2">
+                                <span>Posted By -</span>
+                                <div className="flex items-center gap-1">
+                                  <Avatar className="h-8 w-8">
                                     <AvatarImage src={comment.user_image} />
                                     <AvatarFallback>CN</AvatarFallback>
                                   </Avatar>
+                                  <span className="font-normal">{comment.user_name}</span>
                                 </div>
-                                <div className="font-normal" >{comment.user_name}</div>
+                              </div>
+                  
+                              <div className="text-sm text-brand7 font-semibold border-b-2 border-brand4">
+                                {formatStandardDateTime(comment.created_at)}
                               </div>
                             </div>
-                            <div className="text-sm font-semibold border-t-2 pt-1 text-end">
-                              {formatStandardDateTime(comment.created_at)}
-                            </div>
-                          </Card>
+                          </div>
                         ))}
                       </div>
-                    ) : (
-                      <div className="text-center py-5">No comments yet.</div>
-                    )}
-                  <div className="w-full flex flex-col items-end justify-end gap-y-2 py-6">
+                      
+                      ) : (
+                        <div className="text-center py-20 text-white">No comments yet.</div>
+                      )}
+
+                  </div>
+                  <div className="w-full flex flex-col items-end justify-end gap-y-4 py-6">
                     <Textarea
                       placeholder="Become part of this discussion"
                       value={newComment}
                       onChange={(e) => setNewComment(e.target.value)}
+                      className="w-full z-50 text-brand7 border-brand4"
                     />
 
-                    <div className="flex items-center w-fit">
-                      <Button variant="brand" className="rounded-r-none hover:scale-110  " onClick={handleAddComment}>
+                    <div className="flex z-50 items-center gap-2">
+                      <Button
+                        variant="brand"
+                        className="rounded-md hover:scale-105 transition-transform"
+                        onClick={handleAddComment}
+                      >
                         Add Comment
                       </Button>
+
                       <CommnetImageUpdater onUploadSuccess={handleCommentId} />
                     </div>
-                    {commentUrl !== "" && <img
-                      src={commentUrl}
-                      className="h-40 w-60 object-cover"
-                    />}
 
-
+                    {commentUrl && (
+                      <img
+                        src={commentUrl}
+                        alt="Comment Attachment"
+                        className="h-40 w-60 object-cover rounded-md shadow-md"
+                      />
+                    )}
                   </div>
-                </Card>
+
+                </div>
               )}
+
             </div>
+
+
           </div>
         </div>
       </div>

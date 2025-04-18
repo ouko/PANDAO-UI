@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Check, Copy, Info } from 'lucide-react';
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import { Button } from '@/components/ui/button';
@@ -26,6 +26,24 @@ const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onS
   const { accounts } = useAccount()
   const params = useParams()
   const navigate = useNavigate()
+  const [slug, setSlug] = useState("")
+
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/community/detail/${params.id}`,
+        )
+        if (res.status === 200) {
+          console.log(res.data.blueprint_slug, 'res')
+          setSlug(res.data.blueprint_slug?.toLowerCase())
+        }
+      } catch (error) {
+        console.error('Error fetching blueprint data:', error)
+      }
+    }
+    fetchDetails()
+  }, [params.id])
 
 
   const handleJoinCommunity = async () => {
@@ -88,7 +106,7 @@ const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onS
               </div>
             </div>
             <div className="text-[#ffffff] text-center font-['ClashDisplayVariable-Semibold',_sans-serif] text-[26px] font-semibold relative self-stretch">
-            {daoData.name ? (
+              {daoData.name ? (
                 daoData.name
               ) : (
                 <div className="w-full h-10 bg-purple-300 animate-pulse rounded mx-auto opacity-80" />
@@ -239,7 +257,7 @@ const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onS
             <DialogTitle className="text-2xl font-semibold text-brand7 w-full text-center">
               Quick Start
             </DialogTitle>
-            <DialogDescription className="flex  items-center gap-4 mt-4 w-full">
+            <DialogDescription className="flex flex-col md:flex-row items-center gap-4 mt-4 w-full">
               <Card
                 className="w-full p-6 bg-[rgba(121,84,196,0.8)] border-[1px] border-brand2 hover:bg-[rgba(169,126,255,0.34)] transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
                 onClick={() =>
@@ -253,20 +271,39 @@ const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onS
                   Start a new project by creating a detailed proposal.
                 </p>
               </Card>
-              <Card
-                className="w-full p-6 bg-[rgba(121,84,196,0.8)] border-[1px] border-brand2 hover:bg-[rgba(169,126,255,0.34)]  transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
-                onClick={() =>
-                  navigate(`/community/detail/${params.id}/bondissue`)
-                }
-              >
-                <h3 className="text-xl font-medium text-gray-300">
-                  Create a Bond
-                </h3>
-                <p className="text-sm text-gray-400 mt-1">
-                  Secure your projects with a reliable bond.
-                </p>
-              </Card>
+
+              {slug === 'insurance' ? (
+                <Card
+                  className="w-full p-6 bg-[rgba(121,84,196,0.8)] border-[1px] border-brand2 hover:bg-[rgba(169,126,255,0.34)] transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
+                  onClick={() =>
+                    navigate(`/community/detail/${params.id}/annissue`)
+                  }
+                >
+                  <h3 className="text-xl font-medium text-gray-300">
+                    Create AAN
+                  </h3>
+                  <p className="text-sm text-gray-400 mt-1">
+                    Create an Automated Assurance  (AAN) for insurance claims.
+                  </p>
+                </Card>
+              ) : (
+                <Card
+                  className="w-full p-6 bg-[rgba(121,84,196,0.8)] border-[1px] border-brand2 hover:bg-[rgba(169,126,255,0.34)] transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
+                  onClick={() =>
+                    navigate(`/community/detail/${params.id}/bondissue`)
+                  }
+                >
+                  <h3 className="text-xl font-medium text-gray-300">
+                    Create a Bond
+                  </h3>
+                  <p className="text-sm text-gray-400 mt-1">
+                    Secure your projects with a reliable bond.
+                  </p>
+                </Card>
+              )}
             </DialogDescription>
+
+
           </DialogHeader>
         </DialogContent>
       </Dialog>

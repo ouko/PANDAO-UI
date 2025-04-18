@@ -84,6 +84,52 @@ const AnnIssue = () => {
   const { annuity, updateAnnuity } = useAnnFormStore((state) => state)
   const [isFormComplete, setIsFormComplete] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [nfts, setNfts] = useState([])
+  const [selectedNft, setSelectedNft] = useState(null)
+
+
+
+
+  const fetchNfts = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/users/wallets/assets/${accounts[0].address
+        }`,
+      )
+
+      // const processedData = Array.from(
+      //   new Map(
+      //     response.data.flat().map((item) => [
+      //       item.address,
+      //       {
+      //         name: item.name || '',
+      //         icon_url: item.icon_url || '',
+      //         address: item.address,
+      //       },
+      //     ]),
+      //   ).values(),
+      // )
+      setNfts(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    // Only fetch NFTs if accounts are available
+    if (accounts && accounts.length > 0) {
+      fetchNfts()
+    }
+  }, [accounts])
+
+  const updateBond = (key, value) => {
+    if (key === 'nft') {
+      setSelectedNft(value)
+    }
+  }
+
+
+
   const handleformSubmit = async (e) => {
     e.preventDefault()
     setLoading(true) // Set loading to true at the start of the process
@@ -96,12 +142,12 @@ const AnnIssue = () => {
           ...annuity,
           community_id: params.id,
           user_address: accounts[0].address,
-          initial_exchange_date: new Date(
-            annuity.initial_exchange_date,
-          ).toISOString(),
+          initial_exchange_date: new Date(annuity.initial_exchange_date).toISOString(),
           maturity_date: new Date(annuity.maturity_date).toISOString(),
+          nft: selectedNft, 
         },
       )
+      
 
       if (res.status === 200) {
         setManifest(res.data)
@@ -165,6 +211,9 @@ const AnnIssue = () => {
       'ann_position',
       'price',
       'number_of_ann',
+    
+      
+      
     ]
 
     const allFieldsFilled = requiredFields.every((field) => annuity[field])
@@ -310,6 +359,7 @@ const AnnIssue = () => {
                     <div>
                       <div>Select Position</div>
                       <Select
+                      className="flex items-center justify-center"
                         onValueChange={(value) =>
                           updateAnnuity('ann_position', value)
                         }
@@ -322,7 +372,57 @@ const AnnIssue = () => {
                           <SelectItem value="short">Short</SelectItem>
                         </SelectContent>
                       </Select>
+
+
+                      
                     </div>
+
+                    <div>
+                      
+  <div>Select NFT</div>
+  <Select
+    className="flex items-center justify-center"
+    onValueChange={(value) => {
+      setSelectedNft(value);
+      updateAnnuity('nft', value); 
+    }}
+  >
+    <SelectTrigger className="w-full">
+      <SelectValue placeholder="Select NFT" />
+    </SelectTrigger>
+    <SelectContent>
+      {nfts.length > 0 ? (
+        nfts.map((item, index) => (
+          <SelectItem
+            key={index}
+            value={item.resource_address}
+          >
+            {item.name || item.icon_url ? (
+              <div className="flex items-center gap-2">
+                <img
+                  className="h-5 w-5 rounded-full shadow-md"
+                  src={item.icon_url}
+                  alt=""
+                />
+                {item.name && <span>{item.name}</span>}
+              </div>
+            ) : (
+              'Unnamed Item'
+            )}
+          </SelectItem>
+        ))
+      ) : (
+        <div className="p-4 text-center text-gray-500">
+          No NFTs available
+        </div>
+      )}
+    </SelectContent>
+  </Select>
+</div>
+
+                   
+
+
                   </div>
                   <div className="flex items-center z-50 justify-center">
                     <Button type="submit" 

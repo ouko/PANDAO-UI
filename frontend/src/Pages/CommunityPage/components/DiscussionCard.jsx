@@ -1,13 +1,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { useNavigate, useParams } from 'react-router-dom';
 
-function DiscussionCard({communities}) {
+function DiscussionCard({ communities }) {
     const navigate = useNavigate();
-      const params = useParams();
-    
+    const params = useParams();
+
     return (
-        <div className="bg-[rgba(169,126,255,0.08)]  rounded-[10px] border border-[#5228A4] pt-[13px] pr-[25px] pb-[13px] pl-[25px] self-stretch shrink-0 h-[152px] relative overflow-hidden">
-      
+        <div className="bg-[rgba(169,126,255,0.08)]  rounded-[10px] border border-[#5228A4] pt-[13px] pr-[25px] pb-[13px] pl-[25px] self-stretch shrink-0 h-[352px]  relative overflow-y-auto ">
+
             <div className="bg-[#39246b]  pr-[15px] pl-[15px] flex flex-row items-center justify-between w-full h-[53px] absolute left-0 top-0">
                 <div className="text-[#ffffff]  text-left  text-2xl font-medium flex items-center gap-2">
 
@@ -21,7 +21,7 @@ function DiscussionCard({communities}) {
                             `/community/detail/${params.id}/discussion`,
                         )
                     }
-                    
+
                 >
                     View All &gt;
                 </button>
@@ -32,26 +32,30 @@ function DiscussionCard({communities}) {
                     <p className="text-gray-100 text-center">No active discussions</p>
                 ) : (
                     communities.map((community, index) => (
-                        <div key={index} className="bg-white p-3 rounded-md shadow-md border border-gray-200 mb-2">
-                            <h3 className="text-lg font-semibold text-gray-800 truncate">{community.title}</h3>
-                            <div className="text-sm text-gray-600 flex items-center gap-2 mt-2">
+                        <div key={index} className="bg-gradient-to-br from-[rgba(24,18,45,0.59)] via-transparent to-brand1 p-3 rounded-md shadow-md border border-brand3 mb-2">
+                            <h3 className="text-lg font-semibold text-white truncate">{community.title}</h3>
+                            <div className="text-sm text-white flex items-center gap-2 mt-2">
                                 <span>Started By:</span>
                                 <div className="flex items-center gap-2">
-                                    <Avatar className="h-8 w-8">
-                                        <AvatarImage src={community.user_image} alt={community.user_name} />
-                                        <AvatarFallback>CN</AvatarFallback>
-                                    </Avatar>
-                                    <span className="font-medium text-gray-700 truncate">{community.user_name}</span>
-                                </div>
+    <Avatar className="h-8 w-8 ring-1 ring-offset-1 ring-offset-[rgba(24,18,45,0.59)] overflow-hidden rounded-full">
+        <AvatarImage 
+            src={community.user_image} 
+            className="h-full w-full object-cover rounded-full"
+        />
+        <AvatarFallback>CN</AvatarFallback>
+    </Avatar>
+    <span className="font-medium">{community.user_name}</span>
+</div>
+
                             </div>
-                            <div className="border-t mt-2 pt-1 text-xs text-gray-500">
+                            <div className="border-t mt-2 pt-1 text-xs text-white">
                                 {new Date(community.created_at).toLocaleString()}
                             </div>
                         </div>
                     ))
                 )}
             </div>
-        
+
         </div>
     )
 }
