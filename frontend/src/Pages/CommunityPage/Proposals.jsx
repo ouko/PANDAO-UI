@@ -1075,18 +1075,19 @@ const Proposals = () => {
 
 
           <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] mt-8 w-full z-50 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
-            <div className="  text-[40px] leading-[130%] z-50 font-semibold text-start">
-              <span className="step-2-describe-your-dao-span3 text-amber-50">Proposal Form</span>
+            <div className="  text-[40px] leading-[130%] z-50 font-semibold flex flex-col items-center gap-3">
+              <div className="w-full cursor-pointer flex  items-center text-[22px]   m-2"
+                onClick={() => {
+                  setShowForm(false) // Hide the form and return to the list
+                  setActiveProposal(null) // Ensure no proposal is active
+                }}>
+                <ChevronLeft /> <span className='' >Back</span>
+              </div>   
+                <span className="step-2-describe-your-dao-span3 text-amber-50 whitespace-nowrap">Proposal Form</span>
 
 
             </div>
-            <div className="w-full cursor-pointer items-end  justify-end text-[22px] flex  m-2"
-              onClick={() => {
-                setShowForm(false) // Hide the form and return to the list
-                setActiveProposal(null) // Ensure no proposal is active
-              }}>
-              <ChevronLeft /> <span >Back</span>
-            </div>
+
 
           </div>
           <div className="flex items-center justify-center z-50 p-2 w-full mx-auto">
