@@ -290,7 +290,7 @@ const CommunityDetails = () => {
               <div className="w-full space-y-4">
                 <TokenCard data={communityData} />
                 <TotalFund data={communityData} />
-                <WithdrawCard withDrawRequest={withDrawRequest} />
+                <WithdrawCard withDrawRequest={withDrawRequest} participant={participants} />
                 <DiscussionCard communities={communities} />
               </div>
               <div className="w-full space-y-4">

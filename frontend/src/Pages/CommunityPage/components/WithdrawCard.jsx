@@ -12,13 +12,13 @@ import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 
-const WithdrawCard = ({ withDrawRequest }) => {
+const WithdrawCard = ({ withDrawRequest, participant }) => {
   const [loading, setLoading] = useState(false)
   const params = useParams()
   const { accounts } = useAccount()
   const sendTransaction = useSendTransaction()
 
-
+console.log(participant,"faisal")
 
   const handleWithDrawSign = async (id) => {
     console.log("id", id)
@@ -162,14 +162,17 @@ const WithdrawCard = ({ withDrawRequest }) => {
                 </div>
               )}
               <div className="flex justify-end mt-4">
-                <Button
-                  variant="brand"
-                  disabled={loading}
-                  onClick={() => handleWithDrawSign(request.id)}
-                >
-                  Sign Withdraw Request
-                </Button>
+                {participant.some(p => p.is_executive_member=== true) && (
+                  <Button
+                    variant="brand"
+                    disabled={loading}
+                    onClick={() => handleWithDrawSign(request.id)}
+                  >
+                    Sign Withdraw Request
+                  </Button>
+                )}
               </div>
+
             </div>
           ))
         )}
