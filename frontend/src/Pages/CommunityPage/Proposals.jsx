@@ -1471,8 +1471,10 @@ const Proposals = () => {
                   />
                 </div>
               </div>
+             
               {loadingButton ? (
                 <Button variant="brand" disabled
+                className="z-50"
 
                 >
                   Submitting....
@@ -1480,6 +1482,7 @@ const Proposals = () => {
               ) : (
                 <Button
                   variant="brand"
+                  className="z-50"
                   disabled={Object.values(tokenPriceChangeForm).some(
                     (value) => !value,
                   )}
