@@ -589,7 +589,7 @@ const BondIssue = () => {
 
                   <div className="flex items-center z-50 py-4 justify-end">
                     <Button
-                      className="flex-1 rounded-2xl p-3 z-50 py-4 text-white "
+                      className="flex-1 rounded-2xl p-3 h-14 text-xl z-50 py-4 text-white "
                       variant="brand"
                       onClick={() => setOpen(!open)}
                       disabled={!isFormComplete}
