@@ -542,8 +542,8 @@ const BondIssue = () => {
                         updateBond('bond_position', value)
                       }
                     >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select Position" />
+                      <SelectTrigger className="w-full h-14">
+                      <SelectValue placeholder="Select Position" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="long">Long</SelectItem>
@@ -554,7 +554,7 @@ const BondIssue = () => {
                       className="flex items-center justify-center"
                       onValueChange={(value) => updateBond('nft', value)}
                     >
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger className="w-full h-14">
                         <SelectValue placeholder="Select NFT" />
                       </SelectTrigger>
                       <SelectContent>
