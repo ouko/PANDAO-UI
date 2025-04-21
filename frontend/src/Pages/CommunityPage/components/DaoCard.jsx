@@ -18,7 +18,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
 
-const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onSuccess }) => {
+const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onSuccess, isOwner }) => {
   const [copied, setCopied] = useState(false);
   const [copied1, setCopied1] = useState(false);
   const [quickStartOpen, setQuickStartOpen] = useState(false)
@@ -226,11 +226,12 @@ const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onS
                   onClick={() => setTransferOpen(true)}>
                   Transfer Executive Badge
                 </Button> */}
-                <Button
+                {isOwner && <Button
                   variant="brand"
                   onClick={() => setExecOpen(true)}>
                   Mint Executive Badge
-                </Button>
+                </Button>}
+
                 <Button
                   variant="brand"
                   className="text-white"

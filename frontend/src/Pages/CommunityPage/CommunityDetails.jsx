@@ -254,7 +254,13 @@ const CommunityDetails = () => {
   const isUserParticipant = participants.some(
     (participant) => participant.public_address === accounts[0].address,
   )
-
+  const isOwner = participants.some(
+    (participant) =>
+      participant.public_address === accounts[0].address &&
+      participant.is_owner === true
+  )
+  
+  console.log(isOwner,participants,"fasial")
   const isLoading = isLoadingCommunity || isLoadingParticipants || isLoadingCommunities || isLoadingWithdraw
 
   return (
@@ -284,6 +290,7 @@ const CommunityDetails = () => {
               isUserParticipant={isUserParticipant}
               setTransferOpen={setTransferOpen}
               setExecOpen={setExecOpen}
+              isOwner={isOwner}
             />
 
             <div className="flex md:flex-row flex-col w-full mx-auto gap-[16px]">
