@@ -2,7 +2,7 @@ import { useAccount } from '@/AccountContext'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { useBondFormStore } from '@/store/BondStore/BondForrmStore'
-import { AlertCircle, BookDown } from 'lucide-react'
+import { AlertCircle, BookDown, Info } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import PropTypes from 'prop-types'
@@ -281,11 +281,16 @@ const BondIssue = () => {
                   <div>
 
                     <span className=" text-[40px] leading-[130%] z-50 font-semibold text-start text-amber-50">Create a Bond</span>
-                  
+
                   </div>
-                  <div className='bg-brand3 h-10'>
-                      Lorem
+
+                  <Card className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)]  px-5 py-3">
+                    <div className="flex flex-row gap-[11px] items-center">
+                      <Info className='text-purple-400' />
+                      <div className="text-[#ac97de] text-base font-normal uppercase">Only One Bond Allowed</div>
                     </div>
+                    <div className="text-white text-xl font-normal"></div>
+                  </Card>
                 </div>
                 <div className="text-[#ffffff]  z-50 text-xl leading-[130%] font-normal text-center">
                   Start simple and learn as you go. You can always evolve your DAO in the future
@@ -546,7 +551,7 @@ const BondIssue = () => {
                       }
                     >
                       <SelectTrigger className="w-full h-14">
-                      <SelectValue placeholder="Select Position" />
+                        <SelectValue placeholder="Select Position" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="long">Long</SelectItem>
