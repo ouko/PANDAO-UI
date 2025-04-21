@@ -1474,7 +1474,7 @@ const Proposals = () => {
              
               {loadingButton ? (
                 <Button variant="brand" disabled
-                className="z-50"
+                className="z-50 h-12 text-xl"
 
                 >
                   Submitting....
@@ -1482,7 +1482,7 @@ const Proposals = () => {
               ) : (
                 <Button
                   variant="brand"
-                  className="z-50"
+                  className="z-50 h-12 text-xl"
                   disabled={Object.values(tokenPriceChangeForm).some(
                     (value) => !value,
                   )}
