@@ -275,14 +275,17 @@ const BondIssue = () => {
           <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
             <div className="md:w-[100%] space-y-6  ">
               <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-5 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
-                <div className="  text-[40px] leading-[130%] z-50 font-semibold text-start">
+                <div className="z-50 flex items-center justify-between w-full ">
 
 
-                  <span>
+                  <div>
 
-                    <span className="step-2-describe-your-dao-span2"></span>
-                    <span className="step-2-describe-your-dao-span3 text-amber-50">Create a Bond</span>
-                  </span>
+                    <span className=" text-[40px] leading-[130%] z-50 font-semibold text-start text-amber-50">Create a Bond</span>
+                  
+                  </div>
+                  <div className='bg-brand3 h-10'>
+                      Lorem
+                    </div>
                 </div>
                 <div className="text-[#ffffff]  z-50 text-xl leading-[130%] font-normal text-center">
                   Start simple and learn as you go. You can always evolve your DAO in the future
