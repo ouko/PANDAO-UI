@@ -1,11 +1,5 @@
 import { useAccount } from '@/AccountContext'
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { toast } from 'sonner'
+
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
