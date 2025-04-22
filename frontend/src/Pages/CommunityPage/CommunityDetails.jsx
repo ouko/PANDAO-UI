@@ -65,7 +65,7 @@ const CommunityDetails = () => {
     queryKey: ['community', params.id],
     queryFn: async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/detail/${params.id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/community/detail/${params.id}?fiat_symbol=USD`,
       )
       if (res.status === 200) {
         setSlug(res.data.blueprint_slug)
