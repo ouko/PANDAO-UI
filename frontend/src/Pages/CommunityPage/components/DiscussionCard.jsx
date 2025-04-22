@@ -28,10 +28,10 @@ function DiscussionCard({ communities }) {
                 {communities.length === 0 ? (
                     <p className="text-gray-100 text-center">No active discussions</p>
                 ) : (
-                    communities.slice(0, 3).map((community, index) => (
+                    communities.slice(0, 2).map((community, index) => (
                         <div
                             key={index}
-                            className="bg-gradient-to-br from-[rgba(24,18,45,0.59)] via-transparent to-brand1 p-3 rounded-md shadow-md border border-brand3"
+                            className="bg-gradient-to-br from-[rgba(54,40,101,0.83)] via-transparent to-brand1 p-3 rounded-md shadow-md border border-brand3"
                         >
                             <h3 className="text-lg font-semibold text-white truncate">
                                 {community.title}
@@ -49,7 +49,7 @@ function DiscussionCard({ communities }) {
                                     <span className="font-medium">{community.user_name}</span>
                                 </div>
                             </div>
-                            <div className="border-t mt-2 pt-1 text-xs text-white">
+                            <div className="border-t border-brand3 mt-2 pt-1 text-xs text-white">
                                 {new Date(community.created_at).toLocaleString()}
                             </div>
                         </div>
