@@ -43,6 +43,7 @@ const AnnIssue = lazy(() => import('../Pages/CommunityPage/AnnIssue'));
 const AnnIssued = lazy(() => import('../Pages/CommunityPage/AnnIssued'));
 const PurchasedBond = lazy(() => import('../Pages/CommunityPage/PurchasedBond'));
 const exploreTopDao = lazy(() => import('../Pages/ExploreAllDaos'))
+const Withdraw = lazy(() => import('../Pages/CommunityPage/Withdraw'));
 
 export const publicRoutes = [
   {
@@ -93,21 +94,37 @@ export const protectedRoutes = [
     path: '/exploreDao/:slug/deploy',
     element: Deploy,
   },
-  {
-    path: '/community/detail/:id',
-    element: CommunityDetailsLayout,
-    children: [
-      { index: true, element: CommunityDetails },
-      { path: 'members', element: Members },
-      { path: 'discussion', element: Comments },
-      { path: 'tokenDistribution', element: TokenDistribution },
-      { path: 'activity', element: Activity },
-      { path: 'proposals', element: Proposals },
-      { path: 'bondissue', element: BondIssue },
-      { path: 'annissue', element: AnnIssue },
-      { path: 'purchasedbond', element: PurchasedBond },
-      { path: 'bondissued', element: BondIssued },
-      { path: 'annissued', element: AnnIssued },
-    ],
-  },
+ {
+  path: '/community/detail/:id',
+  element: CommunityDetailsLayout,
+  children: [
+    { index: true, element: CommunityDetails },
+    { path: 'members', element: Members },
+    { path: 'discussion', element: Comments },
+    { path: 'tokenDistribution', element: TokenDistribution },
+    { path: 'activity', element: Activity },
+    { path: 'proposals', element: Proposals },
+    { path: 'bondissue', element: BondIssue },
+    { path: 'annissue', element: AnnIssue },
+    { path: 'purchasedbond', element: PurchasedBond },
+    { path: 'bondissued', element: BondIssued },
+    { path: 'annissued', element: AnnIssued },
+    {
+      path: 'Withdraw',
+      element: Withdraw,
+    }
+  ],
+},
+
+{
+  path: '/community/token-withdraw',
+  element: CommunityDetailsLayout,
+  children: [
+    {
+      path: 'request',
+      element: Withdraw,
+    }
+  ],
+},
+
 ];

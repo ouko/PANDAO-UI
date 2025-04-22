@@ -2,99 +2,98 @@ import { useAccount } from "@/AccountContext";
 import { Button } from "@/components/ui/button";
 import { useSendTransaction } from "@/hooks/useSendTransaction";
 import axios from "axios";
-import { useState } from "react";
-import { useQuery, useQueryClient } from "react-query";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useParams } from 'react-router-dom'
 
 function Withdraw() {
   const [signingId, setSigningId] = useState(null);
-  const params = useParams();
-  const queryClient = useQueryClient();
+  const [withdrawRequests, setWithdrawRequests] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { accounts } = useAccount();
   const sendTransaction = useSendTransaction();
+   const params = useParams()
 
-  const {
-    data: withDrawRequest = [],
-    isLoading: isLoadingWithdraw,
-  } = useQuery({
-    queryKey: ["withdrawRequests", params.id],
-    queryFn: async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/token-withdraw/request?c_id=${params.id}`
-      );
-      return res.data;
-    },
-  });
+  useEffect(() => {
+    const fetchWithdrawRequests = async () => {
+
+      setIsLoading(true);
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/community/token-withdraw/request?c_id=${params.id}`
+        );
+        setWithdrawRequests(res.data || []);
+      } catch (error) {
+        console.error("Failed to fetch withdrawal requests:", error);
+        toast.error("Failed to load withdrawal requests.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchWithdrawRequests();
+  }, [params.id]);
 
   const handleWithDrawSign = async (id) => {
-    const data = {
-      community_id: params.id,
-      user_address: accounts?.[0]?.address,
-      id,
-    };
+    if (!accounts?.[0]?.address) {
+      toast.error("Wallet address not found.");
+      return;
+    }
 
     setSigningId(id);
 
     try {
+      const data = {
+        community_id: params.id,
+        user_address: accounts[0].address,
+        id,
+      };
+
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/manifest/sign-withdraw-request`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        data
       );
 
-      const responseData =
+      const manifest =
         typeof response.data === "string"
           ? response.data.trim()
           : JSON.stringify(response.data);
 
-      const { receipt } = await sendTransaction(responseData);
+      const { receipt } = await sendTransaction(manifest);
       const txId = receipt?.transaction?.intent_hash;
 
       if (txId) {
-        try {
-          const submitResponse = await axios.post(
-            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
-            {
-              tx_id: txId,
-              user_address: accounts?.[0]?.address,
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
+        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/submit-tx`, {
+          tx_id: txId,
+          user_address: accounts[0].address,
+        });
 
-          toast.success("Sign Withdraw Request Successfully!");
-          await queryClient.invalidateQueries(["withdrawRequests", params.id]);
-        } catch (submitError) {
-          console.error("Error submitting transaction:", submitError);
-          toast.error("Failed to submit transaction.");
-        }
+        toast.success("Signed withdraw request successfully!");
+
+        // Refresh list
+        const updated = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/community/token-withdraw/request?c_id=${params.id}`
+        );
+        setWithdrawRequests(updated.data || []);
       } else {
         toast.error("Transaction failed. Please try again.");
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Signing failed:", error);
       toast.error(error?.response?.data?.message || "Something went wrong.");
     } finally {
       setSigningId(null);
     }
   };
 
-  const totalWithdrawAmount = withDrawRequest.reduce(
+  const totalWithdrawAmount = withdrawRequests.reduce(
     (sum, r) => sum + parseFloat(r.amount_to_withdraw || 0),
     0
   );
 
   return (
     <div>
-      <div className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden">
+      <div className="rounded-2xl border-2 border-[#5228A4] p-7 mt-16 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden">
         <div className="flex flex-row gap-10 items-center w-full">
           <div className="bg-[#321e58] rounded-full p-5 z-50 flex items-center justify-center w-24 h-24">
             <img className="w-14 h-14" src="/8.svg" alt="User Icon" />
@@ -104,13 +103,13 @@ function Withdraw() {
               Total Issued Bonds:
             </div>
             <div className="text-white text-[56px] font-medium text-center">
-              ${totalWithdrawAmount}
+              ${totalWithdrawAmount} Total Withdraw Amount
             </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-[rgba(169,126,255,0.08)] rounded-lg border border-[#5228A4] overflow-hidden backdrop-blur-[6.7px]">
+      <div className="bg-[rgba(169,126,255,0.08)] rounded-lg border border-[#5228A4] mt-10 overflow-hidden backdrop-blur-[6.7px]">
         <div className="bg-[#39246b] px-3 flex items-center w-full h-[53px]">
           <div className="text-white text-2xl font-medium">
             Total Withdraw Request:
@@ -118,35 +117,35 @@ function Withdraw() {
         </div>
 
         <div className="flex flex-col gap-6 p-6">
-          {withDrawRequest.length === 0 ? (
+          {isLoading ? (
+            <div className="text-center text-white text-lg font-semibold">
+              Loading withdrawal requests...
+            </div>
+          ) : withdrawRequests.length === 0 ? (
             <div className="text-center text-white text-lg font-semibold">
               No active withdrawal requests.
             </div>
           ) : (
-            withDrawRequest.map((request) => (
+            withdrawRequests.map((request) => (
               <div
                 key={request.id}
                 className="bg-gradient-to-br from-[rgba(31,18,55,0.6)] via-transparent to-brand1 border border-brand3 backdrop-blur-xl shadow-lg p-6 rounded-2xl hover:shadow-2xl"
               >
                 <div className="flex flex-col gap-3 text-white">
                   <div className="flex gap-2 text-lg font-semibold">
-                    <span className="text-[#c9a8ff]">Total Withdraw Request:</span>
+                    <span className="text-[#c9a8ff]">Withdraw Amount:</span>
                     <span>${request.amount_to_withdraw}</span>
                   </div>
 
                   <div className="flex gap-2 text-sm">
                     <span className="text-[#c9a8ff]">Date:</span>
-                    <span>
-                      {new Date(request.request_date).toLocaleString()}
-                    </span>
+                    <span>{new Date(request.request_date).toLocaleString()}</span>
                   </div>
 
                   <div className="flex gap-2 text-sm">
                     <span className="text-[#c9a8ff]">Status:</span>
                     <span
-                      className={
-                        request.status ? "text-green-400" : "text-red-400"
-                      }
+                      className={request.status ? "text-green-400" : "text-red-400"}
                     >
                       {request.status ? "Completed" : "Pending"}
                     </span>
@@ -160,9 +159,7 @@ function Withdraw() {
                     className="w-14 h-14 rounded-sm object-cover border-2 border-white"
                   />
                   <div className="text-white">
-                    <div className="text-lg font-semibold">
-                      {request.user_name}
-                    </div>
+                    <div className="text-lg font-semibold">{request.user_name}</div>
                     <div className="text-xs opacity-75">
                       {request.user_address?.slice(0, 6)}...
                       {request.user_address?.slice(-6)}
@@ -172,9 +169,7 @@ function Withdraw() {
 
                 {request.signed_users?.length > 0 && (
                   <div className="mt-6">
-                    <h4 className="text-white text-sm mb-2 font-medium">
-                      Signed by:
-                    </h4>
+                    <h4 className="text-white text-sm mb-2 font-medium">Signed by:</h4>
                     <div className="flex gap-4 flex-wrap">
                       {request.signed_users.map((user) => (
                         <div
@@ -199,9 +194,7 @@ function Withdraw() {
                     disabled={signingId === request.id}
                     onClick={() => handleWithDrawSign(request.id)}
                   >
-                    {signingId === request.id
-                      ? "Signing..."
-                      : "Sign Withdraw Request"}
+                    {signingId === request.id ? "Signing..." : "Sign Withdraw Request"}
                   </Button>
                 </div>
               </div>
