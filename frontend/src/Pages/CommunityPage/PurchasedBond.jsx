@@ -7,10 +7,80 @@ import { useEffect, useState } from 'react'
 
 import BondCard from './components/BondCard'
 import SkeletonBond from '../GlobalComponents/SkeletonBond'
+import { useSendTransaction } from '@/hooks/useSendTransaction'
+import { Button } from '@/components/ui/button'
+import { toast } from 'sonner'
 
 const PurchasedBond = (props) => {
   const { accounts } = useAccount()
+  const [loading2, setLoading2] = useState(false)
 
+  const sendTransaction = useSendTransaction()
+  const handleClaim = async (bond) => {
+    const data = {
+      bond_id: bond.id,
+      community_id: bond.community_id,
+    }
+    setLoading2(true)
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/manifest/zcb/claim`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+
+      const responseData =
+        typeof response.data === 'string'
+          ? response.data.trim()
+          : JSON.stringify(response.data)
+
+      console.log('Response:', responseData)
+
+
+      const { receipt } = await sendTransaction(responseData)
+
+      const txId = receipt?.transaction?.intent_hash
+
+      if (txId) {
+        try {
+          const submitResponse = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+            {
+              tx_id: txId,
+              user_address: accounts[0].address,
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+
+          console.log('Submit Transaction Response:', submitResponse.data)
+
+          toast.success('Withdraw Successfully!')
+        } catch (submitError) {
+          console.error('Error submitting transaction:', submitError)
+          toast.error('Failed to submit transaction.')
+        }
+      } else {
+        console.error('Transaction ID not found in receipt:', receipt)
+        toast.error('Transaction failed. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error Withdraw token:', error.response.data.detail)
+
+      toast.error('Something went wrong while Withdrawing.')
+    } finally {
+      // Ensure loading is stopped regardless of success or failure
+      setLoading2(false)
+    }
+  }
   const params = useParams()
   const navigate = useNavigate()
   const [issuedBonds, setIssuedBonds] = useState([])
@@ -31,7 +101,7 @@ const PurchasedBond = (props) => {
       setLoading(false)
     }
   }
- 
+
   useEffect(() => {
     fetchIssuedBond()
   }, [])
@@ -103,9 +173,34 @@ const PurchasedBond = (props) => {
                   <div className="  my-6">
                     {issuedBonds.map((bond) => (
                       <div key={bond.id}
-                        className='flex flex-col px-5 '       >
+                        className='flex flex-col px-5 relative '       >
                         <BondCard bond={bond} />
-                     
+                        <div className='absolute top-4 right-8'>
+                        {bond.maturity_date && (
+                          bond.claimed ? (
+
+                            <Button
+                              disabled
+                              variant="brand"
+                            >
+                              Already Claimed
+                            </Button>
+                          ) : (
+
+                            <Button
+                              disabled={loading2}
+                              onClick={() => handleClaim(bond)}
+                              className="   "
+                              variant="brand"
+                            >
+                              Claim
+                            </Button>
+
+                          )
+
+                        )}
+                        </div>
+                      
                       </div>
                     ))}
                   </div>
