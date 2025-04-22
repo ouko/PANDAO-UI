@@ -20,7 +20,20 @@ import useCustomAlertStore from '@/store/customAlertStore';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Label as Label2, Pie, PieChart } from "recharts"
 import { Button } from '@/components/ui/button';
-
+const currencies = [
+  { code: "USD", symbol: "$" },
+  { code: "EUR", symbol: "€" },
+  { code: "GBP", symbol: "£" },
+  { code: "INR", symbol: "₹" },
+  { code: "JPY", symbol: "¥" },
+  { code: "CNY", symbol: "¥" },
+  { code: "AUD", symbol: "A$" },
+  { code: "CAD", symbol: "C$" },
+  { code: "KRW", symbol: "₩" },
+  { code: "RUB", symbol: "₽" },
+  { code: "BRL", symbol: "R$" },
+  { code: "ZAR", symbol: "R" },
+];
 
 const TokenCard = ({ data, onSuccess }) => {
   const [openSellModal, setSellModal] = useState(false);
@@ -28,14 +41,30 @@ const TokenCard = ({ data, onSuccess }) => {
   const [tokenToSell, setTokenToSell] = useState(0);
   const sendTransaction = useSendTransaction()
   const { setOpen, setText } = useCustomAlertStore()
+  const [selected, setSelected] = useState("USD");
 
+  const handleChange = (e) => {
+    // e.target.value gives us the string value of the option
+    const selectedCode = e.target.value;
+    // Find the currency object that matches this code
+    const selectedCurrency = currencies.find(c => c.code === selectedCode);
+    
+    if (selectedCurrency) {
+      setSelected(selectedCurrency);
+      
+      // If onSelect prop exists, pass only the code
+      // if (onSelect) {
+      //   onSelect(selectedCurrency.code);
+      // }
+    }
+  };
 
   const [token, setToken] = useState(0);
 
   const [loading, setLoading] = useState(false)
   const { accounts } = useAccount()
   const params = useParams()
-  const [slug , setSlug]=useState("")
+  const [slug, setSlug] = useState("")
 
 
   const handleSellToken = async () => {
@@ -124,15 +153,15 @@ const TokenCard = ({ data, onSuccess }) => {
       userAddress: accounts[0].address,
       tokenSupply: token,
     };
-  
+
     setLoading(true);
-  
+
     try {
       const endpoint =
-      slug === 'Insurance'
-        ? '/manifest/build/ann/buy_token/token_weighted_dao'
-        : '/manifest/build/buy_token/token_weighted_dao';
-    
+        slug === 'Insurance'
+          ? '/manifest/build/ann/buy_token/token_weighted_dao'
+          : '/manifest/build/buy_token/token_weighted_dao';
+
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}${endpoint}`,
         dataPayload,
@@ -142,18 +171,18 @@ const TokenCard = ({ data, onSuccess }) => {
           },
         }
       );
-  
+
       const responseData =
         typeof response.data === 'string'
           ? response.data.trim()
           : JSON.stringify(response.data);
-  
+
       console.log('Response:', responseData);
-  
+
       const { receipt } = await sendTransaction(responseData);
-  
+
       const txId = receipt?.transaction?.intent_hash;
-  
+
       if (txId) {
         try {
           const submitResponse = await axios.post(
@@ -168,9 +197,9 @@ const TokenCard = ({ data, onSuccess }) => {
               },
             }
           );
-  
+
           console.log('Submit Transaction Response:', submitResponse.data);
-  
+
           toast.success('Token Bought Successfully!');
           setText('Token Bought');
           setOpen(true);
@@ -196,7 +225,7 @@ const TokenCard = ({ data, onSuccess }) => {
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     const fetchSlug = async () => {
       try {
@@ -208,7 +237,7 @@ const TokenCard = ({ data, onSuccess }) => {
         console.error('Error fetching slug:', error);
       }
     };
-  
+
     fetchSlug();
   }, [params.id]);
 
@@ -224,7 +253,6 @@ const TokenCard = ({ data, onSuccess }) => {
       fill: "#9268E4", // slightly darker purple
     },
   ]
-
   const chartConfig = {
     "Total Token": {
       label: `Remaining Token  ${data.total_token - data.token_bought}`,
@@ -238,7 +266,7 @@ const TokenCard = ({ data, onSuccess }) => {
 
 
   if (!data) return null;
-
+  console.log(selected)
 
   return (
     <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-solid border-[#5228A4] border pt-[13px] pr-[25px] pb-[13px] pl-[25px] shrink-0 min-h-[345px] relative overflow-hidden backdrop-blur-[6.7px]">
@@ -276,11 +304,11 @@ const TokenCard = ({ data, onSuccess }) => {
                   </div>
                   <DialogFooter>
                     {loading ? (
-                      <Button  variant="brand" disabled>
+                      <Button variant="brand" disabled>
                         Selling...
                       </Button>
                     ) : (
-                      <Button 
+                      <Button
                         variant="brand"
                         onClick={() => handleSellToken(tokenToSell)}
                         disabled={!tokenToSell || tokenToSell <= 0}
@@ -299,7 +327,7 @@ const TokenCard = ({ data, onSuccess }) => {
             <div>
               <Dialog open={openBuyModal} onOpenChange={setBuyModal}>
                 <DialogTrigger asChild>
-                <Button variant="brand" className="text-white">Buy Token</Button>
+                  <Button variant="brand" className="text-white">Buy Token</Button>
 
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px] bg-[rgba(169,126,255,0.34)] backdrop-blur-md text-white  border-[1px] border-brand3  ">
@@ -329,7 +357,7 @@ const TokenCard = ({ data, onSuccess }) => {
                         Buying...
                       </Button>
                     ) : (
-                      <Button variant="brand" 
+                      <Button variant="brand"
                         onClick={handleBuyToken}
                         disabled={!token}
                       >
@@ -347,16 +375,28 @@ const TokenCard = ({ data, onSuccess }) => {
 
 
       <div className="flex flex-col gap-[25px] items-start justify-start mt-20 ">
-
-        <div className="flex items-center gap-[26px] w-full">
-          <div className="rounded-full w-[45px] h-[45px] overflow-hidden">
-            <img
-              className="w-[50.16px] h-[45px] object-cover"
-              src="/radix.webp"
-              alt="Token Icon"
-            />
+        <div className='flex items-center justify-between w-full'>
+          <div className="flex items-center gap-[26px] w-full">
+            <div className="rounded-full w-[45px] h-[45px] overflow-hidden">
+              <img
+                className="w-[50.16px] h-[45px] object-cover"
+                src="/radix.webp"
+                alt="Token Icon"
+              />
+            </div>
+            <div className="text-white text-4xl font-medium">{data.total_token} Tokens</div>
           </div>
-          <div className="text-white text-4xl font-medium">{data.total_token} Tokens</div>
+          <select
+            value={selected.code} // Use .code here since we're storing the full object
+            onChange={handleChange}
+            className="text-black bg-brand7 border p-2 rounded"
+          >
+            {currencies.map((c) => (
+              <option key={c.code} value={c.code}> {/* The value is just the code */}
+                {c.symbol} - {c.code}
+              </option>
+            ))}
+          </select>
         </div>
 
 
@@ -372,13 +412,13 @@ const TokenCard = ({ data, onSuccess }) => {
                 <td className="">{data.token_buy_back_price}XRD</td>
               </tr>
               <tr>
-                <td className=" pr-4 text-purple-400 uppercase font-medium">Token Price in USD:</td>
-                <td className="">{(Math.round(data.token_price_in_usd * 10000) / 10000).toFixed(4)} $</td>
+                <td className=" pr-4 text-purple-400 uppercase font-medium">Token Price in {selected.code}:</td>
+                <td className="">{(Math.round(data.token_price_in_fiat * 10000) / 10000).toFixed(4)} {selected.symbol}</td>
               </tr>
               <tr>
-                <td className=" pr-4 text-purple-400 uppercase font-medium">Token Buy Back Price in USD:</td>
+                <td className=" pr-4 text-purple-400 uppercase font-medium">Token Buy Back Price in {selected.code}:</td>
                 <td className="">
-                  {(Math.round(data.token_buy_back_price_in_usd * 10000) / 10000).toFixed(4)} $
+                  {(Math.round(data.token_buy_back_price_in_fiat * 10000) / 10000).toFixed(4)} {selected.symbol}
                 </td>
               </tr>
             </tbody>
@@ -453,8 +493,8 @@ TokenCard.propTypes = {
     token_bought: PropTypes.number.isRequired,
     token_price: PropTypes.number.isRequired,
     token_buy_back_price: PropTypes.number.isRequired,
-    token_price_in_usd: PropTypes.number.isRequired,
-    token_buy_back_price_in_usd: PropTypes.number.isRequired,
+    token_price_in_fiat: PropTypes.number.isRequired,
+    token_buy_back_price_in_fiat: PropTypes.number.isRequired,
   }).isRequired,
   onSuccess: PropTypes.func.isRequired,
 };
