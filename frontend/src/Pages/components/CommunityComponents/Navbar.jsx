@@ -62,7 +62,7 @@ const getNavItems = () => {
     { icon: '/3.svg', label: 'Members', path: `/community/detail/${params.id}/members` },
     { icon: '/4.svg', label: 'Discussion', path: `/community/detail/${params.id}/discussion` },
     { icon: '/5.svg', label: 'Vote Power', path: `/community/detail/${params.id}/tokenDistribution` },
-    { icon: '/5.svg', label: 'Withdraw', path: `/community/token-withdraw/request?c_id=${params.id}` },
+    { icon: '/5.svg', label: 'Withdraw', path: `/community/detail/${params.id}/tokenWithdraw` },
     { icon: '/6.svg', label: 'Activity', path: `/community/detail/${params.id}/activity` },
     { icon: '/7.svg', label: 'Proposals', path: `/community/detail/${params.id}/proposals` },
   ];
