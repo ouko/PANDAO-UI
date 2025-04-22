@@ -1,100 +1,108 @@
-// import { useAccount } from "@/AccountContext";
-// import { Button } from "@/components/ui/button";
-// import { useSendTransaction } from "@/hooks/useSendTransaction";
-// import axios from "axios";
-// import { useState } from "react";
-// import { useQuery, useQueryClient } from "react-query";
-// import { useParams } from "react-router-dom";
-// import { toast } from "sonner";
+import { useAccount } from "@/AccountContext";
+import { Button } from "@/components/ui/button";
+import { useSendTransaction } from "@/hooks/useSendTransaction";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "sonner";
+import { SkeletonCard } from "../GlobalComponents/Skeleton";
 
-const  Withdraw =()=> {
-  // const [signingId, setSigningId] = useState(null);
-  // const params = useParams();
-  // const queryClient = useQueryClient();
-  // const { accounts } = useAccount();
-  // const sendTransaction = useSendTransaction();
+const Withdraw = () => {
+  const [withdrawRequests, setWithdrawRequests] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [signingId, setSigningId] = useState(null);
 
-  // const {
-  //   data: withDrawRequest = [],
-  //   isLoading: isLoadingWithdraw,
-  // } = useQuery({
-  //   queryKey: ["withdrawRequests", params.id],
-  //   queryFn: async () => {
-  //     const res = await axios.get(
-  //       `${import.meta.env.VITE_BACKEND_URL}/community/token-withdraw/request?c_id=${params.id}`
-  //     );
-  //     return res.data;
-  //   },
-  // });
+  const params = useParams();
+  const { accounts } = useAccount();
+  const sendTransaction = useSendTransaction();
 
-  // const handleWithDrawSign = async (id) => {
-  //   const data = {
-  //     community_id: params.id,
-  //     user_address: accounts?.[0]?.address,
-  //     id,
-  //   };
+  const fetchWithdrawRequests = async () => {
+    setIsLoading(true);
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/community/token-withdraw/request?c_id=${params.id}`
+      );
+      setWithdrawRequests(res.data);
+    } catch (error) {
+      console.error("Error fetching withdraw requests:", error);
+      toast.error("Failed to load withdrawal requests.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  //   setSigningId(id);
+  useEffect(() => {
+    fetchWithdrawRequests();
+  }, [params.id]);
 
-  //   try {
-  //     const response = await axios.post(
-  //       `${import.meta.env.VITE_BACKEND_URL}/manifest/sign-withdraw-request`,
-  //       data,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
+  const handleWithDrawSign = async (id) => {
+    const data = {
+      community_id: params.id,
+      user_address: accounts?.[0]?.address,
+      id,
+    };
 
-  //     const responseData =
-  //       typeof response.data === "string"
-  //         ? response.data.trim()
-  //         : JSON.stringify(response.data);
+    setSigningId(id);
 
-  //     const { receipt } = await sendTransaction(responseData);
-  //     const txId = receipt?.transaction?.intent_hash;
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/manifest/sign-withdraw-request`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-  //     if (txId) {
-  //       try {
-  //         const submitResponse = await axios.post(
-  //           `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
-  //           {
-  //             tx_id: txId,
-  //             user_address: accounts?.[0]?.address,
-  //           },
-  //           {
-  //             headers: {
-  //               "Content-Type": "application/json",
-  //             },
-  //           }
-  //         );
+      const responseData =
+        typeof response.data === "string"
+          ? response.data.trim()
+          : JSON.stringify(response.data);
 
-  //         toast.success("Sign Withdraw Request Successfully!");
-  //         await queryClient.invalidateQueries(["withdrawRequests", params.id]);
-  //       } catch (submitError) {
-  //         console.error("Error submitting transaction:", submitError);
-  //         toast.error("Failed to submit transaction.");
-  //       }
-  //     } else {
-  //       toast.error("Transaction failed. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //     toast.error(error?.response?.data?.message || "Something went wrong.");
-  //   } finally {
-  //     setSigningId(null);
-  //   }
-  // };
+      const { receipt } = await sendTransaction(responseData);
+      const txId = receipt?.transaction?.intent_hash;
 
-  // const totalWithdrawAmount = withDrawRequest.reduce(
-  //   (sum, r) => sum + parseFloat(r.amount_to_withdraw || 0),
-  //   0
-  // );
+      if (txId) {
+        try {
+          await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+            {
+              tx_id: txId,
+              user_address: accounts?.[0]?.address,
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          toast.success("Sign Withdraw Request Successfully!");
+          await fetchWithdrawRequests(); // manually refetch data
+        } catch (submitError) {
+          console.error("Error submitting transaction:", submitError);
+          toast.error("Failed to submit transaction.");
+        }
+      } else {
+        toast.error("Transaction failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error(error?.response?.data?.message || "Something went wrong.");
+    } finally {
+      setSigningId(null);
+    }
+  };
+
+  const totalWithdrawAmount = withdrawRequests.reduce(
+    (sum, r) => sum + parseFloat(r.amount_to_withdraw || 0),
+    0
+  );
 
   return (
-    <div className="h-screen">
-      {/* <div className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden">
+    <div>
+      <div className="rounded-2xl border-2 border-[#5228A4] p-7 mx-8 mt-16 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden">
         <div className="flex flex-row gap-10 items-center w-full">
           <div className="bg-[#321e58] rounded-full p-5 z-50 flex items-center justify-center w-24 h-24">
             <img className="w-14 h-14" src="/8.svg" alt="User Icon" />
@@ -104,13 +112,13 @@ const  Withdraw =()=> {
               Total Issued Bonds:
             </div>
             <div className="text-white text-[56px] font-medium text-center">
-              ${totalWithdrawAmount} Total Withdraw Amount
+              ${totalWithdrawAmount.toFixed(2)} USD
             </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-[rgba(169,126,255,0.08)] rounded-lg border border-[#5228A4] mt-10 overflow-hidden backdrop-blur-[6.7px]">
+      <div className="bg-[rgba(169,126,255,0.08)] rounded-lg border border-[#5228A4] mt-10 mx-8 overflow-hidden backdrop-blur-[6.7px]">
         <div className="bg-[#39246b] px-3 flex items-center w-full h-[53px]">
           <div className="text-white text-2xl font-medium">
             Total Withdraw Request:
@@ -119,9 +127,9 @@ const  Withdraw =()=> {
 
         <div className="flex flex-col gap-6 p-6">
           {isLoading ? (
-            <div className="text-center text-white text-lg font-semibold">
-              Loading withdrawal requests...
-            </div>
+           <div className="flex flex-col h-[200px] items-center justify-center text-center  mt-5  ">
+                               <SkeletonCard />
+                             </div>
           ) : withdrawRequests.length === 0 ? (
             <div className="text-center text-white text-lg font-semibold">
               No active withdrawal requests.
@@ -202,9 +210,9 @@ const  Withdraw =()=> {
             ))
           )}
         </div>
-      </div> */}
+      </div>
     </div>
   );
-}
+};
 
 export default Withdraw;
