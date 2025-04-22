@@ -338,34 +338,34 @@ const Proposals = () => {
     }
   }
   const handleSubmitTokenChangeForm = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Validate form inputs
     if (!validateForm(tokenPriceChangeForm)) {
-      return
+      return;
     }
 
     // Prepare start and end datetime
-    const startDateTime = new Date(tokenPriceChangeForm.startDate)
-    const [startHours, startMinutes] = tokenPriceChangeForm.startTime.split(':')
+    const startDateTime = new Date(tokenPriceChangeForm.startDate);
+    const [startHours, startMinutes] = tokenPriceChangeForm.startTime.split(':');
     startDateTime.setHours(
       parseInt(startHours, 10),
       parseInt(startMinutes, 10),
       0,
-      0,
-    )
+      0
+    );
 
-    const endDateTime = new Date(tokenPriceChangeForm.endDate)
-    const [endHours, endMinutes] = tokenPriceChangeForm.endTime.split(':')
+    const endDateTime = new Date(tokenPriceChangeForm.endDate);
+    const [endHours, endMinutes] = tokenPriceChangeForm.endTime.split(':');
     endDateTime.setHours(
       parseInt(endHours, 10),
       parseInt(endMinutes, 10),
       59,
-      0,
-    )
+      0
+    );
 
     try {
-      setLoadingButton(true)
+      setLoadingButton(true);
 
       // Submit proposal data
       const proposalPayload = {
@@ -377,63 +377,71 @@ const Proposals = () => {
         proposal: tokenPriceChangeForm.proposalText,
         description: tokenPriceChangeForm.proposalDescription,
         vote_type: tokenPriceChangeForm.voteType,
-        desire_token_buy_back_price:
-          tokenPriceChangeForm.desireTokenBuyBackPrice,
+        desire_token_buy_back_price: tokenPriceChangeForm.desireTokenBuyBackPrice,
         desire_token_price: tokenPriceChangeForm.desireTokenPrice,
-      }
+      };
 
       const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL
-        }/manifest/proposal/update-token-price`,
-        proposalPayload,
-      )
+        `${import.meta.env.VITE_BACKEND_URL}/manifest/proposal/update-token-price`,
+        proposalPayload
+      );
 
-      console.log('Proposal submitted successfully:', res.data)
-      setManifest(res.data)
+      console.log('Proposal submitted successfully:', res.data);
 
-      const { receipt } = await sendTransaction(manifest)
+      // Check if response data exists before proceeding
+      if (res.data) {
+        const { receipt } = await sendTransaction(res.data);
 
-      if (receipt?.transaction?.intent_hash) {
-        const txId = receipt.transaction.intent_hash
+        // Check if receipt exists and has the required transaction data
+        if (receipt?.transaction?.intent_hash) {
+          const txId = receipt.transaction.intent_hash;
 
-        try {
-          const response = await axios.post(
-            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
-            {
-              tx_id: txId,
-              user_address: accounts[0]?.address,
-            },
-            {
-              headers: { 'Content-Type': 'application/json' },
-            },
-          )
+          try {
+            const response = await axios.post(
+              `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+              {
+                tx_id: txId,
+                user_address: accounts[0]?.address,
+              },
+              {
+                headers: { 'Content-Type': 'application/json' },
+              }
+            );
 
-          console.log(response.data)
-          toast.success('Proposal Submitted Successfully')
-          setLoadingButton(false)
-          location.reload()
-        } catch (error) {
-          console.error(
-            'Error during transaction submission:',
-            error.response?.data,
-          )
-          toast.error('Something went wrong during transaction submission')
-          setLoadingButton(false)
+            console.log(response.data);
+            toast.success('Proposal Submitted Successfully');
+            setLoadingButton(false);
+            location.reload();
+          } catch (error) {
+            console.error(
+              'Error during transaction submission:',
+              error.response?.data
+            );
+            toast.error('Something went wrong during transaction submission');
+            setLoadingButton(false);
+          }
+        } else {
+          // Handle case when receipt doesn't have expected format
+          toast.error('Transaction receipt is incomplete or invalid');
+          setLoadingButton(false);
         }
+      } else {
+        // Handle case when response data is empty
+        toast.error('No data received from server');
+        setLoadingButton(false);
       }
     } catch (error) {
       console.error(
         'Error submitting proposal:',
-        error.response?.data?.detail?.error || error.message,
-      )
+        error.response?.data?.detail?.error || error.message
+      );
       toast.error(
         error.response?.data?.detail?.error?.toUpperCase() ||
-        'Failed to submit proposal',
-      )
-    } finally {
-      setLoadingButton(false)
+        'Failed to submit proposal'
+      );
+      setLoadingButton(false);
     }
-  }
+  };
 
   const handleAgainst = async () => {
     setVote(true)
@@ -1082,8 +1090,8 @@ const Proposals = () => {
                   setActiveProposal(null) // Ensure no proposal is active
                 }}>
                 <ChevronLeft /> <span className='' >Back</span>
-              </div>   
-                <span className="step-2-describe-your-dao-span3 text-amber-50 whitespace-nowrap">Proposal Form</span>
+              </div>
+              <span className="step-2-describe-your-dao-span3 text-amber-50 whitespace-nowrap">Proposal Form</span>
 
 
             </div>
@@ -1471,10 +1479,10 @@ const Proposals = () => {
                   />
                 </div>
               </div>
-             
+
               {loadingButton ? (
                 <Button variant="brand" disabled
-                className="z-50 h-12 text-xl"
+                  className="z-50 h-12 text-xl"
 
                 >
                   Submitting....
