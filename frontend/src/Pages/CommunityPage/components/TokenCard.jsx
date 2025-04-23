@@ -389,10 +389,10 @@ const TokenCard = ({ data, onSuccess }) => {
           <select
             value={selected.code} // Use .code here since we're storing the full object
             onChange={handleChange}
-            className="text-black bg-brand7 border p-2 rounded"
+            className="text-white bg-[rgba(169,126,255,0.2)]  backdrop-blur-md  border p-2 rounded-2xl hover:bg-brand3 border-brand3"
           >
             {currencies.map((c) => (
-              <option key={c.code} value={c.code}> {/* The value is just the code */}
+              <option className="bg-brand5 hover:bg-slate-100" key={c.code} value={c.code}> {/* The value is just the code */}
                 {c.symbol} - {c.code}
               </option>
             ))}
