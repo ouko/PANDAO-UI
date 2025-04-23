@@ -612,14 +612,13 @@ const BondIssue = () => {
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger></DialogTrigger>
-          <DialogContent className="max-w-2xl  bg-[rgba(169,126,255,0.34)] text-white  border-[1px] border-brand3 ">
-            <h2 className="text-xl font-bold">Confirm Submission</h2>
-            <p>Review the details below before submitting:</p>
+          <DialogContent className="max-w-2xl bg-[rgba(169,126,255,0.2)] text-white backdrop-blur-md border border-brand3 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-bold mb-2">Confirm Submission</h2>
+            <p className="mb-4 text-white/90">Review the details below before submitting:</p>
 
-            {/* Display the submitted data */}
-            <div className=" p-4 rounded-lg text-left max-h-96 overflow-auto">
-              <ul className="space-y-2 bg-[rgba(169,126,255,0.34)] text-black ">
-                <li>
+            <div className="p-4 text-left max-h-96 overflow-y-auto rounded-md bg-[rgba(133,115,170,0.2)] ">
+              <ul className="space-y-2 px-2">
+              <li>
                   <strong>Community ID:</strong> {params.id}
                 </li>
                 <li>
@@ -668,8 +667,8 @@ const BondIssue = () => {
                 </li>
                 <li>
                   <strong>NFT:</strong> {bond.nft}
-                </li>
-                {/* <li>
+                </li>         
+                        {/* <li>
               <strong>Bond Icon:</strong>
               <div className="mt-2">
                 <img
@@ -692,6 +691,7 @@ const BondIssue = () => {
               </Button>
             </div>
           </DialogContent>
+
         </Dialog>
       </div>
     </div>
