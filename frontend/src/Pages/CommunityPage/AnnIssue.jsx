@@ -1,6 +1,6 @@
 import { useAccount } from '@/AccountContext'
 import { Input } from '@/components/ui/input'
-import { AlertCircle} from 'lucide-react'
+import { AlertCircle } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import PropTypes from 'prop-types'
@@ -22,6 +22,11 @@ import {
 } from '@/components/ui/select'
 import { useSendTransaction } from '@/hooks/useSendTransaction'
 import { useAnnFormStore } from '@/store/AnnStore/AnnFormStore'
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 
 const FormInput = ({
   label,
@@ -86,6 +91,7 @@ const AnnIssue = () => {
   const [loading, setLoading] = useState(false)
   const [nfts, setNfts] = useState([])
   const [selectedNft, setSelectedNft] = useState(null)
+  const [open, setOpen] = useState(false)
 
 
 
@@ -144,10 +150,10 @@ const AnnIssue = () => {
           user_address: accounts[0].address,
           initial_exchange_date: new Date(annuity.initial_exchange_date).toISOString(),
           maturity_date: new Date(annuity.maturity_date).toISOString(),
-          nft: selectedNft, 
+          nft: selectedNft,
         },
       )
-      
+
 
       if (res.status === 200) {
         setManifest(res.data)
@@ -211,13 +217,13 @@ const AnnIssue = () => {
       'ann_position',
       'price',
       'number_of_ann',
-    
-      
-      
+
+
+
     ]
 
     const allFieldsFilled = requiredFields.every((field) => annuity[field])
-    console.log('Form complete:', allFieldsFilled); 
+    console.log('Form complete:', allFieldsFilled);
     setIsFormComplete(allFieldsFilled)
   }, [annuity])
   if (!accounts || accounts.length === 0) {
@@ -230,7 +236,7 @@ const AnnIssue = () => {
         <div className="space-y-6 md:w-[100%] ">
           <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
             <div className="md:w-[100%] space-y-6  ">
-              <div className =" rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden ">  
+              <div className=" rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden ">
                 <div className="flex flex-row  gap-10 items-center w-full">
                   <div
                     className="bg-[#321e58] rounded-full p-5 z-50 flex items-center justify-center w-24 h-24">
@@ -266,16 +272,16 @@ const AnnIssue = () => {
                       value={params.id}
                       disabled="true"
                       tooltipText="Unique identifier for the community"
-                     
+
                     />
-                     <FormInput
+                    <FormInput
                       label="Description"
                       name="description"
                       onChange={handleChange}
                       value={annuity.description}
                       placeholder="Enter description here"
                     />
-                     <FormInput
+                    <FormInput
                       label="Name"
                       name="name"
                       onChange={handleChange}
@@ -320,9 +326,9 @@ const AnnIssue = () => {
                       tooltipText='Total Number of ANN Token'
                     />
 
-                  
-                  
-                 
+
+
+
                     <FormInput
                       label="Nominal Interest Rate"
                       type="number"
@@ -355,11 +361,11 @@ const AnnIssue = () => {
                       onChange={handleChange}
                       tooltipText='Principal amount of the Token'
                     />
-                 
+
                     <div>
                       <div>Select Position</div>
                       <Select
-                      className="flex items-center justify-center"
+                        className="flex items-center justify-center"
                         onValueChange={(value) =>
                           updateAnnuity('ann_position', value)
                         }
@@ -374,61 +380,62 @@ const AnnIssue = () => {
                       </Select>
 
 
-                      
+
                     </div>
 
                     <div>
-                      
-  <div>Select NFT</div>
-  <Select
-    className="flex items-center justify-center"
-    onValueChange={(value) => {
-      setSelectedNft(value);
-      updateAnnuity('nft', value); 
-    }}
-  >
-    <SelectTrigger className="w-full">
-      <SelectValue placeholder="Select NFT" />
-    </SelectTrigger>
-    <SelectContent>
-      {nfts.length > 0 ? (
-        nfts.map((item, index) => (
-          <SelectItem
-            key={index}
-            value={item.resource_address}
-          >
-            {item.name || item.icon_url ? (
-              <div className="flex items-center gap-2">
-                <img
-                  className="h-5 w-5 rounded-full shadow-md"
-                  src={item.icon_url}
-                  alt=""
-                />
-                {item.name && <span>{item.name}</span>}
-              </div>
-            ) : (
-              'Unnamed Item'
-            )}
-          </SelectItem>
-        ))
-      ) : (
-        <div className="p-4 text-center text-gray-500">
-          No NFTs available
-        </div>
-      )}
-    </SelectContent>
-  </Select>
-</div>
 
-                   
+                      <div>Select NFT</div>
+                      <Select
+                        className="flex items-center justify-center"
+                        onValueChange={(value) => {
+                          setSelectedNft(value);
+                          updateAnnuity('nft', value);
+                        }}
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select NFT" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {nfts.length > 0 ? (
+                            nfts.map((item, index) => (
+                              <SelectItem
+                                key={index}
+                                value={item.resource_address}
+                              >
+                                {item.name || item.icon_url ? (
+                                  <div className="flex items-center gap-2">
+                                    <img
+                                      className="h-5 w-5 rounded-full shadow-md"
+                                      src={item.icon_url}
+                                      alt=""
+                                    />
+                                    {item.name && <span>{item.name}</span>}
+                                  </div>
+                                ) : (
+                                  'Unnamed Item'
+                                )}
+                              </SelectItem>
+                            ))
+                          ) : (
+                            <div className="p-4 text-center text-gray-500">
+                              No NFTs available
+                            </div>
+                          )}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+
 
 
                   </div>
                   <div className="flex items-center z-50 justify-center">
-                    <Button type="submit" 
-                    variant="brand"
-                    className="w-1/2 mt-5"
-                     disabled={!isFormComplete || loading }>
+                    <Button type="submit"
+                      variant="brand"
+                      className="w-1/2 mt-5"
+                      disabled={!isFormComplete || loading} onClick={() => setOpen(!open)}  >
+
                       Submit
                     </Button>
                   </div>
@@ -437,6 +444,43 @@ const AnnIssue = () => {
             </div>
           </div>
         </div>
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger></DialogTrigger>
+          <DialogContent className="max-w-2xl bg-[rgba(169,126,255,0.2)] text-white backdrop-blur-md border border-brand3 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-bold mb-2">Confirm Submission</h2>
+            <p className="mb-4 text-white/90">Review the details below before submitting:</p>
+
+            <div className="p-4 text-left max-h-96 overflow-y-auto rounded-md bg-[rgba(133,115,170,0.2)]">
+              <ul className="space-y-2 px-2">
+                <li><strong>Community ID:</strong> {params.id}</li>
+                <li><strong>Name:</strong> {annuity.name}</li>
+                <li><strong>Description:</strong> {annuity.description}</li>
+                <li><strong>Contract Type:</strong> {annuity.contract_type}</li>
+                <li><strong>Contract Role:</strong> {annuity.contract_role}</li>
+                <li><strong>Contract Identity:</strong> {annuity.contract_identity}</li>
+                <li><strong>Price:</strong> {annuity.price}</li>
+                <li><strong>Number of ANN:</strong> {annuity.number_of_ann}</li>
+                <li><strong>Nominal Interest Rate:</strong> {annuity.nominal_interest_rate}</li>
+                <li><strong>Initial Exchange Date:</strong> {annuity.initial_exchange_date}</li>
+                <li><strong>Maturity Date:</strong> {annuity.maturity_date}</li>
+                <li><strong>Notional Principal:</strong> {annuity.notional_principal}</li>
+                <li><strong>ANN Position:</strong> {annuity.ann_position}</li>
+                <li><strong>NFT:</strong> {annuity.nft}</li>
+                <li><strong>User Address:</strong> {accounts[0]?.address}</li>
+              </ul>
+            </div>
+
+            <div className="flex items-center justify-end space-x-4">
+              <Button
+                variant="brand"
+                disabled={loading}
+                onClick={handleformSubmit}
+              >
+                Confirm
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   )
