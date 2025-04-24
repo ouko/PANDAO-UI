@@ -41,9 +41,9 @@ const TokenCard = ({ data, onSuccess }) => {
   const [tokenToSell, setTokenToSell] = useState(0);
   const sendTransaction = useSendTransaction()
   const { setOpen, setText } = useCustomAlertStore()
-  const [selected, setSelected] = useState("USD");
+  const [selected, setSelected] = useState(currencies[0]);
   const [token, setToken] = useState(0)
-  const [tokenPrice, setTokenPrice] = useState("")
+  const [tokenPrice, setTokenPrice] = useState(null)
   const handleChange = (e) => {
     // e.target.value gives us the string value of the option
     const selectedCode = e.target.value;
@@ -279,8 +279,8 @@ const TokenCard = ({ data, onSuccess }) => {
 
 
   if (!data) return null;
-  console.log(selected)
-  console.log(tokenPrice, "faisal");
+  // console.log(selected)
+  // console.log("%c" +  "faisal", "font-size:20px;color:#007acc;font-weight:bold;background:#f0f0f0;border-radius:3px;padding:2px", tokenPrice);
 
   return (
     <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-solid border-[#5228A4] border pt-[13px] pr-[25px] pb-[13px] pl-[25px] shrink-0 min-h-[345px] relative overflow-hidden backdrop-blur-[6.7px]">
@@ -427,12 +427,16 @@ const TokenCard = ({ data, onSuccess }) => {
               </tr>
               <tr>
                 <td className=" pr-4 text-purple-400 uppercase font-medium">Token Price in {selected.code}:</td>
-                <td className="">{(Math.round(tokenPrice.token_price_in_fiat * 10000) / 10000).toFixed(4)} {selected.symbol}</td>
+                <td className="">{tokenPrice && tokenPrice.token_price_in_fiat !== undefined
+                  ? (Math.round(tokenPrice.token_price_in_fiat * 10000) / 10000).toFixed(4)
+                  : '...'} {selected.symbol}</td>
               </tr>
               <tr>
                 <td className=" pr-4 text-purple-400 uppercase font-medium">Token Buy Back Price in {selected.code}:</td>
                 <td className="">
-                  {(Math.round(tokenPrice.token_buy_back_price_in_fiat * 10000) / 10000).toFixed(4)} {selected.symbol}
+                  {tokenPrice && tokenPrice.token_buy_back_price_in_fiat !== undefined
+                    ? (Math.round(tokenPrice.token_buy_back_price_in_fiat * 10000) / 10000).toFixed(4)
+                    : '...'} {selected.symbol}
                 </td>
               </tr>
             </tbody>
