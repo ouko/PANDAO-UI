@@ -86,9 +86,11 @@ const CommunityDetails = () => {
   })
 
   const handleSuccess = () => {
-    queryClient.invalidateQueries({ queryKey: ['participants', 'community', params.id] });
-    queryClient.refetchQueries({ queryKey: ['participants', 'community', params.id] });
-  }
+    queryClient.refetchQueries({
+      queryKey: ['participants', 'community', params.id],
+      type: 'active'
+    });
+  };
 
   const { data: communities = [], isLoading: isLoadingCommunities } = useQuery({
     queryKey: ['discussions', params.id],
