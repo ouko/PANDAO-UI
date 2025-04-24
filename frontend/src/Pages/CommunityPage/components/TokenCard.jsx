@@ -9,7 +9,7 @@ import {
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useAccount } from '@/AccountContext';
 import { useParams } from 'react-router-dom';
@@ -20,20 +20,8 @@ import useCustomAlertStore from '@/store/customAlertStore';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Label as Label2, Pie, PieChart } from "recharts"
 import { Button } from '@/components/ui/button';
-const currencies = [
-  { code: "USD", symbol: "$" },
-  { code: "EUR", symbol: "€" },
-  { code: "GBP", symbol: "£" },
-  { code: "INR", symbol: "₹" },
-  { code: "JPY", symbol: "¥" },
-  { code: "CNY", symbol: "¥" },
-  { code: "AUD", symbol: "A$" },
-  { code: "CAD", symbol: "C$" },
-  { code: "KRW", symbol: "₩" },
-  { code: "RUB", symbol: "₽" },
-  { code: "BRL", symbol: "R$" },
-  { code: "ZAR", symbol: "R" },
-];
+import { currencies } from '@/utils/data/currencies';
+
 
 const TokenCard = ({ data, onSuccess }) => {
   const [openSellModal, setSellModal] = useState(false);
@@ -41,7 +29,7 @@ const TokenCard = ({ data, onSuccess }) => {
   const [tokenToSell, setTokenToSell] = useState(0);
   const sendTransaction = useSendTransaction()
   const { setOpen, setText } = useCustomAlertStore()
-  const [selected, setSelected] = useState("USD");
+  const [selected, setSelected] = useState(currencies[0]);
   const [token, setToken] = useState(0)
   const [tokenPrice, setTokenPrice] = useState("")
   const handleChange = (e) => {
@@ -279,8 +267,7 @@ const TokenCard = ({ data, onSuccess }) => {
 
 
   if (!data) return null;
-  console.log(selected)
-  console.log(tokenPrice, "faisal");
+
 
   return (
     <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-solid border-[#5228A4] border pt-[13px] pr-[25px] pb-[13px] pl-[25px] shrink-0 min-h-[345px] relative overflow-hidden backdrop-blur-[6.7px]">
