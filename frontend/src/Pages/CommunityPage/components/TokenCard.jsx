@@ -9,7 +9,7 @@ import {
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import  { useEffect, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useAccount } from '@/AccountContext';
 import { useParams } from 'react-router-dom';
@@ -22,6 +22,7 @@ import { Label as Label2, Pie, PieChart } from "recharts"
 import { Button } from '@/components/ui/button';
 import { currencies } from '@/utils/data/currencies';
 import useBluePrintSlugStore from '@/store/blueprintSlug';
+import { useQuery } from '@tanstack/react-query';
 
 
 const TokenCard = ({ data, onSuccess }) => {
@@ -32,8 +33,7 @@ const TokenCard = ({ data, onSuccess }) => {
   const { setOpen, setText } = useCustomAlertStore()
   const [selected, setSelected] = useState(currencies[0]);
   const [token, setToken] = useState(0)
-  const [tokenPrice, setTokenPrice] = useState("")
-  const { slug  } = useBluePrintSlugStore()
+  const { slug } = useBluePrintSlugStore()
 
   const handleChange = (e) => {
     // e.target.value gives us the string value of the option
@@ -217,19 +217,13 @@ const TokenCard = ({ data, onSuccess }) => {
   };
 
 
-  useEffect(() => {
-    const fetchTokenData = async () => {
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/community/detail/${params.id}/${selected.code}`);
-        if (res.status === 200) {
-          setTokenPrice(res.data)
-        }
-      } catch (error) {
-        console.error('Error fetching slug:', error)
-      }
-    };
-    fetchTokenData()
-  }, [params.id, selected]);
+  const { data: tokenPrice, isLoading: tokenPriceLoading } = useQuery({
+    queryKey: ['tokenPrice', params.id, selected.code],
+    queryFn: async () => {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/community/detail/${params.id}/${selected.code}`);
+      return res.data;
+    }
+  });
 
   const chartData = [
     {
@@ -403,13 +397,27 @@ const TokenCard = ({ data, onSuccess }) => {
               </tr>
               <tr>
                 <td className=" pr-4 text-purple-400 uppercase font-medium">Token Price in {selected.code}:</td>
-                <td className="">{(Math.round(tokenPrice.token_price_in_fiat * 10000) / 10000).toFixed(4)} {selected.symbol}</td>
+                <td className="">
+                  {tokenPriceLoading ? (<div className="inline-block h-[1em] w-12 rounded bg-brand5 animate-pulse align-text-bottom" />
+                  ) :
+                    tokenPrice ? (Math.round(tokenPrice.token_price_in_fiat * 10000) / 10000).toFixed(4) : '0'} {selected.symbol}
+                </td>
               </tr>
               <tr>
                 <td className=" pr-4 text-purple-400 uppercase font-medium">Token Buy Back Price in {selected.code}:</td>
                 <td className="">
-                  {(Math.round(tokenPrice.token_buy_back_price_in_fiat * 10000) / 10000).toFixed(4)} {selected.symbol}
+                  {tokenPriceLoading ? (
+                    // shimmer placeholder
+                    <div className="inline-block h-[1em] w-12 rounded bg-brand5 animate-pulse align-text-bottom" />
+                  ) : tokenPrice ? (
+                    (Math.round(tokenPrice.token_buy_back_price_in_fiat * 10000) / 10000)
+                      .toFixed(4)
+                  ) : (
+                    '0'
+                  )}{' '}
+                  {selected.symbol}
                 </td>
+
               </tr>
             </tbody>
           </table>
