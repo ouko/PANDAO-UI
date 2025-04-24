@@ -52,7 +52,7 @@ const CommunityDetails = () => {
   const { accounts } = useAccount()
   const [execOpen, setExecOpen] = useState(false)
   const [transferOpen, setTransferOpen] = useState(false)
-  const { setSlug } = useBluePrintSlugStore()
+  const { setSlug  } = useBluePrintSlugStore()
   const [executiveName, setExecutiveName] = useState("")
   const navigate = useNavigate()
   const params = useParams()
@@ -65,7 +65,7 @@ const CommunityDetails = () => {
     queryKey: ['community', params.id],
     queryFn: async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/detail/${params.id}?fiat_symbol=USD`,
+        `${import.meta.env.VITE_BACKEND_URL}/community/detail/${params.id}`,
       )
       if (res.status === 200) {
         setSlug(res.data.blueprint_slug)

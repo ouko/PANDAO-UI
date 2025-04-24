@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Check, Copy, Info } from 'lucide-react';
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import { Button } from '@/components/ui/button';
@@ -16,34 +16,20 @@ import { useAccount } from '@/AccountContext';
 import { toast } from 'sonner';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import useBluePrintSlugStore from '@/store/blueprintSlug';
 
 
 const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onSuccess, isOwner }) => {
   const [copied, setCopied] = useState(false);
   const [copied1, setCopied1] = useState(false);
   const [quickStartOpen, setQuickStartOpen] = useState(false)
+  const { slug } = useBluePrintSlugStore()
 
   const { accounts } = useAccount()
   const params = useParams()
   const navigate = useNavigate()
-  const [slug, setSlug] = useState("")
 
-  useEffect(() => {
-    const fetchDetails = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/community/detail/${params.id}`,
-        )
-        if (res.status === 200) {
-          console.log(res.data.blueprint_slug, 'res')
-          setSlug(res.data.blueprint_slug?.toLowerCase())
-        }
-      } catch (error) {
-        console.error('Error fetching blueprint data:', error)
-      }
-    }
-    fetchDetails()
-  }, [params.id])
+ 
 
 
   const handleJoinCommunity = async () => {

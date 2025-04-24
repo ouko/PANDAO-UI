@@ -21,6 +21,7 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/
 import { Label as Label2, Pie, PieChart } from "recharts"
 import { Button } from '@/components/ui/button';
 import { currencies } from '@/utils/data/currencies';
+import useBluePrintSlugStore from '@/store/blueprintSlug';
 
 
 const TokenCard = ({ data, onSuccess }) => {
@@ -32,6 +33,8 @@ const TokenCard = ({ data, onSuccess }) => {
   const [selected, setSelected] = useState(currencies[0]);
   const [token, setToken] = useState(0)
   const [tokenPrice, setTokenPrice] = useState("")
+  const { slug  } = useBluePrintSlugStore()
+
   const handleChange = (e) => {
     // e.target.value gives us the string value of the option
     const selectedCode = e.target.value;
@@ -52,7 +55,6 @@ const TokenCard = ({ data, onSuccess }) => {
   const [loading, setLoading] = useState(false)
   const { accounts } = useAccount()
   const params = useParams()
-  const [slug, setSlug] = useState("")
 
 
   const handleSellToken = async () => {
@@ -214,20 +216,7 @@ const TokenCard = ({ data, onSuccess }) => {
     }
   };
 
-  useEffect(() => {
-    const fetchSlug = async () => {
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/community/detail/${params.id}`);
-        if (res.status === 200) {
-          setSlug(res.data.blueprint_slug);
-        }
-      } catch (error) {
-        console.error('Error fetching slug:', error);
-      }
-    };
 
-    fetchSlug();
-  }, [params.id]);
   useEffect(() => {
     const fetchTokenData = async () => {
       try {
