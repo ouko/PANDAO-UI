@@ -42,16 +42,17 @@ const TokenCard = ({ data, onSuccess }) => {
   const sendTransaction = useSendTransaction()
   const { setOpen, setText } = useCustomAlertStore()
   const [selected, setSelected] = useState("USD");
-
+  const [token, setToken] = useState(0)
+  const [tokenPrice, setTokenPrice] = useState("")
   const handleChange = (e) => {
     // e.target.value gives us the string value of the option
     const selectedCode = e.target.value;
     // Find the currency object that matches this code
     const selectedCurrency = currencies.find(c => c.code === selectedCode);
-    
+
     if (selectedCurrency) {
       setSelected(selectedCurrency);
-      
+
       // If onSelect prop exists, pass only the code
       // if (onSelect) {
       //   onSelect(selectedCurrency.code);
@@ -59,7 +60,6 @@ const TokenCard = ({ data, onSuccess }) => {
     }
   };
 
-  const [token, setToken] = useState(0);
 
   const [loading, setLoading] = useState(false)
   const { accounts } = useAccount()
@@ -240,6 +240,19 @@ const TokenCard = ({ data, onSuccess }) => {
 
     fetchSlug();
   }, [params.id]);
+  useEffect(() => {
+    const fetchTokenData = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/community/detail/${params.id}/${selected.code}`);
+        if (res.status === 200) {
+          setTokenPrice(res.data)
+        }
+      } catch (error) {
+        console.error('Error fetching slug:', error)
+      }
+    };
+    fetchTokenData()
+  }, [params.id, selected]);
 
   const chartData = [
     {
@@ -267,6 +280,7 @@ const TokenCard = ({ data, onSuccess }) => {
 
   if (!data) return null;
   console.log(selected)
+  console.log(tokenPrice, "faisal");
 
   return (
     <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-solid border-[#5228A4] border pt-[13px] pr-[25px] pb-[13px] pl-[25px] shrink-0 min-h-[345px] relative overflow-hidden backdrop-blur-[6.7px]">
@@ -413,12 +427,12 @@ const TokenCard = ({ data, onSuccess }) => {
               </tr>
               <tr>
                 <td className=" pr-4 text-purple-400 uppercase font-medium">Token Price in {selected.code}:</td>
-                <td className="">{(Math.round(data.token_price_in_fiat * 10000) / 10000).toFixed(4)} {selected.symbol}</td>
+                <td className="">{(Math.round(tokenPrice.token_price_in_fiat * 10000) / 10000).toFixed(4)} {selected.symbol}</td>
               </tr>
               <tr>
                 <td className=" pr-4 text-purple-400 uppercase font-medium">Token Buy Back Price in {selected.code}:</td>
                 <td className="">
-                  {(Math.round(data.token_buy_back_price_in_fiat * 10000) / 10000).toFixed(4)} {selected.symbol}
+                  {(Math.round(tokenPrice.token_buy_back_price_in_fiat * 10000) / 10000).toFixed(4)} {selected.symbol}
                 </td>
               </tr>
             </tbody>
