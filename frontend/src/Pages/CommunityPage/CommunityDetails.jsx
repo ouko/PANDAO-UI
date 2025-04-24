@@ -85,12 +85,12 @@ const CommunityDetails = () => {
     },
   })
 
-  const handleSuccess = () => {
-    queryClient.refetchQueries({
-      queryKey: ['participants', 'community', params.id],
-      type: 'active'
-    });
-  };
+  // const handleSuccess = () => {
+  //   queryClient.refetchQueries({
+  //     queryKey: ['participants', 'community', params.id],
+  //     type: 'active'
+  //   });
+  // };
 
   const { data: communities = [], isLoading: isLoadingCommunities } = useQuery({
     queryKey: ['discussions', params.id],
@@ -298,7 +298,7 @@ const CommunityDetails = () => {
               setTransferOpen={setTransferOpen}
               setExecOpen={setExecOpen}
               isOwner={isOwner}
-              onSuccess={handleSuccess}
+              // onSuccess={handleSuccess}
             />
 
             <div className="flex md:flex-row flex-col w-full mx-auto gap-[16px]">
