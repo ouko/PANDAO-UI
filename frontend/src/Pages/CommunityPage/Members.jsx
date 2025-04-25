@@ -50,6 +50,7 @@ const Members = () => {
   const [loading2, setLoading2] = useState(false)
   const queryClient = useQueryClient();
 
+  const [modalOpen, setModalOpen] = useState(false);
   const { data: participants = [], isLoading: loading } = useQuery({
     queryKey: ['participants', params.id],
     queryFn: async () => {
@@ -102,6 +103,8 @@ const Members = () => {
             },
           )
           toast.success('Transfer Token Successfully!')
+          setModalOpen(false)
+
           queryClient.invalidateQueries({ queryKey: ['participants', params.id] });
         } catch (submitError) {
           console.error('Error submitting transaction:', submitError)
@@ -234,7 +237,7 @@ const Members = () => {
                       </div>
 
                       <div className="flex flex-col md:flex-row z-20 items-start md:items-center  gap-4">
-                        <Dialog>
+                        <Dialog open={modalOpen} onOpenChange={setModalOpen}>
                           <DialogTrigger>
                             <div className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-white text-[14px] leading-5 font-medium">
                               View Details
