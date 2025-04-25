@@ -17,9 +17,10 @@ import { toast } from 'sonner';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import useBluePrintSlugStore from '@/store/blueprintSlug';
+import PropTypes from 'prop-types';
 
 
-const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onSuccess, isOwner }) => {
+const DaoCard = ({ daoData, isUserParticipant,  setExecOpen, onSuccess, isOwner }) => {
   const [copied, setCopied] = useState(false);
   const [copied1, setCopied1] = useState(false);
   const [quickStartOpen, setQuickStartOpen] = useState(false)
@@ -298,5 +299,12 @@ const DaoCard = ({ daoData, isUserParticipant, setTransferOpen, setExecOpen, onS
 
   );
 };
-
+DaoCard.propTypes = {
+  daoData: PropTypes.object.isRequired,
+  isUserParticipant: PropTypes.bool.isRequired,
+  setTransferOpen: PropTypes.func.isRequired,
+  setExecOpen: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
+  isOwner: PropTypes.bool.isRequired,
+};
 export default DaoCard;
