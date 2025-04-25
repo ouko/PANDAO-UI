@@ -88,6 +88,7 @@ const CommunityDetails = () => {
   const handleSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['participants', params.id] });
     queryClient.invalidateQueries({ queryKey: ['community', params.id] });
+    queryClient.invalidateQueries({ queryKey: ['withdrawRequests', params.id] });
   };
 
   const { data: communities = [], isLoading: isLoadingCommunities } = useQuery({
@@ -306,7 +307,7 @@ const CommunityDetails = () => {
               <div className="w-full space-y-4">
                 <TokenCard data={communityData} />
                 <TotalFund data={communityData} />
-                <WithdrawCard withDrawRequest={withDrawRequest} participant={participants} />
+                <WithdrawCard withDrawRequest={withDrawRequest} participant={participants} onSuccess={handleSuccess} />
 
               </div>
               <div className="w-full space-y-4">

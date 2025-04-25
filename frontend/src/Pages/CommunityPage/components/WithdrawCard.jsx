@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 
-const WithdrawCard = ({ withDrawRequest, participant }) => {
+const WithdrawCard = ({ withDrawRequest, participant,onSuccess }) => {
   const [loading, setLoading] = useState(false)
   const params = useParams()
   const { accounts } = useAccount()
@@ -70,6 +70,8 @@ console.log(participant,"faisal")
 
           console.log('Submit Transaction Response:', submitResponse.data)
           toast.success('Sign Withdraw Request Successfully!')
+          onSuccess()
+
         } catch (submitError) {
           console.error('Error submitting transaction:', submitError)
           toast.error('Failed to submit transaction.')
