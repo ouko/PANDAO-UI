@@ -28,7 +28,6 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 
-import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { SkeletonCard } from '../GlobalComponents/Skeleton'
 import { Button } from '@/components/ui/button'
@@ -40,6 +39,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useState } from 'react'
 
 const Members = () => {
   const { accounts } = useAccount()
@@ -47,25 +48,20 @@ const Members = () => {
   const params = useParams()
   const sendTransaction = useSendTransaction()
   const [loading2, setLoading2] = useState(false)
-  const [participants, setParticipants] = useState([])
-  const [loading, setLoading] = useState(true)
+  const queryClient = useQueryClient();
 
-
-  const fetchParticipant = async () => {
-    try {
+  const { data: participants = [], isLoading: loading } = useQuery({
+    queryKey: ['participants', params.id],
+    queryFn: async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/participant/${params.id
-        }`,
-      )
-      setParticipants(res.data)
-      setLoading(false)
-    } catch (error) {
-      console.error('Error fetching blueprint data:', error)
-    }
-  }
+        `${import.meta.env.VITE_BACKEND_URL}/community/participant/${params.id}`
+      );
+      return res.data;
+    },
+  });
+
   const handleTransfer = async (transferAddress) => {
     if (transferAddress.trim() === "") {
-
       toast.error("Fill Fields")
       return
     }
@@ -74,14 +70,10 @@ const Members = () => {
       user_address: accounts[0].address,
       community_id: params.id,
       recipient: transferAddress
-
     }
-
-
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL
-        }/manifest/transfer-executive-token`,
+        `${import.meta.env.VITE_BACKEND_URL}/manifest/transfer-executive-token`,
         data,
         {
           headers: {
@@ -89,18 +81,12 @@ const Members = () => {
           },
         },
       )
-
       const responseData =
         typeof response.data === 'string'
           ? response.data.trim()
           : JSON.stringify(response.data)
-
-      console.log('Response:', responseData)
-
       const { receipt } = await sendTransaction(responseData)
-
       const txId = receipt?.transaction?.intent_hash
-
       if (txId) {
         try {
           const submitResponse = await axios.post(
@@ -115,10 +101,8 @@ const Members = () => {
               },
             },
           )
-
-          console.log('Submit Transaction Response:', submitResponse.data)
           toast.success('Transfer Token Successfully!')
-
+          queryClient.invalidateQueries({ queryKey: ['participants', params.id] });
         } catch (submitError) {
           console.error('Error submitting transaction:', submitError)
           toast.error('Failed to submit transaction.')
@@ -126,19 +110,14 @@ const Members = () => {
       } else {
         console.error('Transaction ID not found in receipt:', receipt)
         toast.error('Transaction failed. Please try again.')
-
       }
     } catch (error) {
-      console.error('Error selling token:', error.response.data.detail)
+      console.error('Error selling token:', error.response?.data?.detail)
       toast.error('Something went wrong.')
     } finally {
       setLoading2(false)
     }
   }
-
-  useEffect(() => {
-    fetchParticipant()
-  }, [params.id])
 
   if (!accounts || accounts.length === 0) {
     navigate('/')
