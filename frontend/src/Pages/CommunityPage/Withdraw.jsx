@@ -2,49 +2,42 @@ import { useAccount } from "@/AccountContext";
 import { Button } from "@/components/ui/button";
 import { useSendTransaction } from "@/hooks/useSendTransaction";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { SkeletonCard } from "../GlobalComponents/Skeleton";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+
+const fetchWithdrawRequests = async (id) => {
+  const res = await axios.get(
+    `${import.meta.env.VITE_BACKEND_URL}/community/token-withdraw/request?c_id=${id}`
+  );
+  return res.data;
+};
 
 const Withdraw = () => {
-  const [withdrawRequests, setWithdrawRequests] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [signingId, setSigningId] = useState(null);
-
   const params = useParams();
   const { accounts } = useAccount();
   const sendTransaction = useSendTransaction();
+  const queryClient = useQueryClient();
 
-  const fetchWithdrawRequests = async () => {
-    setIsLoading(true);
-    try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/token-withdraw/request?c_id=${params.id}`
-      );
-      setWithdrawRequests(res.data);
-    } catch (error) {
-      console.error("Error fetching withdraw requests:", error);
-      toast.error("Failed to load withdrawal requests.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { data: withdrawRequests = [], isLoading } = useQuery({
+    queryKey: ["withdrawRequests", params.id],
+    queryFn: () => fetchWithdrawRequests(params.id),
+    staleTime: 30000, 
+  });
 
-  useEffect(() => {
-    fetchWithdrawRequests();
-  }, [params.id]);
+  const mutation = useMutation({
+    mutationFn: async (id) => {
+      const data = {
+        community_id: params.id,
+        user_address: accounts?.[0]?.address,
+        id,
+      };
 
-  const handleWithDrawSign = async (id) => {
-    const data = {
-      community_id: params.id,
-      user_address: accounts?.[0]?.address,
-      id,
-    };
+      setSigningId(id);
 
-    setSigningId(id);
-
-    try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/manifest/sign-withdraw-request`,
         data,
@@ -64,36 +57,32 @@ const Withdraw = () => {
       const txId = receipt?.transaction?.intent_hash;
 
       if (txId) {
-        try {
-          await axios.post(
-            `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
-            {
-              tx_id: txId,
-              user_address: accounts?.[0]?.address,
+        await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+          {
+            tx_id: txId,
+            user_address: accounts?.[0]?.address,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
             },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-
-          toast.success("Sign Withdraw Request Successfully!");
-          await fetchWithdrawRequests(); // manually refetch data
-        } catch (submitError) {
-          console.error("Error submitting transaction:", submitError);
-          toast.error("Failed to submit transaction.");
-        }
+          }
+        );
+        toast.success("Sign Withdraw Request Successfully!");
+        queryClient.invalidateQueries(["withdrawRequests", params.id]); // refetch
       } else {
         toast.error("Transaction failed. Please try again.");
       }
-    } catch (error) {
-      console.error("Error:", error);
+    },
+    onError: (error) => {
+      console.error("Mutation error:", error);
       toast.error(error?.response?.data?.message || "Something went wrong.");
-    } finally {
+    },
+    onSettled: () => {
       setSigningId(null);
-    }
-  };
+    },
+  });
 
   const totalWithdrawAmount = withdrawRequests.reduce(
     (sum, r) => sum + parseFloat(r.amount_to_withdraw || 0),
@@ -120,16 +109,14 @@ const Withdraw = () => {
 
       <div className="bg-[rgba(169,126,255,0.08)] rounded-lg border border-[#5228A4] mt-10 mx-8 overflow-hidden backdrop-blur-[6.7px]">
         <div className="bg-[#39246b] px-3 flex items-center w-full h-[53px]">
-          <div className="text-white text-2xl font-medium">
-            Total Withdraw Request:
-          </div>
+          <div className="text-white text-2xl font-medium">Total Withdraw Request:</div>
         </div>
 
         <div className="flex flex-col gap-6 p-6">
           {isLoading ? (
-           <div className="flex flex-col h-[200px] items-center justify-center text-center  mt-5  ">
-                               <SkeletonCard />
-                             </div>
+            <div className="flex flex-col h-[200px] items-center justify-center text-center mt-5">
+              <SkeletonCard />
+            </div>
           ) : withdrawRequests.length === 0 ? (
             <div className="text-center text-white text-lg font-semibold">
               No active withdrawal requests.
@@ -201,7 +188,7 @@ const Withdraw = () => {
                   <Button
                     variant="brand"
                     disabled={signingId === request.id}
-                    onClick={() => handleWithDrawSign(request.id)}
+                    onClick={() => mutation.mutate(request.id)}
                   >
                     {signingId === request.id ? "Signing..." : "Sign Withdraw Request"}
                   </Button>
