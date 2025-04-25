@@ -162,7 +162,11 @@ console.log(participant,"faisal")
                 </div>
               )}
               <div className="flex justify-end mt-4">
-                {participant.some(p => p.is_executive_member=== true) && (
+                {participant
+                  .filter(p => p.is_executive_member === true)
+                  .some(exec =>
+                    !request.signed_users.some(user => user.public_address === exec.public_address)
+                  ) && (
                   <Button
                     variant="brand"
                     disabled={loading}
