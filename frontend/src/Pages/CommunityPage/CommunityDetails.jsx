@@ -217,7 +217,7 @@ const CommunityDetails = () => {
 
       if (txId) {
         try {
-          await axios.post(
+          const response = await axios.post(
             `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
             {
               tx_id: txId,
@@ -229,22 +229,25 @@ const CommunityDetails = () => {
               },
             },
           )
+          if (response.status === 200) {
+            toast.success('Transfer Token Successfully!')
+            handleSuccess()
+          }
 
-          toast.success('Transfer Token Successfully!')
-          // Invalidate relevant queries
-          queryClient.invalidateQueries({ queryKey: ['participants', params.id] })
-          queryClient.invalidateQueries({ queryKey: ['community', params.id] })
         } catch (submitError) {
           console.error('Error submitting transaction:', submitError)
           toast.error('Failed to submit transaction.')
+          handleSuccess()
         }
       } else {
         console.error('Transaction ID not found in receipt:', receipt)
         toast.error('Transaction failed. Please try again.')
+        handleSuccess()
       }
     } catch (error) {
       console.error('Error selling token:', error.response?.data?.detail)
       toast.error('Something went wrong.')
+      handleSuccess()
     } finally {
       setLoadingMint(false)
       setTransferOpen(false)
