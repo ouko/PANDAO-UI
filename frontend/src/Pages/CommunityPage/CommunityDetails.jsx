@@ -52,7 +52,7 @@ const CommunityDetails = () => {
   const { accounts } = useAccount()
   const [execOpen, setExecOpen] = useState(false)
   const [transferOpen, setTransferOpen] = useState(false)
-  const { setSlug  } = useBluePrintSlugStore()
+  const { setSlug } = useBluePrintSlugStore()
   const [executiveName, setExecutiveName] = useState("")
   const navigate = useNavigate()
   const params = useParams()
@@ -85,12 +85,10 @@ const CommunityDetails = () => {
     },
   })
 
-  // const handleSuccess = () => {
-  //   queryClient.refetchQueries({
-  //     queryKey: ['participants', 'community', params.id],
-  //     type: 'active'
-  //   });
-  // };
+  const handleSuccess = () => {
+    queryClient.invalidateQueries({ queryKey: ['participants', params.id] });
+    queryClient.invalidateQueries({ queryKey: ['community', params.id] });
+  };
 
   const { data: communities = [], isLoading: isLoadingCommunities } = useQuery({
     queryKey: ['discussions', params.id],
@@ -266,8 +264,8 @@ const CommunityDetails = () => {
       participant.public_address === accounts[0].address &&
       participant.is_owner === true
   )
-  
-  console.log(isOwner,participants,"fasial")
+
+  console.log(isOwner, participants, "fasial")
   const isLoading = isLoadingCommunity || isLoadingParticipants || isLoadingCommunities || isLoadingWithdraw
 
   return (
@@ -278,11 +276,11 @@ const CommunityDetails = () => {
           <div className="w-full  space-y-6">
             <CardShimmer />
             <div className="flex md:flex-row flex-col w-full mx-auto gap-[16px]">
-              
-                <CardShimmer2 />
-               
-             
-            
+
+              <CardShimmer2 />
+
+
+
               <div className="w-full   space-y-4">
                 <CardShimmer />
                 <CardShimmer />
@@ -292,13 +290,13 @@ const CommunityDetails = () => {
           </div>
         ) : communityData ? (
           <div className="w-full">
-            <DaoCard 
+            <DaoCard
               daoData={communityData}
               isUserParticipant={isUserParticipant}
               setTransferOpen={setTransferOpen}
               setExecOpen={setExecOpen}
               isOwner={isOwner}
-              // onSuccess={handleSuccess}
+              onSuccess={handleSuccess}
             />
 
             <div className="flex md:flex-row flex-col w-full mx-auto gap-[16px]">
@@ -306,7 +304,7 @@ const CommunityDetails = () => {
                 <TokenCard data={communityData} />
                 <TotalFund data={communityData} />
                 <WithdrawCard withDrawRequest={withDrawRequest} participant={participants} />
-                
+
               </div>
               <div className="w-full space-y-4">
                 <div>
