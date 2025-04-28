@@ -252,7 +252,7 @@ const Activity = () => {
                               {/* Avatar */}
                               <Avatar className="h-16 w-16 rounded-lg overflow-hidden shadow-sm ring-2 ring-brand6">
                                 <img
-                                  src={ac.user_image_url}
+                                  src={ac.image_url}
                                   alt="Avatar"
                                   className="w-full h-full object-cover"
                                 />
