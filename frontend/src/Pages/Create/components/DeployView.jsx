@@ -34,6 +34,7 @@ const DeployView = () => {
   const [loading, setLoading] = useState(false)
 
   const [data, setData] = useState([])
+  const [agreed, setAgreed] = useState(false);
 
   useEffect(() => {
     if (accounts && accounts.length > 0) {
@@ -190,98 +191,103 @@ const DeployView = () => {
 
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen} >
-        <DialogTrigger></DialogTrigger>
-        <DialogContent className="bg-brand1 rounded-[20px] w-full  max-w-5xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
-          <DialogHeader >
-            {/* <DialogTitle>This is all info?</DialogTitle> */}
-          </DialogHeader>
-          {/* Displaying the current form fields with images */}
-          <div className="space-y-2 text-gray-200 text-lg ">
-            <div>
-              <strong>Community Name:</strong> {formFields.communityName}
-            </div>
-            <div>
-              <strong>Description:</strong> {formFields.description}
-            </div>
-            <div>
-              <strong>Token Name:</strong> {formFields.community_token_name}
-            </div>
-            <div className="grid grid-cols-2 gap-10 pb-12 ">
-              <div>
-                <div className='font-medium my-2'>Community Image</div>
-                {formFields.communityImage && (
-                  <img
-                    src={formFields.communityImage}
-                    alt="Community Image"
-                    className="size-10  aspect-video object-cover h-full w-full rounded-lg border"
-                  />
-                )}
-              </div>
-              <div>
-                <div className='font-medium my-2'>Token Image</div>
-                {formFields.tokenImage && (
-                  <img
-                    src={formFields.tokenImage}
-                    alt="Token Image"
-                    className="size-10  aspect-video object-cover h-full w-full rounded-lg border"
-                  />
-                )}
-              </div>
-            </div>
+<Dialog open={open} onOpenChange={setOpen}>
+  <DialogTrigger></DialogTrigger>
+  <DialogContent className="bg-brand1 rounded-[20px] w-full max-w-5xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
+    <DialogHeader>
+      {/* <DialogTitle>This is all info?</DialogTitle> */}
+    </DialogHeader>
 
-            <div className=''>
-              <strong>Token Supply:</strong> {formFields.tokenSupply} XRD
-            </div>
-            <div>
-              <strong>Token Price:</strong> {formFields.tokenPrice} XRD
-            </div>
-            <div>
-              <strong>Who can Vote:</strong> {formFields.proposal_right}
-            </div>
-            <div className='capitalize'>
-              <strong>Purpose:</strong> {formFields.purpose}
-            </div>
-            <div>
-              <strong>Token Withdraw Price:</strong>{' '}
-              {formFields.tokenWithDrawPrice}
-            </div>
-            <div>
-              {formFields.tags.length > 0 && (
-                <div>
-                  <strong>Tags:</strong>{' '}
-                  {formFields.tags.map((tag) => (
-                    <span key={tag} className="px-2 py-1 bg-brand2 rounded-lg mr-2">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-          {loading ? (
-          
-            <button
-              className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF]
-             hover:to-[#391483] disabled:bg-brand3 disabled:cursor-not-allowed "
-              disabled>
-              Deploying....
-            </button>
-          ) : (
-         
-            <button
-              variant="radix"
-
-              type="button"
-              disabled={!allFieldsFilled()}
-              onClick={handleClaimToken}
-              className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] disabled:bg-brand3 disabled:cursor-not-allowed "
-            >
-              Deploy
-            </button>
+    {/* Displaying form fields */}
+    <div className="space-y-2 text-gray-200 text-lg">
+      {/* Existing fields... */}
+      <div><strong>Community Name:</strong> {formFields.communityName}</div>
+      <div><strong>Description:</strong> {formFields.description}</div>
+      <div><strong>Token Name:</strong> {formFields.community_token_name}</div>
+      {/* Images */}
+      <div className="grid grid-cols-2 gap-10 pb-12">
+        <div>
+          <div className="font-medium my-2">Community Image</div>
+          {formFields.communityImage && (
+            <img
+              src={formFields.communityImage}
+              alt="Community Image"
+              className="size-10 aspect-video object-cover h-full w-full rounded-lg border"
+            />
           )}
-        </DialogContent>
-      </Dialog>
+        </div>
+        <div>
+          <div className="font-medium my-2">Token Image</div>
+          {formFields.tokenImage && (
+            <img
+              src={formFields.tokenImage}
+              alt="Token Image"
+              className="size-10 aspect-video object-cover h-full w-full rounded-lg border"
+            />
+          )}
+        </div>
+      </div>
+
+      {/* Other fields */}
+      <div><strong>Token Supply:</strong> {formFields.tokenSupply} XRD</div>
+      <div><strong>Token Price:</strong> {formFields.tokenPrice} XRD</div>
+      <div><strong>Who can Vote:</strong> {formFields.proposal_right}</div>
+      <div className="capitalize"><strong>Purpose:</strong> {formFields.purpose}</div>
+      <div><strong>Token Withdraw Price:</strong> {formFields.tokenWithDrawPrice}</div>
+      <div>
+        {formFields.tags.length > 0 && (
+          <div>
+            <strong>Tags:</strong>{' '}
+            {formFields.tags.map((tag) => (
+              <span key={tag} className="px-2 py-1 bg-brand2 rounded-lg mr-2">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+
+    {/* ✅ Add Terms & Conditions Section */}
+    <div className="flex items-start gap-3 text-sm text-gray-300 border-t border-gray-600 pt-6">
+      <input
+        type="checkbox"
+        id="terms"
+        checked={agreed}
+        onChange={() => setAgreed(!agreed)}
+        className="mt-1 accent-brand2"
+      />
+      <label htmlFor="terms">
+        I agree to the{' '}
+        <a href="/terms-and-conditions" target="_blank" className="underline text-brand4">
+          Terms & Conditions
+        </a>{' '}
+        and acknowledge that once the Community is deployed, it cannot be modified or reversed.
+      </label>
+    </div>
+
+ 
+    {loading ? (
+      <button
+        className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF]
+          hover:to-[#391483] disabled:bg-brand3 disabled:cursor-not-allowed"
+        disabled
+      >
+        Deploying....
+      </button>
+    ) : (
+      <button
+        type="button"
+        disabled={!allFieldsFilled() || !agreed}
+        onClick={handleClaimToken}
+        className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] disabled:bg-brand3 disabled:cursor-not-allowed"
+      >
+        Deploy
+      </button>
+    )}
+  </DialogContent>
+</Dialog>
+
 
       <ReceiptModal>
         {Recipt ? (
