@@ -193,18 +193,17 @@ const DeployView = () => {
     <>
 <Dialog open={open} onOpenChange={setOpen}>
   <DialogTrigger></DialogTrigger>
-  <DialogContent className="bg-brand1 rounded-[20px] w-full max-w-5xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
+  <DialogContent className="bg-[rgba(169,126,255,0.34)] backdrop-blur-md rounded-[20px] w-full max-w-5xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
     <DialogHeader>
-      {/* <DialogTitle>This is all info?</DialogTitle> */}
+ 
     </DialogHeader>
 
-    {/* Displaying form fields */}
     <div className="space-y-2 text-gray-200 text-lg">
-      {/* Existing fields... */}
+
       <div><strong>Community Name:</strong> {formFields.communityName}</div>
       <div><strong>Description:</strong> {formFields.description}</div>
       <div><strong>Token Name:</strong> {formFields.community_token_name}</div>
-      {/* Images */}
+
       <div className="grid grid-cols-2 gap-10 pb-12">
         <div>
           <div className="font-medium my-2">Community Image</div>
@@ -228,7 +227,7 @@ const DeployView = () => {
         </div>
       </div>
 
-      {/* Other fields */}
+
       <div><strong>Token Supply:</strong> {formFields.tokenSupply} XRD</div>
       <div><strong>Token Price:</strong> {formFields.tokenPrice} XRD</div>
       <div><strong>Who can Vote:</strong> {formFields.proposal_right}</div>
@@ -248,7 +247,7 @@ const DeployView = () => {
       </div>
     </div>
 
-    {/* ✅ Add Terms & Conditions Section */}
+
     <div className="flex items-start gap-3 text-sm text-gray-300 border-t border-gray-600 pt-6">
       <input
         type="checkbox"
