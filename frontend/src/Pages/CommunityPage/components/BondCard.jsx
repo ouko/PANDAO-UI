@@ -44,6 +44,45 @@ const BondCard = ({ bond }) => {
                 </div>
             </div>
 
+            {/* User Earnings Section */}
+            {bond.user_earning && (
+                <div className="bg-[#2A1850] rounded-xl p-4 border border-[#7F42F9]">
+                    <h3 className="text-brand5 text-lg font-medium mb-3">Bond Investment Details</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div className="flex flex-col">
+                            <span className="text-brand5 text-sm uppercase">Bond Price</span>
+                            <span className="text-white text-lg font-medium">{bond.user_earning.bond_price} XRD</span>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-brand5 text-sm uppercase">Return Value</span>
+                            <span className="text-white text-lg font-medium">{bond.user_earning.bond_return_value} XRD</span>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className={`text-brand5 text-sm uppercase`}>Potential Earning</span>
+                            <span className={`text-lg font-medium ${bond.user_earning.potential_earning > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                                {bond.user_earning.potential_earning > 0 ? '+' : ''}{bond.user_earning.potential_earning.toFixed(2)} XRD
+                            </span>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-brand5 text-sm uppercase">Bond Status</span>
+                            <span className={`text-lg font-medium ${bond.user_earning.is_bond_successful ? 'text-green-400' : 'text-amber-400'}`}>
+                                {bond.user_earning.is_bond_successful ? 'Successful' : 'In Progress'}
+                            </span>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-brand5 text-sm uppercase">Investors</span>
+                            <span className="text-white text-lg font-medium">{bond.user_earning.people_invested} {bond.user_earning.people_invested === 1 ? 'Person' : 'People'}</span>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-brand5 text-sm uppercase">ROI</span>
+                            <span className={`text-lg font-medium ${((bond.user_earning.bond_return_value / bond.user_earning.bond_price) - 1) * 100 > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                                {(((bond.user_earning.bond_return_value / bond.user_earning.bond_price) - 1) * 100).toFixed(2)}%
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Middle Info Section */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-sm">
                 <div className="space-y-2">
@@ -89,6 +128,7 @@ const BondCard = ({ bond }) => {
                 </div>
             </div>
         </div>
+        
     );
 };
 BondCard.propTypes = {
@@ -115,6 +155,13 @@ BondCard.propTypes = {
         claimed: PropTypes.bool,
         community_id: PropTypes.string,
         id: PropTypes.string.isRequired,
+        user_earning: PropTypes.shape({
+            potential_earning: PropTypes.number,
+            is_bond_successful: PropTypes.bool,
+            bond_return_value: PropTypes.number,
+            bond_price: PropTypes.number,
+            people_invested: PropTypes.number
+        })
     }).isRequired,
 };
 

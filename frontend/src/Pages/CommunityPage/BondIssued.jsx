@@ -1,5 +1,4 @@
 import { useAccount } from '@/AccountContext'
-
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
@@ -15,11 +14,13 @@ const BondIssued = (props) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+  const address = accounts && accounts.length > 0 ? accounts[0] : null 
 
   const fetchIssuedBond = async () => {
+    if (!address) return // if no address, don't fetch
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/zcb/all/${params.id}?purchased=false`,
+        `${import.meta.env.VITE_BACKEND_URL}/community/zcb/all/${params.id}?purchased=false&user_address=${accounts[0]?.address}`,
       )
       setIssuedBonds(res.data)
       setLoading(false)
@@ -31,16 +32,18 @@ const BondIssued = (props) => {
   }
 
   useEffect(() => {
-    fetchIssuedBond()
-  }, [])
+    if (!accounts || accounts.length === 0) {
+      navigate('/')
+    }
+  }, [accounts, navigate])
 
-  
+  useEffect(() => {
+    fetchIssuedBond()
+  }, [params.id, address])
 
   if (!accounts || accounts.length === 0) {
-    navigate('/')
-    return null
+    return null // navigation already handled in useEffect
   }
-
   return (
     <div className=" items-start gap-3 justify-start min-h-screen overflow-hidden z-50  text-black px-2">
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto">
