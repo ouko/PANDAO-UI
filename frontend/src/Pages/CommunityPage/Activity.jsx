@@ -252,7 +252,7 @@ const Activity = () => {
                               {/* Avatar */}
                               <Avatar className="h-16 w-16 rounded-lg overflow-hidden shadow-sm ring-2 ring-brand6">
                                 <img
-                                  src={ac.user_image_url}
+                                  src={ac.image_url}
                                   alt="Avatar"
                                   className="w-full h-full object-cover"
                                 />
@@ -268,13 +268,16 @@ const Activity = () => {
                                   }
                                 >
                                   <div className="text-base font-semibold text-brand6 group-hover:underline">
-                                    {ac.user_name}
+                                    {ac.name}
                                   </div>
                                   <div className="text-xs text-gray-400 group-hover:underline">
                                     {clipAddress(ac.user_address)}
                                   </div>
-                                  <div className="text-sm font-medium text-gray-300 group-hover:underline">
-                                    {ac.info}
+                                  <div className="text-sm font-medium text-gray-100 ">
+                                    {ac.transaction_info}
+                                  </div>
+                                  <div className="text-sm font-medium text-gray-100 ">
+                                    {ac.activity_type}
                                   </div>
                                 </div>
 
