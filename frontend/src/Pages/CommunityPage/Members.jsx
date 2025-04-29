@@ -10,6 +10,7 @@ import {
   FiThumbsUp,
   FiMessageSquare,
   FiFileText,
+  FiAward
 } from 'react-icons/fi'
 
 import { clipAddress } from '@/utils/functions/ClipAddress'
@@ -233,6 +234,38 @@ const Members = () => {
                           </TooltipProvider>
                           
                           )}
+                          
+                          {participant.badges && participant.badges.length > 0 && (
+                            <div className="flex mt-2">
+                              {participant.badges.map((badge) => (
+                                <TooltipProvider key={badge.badge_id}>
+                                  <Tooltip>
+                                    <TooltipTrigger>
+                                      <div className="relative mr-2">
+                                        <img 
+                                          src={badge.badge_image} 
+                                          alt={badge.badge_name}
+                                          className="w-8 h-8 rounded-full"
+                                          onError={(e) => {
+                                            e.target.onerror = null;
+                                            e.target.src = "/default-badge.png";
+                                          }}
+                                        />
+                                        <span className="absolute -top-1 -right-1 bg-purple-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                                          {badge.badge_points}
+                                        </span>
+                                      </div>
+                                    </TooltipTrigger>
+                                    <TooltipContent className="bg-[#5228A4] border-[#7F42F9] text-white max-w-xs">
+                                      <p className="font-bold">{badge.badge_name}</p>
+                                      <p className="text-xs">{badge.badge_description}</p>
+                                      <p className="text-xs mt-1">Points: {badge.badge_points}</p>
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </TooltipProvider>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -275,6 +308,42 @@ const Members = () => {
                                   </div>
                                 </div>
 
+
+                                {/* Badges Section */}
+                                {participant.badges && participant.badges.length > 0 && (
+                                  <div className="mt-4 mb-6">
+                                    <h3 className="text-lg font-medium text-white mb-2 flex items-center">
+                                      <FiAward className="mr-2" /> Member Badges
+                                    </h3>
+                                    <div className="flex flex-wrap gap-3">
+                                      {participant.badges.map((badge) => (
+                                        <div 
+                                          key={badge.badge_id} 
+                                          className="bg-[rgba(82,40,164,0.3)] border border-[#7F42F9] rounded-lg p-3 flex items-start gap-3 max-w-xs"
+                                        >
+                                          <div className="relative">
+                                            <img 
+                                              src={badge.badge_image} 
+                                              alt={badge.badge_name}
+                                              className="w-12 h-12 rounded-full object-cover"
+                                              onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src = "/default-badge.png";
+                                              }}
+                                            />
+                                            <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
+                                              {badge.badge_points}
+                                            </div>
+                                          </div>
+                                          <div>
+                                            <h4 className="font-bold text-white">{badge.badge_name}</h4>
+                                            <p className="text-xs text-gray-200">{badge.badge_description}</p>
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
 
                                 <div className="grid grid-cols-2 gap-3 mt-10">
                                   <div className="flex items-start gap-2">

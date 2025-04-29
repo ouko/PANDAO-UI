@@ -34,6 +34,9 @@ const DeployView = () => {
   const [loading, setLoading] = useState(false)
 
   const [data, setData] = useState([])
+  const [agreed, setAgreed] = useState(false);
+  const [termsDialogOpen, setTermsDialogOpen] = useState(false);
+  const [hasReadTerms, setHasReadTerms] = useState(false);
 
   useEffect(() => {
     if (accounts && accounts.length > 0) {
@@ -190,98 +193,185 @@ const DeployView = () => {
 
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen} >
-        <DialogTrigger></DialogTrigger>
-        <DialogContent className="bg-brand1 rounded-[20px] w-full  max-w-5xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
-          <DialogHeader >
-            {/* <DialogTitle>This is all info?</DialogTitle> */}
-          </DialogHeader>
-          {/* Displaying the current form fields with images */}
-          <div className="space-y-2 text-gray-200 text-lg ">
-            <div>
-              <strong>Community Name:</strong> {formFields.communityName}
-            </div>
-            <div>
-              <strong>Description:</strong> {formFields.description}
-            </div>
-            <div>
-              <strong>Token Name:</strong> {formFields.community_token_name}
-            </div>
-            <div className="grid grid-cols-2 gap-10 pb-12 ">
-              <div>
-                <div className='font-medium my-2'>Community Image</div>
-                {formFields.communityImage && (
-                  <img
-                    src={formFields.communityImage}
-                    alt="Community Image"
-                    className="size-10  aspect-video object-cover h-full w-full rounded-lg border"
-                  />
-                )}
-              </div>
-              <div>
-                <div className='font-medium my-2'>Token Image</div>
-                {formFields.tokenImage && (
-                  <img
-                    src={formFields.tokenImage}
-                    alt="Token Image"
-                    className="size-10  aspect-video object-cover h-full w-full rounded-lg border"
-                  />
-                )}
-              </div>
-            </div>
+<Dialog open={open} onOpenChange={setOpen}>
+  <DialogTrigger></DialogTrigger>
+  <DialogContent className="bg-[rgba(169,126,255,0.34)] backdrop-blur-md rounded-[20px] w-full max-w-5xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
+    <DialogHeader>
+ 
+    </DialogHeader>
 
-            <div className=''>
-              <strong>Token Supply:</strong> {formFields.tokenSupply} XRD
-            </div>
-            <div>
-              <strong>Token Price:</strong> {formFields.tokenPrice} XRD
-            </div>
-            <div>
-              <strong>Who can Vote:</strong> {formFields.proposal_right}
-            </div>
-            <div className='capitalize'>
-              <strong>Purpose:</strong> {formFields.purpose}
-            </div>
-            <div>
-              <strong>Token Withdraw Price:</strong>{' '}
-              {formFields.tokenWithDrawPrice}
-            </div>
-            <div>
-              {formFields.tags.length > 0 && (
-                <div>
-                  <strong>Tags:</strong>{' '}
-                  {formFields.tags.map((tag) => (
-                    <span key={tag} className="px-2 py-1 bg-brand2 rounded-lg mr-2">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-          {loading ? (
-          
-            <button
-              className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF]
-             hover:to-[#391483] disabled:bg-brand3 disabled:cursor-not-allowed "
-              disabled>
-              Deploying....
-            </button>
-          ) : (
-         
-            <button
-              variant="radix"
+    <div className="space-y-2 text-gray-200 text-lg">
 
-              type="button"
-              disabled={!allFieldsFilled()}
-              onClick={handleClaimToken}
-              className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] disabled:bg-brand3 disabled:cursor-not-allowed "
-            >
-              Deploy
-            </button>
+      <div><strong>Community Name:</strong> {formFields.communityName}</div>
+      <div><strong>Description:</strong> {formFields.description}</div>
+      <div><strong>Token Name:</strong> {formFields.community_token_name}</div>
+
+      <div className="grid grid-cols-2 gap-10 pb-12">
+        <div>
+          <div className="font-medium my-2">Community Image</div>
+          {formFields.communityImage && (
+            <img
+              src={formFields.communityImage}
+              alt="Community Image"
+              className="size-10 aspect-video object-cover h-full w-full rounded-lg border"
+            />
           )}
-        </DialogContent>
-      </Dialog>
+        </div>
+        <div>
+          <div className="font-medium my-2">Token Image</div>
+          {formFields.tokenImage && (
+            <img
+              src={formFields.tokenImage}
+              alt="Token Image"
+              className="size-10 aspect-video object-cover h-full w-full rounded-lg border"
+            />
+          )}
+        </div>
+      </div>
+
+
+      <div><strong>Token Supply:</strong> {formFields.tokenSupply} XRD</div>
+      <div><strong>Token Price:</strong> {formFields.tokenPrice} XRD</div>
+      <div><strong>Who can Vote:</strong> {formFields.proposal_right}</div>
+      <div className="capitalize"><strong>Purpose:</strong> {formFields.purpose}</div>
+      <div><strong>Token Withdraw Price:</strong> {formFields.tokenWithDrawPrice}</div>
+      <div>
+        {formFields.tags.length > 0 && (
+          <div>
+            <strong>Tags:</strong>{' '}
+            {formFields.tags.map((tag) => (
+              <span key={tag} className="px-2 py-1 bg-brand2 rounded-lg mr-2">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+
+
+    <div className="flex items-start gap-3 text-sm text-gray-300 border-t border-gray-600 pt-6">
+      <input
+        type="checkbox"
+        id="terms"
+        checked={agreed}
+        onChange={() => setAgreed(!agreed)}
+        className="mt-1 accent-brand2"
+        disabled={!hasReadTerms}
+      />
+      <label htmlFor="terms">
+        I agree to the{' '}
+        <button 
+          type="button"
+          onClick={() => setTermsDialogOpen(true)} 
+          className="underline text-brand4 hover:text-brand5"
+        >
+          Terms & Conditions
+        </button>{' '}
+        and acknowledge that once the Community is deployed, it cannot be modified or reversed.
+        {!hasReadTerms && (
+          <span className="block text-amber-400 mt-1">
+            Please read the Terms & Conditions first
+          </span>
+        )}
+      </label>
+    </div>
+
+ 
+    {loading ? (
+      <button
+        className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF]
+          hover:to-[#391483] disabled:bg-brand3 disabled:cursor-not-allowed"
+        disabled
+      >
+        Deploying....
+      </button>
+    ) : (
+      <button
+        type="button"
+        disabled={!allFieldsFilled() || !agreed}
+        onClick={handleClaimToken}
+        className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] disabled:bg-brand3 disabled:cursor-not-allowed"
+      >
+        Deploy
+      </button>
+    )}
+  </DialogContent>
+</Dialog>
+
+{/* Terms and Conditions Dialog */}
+<Dialog open={termsDialogOpen} onOpenChange={setTermsDialogOpen}>
+  <DialogContent className="bg-[rgba(169,126,255,0.34)] backdrop-blur-md rounded-[20px] w-full max-w-4xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
+    <DialogHeader>
+      <DialogTitle className="text-2xl font-bold text-white">Terms & Conditions</DialogTitle>
+    </DialogHeader>
+    
+    <div className="space-y-4 text-gray-200 text-md overflow-y-auto max-h-[50vh] pr-2 custom-scrollbar">
+      <h2 className="text-xl font-semibold text-white">1. Introduction</h2>
+      <p>
+        Welcome to PANDAO. By using our platform, you agree to these Terms & Conditions, which constitute a legally binding agreement between you and PANDAO.
+      </p>
+      
+      <h2 className="text-xl font-semibold text-white">2. Community Deployment</h2>
+      <p>
+        When you deploy a community on PANDAO:
+      </p>
+      <ul className="list-disc pl-5 space-y-2">
+        <li>You understand that blockchain transactions are immutable and cannot be reversed.</li>
+        <li>The community structure, token economics, and governance parameters you set during deployment will be permanent.</li>
+        <li>You take full responsibility for the configuration of your community.</li>
+      </ul>
+      
+      <h2 className="text-xl font-semibold text-white">3. Token Issuance</h2>
+      <p>
+        When issuing tokens through our platform:
+      </p>
+      <ul className="list-disc pl-5 space-y-2">
+        <li>You are responsible for ensuring compliance with all applicable laws and regulations in your jurisdiction.</li>
+        <li>PANDAO does not guarantee the value, utility, or legality of any tokens issued through our platform.</li>
+        <li>Token economics parameters (supply, price, etc.) cannot be modified after deployment.</li>
+      </ul>
+      
+      <h2 className="text-xl font-semibold text-white">4. Governance</h2>
+      <p>
+        Community governance is determined by the parameters you set during deployment:
+      </p>
+      <ul className="list-disc pl-5 space-y-2">
+        <li>Voting rights, proposal mechanisms, and decision-making processes are established at creation.</li>
+        <li>PANDAO is not responsible for governance decisions made within your community.</li>
+      </ul>
+      
+      <h2 className="text-xl font-semibold text-white">5. Limitation of Liability</h2>
+      <p>
+        PANDAO shall not be liable for:
+      </p>
+      <ul className="list-disc pl-5 space-y-2">
+        <li>Any financial losses related to token value fluctuations.</li>
+        <li>Community governance decisions or disputes.</li>
+        <li>Technical issues with the underlying blockchain network.</li>
+        <li>Regulatory changes that may affect your community or tokens.</li>
+      </ul>
+      
+      <h2 className="text-xl font-semibold text-white">6. Acknowledgment</h2>
+      <p>
+        By deploying a community, you acknowledge that you have read, understood, and agree to these terms. You also confirm that you understand the permanent nature of blockchain deployments and accept full responsibility for your community configuration.
+      </p>
+    </div>
+    
+    <div className="flex flex-col gap-4 pt-4 border-t border-gray-600">
+      <button
+        type="button"
+        onClick={() => {
+          setHasReadTerms(true);
+          setTermsDialogOpen(false);
+        }}
+        className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483]"
+      >
+        I Have Read and Understood
+      </button>
+    </div>
+  </DialogContent>
+</Dialog>
 
       <ReceiptModal>
         {Recipt ? (
