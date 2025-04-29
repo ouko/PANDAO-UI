@@ -91,6 +91,43 @@ const Activity = () => {
     navigate('/')
     return null
   }
+
+  const [selectedActivityType, setSelectedActivityType] = useState('ALL');
+  const ACTIVITY_TYPES = [
+    "take_out_invested_xrds",
+    "proposal_executed",
+    "discussion_comment",
+    "participate",
+    "proposal_comment",
+    "withdraw_sign",
+    "executive_mint",
+    "token_bought",
+    "community_create",
+    "appointed_executive_badge",
+    "proposal_voted",
+    "proposal_created",
+    "withdraw_request",
+    "zero_coupon_bond_created",
+    "discussion"
+  ];
+  const activityTypeLabels = {
+    take_out_invested_xrds: "take out invested xrd",
+    proposal_executed: "proposal executed",
+    discussion_comment: "discussion comment",
+    participate: "participate",
+    proposal_comment: "proposal comment",
+    withdraw_sign: "withdraw sign",
+    executive_mint: "executive mint",
+    token_bought: "token bought",
+    community_create: "community create",
+    appointed_executive_badge: "appointed executive badge",
+    proposal_voted: "proposal voted",
+    proposal_created: "proposal created",
+    withdraw_request: "withdraw request",
+    zero_coupon_bond_created: "zero coupon bond created",
+    discussion: "discussion"
+  };
+
   return (
     <div className=" items-start gap-3 justify-start min-h-screen overflow-hidden  text-black px-2">
       {showExpenses ? (
@@ -244,18 +281,35 @@ const Activity = () => {
                     </div>
                     {!loading && (
                       <div className="space-y-4 px-3 py-3 rounded-2xl h-[600px] overflow-y-auto ">
+                        {/* Activity Type Filter Dropdown */}
+                        <div className="mb-4 flex items-center gap-2 justify-between sticky top-0 z-50 h-12 p-4 bg-[#39246b]">
+                          <label htmlFor="activityTypeFilter" className="text-sm font-medium text-white">Filter by Activity Type:</label>
+                          <select
+                            id="activityTypeFilter"
+                            className="rounded px-2 py-1 bg-brand3 text-white border border-brand6"
+                            value={selectedActivityType}
+                            onChange={e => setSelectedActivityType(e.target.value)}
+                          >
+                            <option value="ALL">All</option>
+                            {ACTIVITY_TYPES.map(type => (
+                              <option key={type} value={type}>{activityTypeLabels[type]}</option>
+                            ))}
+                          </select>
+                        </div>
                         {activity &&
-                          activity.map((ac, index) => (
-                            <ActivityCard
-                              key={index}
-                              ac={ac}
-                              navigate={navigate}
-                              clipAddress={clipAddress}
-                              formatStandardDateTime={formatStandardDateTime}
-                            />
-                           
+                          activity
+                            .filter(ac => selectedActivityType === 'ALL' || ac.activity_type === selectedActivityType)
+                            .map((ac, index) => (
+                              <ActivityCard
+                                key={index}
+                                ac={ac}
+                                navigate={navigate}
+                                clipAddress={clipAddress}
+                                formatStandardDateTime={formatStandardDateTime}
+                              />
+                             
 
-                          ))}
+                            ))}
                       </div>
                     )}
                     {loading && (
