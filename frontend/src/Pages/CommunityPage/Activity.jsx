@@ -272,30 +272,30 @@ const Activity = () => {
 
                 <div className="flex gap-4">
                   <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] h-full  relative overflow-hidden w-full">
-                    <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0 " >
-                      <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
+                  <div className="bg-[#39246b] px-[15px] flex z-50 items-center justify-between w-full h-[63px] sticky top-0 left-0">
+  <div className="text-white text-2xl font-medium">
+    Activity:
+  </div>
+  <div>
+  <label htmlFor="activityTypeFilter" className="text-sm font-medium text-white p-4">Filter by Activity Type:</label>
+    <select
+      id="activityTypeFilter"
+      className="rounded px-2 py-1 bg-brand3  text-white border border-brand5 focus:outline-none"
+      value={selectedActivityType}
+      onChange={e => setSelectedActivityType(e.target.value)}
+    >
+      <option value="ALL">All</option>
+      {ACTIVITY_TYPES.map(type => (
+        <option key={type} value={type}>{activityTypeLabels[type]}</option>
+      ))}
+    </select>
+  </div>
+</div>
 
-                        Activity:
-                      </div>
-
-                    </div>
                     {!loading && (
                       <div className="space-y-4 px-3 py-3 rounded-2xl h-[600px] overflow-y-auto ">
                         {/* Activity Type Filter Dropdown */}
-                        <div className="mb-4 flex items-center gap-2 justify-between sticky top-0 z-50 h-12 p-4 bg-[#39246b]">
-                          <label htmlFor="activityTypeFilter" className="text-sm font-medium text-white">Filter by Activity Type:</label>
-                          <select
-                            id="activityTypeFilter"
-                            className="rounded px-2 py-1 bg-brand3 text-white border border-brand6"
-                            value={selectedActivityType}
-                            onChange={e => setSelectedActivityType(e.target.value)}
-                          >
-                            <option value="ALL">All</option>
-                            {ACTIVITY_TYPES.map(type => (
-                              <option key={type} value={type}>{activityTypeLabels[type]}</option>
-                            ))}
-                          </select>
-                        </div>
+                       
                         {activity &&
                           activity
                             .filter(ac => selectedActivityType === 'ALL' || ac.activity_type === selectedActivityType)

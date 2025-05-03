@@ -6,7 +6,7 @@ export default function ActivityCard({ ac, navigate, clipAddress, formatStandard
 
     return (
         <div
-            className={`flex items-start gap-5 bg-indigo-950 border border-purple-600 rounded-2xl p-5 text-white shadow-md transition-all duration-300 hover:shadow-2xl hover:-translate-y-1`}
+            className={`flex items-start gap-5 bg-gradient-to-br from-[rgba(54,40,101,0.83)] via-transparent to-brand1  border border-purple-600 rounded-2xl p-5 text-white shadow-md transition-all duration-300 hover:shadow-2xl hover:-translate-y-1`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
