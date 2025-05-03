@@ -305,7 +305,7 @@ const CommunityDetails = () => {
 
             <div className="flex md:flex-row flex-col w-full mx-auto gap-[16px]">
               <div className="w-full space-y-4">
-                <TokenCard data={communityData} />
+                <TokenCard data={communityData} onSuccess={handleSuccess} />
                 <TotalFund data={communityData} />
                 <WithdrawCard withDrawRequest={withDrawRequest} participant={participants} onSuccess={handleSuccess} />
 

@@ -107,8 +107,8 @@ const TokenCard = ({ data, onSuccess }) => {
           console.log('Submit Transaction Response:', submitResponse.data)
           toast.success('Withdraw Request Sign Successfully!')
           setText('Token Sold')
-          setOpen(true)
-          setSellModal(false)
+          // setOpen(true)
+          // setSellModal(false)
           setTokenToSell(0)
         } catch (submitError) {
           console.error('Error submitting transaction:', submitError)
@@ -191,8 +191,8 @@ const TokenCard = ({ data, onSuccess }) => {
           console.log('Submit Transaction Response:', submitResponse.data);
 
           toast.success('Token Bought Successfully!');
-          setText('Token Bought');
-          setOpen(true);
+          // setText('Token Bought');
+          // setOpen(true);
           setBuyModal(false);
           onSuccess();
         } catch (submitError) {
@@ -307,52 +307,51 @@ const TokenCard = ({ data, onSuccess }) => {
           )}
 
 
-          {data.total_token > data.token_bought && (
-            <div>
-              <Dialog open={openBuyModal} onOpenChange={setBuyModal}>
-                <DialogTrigger asChild>
-                  <Button variant="brand" className="text-white">Buy Token</Button>
+{data.total_token > data.token_bought && (
+  <div>
+    <Button
+      variant="brand"
+      className="text-white"
+      onClick={() => setBuyModal(true)} // OPEN MANUALLY
+    >
+      Buy Token
+    </Button>
 
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px] bg-[rgba(169,126,255,0.34)] backdrop-blur-md text-white  border-[1px] border-brand3  ">
-                  <DialogHeader>
-                    <DialogTitle>Buy Token</DialogTitle>
-                  </DialogHeader>
-                  <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="name" className="text-right">
-                        Token
-                      </Label>
-                      <Input
-                        id="name"
-                        className="col-span-3"
-                        placeholder="How many tokens to buy"
-                        type="number"
-                        value={token}
-                        onChange={(e) => setToken(e.target.value)}
-                        required
-                        min={0}
-                      />
-                    </div>
-                  </div>
-                  <DialogFooter>
-                    {loading ? (
-                      <Button variant="brand" disabled>
-                        Buying...
-                      </Button>
-                    ) : (
-                      <Button variant="brand"
-                        onClick={handleBuyToken}
-                        disabled={!token}
-                      >
-                        Buy Token
-                      </Button>
-                    )}
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-            </div>
-          )}
+    <Dialog open={openBuyModal} onOpenChange={setBuyModal}>
+      <DialogContent className="sm:max-w-[425px] bg-[rgba(169,126,255,0.34)] backdrop-blur-md text-white border-[1px] border-brand3">
+        <DialogHeader>
+          <DialogTitle>Buy Token</DialogTitle>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="token" className="text-right">
+              Token
+            </Label>
+            <Input
+              id="token"
+              className="col-span-3"
+              placeholder="How many tokens to buy"
+              type="number"
+              value={token}
+              onChange={(e) => setToken(e.target.value)}
+              required
+              min={0}
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button
+            variant="brand"
+            onClick={handleBuyToken}
+            disabled={!token || Number(token) <= 0 || loading}
+          >
+            {loading ? 'Buying...' : 'Buy Token'}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  </div>
+)}
 
         </div>
       </div>
