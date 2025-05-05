@@ -65,12 +65,12 @@ const WithdrawReceipt = (props) => {
                     <div
                       className="text-[#5228A4] font-semibold uppercase text-xl"
                     >
-                      Total Issued Bonds:
+                      Total Bonds Report:
                     </div>
                     <div
                       className="text-white text-[56px] font-medium text-center"
                     >
-                      Issued Bonds
+                       Bonds Report
                     </div>
                   </div>
                 </div>
