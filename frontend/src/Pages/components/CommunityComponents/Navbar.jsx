@@ -75,7 +75,7 @@ const getNavItems = () => {
     : [
         { icon: '/2.svg', label: 'Bond Issue', path: `/community/detail/${params.id}/bondissue` },
         { icon: '/8.svg', label: 'Bond Issued', path: `/community/detail/${params.id}/bondissued` },
-        { icon: '/8.svg', label: 'Bond Receipt', path: `/community/detail/${params.id}/bondrecipt` },
+        { icon: '/8.svg', label: 'Bond Report', path: `/community/detail/${params.id}/bondrecipt` },
       ];
 
   const restItems = [
