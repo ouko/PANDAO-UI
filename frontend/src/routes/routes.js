@@ -44,6 +44,7 @@ const AnnIssued = lazy(() => import('../Pages/CommunityPage/AnnIssued'));
 const PurchasedBond = lazy(() => import('../Pages/CommunityPage/PurchasedBond'));
 const exploreTopDao = lazy(() => import('../Pages/ExploreAllDaos'))
 const TokenWithdraw = lazy(() => import('../Pages/CommunityPage/Withdraw'));
+const WithdrawReceipt = lazy(() => import('../Pages/CommunityPage/WithdrawReceipt'));
 export const publicRoutes = [
   {
     path: '/',
@@ -109,6 +110,7 @@ export const protectedRoutes = [
       { path: 'purchasedbond', element: PurchasedBond },
       { path: 'bondissued', element: BondIssued },
       { path: 'annissued', element: AnnIssued },
+      { path: 'bondrecipt', element: WithdrawReceipt },
     ],
   },
 ];

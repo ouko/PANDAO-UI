@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 
 const BondCard = ({ bond }) => {
     const [showFullDescription, setShowFullDescription] = useState(false);
-  
+
     const toggleDescription = () => {
         setShowFullDescription(!showFullDescription);
     };
@@ -24,7 +24,7 @@ const BondCard = ({ bond }) => {
                 <div className="flex flex-col gap-2 w-full">
                     <div className='flex items-center justify-between bg- '>
                         <h2 className="text-brand5 text-2xl font-medium">Asset Name:</h2>
-                 
+
                     </div>
 
                     <p className="text-white text-xl font-medium">{bond.asset_name || 'N/A'}</p>
@@ -126,9 +126,105 @@ const BondCard = ({ bond }) => {
                     <p className="text-[#b7ec9a] uppercase">Initial Exchange Date: <span className="text-white">{bond.initial_exchange_date ? new Date(bond.initial_exchange_date).toLocaleDateString() : 'N/A'}</span></p>
                     <p className="text-[#f97679] uppercase">Maturity Date: <span className="text-white">{bond.maturity_date ? new Date(bond.maturity_date).toLocaleDateString() : 'N/A'}</span></p>
                 </div>
+
+                {/* Proposal Section */}
+
+
+
+            </div>
+
+            <div>
+                {Array.isArray(bond.proposals) && bond.proposals.length > 0 && bond.proposals.map((proposal, index) => (
+                    <div key={proposal.id || index} className="bg-[#2A1850] rounded-xl p-4 border border-[#7F42F9] mt-4">
+                        <h3 className="text-brand7 text-[25px] font-medium mb-3">Proposal Details</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div className="flex flex-col">
+                                <span className="text-brand5 text-sm uppercase">Title</span>
+                                <span className="text-white text-lg font-medium">{proposal.proposal || 'N/A'}</span>
+                            </div>
+                            <div className="flex flex-col">
+                                <span className="text-brand5 text-sm uppercase">Status</span>
+                                <span className={`text-lg font-medium ${proposal.status === 1 ? 'text-green-400' : 'text-amber-400'}`}>
+                                    {proposal.status === 1 ? 'Approved' : 'Pending'}
+                                </span>
+                            </div>
+
+                            <div className="flex flex-col">
+                                <span className="text-brand5 text-sm uppercase">Votes For</span>
+                                <span className="text-green-400 text-lg font-medium">{proposal.voted_for ?? 0}</span>
+                            </div>
+                            <div className="flex flex-col">
+                                <span className="text-brand5 text-sm uppercase">Votes Against</span>
+                                <span className="text-red-400 text-lg font-medium">{proposal.voted_against ?? 0}</span>
+                            </div>
+                            <div className="flex flex-col">
+                                <span className="text-brand5 text-sm uppercase">Total Votes</span>
+                                <span className="text-white text-lg font-medium">{(proposal.voted_for ?? 0) + (proposal.voted_against ?? 0)}</span>
+                            </div>
+                        </div>
+                        {proposal.description && (
+                            <div className="mt-4">
+                                <span className="text-brand5 text-sm uppercase">Description</span>
+                                <p className="text-white text-base mt-1">{proposal.description}</p>
+                            </div>
+                        )}
+                    </div>
+                ))}
+
+            </div>
+
+
+            <div>
+            {Array.isArray(bond.earnings) && bond.earnings.length > 0 && (
+  <div className="bg-[#1E123A] rounded-xl p-4 border border-[#7F42F9] mt-6">
+    <h3 className="text-brand7 text-[25px] font-medium mb-3">Expacted Earnings</h3>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {bond.earnings.map((earning, index) => (
+        <div
+          key={earning.user_address || index}
+          className="border border-brand5 p-4 rounded-lg bg-[#2A1850]"
+        >
+
+          <div className="flex flex-col mb-2">
+            <span className="text-brand5 text- uppercase">Potential Earning</span>
+            <span className="text-green-400 font-medium">{earning.potential_earning.toFixed(4)}</span>
+          </div>
+
+          <div className="flex flex-col mb-2">
+            <span className="text-brand5 text-sm uppercase">User</span>
+            <span className="text-white font-medium">{earning.user_name}</span>
+          </div>
+          <div className="flex flex-col mb-2">
+            <span className="text-brand5 text-sm uppercase">Bond Successful</span>
+            <span className={`font-medium ${earning.is_bond_successful ? 'text-green-400' : 'text-red-400'}`}>
+              {earning.is_bond_successful ? 'Yes' : 'No'}
+            </span>
+          </div>
+          <div className="flex flex-col mb-2">
+            <span className="text-brand5 text-sm uppercase">Bond Price</span>
+            <span className="text-white font-medium">{earning.bond_price}</span>
+          </div>
+          <div className="flex flex-col mb-2">
+            <span className="text-brand5 text-sm uppercase">Return Value</span>
+            <span className="text-white font-medium">{earning.bond_return_value}</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-brand5 text-sm uppercase">People Invested</span>
+            <span className="text-white font-medium">{earning.people_invested}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
+
+
             </div>
         </div>
-        
+
+
+
     );
 };
 BondCard.propTypes = {
