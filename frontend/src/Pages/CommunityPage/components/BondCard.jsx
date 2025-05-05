@@ -85,25 +85,25 @@ const BondCard = ({ bond }) => {
 
             {/* Middle Info Section */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-sm">
-                <div className="space-y-2">
-                    <p className="text-brand5 uppercase">Contract Identity: <span className="text-white">{bond.contract_identity || 'N/A'}</span></p>
-                    <p className="text-brand5 uppercase">Currency: <span className="text-white">{bond.currency || 'N/A'}</span></p>
-                    <p className="text-brand5 uppercase">Price: <span className="text-white">{bond.price ? `${bond.price} XRD` : 'Not available'}</span></p>
-                    <p className="text-brand5 uppercase">Number of Bonds: <span className="text-white">{bond.number_of_bonds || 'N/A'}</span></p>
-                </div>
-                <div className="space-y-2">
-                    <p className="text-brand5 uppercase">Creator By: <span className="text-white">{bond.creator_name || 'N/A'}</span></p>
-                    <p className="text-brand5 uppercase">Interest Rate: <span className="text-white">{bond.interest_rate || 'N/A'}%</span></p>
-                    <p className="text-brand5 uppercase">Notional Principle: <span className="text-white">{bond.notional_principle || 'N/A'}</span></p>
-                    <p className="text-brand5 uppercase">Contract Role: <span className="text-white">{bond.contract_role || 'N/A'}</span></p>
-                </div>
-                <div className="space-y-2">
-                    <p className="text-brand5 uppercase">Expected Return: <span className="text-white">{bond.amount_own ? `${bond.amount_own} XRD` : 'N/A'}</span></p>
-                    <p className="text-brand5 uppercase">Discount: <span className="text-white">{bond.discount || 'N/A'}</span></p>
-                    <p className="text-brand5 uppercase">Bond Position: <span className="text-white">{bond.bond_position || 'N/A'}</span></p>
-                    <p className="text-brand5 uppercase">Created on Blockchain: <span className="text-white">{bond.created_on_blockchain ? 'Yes' : 'No'}</span></p>
-                </div>
-            </div>
+    <div className="space-y-2">
+        <p className="text-brand5 uppercase">Contract Identity: <span className="text-white mx-2">{bond.contract_identity || 'N/A'}</span></p>
+        <p className="text-brand5 uppercase">Currency: <span className="text-white mx-2">{bond.currency || 'N/A'}</span></p>
+        <p className="text-brand5 uppercase">Price: <span className="text-white mx-2">{bond.price ? `${bond.price} XRD` : 'Not available'}</span></p>
+        <p className="text-brand5 uppercase">Number of Bonds: <span className="text-white mx-2">{bond.number_of_bonds || 'N/A'}</span></p>
+    </div>
+    <div className="space-y-2">
+        <p className="text-brand5 uppercase">Creator By: <span className="text-white mx-2">{bond.creator_name || 'N/A'}</span></p>
+        <p className="text-brand5 uppercase">Interest Rate: <span className="text-white mx-2">{bond.interest_rate || 'N/A'}%</span></p>
+        <p className="text-brand5 uppercase">Notional Principle: <span className="text-white mx-2">{bond.notional_principle || 'N/A'}</span></p>
+        <p className="text-brand5 uppercase">Contract Role: <span className="text-white mx-2">{bond.contract_role || 'N/A'}</span></p>
+    </div>
+    <div className="space-y-2">
+        <p className="text-brand5 uppercase">Expected Return: <span className="text-white mx-2">{bond.amount_own ? `${bond.amount_own} XRD` : 'N/A'}</span></p>
+        <p className="text-brand5 uppercase">Discount: <span className="text-white mx-2">{bond.discount || 'N/A'}</span></p>
+        <p className="text-brand5 uppercase">Bond Position: <span className="text-white mx-2">{bond.bond_position || 'N/A'}</span></p>
+        <p className="text-brand5 uppercase">Created on Blockchain: <span className="text-white mx-2">{bond.created_on_blockchain ? 'Yes' : 'No'}</span></p>
+    </div>
+</div>
 
             {/* Bottom Section */}
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 bg-black/30 p-4 rounded-xl">
