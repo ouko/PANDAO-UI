@@ -108,11 +108,11 @@ const BondCard = ({ bond }) => {
             {/* Bottom Section */}
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 bg-black/30 p-4 rounded-xl">
                 <div className="space-y-2 max-w-xl">
-                    <p className="text-brand5 uppercase">Contract Type: <span className="text-white">{bond.contract_type || 'N/A'}</span></p>
+                    <p className="text-brand5 uppercase">Contract Type: <span className="text-white mx-2">{bond.contract_type || 'N/A'}</span></p>
                     <p className="truncate text-brand5 uppercase">
                         <strong>Creator Address:</strong>{' '}
                         <span
-                            className="cursor-pointer text-white hover:underline truncate"
+                            className="cursor-pointer text-white hover:underline truncate mx-2"
                             onClick={() => {
                                 navigator.clipboard.writeText(bond.creator);
                                 toast.success('Copied address');
@@ -123,8 +123,8 @@ const BondCard = ({ bond }) => {
                     </p>
                 </div>
                 <div className="space-y-1">
-                    <p className="text-[#b7ec9a] uppercase">Initial Exchange Date: <span className="text-white">{bond.initial_exchange_date ? new Date(bond.initial_exchange_date).toLocaleDateString() : 'N/A'}</span></p>
-                    <p className="text-[#f97679] uppercase">Maturity Date: <span className="text-white">{bond.maturity_date ? new Date(bond.maturity_date).toLocaleDateString() : 'N/A'}</span></p>
+                    <p className="text-[#b7ec9a] uppercase">Initial Exchange Date: <span className="text-white mx-2">{bond.initial_exchange_date ? new Date(bond.initial_exchange_date).toLocaleDateString() : 'N/A'}</span></p>
+                    <p className="text-[#f97679] uppercase">Maturity Date: <span className="text-white mx-2">{bond.maturity_date ? new Date(bond.maturity_date).toLocaleDateString() : 'N/A'}</span></p>
                 </div>
 
                 {/* Proposal Section */}
@@ -202,7 +202,7 @@ const BondCard = ({ bond }) => {
           </div>
           <div className="flex flex-col mb-2">
             <span className="text-brand5 text-sm uppercase">Bond Price</span>
-            <span className="text-white font-medium">{earning.bond_price}</span>
+            <span className="text-white font-medium">{earning.bond_price}XRD</span>
           </div>
           <div className="flex flex-col mb-2">
             <span className="text-brand5 text-sm uppercase">Return Value</span>
