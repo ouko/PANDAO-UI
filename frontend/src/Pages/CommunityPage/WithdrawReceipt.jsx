@@ -63,7 +63,7 @@ const WithdrawReceipt = (props) => {
                   </div>
                   <div className="flex flex-col gap-1.5">
                     <div
-                      className="text-[#5228A4] font-semibold uppercase text-xl"
+                      className="text-brand6 font-semibold uppercase text-xl"
                     >
                       Total Bonds Report:
                     </div>

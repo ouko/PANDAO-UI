@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 
 const BondCard = ({ bond }) => {
@@ -59,6 +60,9 @@ const BondCard = ({ bond }) => {
                     <p className="text-gray-300 text-sm font-medium">
                         Created by <span className="text-white">{bond.creator_name || 'Unknown'}</span>
                     </p>
+                    <div className="text-gray-300 text-sm font-medium">
+                        Resources Address: <Link className="text-white" to={`https://stokenet-dashboard.radixdlt.com/resource/${bond.asset_address}`} target="_blank">{bond.asset_address}</Link>
+                    </div>
                     
                     <div className="mt-1">
                         <span className="font-normal text-sm text-white max-w-3xl">
