@@ -19,7 +19,7 @@ const BondCard = ({ bond }) => {
         if (!returnValue || !price || price === 0) return 0;
         return (((returnValue / price) - 1) * 100).toFixed(2);
     };
-    
+    console.log('%c Bond Object: ', 'font-weight: bold; color: #00b0ff', bond);
     return (
         <div className="bg-gradient-to-br from-[#1B0D37] to-[#2A1850] rounded-2xl border-2 border-[#5228A4] w-full mx-auto p-6 overflow-hidden backdrop-blur-md flex flex-col gap-6 shadow-lg">
             {/* Header Section with Asset Info */}
@@ -31,9 +31,7 @@ const BondCard = ({ bond }) => {
                             src={bond.asset_url}
                             alt={bond.asset_name || 'Asset'}
                         />
-                        <div className="absolute top-2 right-2 bg-[#7F42F9] text-white text-xs px-2 py-1 rounded-full">
-                            {bond.bond_position || 'N/A'}
-                        </div>
+                       
                     </div>
                 )}
                 <div className="flex flex-col gap-2 w-full">
@@ -47,8 +45,13 @@ const BondCard = ({ bond }) => {
                                     On-Chain
                                 </span>
                             )}
+                             {bond.created_on_blockchain && (
+                                <span className="bg-[#7F42F9] text-white text-xs px-2 py-1 rounded-full">
+                                     {bond.bond_position || 'N/A'}
+                                </span>
+                            )}
                         </div>
-                        <div className="text-[#7F42F9] text-lg font-semibold">
+                        <div className="text-white text-lg font-semibold">
                             {bond.price ? `${bond.price} ${bond.currency?.toUpperCase() || 'XRD'}` : 'Price N/A'}
                         </div>
                     </div>
@@ -222,23 +225,39 @@ const BondCard = ({ bond }) => {
 
             {/* Additional Details & Footer */}
             <div className="bg-black/30 p-4 rounded-xl mt-2">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div>
-                        <p className="text-brand5 text-xs uppercase">Contract ID:</p>
-                        <p className="text-white text-sm">{bond.contract_identity || 'N/A'}</p>
-                    </div>
-                    <div>
-                        <p className="text-brand5 text-xs uppercase">Creator Address:</p>
-                        <p className="text-white text-sm truncate cursor-pointer hover:underline" 
-                           onClick={() => {
-                               navigator.clipboard.writeText(bond.creator);
-                               toast.success('Address copied to clipboard');
-                           }}>
-                            {bond.creator || 'N/A'}
-                        </p>
-                    </div>
-                </div>
-            </div>
+  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
+    <div className="flex items-center gap-3">
+      {bond.creator_image ? (
+        <img
+          src={bond.creator_image}
+          alt={bond.creator_name || "Creator"}
+          className="w-8 h-8 rounded-full object-cover border border-brand5"
+        />
+      ) : (
+        <div className="w-8 h-8 rounded-full bg-brand5 flex items-center justify-center text-white font-bold">
+          {bond.creator_name ? bond.creator_name.charAt(0).toUpperCase() : "?"}
+        </div>
+      )}
+      <div>
+        <p className="text-brand5 text-xs uppercase">Creator Name:</p>
+        <p className="text-white text-sm">{bond.creator_name || 'N/A'}</p>
+      </div>
+    </div>
+    <div>
+      <p className="text-brand5 text-xs uppercase">Creator Address:</p>
+      <p
+        className="text-white text-sm truncate cursor-pointer hover:underline"
+        onClick={() => {
+          navigator.clipboard.writeText(bond.creator);
+          toast.success('Address copied to clipboard');
+        }}
+        title={bond.creator}
+      >
+        {bond.creator || 'N/A'}
+      </p>
+    </div>
+  </div>
+</div>
         </div>
     );
 };
