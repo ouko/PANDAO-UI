@@ -4,6 +4,7 @@ import Question from "./homeSectionComponents/Question";
 import Reviews from "./homeSectionComponents/Reviews";
 import ExploreSection from "./homeSectionComponents/ExploreSection";
 import Welcome from "./homeSectionComponents/welcome";
+import PriceSection from "./homeSectionComponents/PriceSection";
 
 const HomePage = () => {
     return (
@@ -22,7 +23,7 @@ const HomePage = () => {
             <ExploreSection />
             <Welcome />
             <Reviews />
-            {/* <PriceSection /> */}
+            <PriceSection />
             <Question />
             <Footer />
 

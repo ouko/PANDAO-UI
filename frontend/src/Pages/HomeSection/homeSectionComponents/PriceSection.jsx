@@ -2,12 +2,13 @@ import React from 'react';
 import { useState } from 'react';
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Button } from '@/components/ui/button';
 
 const PricingCard = ({ title, description, price, features, buttonText }) => {
   return (
-    <div className="rounded-[32px]  border border-solid p-10 shrink-0 w-[363px] h-[724px] relative overflow-hidden bg-gradient-to-b from-[rgba(32,3,92,0.97)] to-[rgba(22,3,60,0.94)] backdrop-blur-[42px] hover:scale-105 transition-transform duration-300 ease-in-out">
-      <div className="flex  flex-col gap-8 items-start justify-start">
-        <div className="flex  flex-col gap-6 items-start justify-start">
+    <div className="rounded-[32px]  border border-solid p-10 shrink-0 w-full  h-[724px] relative overflow-hidden bg-gradient-to-b from-[rgba(32,3,92,0.97)] to-[rgba(22,3,60,0.94)] backdrop-blur-[42px] hover:scale-105 transition-transform duration-300 ease-in-out">
+      <div className="flex  flex-col gap-8 items-start justify-center">
+        <div className="flex  flex-col gap-6 items-start justify-center">
           <div className="rounded-[100px] w-10 h-10 relative overflow-hidden bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(192,161,255,0.41)]">
             <div className="bg-black rounded-full w-5 h-5 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
           </div>
@@ -28,13 +29,16 @@ const PricingCard = ({ title, description, price, features, buttonText }) => {
         </div>
       </div>
 
-      <button
-        className="rounded-[26px] border-solid border-transparent pt-3 pr-3.5 pb-3 pl-3.5 flex flex-row gap-2.5 items-center justify-center w-[283px] absolute left-10 top-[284px] overflow-hidden transition duration-300 bg-gradient-to-b from-[rgba(255,255,255,0.08)] to-[rgba(255,255,255,0)] hover:from-[rgba(192,161,255,1)] hover:to-[rgba(125,61,255,1)]"
+      <Button
+      variant="brand"
+      className="w-full"
       >
+
+
         <span className="text-[#ffffff] text-left  text-[14px] leading-5 font-medium relative">
           {buttonText}
         </span>
-      </button>
+      </Button>
 
       <div className="border-solid border-[rgba(255,255,255,0.16)] border-t w-[283px] h-0 absolute left-10 top-[368px]"></div>
 
@@ -100,8 +104,8 @@ const PriceSection = () => {
   ];
 
   return (
-    <div className="flex  flex-col gap-[10px] items-center justify-start bg-gradient-to-br from-[#100821] to-[rgb(8,6,42)]">
-      <div className="flex flex-col gap-3 items-center justify-start self-stretch">
+    <div className="flex  flex-col gap-[10px] z-50 items-center justify-start ">
+      <div className="flex flex-col gap-3 items-center justify-start self-stretch z-50">
         <div className="text-center font-semibold text-[64px] self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent">
           The Perfect Pricing to Power Your DAO Development.
         </div>
@@ -109,8 +113,8 @@ const PriceSection = () => {
           At PANDAO, we believe in transparency, not just in governance but also in costs.
         </div>
       </div>
-      <div className="flex flex-col gap-[34px] items-center justify-start">
-        <div className="bg-[rgba(255,255,255,0.08)] rounded-[29px] border-solid border-[rgba(255,255,255,0.12)] border p-1 flex flex-row gap-0 items-start justify-center backdrop-blur-[6px]">
+      <div className="flex flex-col gap-[34px] items-center justify-start z-50">
+        {/* <div className="bg-[rgba(255,255,255,0.08)] rounded-[29px] border-solid border-[rgba(255,255,255,0.12)] border p-1 flex flex-row gap-0 items-start justify-center backdrop-blur-[6px]">
           <motion.div
             className="absolute top-0 bottom-0 left-0 w-1/2 h-full  bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] rounded-full shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)]"
             animate={{ x: isMonthly ? 0 : "100%" }}
@@ -134,8 +138,8 @@ const PriceSection = () => {
           >
             Annually
           </button>
-        </div>
-        <div className="flex flex-wrap gap-6 md:gap-10 lg:gap-[50px] justify-center md:justify-start">
+        </div> */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 ">
   {plans.map((plan, index) => (
     <PricingCard key={index} {...plan} />
   ))}
