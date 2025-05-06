@@ -3,7 +3,38 @@ import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { useParams } from "react-router-dom";
 
-
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length > 0) {
+    // Your expense object for this point
+    const expense = payload[0].payload;
+    return (
+      <div className="bg-[#2A1850] border border-[#7F42F9]/50 rounded-lg p-4 min-w-[220px]">
+        <div className="flex items-center gap-2 mb-2">
+          <img
+            src={expense.image_url}
+            alt={expense.user_name}
+            className="w-8 h-8 rounded-full object-cover border border-brand5"
+          />
+          <span className="text-white font-semibold">{expense.user_name}</span>
+        </div>
+        <div className="text-gray-200 text-xs mb-1">{expense.info}</div>
+        <div className="text-xs text-gray-400 mb-1">
+          {new Date(expense.date).toLocaleString()}
+        </div>
+        <div className="text-xs text-[#86efac]">
+          +{expense.xrd_added} XRD
+        </div>
+        <div className="text-xs text-[#7c3aed]">
+          Current: {expense.current_xrd} XRD
+        </div>
+        {/* <div className="text-xs text-gray-400 truncate mt-1">
+          Tx: {expense.tx_hash}
+        </div> */}
+      </div>
+    );
+  }
+  return null;
+};
 const FundHistoryGraph = () => {
   const [expenses, setExpenses] = useState([]);
   const params = useParams();
@@ -49,10 +80,7 @@ const FundHistoryGraph = () => {
                 tickFormatter={(date) => new Date(date).toLocaleDateString()}
               />
               <YAxis />
-              <Tooltip
-                formatter={(value, name) => [`${value.toLocaleString()} XRD`, name]}
-                labelFormatter={(label) => `Date: ${new Date(label).toLocaleDateString()}`}
-              />
+              <Tooltip content={<CustomTooltip />} />
               <Legend />
               <Line
                 type="monotone"
