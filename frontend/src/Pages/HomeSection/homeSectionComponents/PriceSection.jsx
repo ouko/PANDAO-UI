@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { Check, CircleCheck } from 'lucide-react';
 
 const PricingCard = ({ title, description, price, features, buttonText, highlight }) => {
   return (
@@ -54,16 +55,16 @@ const PricingCard = ({ title, description, price, features, buttonText, highligh
       {/* Features section */}
       <Separator className="my-10 bg-brand2"/>
       <div className="flex flex-col gap-4 mb-8">
-        <div className="text-white font-medium text-base leading-6">
+        {/* <div className="text-white font-medium text-base leading-6">
           {features.intro}
-        </div>
+        </div> */}
 
         <div className="flex flex-col gap-4">
           {features.list.map((feature, index) => (
-            <div key={index} className="flex flex-row gap-2 items-center">
-              <div className="w-4 h-4">
-                <img className="h-auto" src="/tick.svg" alt="feature icon" />
-              </div>
+            <div key={index} className="flex flex-row gap-2 items-start">
+              <span className="min-w-4 min-h-4 flex items-center justify-center mt-1">
+                <CircleCheck className="h-4 w-4 text-brand7 flex-shrink-0" />
+              </span>
               <div className="text-[rgba(255,255,255,0.80)] font-normal text-sm leading-[22px]">
                 {feature}
               </div>
@@ -86,34 +87,56 @@ const PriceSection = () => {
       description: "Perfect for early-stage DAOs.",
       price: "Free",
       features: {
-        intro: "Access essential DAO tools and resources to kickstart your journey.",
-        list: ["Basic DAO setup", "Voting & governance tools", "Essential analytics", "Community support"]
+        intro: "Designed for new or experimental DAOs ready to take their first steps in decentralized governance. The Community Plan provides access to foundational tools and educational resources to help you set up your DAO, onboard contributors, and launch your first proposals.",
+        list: [
+          "DAO creation wizard",
+          "Basic proposal and voting tools",
+          "Contributor role setup and permissions",
+          "Templates for DAO charters and governance policies",
+          "Access to the Catalyst community support forum",
+          "Educational resources and DAO best practice guides"
+        ]
       },
-      buttonText: "Get Started",
-
+      buttonText: "Get Started"
     },
     {
-      title: "Enterprise",
+      title: "Growth Plan",
       description: "For growing DAOs aiming for sustainable growth.",
       price: "$299",
       features: {
-        intro: "Scale your DAO with enhanced features and dedicated support.",
-        list: ["Advanced voting mechanisms", "Custom analytics dashboards", "Member onboarding tools", "Email & chat support"]
+        intro: "Scale your DAO operations with powerful governance features and strategic support. The Growth Plan equips you with the tools to manage your contributor base, drive engagement, and grow your treasury with confidence.",
+        list: [
+          "All Community Plan features",
+          "Custom DAO subdomains and branding",
+          "Token-based access control and reputation systems",
+          "Contributor compensation workflows",
+          "Community analytics dashboard",
+          "Multi-sig treasury integration",
+          "Priority email + chat support",
+          "Monthly governance optimization reports"
+        ]
       },
-      buttonText: "Subscribed",
+      buttonText: "Upgrade Now",
       highlight: true
-
     },
     {
-      title: "Business",
-      description: "Customized solutions for enterprise DAOs.",
-      price: "Custom ",
+      title: "Enterprise Plan",
+      description: "Custom solutions for enterprise DAOs",
+      price: "Custom Pricing",
       features: {
-        intro: "Tailored DAO solutions to meet your unique organizational needs.",
-        list: ["Dedicated DAO strategist", "Custom integrations & tools", "On-site workshops & training", "Priority 24/7 support"]
+        intro: "The Enterprise Plan is a white-glove solution tailored for large DAOs and decentralized organizations with complex coordination needs. We work with you to build deeply customized governance architecture, integrations, compliance pathways, and scaling strategies.",
+        list: [
+          "All Growth Plan features",
+          "Custom smart contract modules",
+          "API access and system integrations",
+          "Layer-2 scaling options",
+          "On-chain/off-chain identity verification",
+          "Governance consulting and training",
+          "Dedicated account manager + 24/7 support",
+          "SLA-based onboarding and support"
+        ]
       },
-      buttonText: "Contact Us",
-
+      buttonText: "Contact Us"
     }
   ];
 
