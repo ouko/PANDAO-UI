@@ -3,64 +3,75 @@ import { useState } from 'react';
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 
-const PricingCard = ({ title, description, price, features, buttonText }) => {
+const PricingCard = ({ title, description, price, features, buttonText, highlight }) => {
   return (
-    <div className="rounded-[32px]  border border-solid p-10 shrink-0 w-full  h-[724px] relative overflow-hidden bg-gradient-to-b from-[rgba(32,3,92,0.97)] to-[rgba(22,3,60,0.94)] backdrop-blur-[42px] hover:scale-105 transition-transform duration-300 ease-in-out">
-      <div className="flex  flex-col gap-8 items-start justify-center">
-        <div className="flex  flex-col gap-6 items-start justify-center">
-          <div className="rounded-[100px] w-10 h-10 relative overflow-hidden bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(192,161,255,0.41)]">
+    <div
+      className="rounded-[32px] border border-brand2 p-10 w-full flex flex-col relative overflow-hidden"
+      style={{
+        background: 'linear-gradient(195.05deg, rgba(192, 161, 255, 0.1) 0%, rgba(192, 161, 255, 0.02) 50%, rgba(192, 161, 255, 0.06) 100%)'
+      }}
+    >
+      {highlight && (
+        <div
+          className="absolute left-1/2 -top-40 -translate-x-1/2 pointer-events-none z-0 rounded-full blur-2xl bg-purple-700 w-52 h-52"
+        />
+      )}
+
+      <div className="flex flex-col gap-8 mb-8">
+        {/* Header section */}
+        <div className="flex flex-col gap-6">
+          <div className="rounded-[100px] w-10 h-10 relative bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(192,161,255,0.41)]">
             <div className="bg-black rounded-full w-5 h-5 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
           </div>
-          <div className="flex flex-col gap-1 items-start justify-start">
-            <div className="text-white font-clash  text-left  font-medium text-xl leading-7">
+
+          <div className="flex flex-col gap-1">
+            <div className="text-white font-clash text-xl leading-7 font-medium">
               {title}
             </div>
-            <div className="text-[rgba(255,255,255,0.80)] text-left font-clash  font-normal text-sm leading-5">
+            <div className="text-[rgba(255,255,255,0.80)] font-clash text-sm leading-5 font-normal">
               {description}
             </div>
           </div>
         </div>
 
-        <div className="shrink-0 w-[209px] h-14 relative">
-          <div className="text-white text-left f font-medium text-4xl font-clash  leading-[56px] absolute left-0 top-0">
-            {price}
-          </div>
+        {/* Price section */}
+        <div className="text-white font-clash text-4xl leading-[56px] font-medium">
+          {price}
         </div>
       </div>
-
-      <Button
-      variant="brand"
-      className="w-full"
-      >
-
-
-        <span className="text-[#ffffff] text-left  text-[14px] leading-5 font-medium relative">
-          {buttonText}
-        </span>
-      </Button>
-
-      <div className="border-solid border-[rgba(255,255,255,0.16)] border-t w-[283px] h-0 absolute left-10 top-[368px]"></div>
-
-      <div className="flex flex-col gap-4 items-start justify-start absolute left-10 top-[408px]">
-        <div className="text-white text-left  font-medium text-base leading-6 w-[271.79px]">
+   {/* Button section - stays at bottom with flex-grow pushing it down */}
+   <div className="mb-5">
+        <Button variant="brand" className="w-full">
+          <span className="text-[#ffffff] text-[14px] leading-5 font-medium">
+            {buttonText}
+          </span>
+        </Button>
+      </div>
+      {/* Features section */}
+      <Separator className="my-10 bg-brand2"/>
+      <div className="flex flex-col gap-4 mb-8">
+        <div className="text-white font-medium text-base leading-6">
           {features.intro}
         </div>
-        <div className="flex flex-col gap-4 items-start justify-start">
+
+        <div className="flex flex-col gap-4">
           {features.list.map((feature, index) => (
-            <div key={index} className="flex flex-row gap-2 items-center justify-start">
-              <div className="shrink-0 w-4 h-4 relative">
-                <img className="h-auto absolute left-0 top-0 overflow-visible" src={`/tick.svg`} alt="feature icon" />
+            <div key={index} className="flex flex-row gap-2 items-center">
+              <div className="w-4 h-4">
+                <img className="h-auto" src="/tick.svg" alt="feature icon" />
               </div>
-              <div className="text-[rgba(255,255,255,0.80)] text-left  font-normal text-sm leading-[22px]">
+              <div className="text-[rgba(255,255,255,0.80)] font-normal text-sm leading-[22px]">
                 {feature}
               </div>
             </div>
           ))}
         </div>
       </div>
-    </div>
 
+   
+    </div>
   );
 };
 
@@ -88,6 +99,7 @@ const PriceSection = () => {
         list: ["Advanced voting mechanisms", "Custom analytics dashboards", "Member onboarding tools", "Email & chat support"]
       },
       buttonText: "Subscribed",
+      highlight: true
 
     },
     {
@@ -139,11 +151,11 @@ const PriceSection = () => {
             Annually
           </button>
         </div> */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 ">
-  {plans.map((plan, index) => (
-    <PricingCard key={index} {...plan} />
-  ))}
-</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 max-w-[1200px] mx-auto ">
+          {plans.map((plan, index) => (
+            <PricingCard key={index} {...plan} />
+          ))}
+        </div>
 
       </div>
     </div>
