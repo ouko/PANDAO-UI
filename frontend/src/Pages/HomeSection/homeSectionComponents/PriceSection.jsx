@@ -143,14 +143,14 @@ const PriceSection = () => {
   return (
     <div className="flex  flex-col gap-[10px] z-50 items-center justify-start ">
       <div className="flex flex-col gap-3 items-center justify-start self-stretch z-50">
-        <div className="text-center font-semibold text-[64px] self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent">
+        <div className="text-center font-semibold md:text-[64px] text-[30px] leading-[120%]  self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent">
           The Perfect Pricing to Power Your DAO Development.
         </div>
-        <div className="text-[#B59AEC] text-center font-normal text-2xl leading-[120%] relative self-stretch">
+        <div className="text-[#B59AEC] text-center font-normal md:text-2xl text-xl leading-[120%] relative self-stretch px-3" >
           At PANDAO, we believe in transparency, not just in governance but also in costs.
         </div>
       </div>
-      <div className="flex flex-col gap-[34px] items-center justify-start z-50">
+      <div className="flex flex-col gap-[34px] items-center justify-start z-50 px-3 md:px-0">
         {/* <div className="bg-[rgba(255,255,255,0.08)] rounded-[29px] border-solid border-[rgba(255,255,255,0.12)] border p-1 flex flex-row gap-0 items-start justify-center backdrop-blur-[6px]">
           <motion.div
             className="absolute top-0 bottom-0 left-0 w-1/2 h-full  bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] rounded-full shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)]"
