@@ -273,11 +273,11 @@ const CommunityDetails = () => {
   const isLoading = isLoadingCommunity || isLoadingParticipants || isLoadingCommunities || isLoadingWithdraw
 
   return (
-    <div className="pb-10 items-start font-clash gap-3 justify-start min-h-screen overflow-hidden mt-5 text-black px-2">
+    <div className="pb-10 items-start font-clash gap-2 justify-start min-h-screen overflow-hidden mt-5 text-black px-2">
       <CustomAlert />
       <div className="flex md:flex-row flex-col md:py-12">
         {isLoading ? (
-          <div className="w-full  space-y-6">
+          <div className="w-full mx-4 space-y-6">
             <CardShimmer />
             <div className="flex md:flex-row flex-col w-full mx-auto gap-[16px]">
 
@@ -293,7 +293,7 @@ const CommunityDetails = () => {
             </div>
           </div>
         ) : communityData ? (
-          <div className="w-full">
+          <div className="w-full mx-4">
             <DaoCard
               daoData={communityData}
               isUserParticipant={isUserParticipant}

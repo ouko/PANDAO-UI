@@ -132,8 +132,8 @@ const Members = () => {
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
         <div className="space-y-6 md:w-[100%] ">
           <div className="flex md:flex-row flex-col  mx-auto gap-2">
-            <div className="md:w-[100%] space-y-6  ">
-
+            <div className="md:w-[100%] space-y-6 mx-[1px] ">
+ 
               <div
                 className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden"
               >
