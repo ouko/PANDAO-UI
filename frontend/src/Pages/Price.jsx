@@ -7,7 +7,7 @@ const Price = () => {
       <AnimatedGridPattern />
 
       <div className="container my-40  flex flex-col items-center gap-2 justify-center  ">
-        <div className="md:text-6xl text-4xl pt-8 font-semibold text-center text-transparent bg-clip-text bg-gradient-to-b from-black dark:from-white to-gray-600 dark:to-gray-400">
+        <div className="md:text-6xl text-xl pt-8 font-semibold text-center text-transparent bg-clip-text bg-gradient-to-b from-black dark:from-white to-gray-600 dark:to-gray-400">
           The perfect pricing to power your DAO development.
         </div>
         <p className="text-center tracking-wide pb-8">
