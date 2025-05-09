@@ -46,6 +46,12 @@ export default function ActivityCard({ ac, navigate, clipAddress, formatStandard
                     <div className="text-sm font-medium text-gray-100 bg-indigo-900 bg-opacity-40 px-4 py-2 rounded-lg space-x-2">
                         <span className="text-purple-400">Activity Info:</span> <span className="text-white capitalize">{ac.transaction_info}</span>
                     </div>
+                    {ac.funds_effected != null && (
+    <div className="text-xs font-semibold text-white bg-purple-700 px-4 py-1.5 rounded-full mx-1 inline-block space-x-2">
+        <span className="text-purple-400">Funds Effected:</span> 
+        <span className="text-white">{ac.funds_effected} Tokens</span>
+    </div>
+)}
 
                     <div className="text-xs font-semibold text-white bg-purple-800 px-4 py-1.5 rounded-full inline-block space-x-2">
                      <span className="text-purple-400">Activity Type:</span> <span className="text-white capitalize">{ac.activity_type}</span>
