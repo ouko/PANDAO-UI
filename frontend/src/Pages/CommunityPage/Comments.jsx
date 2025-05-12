@@ -1,7 +1,6 @@
 import { useAccount } from "@/AccountContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -10,14 +9,12 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { clipAddress } from "@/utils/functions/ClipAddress";
 import { formatStandardDateTime } from "@/utils/functions/convertActivityData";
 import axios from "axios";
-import { MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import ImageUpdater from "../components/ImageUpdater";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import CommnetImageUpdater from "../components/CommentImageUpdater";
 import { SkeletonCard } from "../GlobalComponents/Skeleton";
 import { SkeletonActivity } from "../GlobalComponents/SkeletonActivity";
@@ -26,119 +23,151 @@ const Comments = () => {
   const { accounts } = useAccount();
   const navigate = useNavigate();
   const params = useParams();
+  const queryClient = useQueryClient();
   const [title, setTitle] = useState("");
-  const [communities, setCommunities] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
-  const [selectedComments, setSelectedComments] = useState([]);
   const [selectedDiscussion, setSelectedDiscussion] = useState(null);
   const [selectedDiscussionTitle, setSelectedDiscussionTitle] = useState("");
   const [newComment, setNewComment] = useState("");
   const [commentUrl, setCommentUrl] = useState("")
 
 
-  const handleAddDiscussion = async () => {
+  // Mutation for adding a discussion
+  const addDiscussionMutation = useMutation({
+    mutationFn: async (discussionData) => {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/community/discussion`,
+        discussionData
+      );
+      return response.data;
+    },
+    onSuccess: () => {
+      toast.success("Discussion Added");
+      setTitle("");
+      setOpen(false);
+      // Invalidate and refetch discussions
+      queryClient.invalidateQueries({ queryKey: ['discussions', params.id] });
+    },
+    onError: (error) => {
+      if (error.response?.status === 401) {
+        toast.warning("Non member cannot add discussion");
+        setTitle("");
+        setOpen(false);
+      } else {
+        console.error("Error adding discussion:", error);
+        toast.error("Failed to add discussion");
+      }
+    }
+  });
+
+  const handleAddDiscussion = () => {
     if (title.trim() === "") {
-      alert("Add something");
+      toast.error("Add something");
       return;
     }
+    
     const data = {
       user_addr: accounts[0].address,
       discussion_title: title,
       community_id: params.id,
     };
 
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/community/discussion`,
-        data
-      );
-      console.log("Comment Response:", response.data);
-      toast.success("Discussion Added");
-      setTitle("");
-      setOpen(false);
-      fetchComments();
-    } catch (error) {
-      if (error.response.status === 401) {
-        toast.warning("Non member cannot add discussion");
-        setTitle("");
-        setOpen(false);
-      }
-      console.error("Error adding discussion:", error.response.status);
-
-    }
+    addDiscussionMutation.mutate(data);
   };
 
-  const fetchComments = async () => {
-    try {
+  // Query for fetching discussions
+  const { data: communities, isLoading: discussionsLoading } = useQuery({
+    queryKey: ['discussions', params.id],
+    queryFn: async () => {
       const res = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/community/discussion/${params.id}`
       );
-      setCommunities(res.data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching discussions:", error);
-    }
+      return res.data;
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    refetchOnWindowFocus: true,
+  });
+
+  const fetchDiscussionComments = (discussionId, discussionTitle) => {
+    setSelectedDiscussion(discussionId);
+    setSelectedDiscussionTitle(discussionTitle);
   };
 
-  const fetchDiscussionComments = async (discussionId, discussionTitle) => {
-    try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL
-        }/community/discussion/comments/${discussionId}`
-      );
-      setSelectedComments(res.data);
-      setSelectedDiscussion(discussionId);
-      setSelectedDiscussionTitle(discussionTitle); // Set the discussion title
-    } catch (error) {
-      console.error("Error fetching discussion comments:", error);
+  // Mutation for adding a comment
+  const addCommentMutation = useMutation({
+    mutationFn: async (commentData) => {
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/community/discussion/comments`,
+          commentData
+        );
+        return response.data;
+      } catch (error) {
+        // Capture the error here to handle specific status codes
+        if (error.response?.status === 401) {
+          throw new Error("unauthorized");
+        }
+        throw error; // Re-throw other errors to be caught by onError
+      }
+    },
+    onSuccess: () => {
+      toast.success("Comment Added");
+      setNewComment("");
+      setCommentUrl("");
+      // Invalidate and refetch comments for the selected discussion
+      queryClient.invalidateQueries({ queryKey: ['discussionComments', selectedDiscussion] });
+    },
+    onError: (error) => {
+      console.error("Error adding comment:", error);
+      
+      if (error.message === "unauthorized") {
+        toast.warning("You must be a community member to add comments");
+        setNewComment("");
+        setCommentUrl("");
+      } else {
+        toast.error("Failed to add comment");
+      }
     }
-  };
+  });
 
-  const handleAddComment = async () => {
+  const handleAddComment = () => {
     if (newComment.trim() === "") {
       toast.error("Comment cannot be empty");
       return;
     }
+    
     const data = {
       user_addr: accounts[0].address,
       discussion_id: selectedDiscussion,
       comment: newComment,
       image: commentUrl || "string",
     };
-    setLoading(true);
 
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/community/discussion/comments`,
-        data
-      );
-      console.log("Add Comment Response:", response);
-
-      if (response.status == 200) {
-        toast.success("Comment Added");
-        setNewComment("");
-        setCommentUrl("")
-        fetchDiscussionComments(selectedDiscussion, selectedDiscussionTitle);
-      }
-      if (response.data.status_code === 401) {
-        toast.warning("Not a community member");
-        setNewComment("")
-        return
-      }
-
-    } catch (error) {
-      console.error("Error adding comment:", error);
-    }
-    setLoading(false);
+    addCommentMutation.mutate(data);
   };
+
   const handleCommentId = (id) => {
     const url = `https://ucarecdn.com/${id}/-/preview/1000x562/`;
     console.log("Received file URL:", url);
     setCommentUrl(url)
   };
+
+  // Query for fetching comments for a selected discussion
+  const { data: selectedComments, isLoading: commentsLoading } = useQuery({
+    queryKey: ['discussionComments', selectedDiscussion],
+    queryFn: async () => {
+      if (!selectedDiscussion) return [];
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/community/discussion/comments/${selectedDiscussion}`
+      );
+      return res.data;
+    },
+    enabled: !!selectedDiscussion,
+    staleTime: 1000 * 60 * 2, // 2 minutes
+  });
+
   useEffect(() => {
-    fetchComments();
+    fetchDiscussionComments();
   }, [params.id]);
 
   if (!accounts || accounts.length === 0) {
@@ -171,7 +200,7 @@ const Comments = () => {
                     <div className="text-white text-[56px] font-medium text-center">
                       {selectedDiscussion
                         ? selectedDiscussionTitle
-                        : `${communities.length} discussions so far.`}
+                        : `${communities?.length || 0} discussions so far.`}
                     </div>
                   </div>
                 </div>
@@ -214,12 +243,13 @@ const Comments = () => {
                     </div>
 
                   </div>
-                  {!loading && (
+                  {!discussionsLoading && (
                     <div className="space-y-4">
-                      {communities.length === 0 && <div className="flex items-center justify-center h-[200px] text-gray-300">
-                        No Active Discussion
-                      </div>}
-                      {communities.length > 0 && (
+                      {!communities || communities.length === 0 ? (
+                        <div className="flex items-center justify-center h-[200px] text-gray-300">
+                          No Active Discussion
+                        </div>
+                      ) : (
                         <div className="grid md:grid-cols-2 grid-cols-1 gap-3 p-6">
                           {communities.map((community, index) => (
                             <div
@@ -256,7 +286,7 @@ const Comments = () => {
                       )}
                     </div>
                   )}
-                  {loading && (
+                  {discussionsLoading && (
                     <div className="grid md:grid-cols-2 h-[400px] rounded-md grid-cols-1 gap-3 p-6">
                       {[...Array(4)].map((_, index) => (
                         <SkeletonActivity
@@ -289,14 +319,14 @@ const Comments = () => {
 
                     </div>
 
-                    {loading ? (
+                    {commentsLoading ? (
                       <div className="flex flex-col h-auto items-center justify-center text-center mt-5">
                         {[...Array(4)].map((_, i) => (
                           <SkeletonCard key={i} />
                         ))}
                       </div>
                     ) :
-                      selectedComments.length > 0 ? (
+                      selectedComments && selectedComments.length > 0 ? (
                         <div className="px-4 py-4">
                           {selectedComments.map((comment, index) => (
                             <div
@@ -345,6 +375,7 @@ const Comments = () => {
                       ) : (
                         <div className="text-center py-20 text-white">No comments yet.</div>
                       )}
+                    
 
                   </div>
                   <div className="w-full flex flex-col items-end gap-y-4 py-6">
