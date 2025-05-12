@@ -1,45 +1,55 @@
 import { useAccount } from '@/AccountContext'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
 
 import BondCard from './components/BondCard'
 import SkeletonBond from '../GlobalComponents/SkeletonBond'
+
+// API utility functions
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
+const fetchData = async (endpoint, params = {}) => {
+  const response = await axios.get(`${API_BASE_URL}${endpoint}`, { params });
+  return response.data;
+};
 
 const BondIssued = (props) => {
   const { accounts } = useAccount()
   const params = useParams()
   const navigate = useNavigate()
-  const [issuedBonds, setIssuedBonds] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
 
-  const address = accounts && accounts.length > 0 ? accounts[0] : null 
+  const address = accounts && accounts.length > 0 ? accounts[0] : null
 
-  const fetchIssuedBond = async () => {
-    if (!address) return // if no address, don't fetch
-    try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/zcb/all/${params.id}?purchased=false&user_address=${accounts[0]?.address}`,
-      )
-      setIssuedBonds(res.data)
-      setLoading(false)
-    } catch (err) {
-      console.error(err)
-      setError('Failed to load issued bonds')
-      setLoading(false)
+  // Query for fetching issued bonds
+  const { 
+    data: issuedBonds = [], 
+    isLoading: loading, 
+    error 
+  } = useQuery({
+    queryKey: ['issuedBonds', params.id, address?.address],
+    queryFn: async () => {
+      if (!address) return []; // if no address, return empty array
+      return fetchData(`/community/zcb/all/${params.id}`, {
+        purchased: false,
+        user_address: address.address
+      });
+    },
+    enabled: !!address, // Only run query if we have an address
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    refetchOnWindowFocus: true,
+    retry: 2,
+    onError: (err) => {
+      console.error('Error fetching issued bonds:', err);
     }
-  }
+  });
 
   useEffect(() => {
     if (!accounts || accounts.length === 0) {
       navigate('/')
     }
   }, [accounts, navigate])
-
-  useEffect(() => {
-    fetchIssuedBond()
-  }, [params.id, address])
 
   if (!accounts || accounts.length === 0) {
     return null // navigation already handled in useEffect
@@ -86,15 +96,17 @@ const BondIssued = (props) => {
                   
                 </div>
                 {loading ? (
-                  <div className="flex flex-col h-auto items-center px-5  justify-center text-center mt-5">
-                                      {[...Array(2)].map((_, i) => (
-                                        <SkeletonBond key={i} />
-                                      ))}
-                                    </div>
+                  <div className="flex flex-col h-auto items-center px-5 justify-center text-center mt-5">
+                    {[...Array(2)].map((_, i) => (
+                      <SkeletonBond key={i} />
+                    ))}
+                  </div>
                 ) : error ? (
-                  <div className="text-center text-red-500">{error}</div>
+                  <div className="text-center text-red-500 py-4">
+                    {error instanceof Error ? error.message : 'Failed to load issued bonds'}
+                  </div>
                 ) : issuedBonds.length === 0 ? (
-                  <div className="text-center">No bonds issued yet</div>
+                  <div className="text-center py-4 text-white">No bonds issued yet</div>
                 ) : (
                   <div className="space-y-4 px-6 py-6">
                     {issuedBonds.map((bond) => (
