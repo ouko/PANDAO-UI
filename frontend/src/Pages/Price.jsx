@@ -142,13 +142,16 @@ const PriceSection = () => {
   ];
 
   return (
-    <div className="bg-black/50 absolute inset-0">
-      <div className="absolute bottom-[100px] left-0 bg-brand1 z-0 size-[500px] rounded-full blur-[200px]"></div>
-      <div className="absolute top-[10px] right-0 bg-brand1 z-0 size-[500px] rounded-full blur-[200px]"></div>
-      <div className="absolute top-[600px] right-0 bg-brand1 z-0 size-[500px] rounded-full blur-[200px]"></div>
-      <div className="w-full absolute overflow-hidden opacity-10 h-[900px]">
+     <div className="bg-brand1 relative min-h-screen pb-20 font-clash overflow-hidden">
+      {/* Background elements */}
+      <div className="bg-black/50 absolute inset-0"></div>
+      <div className="absolute bottom-[100px] left-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px]"></div>
+      <div className="absolute top-[10px] right-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px]"></div>
+      <div className="absolute top-[600px] right-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px]"></div>
+      <div className="w-full absolute overflow-hidden opacity-20 h-[600px]">
         <TileEffect4 />
       </div>
+0
     <div className="flex  flex-col gap-[10px] z-50 items-center justify-start pt-20 ">
       <div className="flex flex-col gap-3 items-center justify-start self-stretch z-50">
         <div className="text-center font-semibold md:text-[64px] text-[30px] leading-[120%]  self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent">
