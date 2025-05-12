@@ -3,7 +3,6 @@ import { useAccount } from "@/AccountContext";
 import {
   Table,
   TableBody,
-
   TableCell,
   TableHead,
   TableHeader,
@@ -13,18 +12,17 @@ import {
 import { clipAddress } from "@/utils/functions/ClipAddress";
 import axios from "axios";
 
-import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { SkeletonCard } from "../GlobalComponents/Skeleton";
 
 
 const TokenDistribution = () => {
   const { accounts } = useAccount();
   const navigate = useNavigate();
   const params = useParams();
-  const [comment, setComment] = useState("");
-  const [tokens, setTokens] = useState([]);
-  const [loading, setLoading] = useState(true);
 
+  // Commented out unused code
   // const handleAddComment = async () => {
   //   if (comment.trim() === "") {
   //     alert("Add Somthign");
@@ -32,11 +30,10 @@ const TokenDistribution = () => {
   //   }
   //   const data = {
   //     user_addr: accounts[0].address,
-
   //     comment: comment,
   //     community_id: params.id,
   //   };
-
+  //
   //   try {
   //     const response = await axios.post(
   //       `${import.meta.env.VITE_BACKEND_URL}/community/comment`,
@@ -51,21 +48,23 @@ const TokenDistribution = () => {
   //   }
   // };
 
-  const fetchComments = async () => {
-    try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/token/${params.id}`
-      );
-      console.log(res, "hi");
-      setTokens(res.data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching blueprint data:", error);
-    }
-  };
-  useEffect(() => {
-    fetchComments();
-  }, [params.id]);
+  // Using TanStack Query to fetch token distribution data
+  const { data: tokens = [], isLoading } = useQuery({
+    queryKey: ['tokenDistribution', params.id],
+    queryFn: async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/community/token/${params.id}`
+        );
+        return res.data;
+      } catch (error) {
+        console.error("Error fetching token distribution data:", error);
+        throw error;
+      }
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    refetchOnWindowFocus: true,
+  });
 
   if (!accounts || accounts.length === 0) {
     navigate("/");
@@ -112,40 +111,49 @@ const TokenDistribution = () => {
               </div>
 
               <div className=" bg-[rgba(169,126,255,0.08)] rounded-[10px] z-50 border-2 border-[#5228A4] h-full relative  overflow-hidden">
-
-                <Table>
-                  {/* <TableCaption>A list of your recent .</TableCaption> */}
-                  <TableHeader>
-                    <TableRow className="bg-[#39246b] h-[65px] hover:bg-[#39246b] text-white text-[20px] ">
-                      <TableHead className="w-[150px] text-white  ">User Name</TableHead>
-                      <TableHead className="w-[150px] text-white  " >Token Owned</TableHead>
-                      <TableHead className="w-[150px] text-white  " >Address</TableHead>
-                      {/* <TableHead className="text-right">Amount</TableHead> */}
-                    </TableRow>
-                  </TableHeader>
-
-                  <TableBody className="text-[18px] bg-gradient-to-br from-[rgba(24,18,45,0.59)]  via-transparent to-brand1  border-2 border-brand2  px-2 py-2 text-brand7">
-                    {tokens.map((token, index) => (
-                      <TableRow key={index} className="hover:bg-[#7057ab] hover:text-white ">
-                        <TableCell className="font-medium  ">
-                          {" "}
-                          {token.user_name}
-                        </TableCell>
-                        <TableCell className>{token.token_owned}</TableCell>
-                        <TableCell onClick={() =>
-                          navigate(
-                            `/userDashboard/userProfile/${token.public_address}`
-                          )
-                        }  >
-                          {clipAddress(token.public_address)}
-                        </TableCell>
-                      </TableRow>
+                {isLoading ? (
+                  <div className="flex flex-col h-auto items-center justify-center text-center mt-5">
+                    {[...Array(4)].map((_, i) => (
+                      <SkeletonCard key={i} />
                     ))}
-                  </TableBody>
-                </Table>
-                {tokens.length === 0 && <div className="flex items-center justify-center h-20">
-                  No trade happend yet.
-                </div>}
+                  </div>
+                ) : (
+                  <>
+                    <Table>
+                      {/* <TableCaption>A list of your recent .</TableCaption> */}
+                      <TableHeader>
+                        <TableRow className="bg-[#39246b] h-[65px] hover:bg-[#39246b] text-white text-[20px] ">
+                          <TableHead className="w-[150px] text-white  ">User Name</TableHead>
+                          <TableHead className="w-[150px] text-white  " >Token Owned</TableHead>
+                          <TableHead className="w-[150px] text-white  " >Address</TableHead>
+                          {/* <TableHead className="text-right">Amount</TableHead> */}
+                        </TableRow>
+                      </TableHeader>
+
+                      <TableBody className="text-[18px] bg-gradient-to-br from-[rgba(24,18,45,0.59)]  via-transparent to-brand1  border-2 border-brand2  px-2 py-2 text-brand7">
+                        {tokens.map((token, index) => (
+                          <TableRow key={index} className="hover:bg-[#7057ab] hover:text-white ">
+                            <TableCell className="font-medium  ">
+                              {" "}
+                              {token.user_name}
+                            </TableCell>
+                            <TableCell className>{token.token_owned}</TableCell>
+                            <TableCell onClick={() =>
+                              navigate(
+                                `/userDashboard/userProfile/${token.public_address}`
+                              )
+                            }  >
+                              {clipAddress(token.public_address)}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                    {tokens.length === 0 && <div className="flex items-center justify-center h-20 text-white">
+                      No trade happened yet.
+                    </div>}
+                  </>
+                )}
               </div>
             </div>
           </div>
