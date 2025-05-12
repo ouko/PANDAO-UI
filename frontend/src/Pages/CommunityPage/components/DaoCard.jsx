@@ -77,7 +77,7 @@ const DaoCard = ({ daoData, isUserParticipant,  setExecOpen, onSuccess, isOwner 
 
     <>
       <div
-        className="bg-[rgba(169,126,255,0.08)] rounded-[20px] border-solid border-[#5228A4] border pt-[13px]  pb-[13px] pl-[25px] self-stretch shrink-0 h-[295px] relative overflow-hidden"
+        className="bg-[rgba(169,126,255,0.08)] rounded-[20px] border-solid border-[#5228A4] border pt-[13px]  pb-[13px] pl-[25px] self-stretch shrink-0 h-[410px] relative overflow-hidden"
 
       >
 
@@ -174,16 +174,15 @@ const DaoCard = ({ daoData, isUserParticipant,  setExecOpen, onSuccess, isOwner 
   <div className="text-[#AE85FF] text-left text-base font-normal uppercase relative self-stretch">
     Description:
   </div>
-  <div className="flex flex-col gap-1 items-start">
-    <p className="text-[#ffffff] text-start text-xl font-normal overflow-hidden text-ellipsis">
-      {showFullDescription
-        ? daoData.description
-        : `${daoData.description?.slice(0, 60)}...`}
-    </p>
-    {daoData.description?.length > 60 && (
+  <div className="flex flex-col gap-1 items-start w-full">
+    <div className={`text-[#ffffff] text-start text-xl font-normal ${!showFullDescription ? 'line-clamp-2 sm:line-clamp-3 md:line-clamp-2' : ''}`}>
+      {daoData.description || 'No description available'}
+    </div>
+    {daoData.description && (
       <button
         onClick={() => setShowFullDescription(!showFullDescription)}
-        className="text-purple-400 text-sm underline"
+        className="text-purple-400 text-sm underline hover:text-purple-300 transition-colors mt-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+        aria-expanded={showFullDescription}
       >
         {showFullDescription ? "See less" : "See more"}
       </button>
