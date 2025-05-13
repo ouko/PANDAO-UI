@@ -1,10 +1,40 @@
+import { Button } from '@/components/ui/button';
+import { ArrowBigDown, ArrowBigUp } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
+import { useAccount } from '@/AccountContext';
+import axios from 'axios';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const BondCard = ({ bond }) => {
     const [showFullDescription, setShowFullDescription] = useState(false);
+    const [likeStatus, setLikeStatus] = useState(null);
+    const { accounts } = useAccount();
+    const user_address = accounts?.[0]?.address;
     
+
+    // Like/Dislike mutation
+    const likeDislikeMutation = useMutation({
+        mutationFn: async (isLiked) => {
+            const payload = {
+                zcb_id: bond.id,
+                user_address,
+                is_liked: isLiked
+            };
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/community/zcb/like-dislike`, payload);
+            return response.data;
+        },
+        onSuccess: (data, isLiked) => {
+            setLikeStatus(isLiked ? 'like' : 'dislike');
+            toast.success(isLiked ? 'You liked this bond!' : 'You disliked this bond.');
+
+        },
+        onError: (error) => {
+            toast.error('Failed to submit feedback.');
+        }
+    });
+
     // Format date helper
     const formatDate = (dateString) => {
         if (!dateString) return 'N/A';
@@ -14,13 +44,13 @@ const BondCard = ({ bond }) => {
             day: 'numeric'
         });
     };
-    
+
     // Calculate ROI helper
     const calculateROI = (returnValue, price) => {
         if (!returnValue || !price || price === 0) return 0;
         return (((returnValue / price) - 1) * 100).toFixed(2);
     };
-    console.log('%c Bond Object: ', 'font-weight: bold; color: #00b0ff', bond);
+    console.log('%c Bond Object: ', 'font-weight: bold; color: #00b0ff', bond.dislikes_count ,bond.likes_count);
     return (
         <div className="bg-gradient-to-br from-[#1B0D37] to-[#2A1850] rounded-2xl border-2 border-[#5228A4] w-full mx-auto p-6 overflow-hidden backdrop-blur-md flex flex-col gap-6 shadow-lg">
             {/* Header Section with Asset Info */}
@@ -32,7 +62,7 @@ const BondCard = ({ bond }) => {
                             src={bond.asset_url}
                             alt={bond.asset_name || 'Asset'}
                         />
-                       
+
                     </div>
                 )}
                 <div className="flex flex-col gap-2 w-full">
@@ -46,9 +76,9 @@ const BondCard = ({ bond }) => {
                                     On-Chain
                                 </span>
                             )}
-                             {bond.created_on_blockchain && (
+                            {bond.created_on_blockchain && (
                                 <span className="bg-[#7F42F9] text-white text-xs px-2 py-1 rounded-full">
-                                     {bond.bond_position || 'N/A'}
+                                    {bond.bond_position || 'N/A'}
                                 </span>
                             )}
                         </div>
@@ -56,14 +86,14 @@ const BondCard = ({ bond }) => {
                             {bond.price ? `${bond.price} ${bond.currency?.toUpperCase() || 'XRD'}` : 'Price N/A'}
                         </div>
                     </div>
-                    
+
                     <p className="text-gray-300 text-sm font-medium">
                         Created by <span className="text-white">{bond.creator_name || 'Unknown'}</span>
                     </p>
                     <div className="text-gray-300 text-sm font-medium">
                         Resources Address: <Link className="text-white" to={`https://stokenet-dashboard.radixdlt.com/resource/${bond.asset_address}`} target="_blank">{bond.asset_address}</Link>
                     </div>
-                    
+
                     <div className="mt-1">
                         <span className="font-normal text-sm text-white max-w-3xl">
                             {showFullDescription
@@ -83,33 +113,33 @@ const BondCard = ({ bond }) => {
             </div>
 
             <div className="relative py-8">
-  {/* Timeline lines between dots */}
-  {/* First segment: between Created and Initial Exchange */}
-  <div className="absolute top-1/3 left-[16.66%] w-[33.33%] h-1 bg-gray-700 rounded-full -translate-y-1/2 z-0"></div>
-  {/* Second segment: between Initial Exchange and Maturity Date */}
-  <div className="absolute top-1/3 left-[49.99%] w-[33.33%] h-1 bg-gray-700 rounded-full -translate-y-1/2 z-0"></div>
-  {/* Timeline steps */}
-  <div className="flex justify-between items-center relative z-10">
-    {/* Created */}
-    <div className="flex flex-col items-center w-1/3">
-      <div className="bg-[#b7ec9a] h-5 w-5 rounded-full border-4 border-[#1B0D37] shadow-lg"></div>
-      <span className="text-[#b7ec9a] text-xs mt-2 font-semibold">Created</span>
-      <span className="text-white text-xs mt-1">{formatDate(bond.created_at)}</span>
-    </div>
-    {/* Initial Exchange */}
-    <div className="flex flex-col items-center w-1/3">
-      <div className="bg-[#b7ec9a] h-5 w-5 rounded-full border-4 border-[#1B0D37] shadow-lg"></div>
-      <span className="text-[#b7ec9a] text-xs mt-2 font-semibold">Initial Exchange</span>
-      <span className="text-white text-xs mt-1">{formatDate(bond.initial_exchange_date)}</span>
-    </div>
-    {/* Maturity Date */}
-    <div className="flex flex-col items-center w-1/3">
-      <div className="bg-[#f97679] h-5 w-5 rounded-full border-4 border-[#1B0D37] shadow-lg"></div>
-      <span className="text-[#f97679] text-xs mt-2 font-semibold">Maturity Date</span>
-      <span className="text-white text-xs mt-1">{formatDate(bond.maturity_date)}</span>
-    </div>
-  </div>
-</div>
+                {/* Timeline lines between dots */}
+                {/* First segment: between Created and Initial Exchange */}
+                <div className="absolute top-1/3 left-[16.66%] w-[33.33%] h-1 bg-gray-700 rounded-full -translate-y-1/2 z-0"></div>
+                {/* Second segment: between Initial Exchange and Maturity Date */}
+                <div className="absolute top-1/3 left-[49.99%] w-[33.33%] h-1 bg-gray-700 rounded-full -translate-y-1/2 z-0"></div>
+                {/* Timeline steps */}
+                <div className="flex justify-between items-center relative z-10">
+                    {/* Created */}
+                    <div className="flex flex-col items-center w-1/3">
+                        <div className="bg-[#b7ec9a] h-5 w-5 rounded-full border-4 border-[#1B0D37] shadow-lg"></div>
+                        <span className="text-[#b7ec9a] text-xs mt-2 font-semibold">Created</span>
+                        <span className="text-white text-xs mt-1">{formatDate(bond.created_at)}</span>
+                    </div>
+                    {/* Initial Exchange */}
+                    <div className="flex flex-col items-center w-1/3">
+                        <div className="bg-[#b7ec9a] h-5 w-5 rounded-full border-4 border-[#1B0D37] shadow-lg"></div>
+                        <span className="text-[#b7ec9a] text-xs mt-2 font-semibold">Initial Exchange</span>
+                        <span className="text-white text-xs mt-1">{formatDate(bond.initial_exchange_date)}</span>
+                    </div>
+                    {/* Maturity Date */}
+                    <div className="flex flex-col items-center w-1/3">
+                        <div className="bg-[#f97679] h-5 w-5 rounded-full border-4 border-[#1B0D37] shadow-lg"></div>
+                        <span className="text-[#f97679] text-xs mt-2 font-semibold">Maturity Date</span>
+                        <span className="text-white text-xs mt-1">{formatDate(bond.maturity_date)}</span>
+                    </div>
+                </div>
+            </div>
 
             {/* Bond Key Details */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -140,7 +170,7 @@ const BondCard = ({ bond }) => {
                         </svg>
                         Proposal Details
                     </h3>
-                    
+
                     {bond.proposals.map((proposal, index) => (
                         <div key={proposal.id || index} className="bg-[#1B0D37] rounded-lg p-4 mb-2 last:mb-0">
                             <div className="flex justify-between items-start mb-3">
@@ -149,11 +179,11 @@ const BondCard = ({ bond }) => {
                                     {proposal.status === 1 ? 'Approved' : 'Pending'}
                                 </span>
                             </div>
-                            
+
                             {proposal.description && (
                                 <p className="text-gray-300 text-sm mb-4">{proposal.description}</p>
                             )}
-                            
+
                             <div className="flex gap-4">
                                 <div className="flex items-center gap-2">
                                     <span className="bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded-full">For: {proposal.voted_for ?? 0}</span>
@@ -177,15 +207,15 @@ const BondCard = ({ bond }) => {
                         </svg>
                         Expected Earnings
                     </h3>
-                    
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {bond.earnings.map((earning, index) => (
                             <div key={earning.user_address || index} className="bg-[#1B0D37] rounded-lg p-4 border border-[#7F42F9]/30">
                                 <div className="flex items-center gap-3 mb-3">
                                     {earning.user_profile_picture && (
-                                        <img 
-                                            src={earning.user_profile_picture} 
-                                            alt={earning.user_name} 
+                                        <img
+                                            src={earning.user_profile_picture}
+                                            alt={earning.user_name}
                                             className="w-10 h-10 rounded-full object-cover"
                                         />
                                     )}
@@ -196,7 +226,7 @@ const BondCard = ({ bond }) => {
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div className="grid grid-cols-2 gap-2 text-sm">
                                     <div>
                                         <span className="text-brand5 text-xs block">Bond Price</span>
@@ -229,39 +259,63 @@ const BondCard = ({ bond }) => {
 
             {/* Additional Details & Footer */}
             <div className="bg-black/30 p-4 rounded-xl mt-2">
-  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
-    <div className="flex items-center gap-3">
-      {bond.creator_image ? (
-        <img
-          src={bond.creator_image}
-          alt={bond.creator_name || "Creator"}
-          className="w-8 h-8 rounded-full object-cover border border-brand5"
-        />
-      ) : (
-        <div className="w-8 h-8 rounded-full bg-brand5 flex items-center justify-center text-white font-bold">
-          {bond.creator_name ? bond.creator_name.charAt(0).toUpperCase() : "?"}
-        </div>
-      )}
-      <div>
-        <p className="text-brand5 text-xs uppercase">Creator Name:</p>
-        <p className="text-white text-sm">{bond.creator_name || 'N/A'}</p>
-      </div>
-    </div>
-    <div>
-      <p className="text-brand5 text-xs uppercase">Creator Address:</p>
-      <p
-        className="text-white text-sm truncate cursor-pointer hover:underline"
-        onClick={() => {
-          navigator.clipboard.writeText(bond.creator);
-          toast.success('Address copied to clipboard');
-        }}
-        title={bond.creator}
-      >
-        {bond.creator || 'N/A'}
-      </p>
-    </div>
-  </div>
-</div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
+                    <div className="flex items-center gap-3">
+                        {bond.creator_image ? (
+                            <img
+                                src={bond.creator_image}
+                                alt={bond.creator_name || "Creator"}
+                                className="w-8 h-8 rounded-full object-cover border border-brand5"
+                            />
+                        ) : (
+                            <div className="w-8 h-8 rounded-full bg-brand5 flex items-center justify-center text-white font-bold">
+                                {bond.creator_name ? bond.creator_name.charAt(0).toUpperCase() : "?"}
+                            </div>
+                        )}
+                        <div>
+                            <p className="text-brand5 text-xs uppercase">Creator Name:</p>
+                            <p className="text-white text-sm">{bond.creator_name || 'N/A'}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p className="text-brand5 text-xs uppercase">Creator Address:</p>
+                        <p
+                            className="text-white text-sm truncate cursor-pointer hover:underline"
+                            onClick={() => {
+                                navigator.clipboard.writeText(bond.creator);
+                                toast.success('Address copied to clipboard');
+                            }}
+                            title={bond.creator}
+                        >
+                            {bond.creator || 'N/A'}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div className="flex gap-4 justify-end mt-4">
+                <Button
+                    className={`flex items-center gap-1 px-3 py-1 rounded-full border transition-colors duration-150 ${likeStatus === 'like' ? 'bg-green-600 text-white border-green-600' : 'bg-[#1B0D37] text-green-400 border-green-400 hover:bg-green-600 hover:text-white'}`}
+                    onClick={() => likeDislikeMutation.mutate(true)}
+                    aria-label="Like"
+                    disabled={likeDislikeMutation.isLoading || !user_address}
+                >
+                    <ArrowBigUp /> Like
+                    <span className="ml-2 px-2 py-0.5 rounded-full bg-green-900/60 text-green-200 text-xs font-bold">
+                        {bond.likes_count || 0}
+                    </span>
+                </Button>
+                <Button
+                    className={`flex items-center gap-1 px-3 py-1 rounded-full border transition-colors duration-150 ${likeStatus === 'dislike' ? 'bg-red-600 text-white border-red-600' : 'bg-[#1B0D37] text-red-400 border-red-400 hover:bg-red-600 hover:text-white'}`}
+                    onClick={() => likeDislikeMutation.mutate(false)}
+                    aria-label="Dislike"
+                    disabled={likeDislikeMutation.isLoading || !user_address}
+                >
+                    <ArrowBigDown /> Dislike
+                    <span className="ml-2 px-2 py-0.5 rounded-full bg-red-900/60 text-red-200 text-xs font-bold">
+                        {bond.dislikes_count || 0}
+                    </span>
+                </Button>
+            </div>
         </div>
     );
 };

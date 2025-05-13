@@ -10,18 +10,21 @@ import TileEffect4 from '@/components/ui/myComponents/grid-bg-4';
 const PricingCard = ({ title, description, price, features, buttonText, highlight }) => {
   return (
     <div
-      className={`rounded-[32px] border border-brand2 p-10  w-full flex flex-col relative overflow-hidden ${highlight ? 'z-10' : ''}`}
+   className={`rounded-[32px] border p-10 w-full flex flex-col relative overflow-hidden
+  ${highlight 
+    ? 'z-10 -translate-y-10 border-brand3 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand1 via-brand1  to-brand3' 
+    : 'border-brand2 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand2 via-brand2 to-brand1'
+  }`}
+
       style={{
-        background: 'linear-gradient(195.05deg, rgba(192, 161, 255, 0.1) 90%, rgba(192, 161, 255, 0.02) 90%, rgba(192, 161, 255, 0.06) 100%)',
-        transform: highlight ? 'md:translateY(-24px)' : undefined,
         transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)'
       }}
     >
-      {highlight && (
+      {/* {highlight && (
         <div
           className="absolute left-1/2 -top-40 -translate-x-1/2 pointer-events-none z-0 rounded-full blur-2xl bg-purple-700 w-52 h-52"
         />
-      )}
+      )} */}
 
       <div className="flex flex-col gap-8 mb-8">
         {/* Header section */}
@@ -187,7 +190,7 @@ const PriceSection = () => {
             Annually
           </button>
         </div> */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 max-w-[1200px] mx-auto ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-20 max-w-[1200px] mx-auto ">
           {plans.map((plan, index) => (
             <PricingCard key={index} {...plan} />
           ))}
