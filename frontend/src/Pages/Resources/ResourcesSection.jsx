@@ -65,23 +65,24 @@ const ResourceSection = () => {
 
   console.log(posts)
   return (
-    <div className="min-h-screen flex flex-col items-start   text-black max-w-[1000px] mx-auto mb-20">
+    <div className="min-h-screen flex flex-col z-50 items-start max-w-[1000px] mx-auto mb-2">
+      
       <div className="flex flex-col  items-start  gap-5 justify-center w-full p-5">
-        <div className="text-4xl font-semibold">Video Guide</div>
-        <p className="md:w-2/3 font-thin">Don&apos;t know where to start?</p>
+        <div className="text-4xl font-semibold z-50 bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent">Video Guide</div>
+        <p className="md:w-2/3 text-brand7 z-50 font-thin">Don&apos;t know where to start?</p>
       </div>
       <div className="w-full md:h-[60vh] px-2">
         <ReactPlayer
           url="https://youtu.be/6cDtHjgpCyE?si=ZJSmDCNT80mOSbPi"
-          className=" w-full h-full"
+          className=" w-full z-50 rounded-2xl h-full"
           width="100%"
           height="100%"
         />{' '}
       </div>
 
-      <div className="flex flex-col  items-start  gap-5 justify-center w-full p-5 mt-6">
-        <div className="text-4xl font-semibold">Get Information</div>
-        <p className="md:w-2/3 font-thin">
+      <div className="flex flex-col  items-start z-50 gap-5 justify-center w-full p-5 mt-6">
+        <div className="text-4xl text-brand7 font-semibold">Get Information</div>
+        <p className="md:w-2/3 z-50 text-brand7 font-thin">
           Don&apos;t know where to start? Explore insightful blogs about the
           PandaO platform and the AboutActus initiative
         </p>
