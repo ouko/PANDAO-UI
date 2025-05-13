@@ -299,6 +299,9 @@ const BondCard = ({ bond }) => {
                     disabled={likeDislikeMutation.isLoading || !user_address}
                 >
                     <ArrowBigUp /> Like
+                    <span className="ml-2 px-2 py-0.5 rounded-full bg-green-900/60 text-green-200 text-xs font-bold">
+                        {bond.likes_count || 0}
+                    </span>
                 </Button>
                 <Button
                     className={`flex items-center gap-1 px-3 py-1 rounded-full border transition-colors duration-150 ${likeStatus === 'dislike' ? 'bg-red-600 text-white border-red-600' : 'bg-[#1B0D37] text-red-400 border-red-400 hover:bg-red-600 hover:text-white'}`}
@@ -307,6 +310,9 @@ const BondCard = ({ bond }) => {
                     disabled={likeDislikeMutation.isLoading || !user_address}
                 >
                     <ArrowBigDown /> Dislike
+                    <span className="ml-2 px-2 py-0.5 rounded-full bg-red-900/60 text-red-200 text-xs font-bold">
+                        {bond.dislikes_count || 0}
+                    </span>
                 </Button>
             </div>
         </div>
