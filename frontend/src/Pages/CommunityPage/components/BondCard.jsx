@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { useAccount } from '@/AccountContext';
 import axios from 'axios';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const BondCard = ({ bond }) => {
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [likeStatus, setLikeStatus] = useState(null);
     const { accounts } = useAccount();
     const user_address = accounts?.[0]?.address;
+    
 
     // Like/Dislike mutation
     const likeDislikeMutation = useMutation({
@@ -26,8 +27,8 @@ const BondCard = ({ bond }) => {
         },
         onSuccess: (data, isLiked) => {
             setLikeStatus(isLiked ? 'like' : 'dislike');
-            queryClient.invalidateQueries(['bondReports', params.id, user_address]);
             toast.success(isLiked ? 'You liked this bond!' : 'You disliked this bond.');
+
         },
         onError: (error) => {
             toast.error('Failed to submit feedback.');
