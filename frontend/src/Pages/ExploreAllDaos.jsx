@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SkeletonCard } from "@/components/ui/myComponents/card-skeleton";
+import TileEffect4 from "@/components/ui/myComponents/grid-bg-4";
 
 const debounce = (func, delay) => {
   let timer;
@@ -83,13 +84,18 @@ const ExploreAllDao = () => {
   const dropdownTags = tags.slice(5);
 
   return (
-    <div className="bg-brand1 overflow-hidden">
-      <div className="absolute left-1/3 bg-brand4 y-50 size-[300px] rounded-full blur-[200px]"></div>
+    <div className="bg-brand1 relative min-h-screen pb-20 font-clash overflow-hidden">
+      <div className="bg-black/50 absolute inset-0"></div>
+      <div className="absolute bottom-[100px] left-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px] animate-pulse"></div>
+      <div className="absolute top-[10px] right-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px] animate-pulse"></div>
+      <div className="absolute top-[600px] right-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px] animate-pulse"></div>
+      <div className="w-full absolute overflow-hidden opacity-20 h-[600px]">
+        <TileEffect4 />
+      </div>
 
-
-      <div className="min-h-screen bg-brand1 pt-20 max-w-[1200px] mx-auto">
+      <div className="min-h-screen bg-brand1 z-50 pt-20 max-w-[1200px] mx-auto">
         <div className="flex items-center w-full justify-between pr-3">
-          <div className="text-[40px] md:text-[64px] leading-tight font-semibold bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent text-center font-clash">
+          <div className="text-[40px] md:text-[64px] z-50 leading-tight font-semibold bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent text-center font-clash">
             Explore All DAOs
           </div>
           <div>
@@ -98,7 +104,7 @@ const ExploreAllDao = () => {
               placeholder="Search for a DAO..."
               value={searchQuery}
               onChange={handleSearchChange}
-              className="w-full px-4 py-2 border border-brand3 bg-brand1 text-brand7 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-brand5 focus:border-brand4 placeholder-brand6 transition duration-200"
+              className="w-full px-4 py-2 border border-brand3 relative bg-brand1 text-brand7 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-brand5 focus:border-brand4 placeholder-brand6 transition duration-200"
             />
           </div>
         </div>
@@ -149,13 +155,13 @@ const ExploreAllDao = () => {
         </div>
         
         {!isLoading && daos.length === 0 && (
-          <div className="flex items-center justify-center bg-brand2 text-white mt-3 h-32 rounded-lg shadow-xl">
+          <div className="flex items-center justify-center relative bg-brand2 text-white mt-3 h-32 rounded-lg shadow-xl">
             No Deployed DAOs
           </div>
         )}
 
         {isLoading ? (
-          <div className="mt-5 grid md:grid-cols-3 grid-cols-1 gap-3">
+          <div className="mt-5 grid md:grid-cols-3 relative grid-cols-1 gap-3">
             <SkeletonCard />      
             <SkeletonCard />
             <SkeletonCard />
@@ -164,7 +170,9 @@ const ExploreAllDao = () => {
             <SkeletonCard />
           </div>
         ) : (
-          <BrandCard daos={daos} />
+          <div className="relative">
+          <BrandCard daos={daos}  />
+          </div>
         )}
       </div>
     </div>
