@@ -146,12 +146,12 @@ const DaoCard = ({ daoData, isUserParticipant,  setExecOpen, onSuccess, isOwner 
           </div>
           <div className="flex flex-col gap-1.5 items-start justify-start shrink-0 relative z-30">
             <div className="text-[#AE85FF] text-left text-base font-normal uppercase relative self-stretch">
-              Owner address:
+              Component Address:
             </div>
             <div className="flex items-center gap-2">
               <div className="text-[#ffffff] text-center text-xl font-normal overflow-hidden">
                 {daoData.owner_address ? (
-                  clipAddress(daoData.owner_address)
+                  clipAddress(daoData.component_address)
                 ) : (
                   <div className="h-5 w-40 bg-purple-300 animate-pulse rounded mx-auto opacity-80" />
                 )}
