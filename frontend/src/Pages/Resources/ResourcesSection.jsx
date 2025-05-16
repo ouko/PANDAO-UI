@@ -71,7 +71,7 @@ const ResourceSection = () => {
         <div className="text-4xl font-semibold z-50 bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent">Video Guide</div>
         <p className="md:w-2/3 text-brand7 z-50 font-thin">Don&apos;t know where to start?</p>
       </div>
-      <div className="w-full md:h-[60vh] px-2">
+      <div className="w-full md:h-[60vh] px-2 z-50">
         <ReactPlayer
           url="https://youtu.be/6cDtHjgpCyE?si=ZJSmDCNT80mOSbPi"
           className=" w-full z-50 rounded-2xl h-full"
