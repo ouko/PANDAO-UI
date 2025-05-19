@@ -85,6 +85,7 @@ const Proposals = () => {
   const [comments, setComments] = useState([])
   const [minimumQuorum, setMinimumQuorum] = useState('')
   const [proposalText, setProposalText] = useState('')
+  const [zcbId, setZcbId] = useState('')
   const [tokenPriceChangeForm, setTokenPriceChangeForm] = useState({
     proposalText: '',
     proposalDescription: '',
@@ -149,6 +150,7 @@ const Proposals = () => {
     const selectedBond = bondIssuerAddresses.find(
       (newValue) => newValue.creator_address === value,
     )
+    setZcbId(selectedBond.bond_id)
     setTargetXrdAmount(selectedBond.price)
     setBondIssuerAddress(value)
   }
@@ -263,7 +265,8 @@ const Proposals = () => {
       !targetXrdAmount ||
       !startTime ||
       !endTime ||
-      !voteType
+      !voteType ||
+      !zcbId
     ) {
       alert('Please fill out all fields.')
       return
@@ -293,6 +296,7 @@ const Proposals = () => {
           bond_issuer_address: bondIssuerAddress,
           target_xrd_amount: targetXrdAmount,
           vote_type: voteType,
+          zcb_id: zcbId,
         },
       )
 
