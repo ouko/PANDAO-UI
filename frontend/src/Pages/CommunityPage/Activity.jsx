@@ -1,19 +1,11 @@
 import { useAccount } from '@/AccountContext'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { Textarea } from '@/components/ui/textarea'
+impfixort { Card } from '@/components/ui/card'
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import axios from 'axios'
-import {
-  ActivityIcon,
-  ChevronRight,
-  ClockIcon,
-  MessageCircle,
-} from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { toast } from 'sonner'
 import { SkeletonCard } from '../GlobalComponents/Skeleton'
 import { formatStandardDateTime } from '@/utils/functions/convertActivityData'
 import FundHistoryGraph from './ChatHistory'
@@ -26,73 +18,73 @@ const Activity = () => {
   const navigate = useNavigate()
   const params = useParams()
   const [showExpenses, setShowExpenses] = useState(false)
-  const [expenses, setExpenses] = useState([])
-  const [participants, setParticipants] = useState([])
   const [address, setAddress] = useState(null)
+  // Activity type filter state
+  const [selectedActivityType, setSelectedActivityType] = useState('ALL')
 
-  const [activity, setActivity] = useState([])
-  const [loading, setLoading] = useState(true)
-
-  const fetchParticipant = async () => {
-    try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/participant/${params.id
-        }`,
-      )
-      setParticipants(res.data)
-      setLoading(false)
-    } catch (error) {
-      console.error('Error fetching blueprint data:', error)
-    }
+  // Query function to fetch participants
+  const fetchParticipants = async () => {
+    const res = await axios.get(
+      `${import.meta.env.VITE_BACKEND_URL}/community/participant/${params.id}`
+    )
+    return res.data
   }
-  const fetchComments = async () => {
-    try {
-      let res
-      if (address == null) {
-        res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/activity/${params.id
-          }`,
-        )
-      } else {
-        res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/activity/${params.id
-          }?user_address=${address}`,
-        )
-      }
 
-      setActivity(res.data)
-      setLoading(false)
-    } catch (error) {
-      console.error('Error fetching blueprint data:', error)
-    }
+  // Query function to fetch activity data
+  const fetchActivityData = async () => {
+    const url = address === null
+      ? `${import.meta.env.VITE_BACKEND_URL}/activity/${params.id}`
+      : `${import.meta.env.VITE_BACKEND_URL}/activity/${params.id}?user_address=${address}`
+    
+    const res = await axios.get(url)
+    return res.data
   }
-  const fetchActivity = async () => {
-    try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/community/funds-history/${params.id
-        }`,
-      )
 
-      if (res.status == 200) {
-        console.log(res.data, 'res-----res')
-        setExpenses(res.data)
-      }
-    } catch (error) {
-      console.error('Error fetching blueprint data:', error)
-    }
+  // Query function to fetch fund history
+  const fetchFundHistory = async () => {
+    const res = await axios.get(
+      `${import.meta.env.VITE_BACKEND_URL}/community/funds-history/${params.id}`
+    )
+    return res.data
   }
-  useEffect(() => {
-    fetchComments()
-    fetchActivity()
-    fetchParticipant()
-  }, [params.id, address])
+
+  // Use TanStack Query for participants data
+  const { 
+    data: participants = [], 
+    isLoading: isParticipantsLoading 
+  } = useQuery({
+    queryKey: ['participants', params.id],
+    queryFn: fetchParticipants,
+    onError: (error) => console.error('Error fetching participants:', error)
+  })
+
+  // Use TanStack Query for activity data
+  const { 
+    data: activity = [], 
+    isLoading: isActivityLoading 
+  } = useQuery({
+    queryKey: ['activity', params.id, address],
+    queryFn: fetchActivityData,
+    onError: (error) => console.error('Error fetching activity data:', error)
+  })
+
+  // Use TanStack Query for fund history
+  const { 
+    data: expenses = [], 
+    isLoading: isExpensesLoading 
+  } = useQuery({
+    queryKey: ['expenses', params.id],
+    queryFn: fetchFundHistory,
+    onError: (error) => console.error('Error fetching fund history:', error)
+  })
+  
+  // Combine loading states
+  const loading = isParticipantsLoading || isActivityLoading || isExpensesLoading
 
   if (!accounts || accounts.length === 0) {
     navigate('/')
     return null
   }
-
-  const [selectedActivityType, setSelectedActivityType] = useState('ALL');
   const ACTIVITY_TYPES = [
     "take_out_invested_xrds",
     "proposal_executed",
