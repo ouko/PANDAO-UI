@@ -1,7 +1,7 @@
 import { useAccount } from '@/AccountContext'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-impfixort { Card } from '@/components/ui/card'
+import { Card } from '@/components/ui/card'
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import axios from 'axios'
 import { useState } from 'react'
