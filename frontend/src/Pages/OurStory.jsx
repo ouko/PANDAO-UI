@@ -174,6 +174,63 @@ const OurStory = () => {
             </motion.p>
           </motion.div>
 
+          {/* Story section with images */}
+          <motion.div
+            className="mb-20"
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <div className="flex flex-col md:flex-row items-center justify-between gap-10">
+              <motion.div 
+                className="relative w-full md:w-1/2 flex justify-center items-center"
+                variants={scaleIn}
+              >
+                <img 
+                  src="/story.svg" 
+                  alt="Our Story" 
+                  className="w-full max-w-xl rounded-lg shadow-2xl z-10" 
+                />
+                
+
+                
+                {/* Additional decorative elements */}
+                <motion.div 
+                  className="absolute top-[-10%] right-[10%] z-0 bg-brand3/30 rounded-full"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.8, duration: 0.7 }}
+                  style={{ width: '120px', height: '120px' }}
+                />
+                
+                <motion.div 
+                  className="absolute bottom-[10%] left-[5%] z-0 bg-brand2/40 rounded-full"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 1, duration: 0.7 }}
+                  style={{ width: '80px', height: '80px' }}
+                />
+              </motion.div>
+              
+              <motion.div 
+                className="w-full md:w-1/2 text-left"
+                variants={fadeInUp}
+              >
+                <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-white to-brand3 bg-clip-text text-transparent">The Journey Begins</h2>
+                <p className="text-[#B59AEC] text-xl mb-6">
+                  PandaoLive started with a simple question: Why is creating a DAO so complicated? Our founders, tired of the technical barriers and complex interfaces, set out to build something different.
+                </p>
+                <p className="text-[#B59AEC] text-xl mb-8">
+                  What began as a weekend hackathon project quickly evolved into a mission to democratize decentralized organizations for everyone, everywhere.
+                </p>
+                <Button className="bg-brand2 hover:bg-brand2/80 text-white px-8 py-6 text-lg rounded-full">
+                  Learn More
+                </Button>
+              </motion.div>
+            </div>
+          </motion.div>
+
           {/* Sections with staggered animation */}
           <motion.div
             variants={staggerContainer}
