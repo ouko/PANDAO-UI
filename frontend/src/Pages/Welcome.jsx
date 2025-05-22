@@ -2,6 +2,7 @@ import TileEffect4 from "@/components/ui/myComponents/grid-bg-4";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { PricingCard } from "./HomeSection/homeSectionComponents/PriceSection";
+import BrandButton from "@/components/ui/myComponents/brand-button";
 
 const WelcomePage = () => {
   // Animation variants
@@ -115,7 +116,7 @@ const WelcomePage = () => {
         className="flex flex-col gap-8 items-center justify-start z-10">
         <motion.h1 
           variants={fadeIn}
-          className="text-center text-6xl relative lg:text-7xl font-extrabold leading-tight bg-gradient-to-r from-white to-brand3 bg-clip-text text-transparent mt-20">
+          className="text-center text-6xl relative lg:text-7xl font-extrabold leading-tight bg-gradient-to-r from-white to-brand3 bg-clip-text text-transparent mt-32">
           Welcome to the future of Decentralized Governance
         </motion.h1>
         <motion.p 
@@ -133,28 +134,17 @@ const WelcomePage = () => {
         <div className="flex flex-row gap-10 items-center self-stretch">
           <motion.div 
             initial="rest"
-            whileHover="hover"
+            
             variants={cardHover}
-            className="bg-white/5 rounded-2xl border border-brand3 p-5 flex-1 w-[300px] h-[411px] relative overflow-hidden transition-all duration-300 hover:border-brand2 hover:shadow-lg hover:shadow-brand3/20">
-            <div className="flex flex-col gap-8 items-start w-[721px] absolute left-9 top-1/2 transform -translate-y-1/2">
+            className="bg-white/5 rounded-2xl border border-brand3 p-5 flex-1 w-[200px] h-[411px] relative overflow-hidden transition-all duration-300 hover:border-brand2 hover:shadow-lg hover:shadow-brand3/20">
+            <div className="flex flex-col gap-8 items-start  absolute left-9 top-1/2 transform -translate-y-1/2">
               <h2 className="text-left text-[48px] font-semibold bg-gradient-to-r from-white to-indigo-500 bg-clip-text text-transparent">
                 Join, Vote, and Shape the Future
               </h2>
               <p className="text-[#B59AEC] text-left text-2xl font-normal w-[658px]">
                 A DAO Community Built for Engagement - Buy, Propose, and Vote to Lead the Change!
               </p>
-              <motion.button 
-                initial="rest"
-                whileHover="hover"
-                variants={buttonHover}
-                className="relative w-[219px] h-[49px] shrink-0 flex items-center justify-center rounded-full border border-violet-900 bg-black overflow-hidden cursor-pointer">
-                <div className="absolute w-[230.02px] h-[59.52px]  rounded-full opacity-70 blur-[25.75px]"></div>
-                <div className="absolute w-[230.02px] h-[59.52px] bg-[#4a2692] rounded-full blur-[25.75px] top-[34px]"></div>
-                <div className="absolute w-[230.02px] h-[59.52px] bg-[#22133e] rounded-full blur-[25.75px] top-[-34px]"></div>
-                <span className="text-center font-roboto font-bold text-[22px] leading-normal bg-gradient-to-r from-white to-[#b894ff] bg-clip-text text-transparent">
-                  Join Community
-                </span>
-              </motion.button>
+             <BrandButton title='Join Community' href='/userDashboard' />
             </div>
           </motion.div>
         </div>
