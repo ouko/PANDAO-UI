@@ -138,7 +138,7 @@ const OurStory = () => {
         <div className="container mx-auto px-6 md:px-12 lg:px-16">
           {/* Title with enhanced animation */}
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-20"
             variants={fadeInUp}
             initial="hidden"
             whileInView="show"
@@ -277,7 +277,7 @@ const OurStory = () => {
             ].map((section, i) => (
               <motion.div
                 key={i}
-                className="mb-16 relative"
+                className="mb-20 relative"
                 variants={fadeInUp}
               >
                 <motion.div
@@ -289,7 +289,7 @@ const OurStory = () => {
                 />
                 
                 <motion.h2 
-                  className="text-3xl font-bold text-brand5 mb-4 pl-2"
+                  className="text-4xl font-bold text-brand5 mb-6 pl-3"
                   whileHover={{ x: 5 }}
                   transition={{ type: "spring", stiffness: 400 }}
                 >
@@ -298,7 +298,7 @@ const OurStory = () => {
                 
                 {section.content && (
                   <motion.p 
-                    className="text-brand7 leading-relaxed"
+                    className="text-brand7 text-lg leading-relaxed"
                     variants={fadeIn}
                   >
                     {section.content}
@@ -307,7 +307,7 @@ const OurStory = () => {
                 
                 {section.list && (
                   <motion.ul 
-                    className="space-y-6 mt-4"
+                    className="space-y-8 mt-6"
                     variants={staggerContainer}
                     initial="hidden"
                     whileInView="show"
@@ -321,7 +321,7 @@ const OurStory = () => {
                         whileHover={{ x: 5 }}
                       >
                         <motion.span 
-                          className="text-green-500 mr-3 text-lg"
+                          className="text-green-500 mr-4 text-xl"
                           initial={{ scale: 0 }}
                           whileInView={{ scale: 1 }}
                           transition={{ type: "spring", stiffness: 400 }}
@@ -329,7 +329,7 @@ const OurStory = () => {
                         >
                           &#10003;
                         </motion.span>
-                        <p className="text-brand7">
+                        <p className="text-brand7 text-lg">
                           <strong>{item.split(':')[0]}:</strong> 
                           {item.split(':').slice(1).join(':').trim()}
                         </p>
@@ -343,7 +343,7 @@ const OurStory = () => {
 
           {/* At Pandao Section with enhanced animation */}
           <motion.div
-            className="mb-16 relative"
+            className="mb-20 relative"
             variants={scaleIn} 
             initial="hidden"
             whileInView="show"
@@ -358,9 +358,9 @@ const OurStory = () => {
               viewport={{ once: true }}
             />
             
-            <div className="p-6 rounded-xl">
-              <h2 className="text-3xl font-bold text-brand5 mb-4">At PANDAO</h2>
-              <p className="text-brand7 leading-relaxed">
+            <div className="p-8 rounded-xl">
+              <h2 className="text-4xl font-bold text-brand5 mb-6">At PANDAO</h2>
+              <p className="text-brand7 text-lg leading-relaxed">
                 At <motion.strong
                   whileHover={{ color: "#B59AEC" }}
                 >PandaoLive</motion.strong>, we aim to empower both communities and developers by redefining the way DAOs operate.
@@ -393,13 +393,13 @@ const OurStory = () => {
             />
             
             <div className="p-6">
-              <h2 className="text-3xl font-bold text-brand5 mb-4">Early Stages, Big Potential</h2>
-              <p className="text-brand7 leading-relaxed">
+              <h2 className="text-4xl font-bold text-brand5 mb-6">Early Stages, Big Potential</h2>
+              <p className="text-brand7 text-lg leading-relaxed">
                 <strong>PandaoLive</strong> is on an exciting path of rapid growth and innovation.
                 Our evolving roadmap includes the introduction of modular templates, enhanced DeFi protocol integration, and advanced collaboration tools—all designed to support today's innovators and pave the way for tomorrow's leaders.
                 We are committed to continuously refining our platform to meet the changing needs of the digital landscape.
               </p>
-              <p className="text-brand7 leading-relaxed mt-4">
+              <p className="text-brand7 text-lg leading-relaxed mt-4">
                 We envision a future where DAOs form the backbone of digital collaboration, breaking down traditional barriers and empowering individuals across the globe.
                 <motion.strong
                   whileHover={{ color: "#B59AEC" }}
@@ -411,7 +411,7 @@ const OurStory = () => {
 
           {/* Join Us CTA Section with glow effect */}
           <motion.div
-            className="mb-16 relative"
+            className="mb-20 relative"
             variants={scaleIn} 
             initial="hidden"
             whileInView="show"
@@ -429,9 +429,9 @@ const OurStory = () => {
               transition={{ duration: 3, repeat: Infinity }}
             />
             
-            <div className="p-6 rounded-xl">
-              <h2 className="text-3xl font-bold text-brand5 mb-4">Join Us</h2>
-              <p className="text-brand7 leading-relaxed">
+            <div className="p-8 rounded-xl">
+              <h2 className="text-4xl font-bold text-brand5 mb-6">Join Us</h2>
+              <p className="text-brand7 text-lg leading-relaxed">
                 Now is the time to explore the boundless potential of decentralized technology.
                 Whether you are an experienced blockchain developer or just starting your journey in the world of DAOs,
                 <motion.strong
@@ -439,7 +439,7 @@ const OurStory = () => {
                 > PandaoLive </motion.strong> is here to guide and support you.
                 Embrace a future of inclusive, transparent governance and join a community that values innovation, collaboration, and shared success.
               </p>
-              <p className="text-brand7 leading-relaxed mt-4">
+              <p className="text-brand7 text-lg leading-relaxed mt-4">
                 Let's build the future of decentralized governance together.
               </p>
             </div>
@@ -447,7 +447,7 @@ const OurStory = () => {
 
           {/* Still Early Section with typing effect */}
           <motion.div
-            className="mb-16 relative"
+            className="mb-20 relative"
             variants={fadeInUp} 
             initial="hidden"
             whileInView="show"
@@ -455,9 +455,9 @@ const OurStory = () => {
           >
             <TypingEffect 
               text="Still Early, But Growing Fast" 
-              className="text-3xl font-bold text-brand5 mb-4"
+              className="text-4xl font-bold text-brand5 mb-6"
             />
-            <p className="text-brand7 leading-relaxed">
+            <p className="text-brand7 text-lg leading-relaxed">
               We're in an exciting phase of rapid growth. Coming soon: DAO templates for real-world use cases, integrations with Radix DeFi, collaboration tools, treasury management, NFT-based memberships, and more — all built with you, the dreamers, schemers, and rebels building better worlds.
             </p>
           </motion.div>
@@ -480,8 +480,8 @@ const OurStory = () => {
               transition={{ duration: 8, repeat: Infinity }}
             />
             
-            <h2 className="text-3xl font-bold text-brand5 mb-4">Join the DAOvolution</h2>
-            <p className="text-brand7 mb-6 max-w-3xl mx-auto">
+            <h2 className="text-4xl font-bold text-brand5 mb-6">Join the DAOvolution</h2>
+            <p className="text-brand7 text-lg mb-6 max-w-3xl mx-auto">
               Whether you're a buzzing community, a solo builder rallying your tribe, or a founder dreaming of transparent governance — PandaoLive is your launchpad.
             </p>
             
@@ -497,7 +497,7 @@ const OurStory = () => {
                   whileHover={{ scale: 1.5, borderRadius: "0%" }}
                   transition={{ duration: 0.5 }}
                 />
-                <span className="relative z-10">Launch Your DAO Now</span>
+                <span className="relative z-10 text-lg">Launch Your DAO Now</span>
               </Button>
             </motion.div>
           </motion.div>
