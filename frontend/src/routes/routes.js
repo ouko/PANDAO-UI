@@ -20,6 +20,7 @@ const Roadmap = lazy(() => import('../Pages/Roadmap'));
 const Blog = lazy(() => import('../Pages/Blogs'));
 const Resources = lazy(() => import('../Pages/Resources'));
 const BlogDetail = lazy(() => import('../Pages/Resources/BlogDeatails'));
+const Welcome = lazy(() => import('../Pages/Welcome'));
 
 // Protected Pages
 // const UserDashboard = lazy(() => import('../Pages/UserDashboard'));  // old Dahboard
@@ -52,6 +53,7 @@ export const publicRoutes = [
     children: [
       { index: true, element: HomePage },
       { path: 'ourstory', element: OurStory },
+      { path: 'catalystsuite', element: Welcome },
       { path: 'temp', element: OnboardingFlow },
       { path: 'privacypolicy', element: PrivacyPolicy },
       { path: 'termsandcondition', element: TermsAndConditions },
@@ -59,7 +61,7 @@ export const publicRoutes = [
       { path: 'support', element: Support },
       { path: 'community', element: Community },
       { path: 'roadmap', element: Roadmap },
-      { path: 'catalystsuite', element: Product },
+      // { path: 'catalystsuite', element: Product },
       { path: 'blog', element: Blog },
       { path: 'resources', element: Resources },
       { path: 'explore', element: exploreTopDao },

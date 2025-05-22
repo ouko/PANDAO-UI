@@ -18,10 +18,10 @@ export const navconfig = [
     },
     {
       title: "Catalyst Suite",
-      path: "catalystsuite",
+      path: "/catalystsuite",
       icon: Package,
       exact: true,
-      type: "scroll" 
+      type: "link" 
     },
     {
       title: "Resources",
