@@ -313,14 +313,40 @@ const WelcomePage = () => {
               </p>
               
               <div className="mt-4">
-                <h4 className="text-2xl font-semibold text-white mb-4">What Are ACTUS Standard Contracts?</h4>
+                <h4 className="text-2xl font-semibold text-white mb-4">The ACTUS Smart Contracts Module</h4>
+                <p className="text-white/80 text-lg">
+                  The ACTUS Smart Contracts Module in the Catalyst Suite enables DAOs to adopt and deploy financial instruments based on the globally recognized ACTUS (Algorithmic Contract Types Unified Standards) framework. These smart contracts bring precision, modularity, and legal clarity to decentralized finance and treasury operations.
+                </p>
+                
+                <h4 className="text-2xl font-semibold text-white mt-6 mb-4">What Are ACTUS Standard Contracts?</h4>
                 <p className="text-white/80 text-lg">
                   ACTUS defines a taxonomy of machine-executable financial contract types, representing everything from bonds and loans to swaps and annuities. These standards make financial products transparent, interoperable, and automatable.
                 </p>
                 
+                <p className="text-white/80 text-lg mt-3">
+                  By integrating ACTUS contracts into your DAO's infrastructure, you gain:
+                </p>
+                <ul className="text-white/80 text-lg space-y-2 mt-2 ml-6">
+                  <li className="flex items-start gap-2">
+                    <span className="text-brand3">•</span> <span className="font-medium">Legally interpretable behaviour</span> based on global standards
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-brand3">•</span> <span className="font-medium">Event-driven payment logic</span>, including interest, principal, fees, and penalties
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-brand3">•</span> <span className="font-medium">Predictable cash flow modelling</span> across complex portfolios
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-brand3">•</span> <span className="font-medium">Plug-and-play templates</span> for compliant on-chain finance
+                  </li>
+                </ul>
+                
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
                   <div>
                     <h5 className="text-xl font-medium text-indigo-300 mb-3">What You Can Do with the Module:</h5>
+                    <p className="text-white/80 text-lg mb-3">
+                      These DAOs can instantly deploy some of the following contract types, pre-coded and ACTUS-compliant:
+                    </p>
                     <ul className="text-white/80 text-lg space-y-3">
                       <li className="flex items-start gap-2">
                         <span className="text-brand3">•</span> Zero-Coupon Bonds
@@ -344,6 +370,27 @@ const WelcomePage = () => {
                         <span className="text-brand3">•</span> Yield-bearing Structured Notes
                       </li>
                     </ul>
+                    
+                    <p className="text-white/80 text-lg mt-4">
+                      Each contract is configured through a <span className="font-medium">no-code interface</span>, and includes full support for:
+                    </p>
+                    <ul className="text-white/80 text-lg space-y-2 mt-2 ml-6">
+                      <li className="flex items-start gap-2">
+                        <span className="text-brand3">•</span> Custom token denominations
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-brand3">•</span> Scheduled and conditional payments
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-brand3">•</span> Interest accrual and balance tracking
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-brand3">•</span> Automated redemption or rollover at maturity
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-brand3">•</span> DAO vote-triggered parameter updates
+                      </li>
+                    </ul>
                   </div>
                   
                   <div>
@@ -359,15 +406,68 @@ const WelcomePage = () => {
                         <span className="text-brand3">•</span> Easily integrates with DAO treasuries and multi-sig wallets
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="text-brand3">•</span> ACTUS conformance assures compatibility with future DeFi standards
+                        <span className="text-brand3">•</span> ACTUS conformance assures compatibility with future DeFi standards and regulatory mappings
                       </li>
                     </ul>
                     
                     <h5 className="text-xl font-medium text-indigo-300 mt-6 mb-3">Why It Matters for DAOs</h5>
                     <p className="text-white/80 text-lg">
-                      DAOs often rely on ad hoc or bespoke financial arrangements. With ACTUS-standard contracts, financial logic is transparent and deterministic, agreements are future-proof and modular, and capital flows are visible, forecastable, and programmable.
+                      DAOs often rely on ad hoc or bespoke financial arrangements. With ACTUS-standard contracts:
                     </p>
+                    <ul className="text-white/80 text-lg space-y-2 mt-2 ml-6">
+                      <li className="flex items-start gap-2">
+                        <span className="text-brand3">•</span> Financial logic is <span className="font-medium">transparent and deterministic</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-brand3">•</span> Agreements are <span className="font-medium">future-proof and modular</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-brand3">•</span> Risk is reduced through <span className="font-medium">standardized templates</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-brand3">•</span> Capital flows are <span className="font-medium">visible, forecastable, and programmable</span>
+                      </li>
+                    </ul>
+                    
+                    <p className="text-white/80 text-lg mt-3">
+                      This elevates your DAO's capacity to:
+                    </p>
+                    <ul className="text-white/80 text-lg space-y-2 mt-2 ml-6">
+                      <li className="flex items-start gap-2">
+                        <span className="text-brand3">•</span> Issue bonds to back protocol development
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-brand3">•</span> Manage lending arrangements with communities or contributors
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-brand3">•</span> Offer structured DAO-native savings products
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-brand3">•</span> Enable compliant interaction with institutional DeFi platforms
+                      </li>
+                    </ul>
                   </div>
+                </div>
+                
+                <div className="mt-8">
+                  <h5 className="text-xl font-medium text-indigo-300 mb-3">Seamless Catalyst Integration</h5>
+                  <p className="text-white/80 text-lg">
+                    The ACTUS module plugs directly into your DAO via the Catalyst Suite:
+                  </p>
+                  <ul className="text-white/80 text-lg space-y-2 mt-2 ml-6">
+                    <li className="flex items-start gap-2">
+                      <span className="text-brand3">•</span> Link contracts to <span className="font-medium">on-chain governance outcomes</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-brand3">•</span> Monitor all flows through the <span className="font-medium">Catalyst Dashboard</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-brand3">•</span> Tokenize contract cashflows for DeFi composability
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-brand3">•</span> Use Catalyst's <span className="font-medium">Growth or Enterprise Plan</span> for multi-contract management
+                    </li>
+                  </ul>
                 </div>
               </div>
               
