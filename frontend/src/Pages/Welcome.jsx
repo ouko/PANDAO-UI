@@ -1,6 +1,7 @@
 import TileEffect4 from "@/components/ui/myComponents/grid-bg-4";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { PricingCard } from "./HomeSection/homeSectionComponents/PriceSection";
 
 const WelcomePage = () => {
   // Animation variants
@@ -37,6 +38,64 @@ const WelcomePage = () => {
     hidden: { opacity: 0, x: -20 },
     visible: { opacity: 1, x: 0, transition: { duration: 0.3 } }
   };
+  const plans = [
+    {
+      title: "Community Plan",
+      description: "Perfect for early-stage DAOs.",
+      price: "Free",
+      features: {
+        intro: "Designed for new or experimental DAOs ready to take their first steps in decentralized governance. The Community Plan provides access to foundational tools and educational resources to help you set up your DAO, onboard contributors, and launch your first proposals.",
+        list: [
+          "DAO creation wizard",
+          "Basic proposal and voting tools",
+          "Contributor role setup and permissions",
+          "Templates for DAO charters and governance policies",
+          "Access to the Catalyst community support forum",
+          "Educational resources and DAO best practice guides"
+        ]
+      },
+      buttonText: "Get Started"
+    },
+    {
+      title: "Growth Plan",
+      description: "For growing DAOs aiming for sustainable growth.",
+      price: "$299",
+      features: {
+        intro: "Scale your DAO operations with powerful governance features and strategic support. The Growth Plan equips you with the tools to manage your contributor base, drive engagement, and grow your treasury with confidence.",
+        list: [
+          "All Community Plan features",
+          "Custom DAO subdomains and branding",
+          "Token-based access control and reputation systems",
+          "Contributor compensation workflows",
+          "Community analytics dashboard",
+          "Multi-sig treasury integration",
+          "Priority email + chat support",
+          "Monthly governance optimization reports"
+        ]
+      },
+      buttonText: "Upgrade Now",
+      highlight: true
+    },
+    {
+      title: "Enterprise Plan",
+      description: "Custom solutions for enterprise DAOs",
+      price: "Custom Pricing",
+      features: {
+        intro: "The Enterprise Plan is a white-glove solution tailored for large DAOs and decentralized organizations with complex coordination needs. We work with you to build deeply customized governance architecture, integrations, compliance pathways, and scaling strategies.",
+        list: [
+          "All Growth Plan features",
+          "Custom smart contract modules",
+          "API access and system integrations",
+          "Layer-2 scaling options",
+          "On-chain/off-chain identity verification",
+          "Governance consulting and training",
+          "Dedicated account manager + 24/7 support",
+          "SLA-based onboarding and support"
+        ]
+      },
+      buttonText: "Contact Us"
+    }
+  ];
     return (<motion.div 
       initial="hidden"
       animate="visible"
@@ -167,133 +226,11 @@ const WelcomePage = () => {
           </div>
           
           {/* Plans Section */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
-            {/* Community Plan */}
-            <div className="bg-white/5 rounded-2xl border border-brand3 p-6 flex flex-col gap-6 relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-brand2/20 w-40 h-40 rounded-full blur-[80px]"></div>
-              <h3 className="text-3xl font-bold bg-gradient-to-r from-white to-indigo-300 bg-clip-text text-transparent">
-                Community Plan
-              </h3>
-              <p className="text-indigo-300 text-xl font-medium">Perfect for early-stage DAOs.</p>
-              <p className="text-white/80 text-base">
-                Designed for new or experimental DAOs ready to take their first steps in decentralized governance.
-              </p>
-              <div className="flex flex-col gap-2 text-[18px]">
-                <h4 className="text-white font-medium text-xl">What&apos;s included:</h4>
-                <ul className="text-white/80 text-lg space-y-2">
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> DAO creation wizard
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> Basic proposal and voting tools
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> Contributor role setup and permissions
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> Templates for DAO charters and governance policies
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> Access to the Catalyst community support forum
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> Educational resources and DAO best practice guides
-                  </li>
-                </ul>
-              </div>
-              <p className="text-white/70 text-base italic mt-auto">
-                Ideal for: Hackathon projects, mission-aligned communities, small collectives, NFT-based groups, and testnets.
-              </p>
-            </div>
-            
-            {/* Growth Plan */}
-            <div className="bg-white/5 rounded-2xl border border-brand3 p-6 flex flex-col gap-6 relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-indigo-600/20 w-40 h-40 rounded-full blur-[80px]"></div>
-              <h3 className="text-3xl font-bold bg-gradient-to-r from-white to-indigo-400 bg-clip-text text-transparent">
-                Growth Plan
-              </h3>
-              <p className="text-indigo-400 text-xl font-medium">For growing DAOs aiming for sustainable growth.</p>
-              <p className="text-white/80 text-base">
-                Scale your DAO operations with powerful governance features and strategic support.
-              </p>
-              <div className="flex flex-col gap-2">
-                <h4 className="text-white font-medium text-xl">What's included:</h4>
-                <ul className="text-white/80 text-lg space-y-2">
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> All Community Plan features
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> Custom DAO subdomains and branding
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> Token-based access control and reputation systems
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> Contributor compensation workflows
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> Community analytics dashboard
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> Multi-sig treasury integration
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> Priority email + chat support
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> Monthly governance optimization reports
-                  </li>
-                </ul>
-              </div>
-              <p className="text-white/70 text-base italic mt-auto">
-                Ideal for: DAOs moving from bootstrap to structured operations — including DeFi communities, social DAOs, media collectives, and protocol-aligned groups.
-              </p>
-            </div>
-            
-            {/* Enterprise Plan */}
-            <div className="bg-white/5 rounded-2xl border border-brand3 p-6 flex flex-col gap-6 relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-purple-600/20 w-40 h-40 rounded-full blur-[80px]"></div>
-              <h3 className="text-3xl font-bold bg-gradient-to-r from-white to-indigo-500 bg-clip-text text-transparent">
-                Enterprise Plan
-              </h3>
-              <p className="text-indigo-500 text-xl font-medium">Custom solutions for enterprise DAOs</p>
-              <p className="text-white/80 text-base">
-                A white-glove solution tailored for large DAOs and decentralized organizations with complex coordination needs.
-              </p>
-              <div className="flex flex-col gap-2">
-                <h4 className="text-white font-medium">What's included:</h4>
-                <ul className="text-white/80 text-lg space-y-2">
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> All Growth Plan features
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> Custom smart contract modules
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> API access and system integrations
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> Layer-2 scaling options
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> On-chain/off-chain identity verification
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> Governance consulting and training
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> Dedicated account manager + 24/7 support
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand3">•</span> SLA-based onboarding and support
-                  </li>
-                </ul>
-              </div>
-              <p className="text-white/70 text-base italic mt-auto">
-                Ideal for: Protocol DAOs, large treasuries, enterprise-aligned networks, multi-team foundations, cross-chain ecosystems, and institutional DAO use cases.
-              </p>
-            </div>
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-20 max-w-[1200px] mx-auto ">
+          {plans.map((plan, index) => (
+            <PricingCard key={index} {...plan} />
+          ))}
+        </div>
           
           {/* ACTUS Smart Contracts Section */}
           <motion.div 

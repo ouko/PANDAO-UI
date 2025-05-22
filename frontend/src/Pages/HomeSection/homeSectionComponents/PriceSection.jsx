@@ -6,13 +6,13 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Check, CircleCheck } from 'lucide-react';
 
-const PricingCard = ({ title, description, price, features, buttonText, highlight }) => {
+export const PricingCard = ({ title, description, price, features, buttonText, highlight }) => {
   return (
     <div
       className={`rounded-[32px] border border-brand2 p-10 w-full flex flex-col relative overflow-hidden ${highlight ? 'z-10' : ''}`}
       style={{
         background: 'linear-gradient(195.05deg, rgba(192, 161, 255, 0.1) 0%, rgba(192, 161, 255, 0.02) 50%, rgba(192, 161, 255, 0.06) 100%)',
-        transform: highlight ? 'md:translateY(-24px)' : undefined,
+        transform: highlight ? 'translateY(-24px)' : undefined,
         transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)'
       }}
     >
