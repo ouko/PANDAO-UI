@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import TileEffect4 from '@/components/ui/myComponents/grid-bg-4';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
 // Enhanced animation variants
 const fadeInUp = {
@@ -241,43 +242,44 @@ const OurStory = () => {
             {[
               {
                 title: 'Our Mission',
-                content: `To radically simplify how DAOs are launched, scaled, and sustained. We're not just giving you the tools to launch a DAO — we're giving you the freedom to organize, fund, and govern transparently from Day 1.`,
+                content: `To radically simplify how DAOs are launched, scaled, and sustained. We&apos;re not just giving you the tools to launch a DAO — we&apos;re giving you the freedom to organize, fund, and govern transparently from Day 1.`,
               },
               {
                 title: 'Our Vision',
                 content: `We imagine a world where DAOs are as common as group chats and as impactful as corporations. PandaoLive is building that world — one DAO at a time.`,
+                className: "mb-8",
               },
               {
                 title: 'Our Ethos',
                 list: [
-                  'Permissionless by Design: Anyone, anywhere should be able to launch or join a DAO without gatekeepers.',
-                  'Community is Everything: Built for builders, organizers, rebels, and dreamers who believe in doing things together, better.',
-                  'Simplicity Over Complexity: No code. No jargon. No sleepless nights. DAO creation should feel like starting a group chat.',
-                  'Transparency & Trust: Every action, vote, and transaction is on-chain, verifiable, and crystal-clear.',
-                  'Composable Future: PandaoLive plays well with others — no walled gardens, full interoperability.',
+                  "Permissionless by Design: Anyone, anywhere should be able to launch or join a DAO without gatekeepers.",
+                  "Community is Everything: Built for builders, organizers, rebels, and dreamers who believe in doing things together, better.",
+                  "Simplicity Over Complexity: No code. No jargon. No sleepless nights. DAO creation should feel like starting a group chat.",
+                  "Transparency & Trust: Every action, vote, and transaction is on-chain, verifiable, and crystal-clear.",
+                  "Composable Future: PandaoLive plays well with others — no walled gardens, full interoperability.",
                 ],
               },
               {
                 title: 'What We Do',
                 list: [
-                  'Launch DAOs with Ease: Spin up your DAO and governance structure as easily as creating a group chat — without the developer jargon.',
-                  'Govern Like a Pro: Set up adaptable, inclusive governance frameworks. No spreadsheets. No gatekeeping.',
-                  'Plug into DeFi Effortlessly: Connect your DAO to Radix-native DeFi apps and beyond. Treasury management that just works.',
-                  'Customize Everything or Keep it Simple: Use pre-built templates or start from scratch — its your DAO, your rules.',
+                  "Launch DAOs with Ease: Spin up your DAO and governance structure as easily as creating a group chat — without the developer jargon.",
+                  "Govern Like a Pro: Set up adaptable, inclusive governance frameworks. No spreadsheets. No gatekeeping.",
+                  "Plug into DeFi Effortlessly: Connect your DAO to Radix-native DeFi apps and beyond. Treasury management that just works.",
+                  "Customize Everything or Keep it Simple: Use pre-built templates or start from scratch — its your DAO, your rules.",
                 ],
               },
               {
                 title: 'Why PandaoLive?',
                 list: [
-                  'Built for Radix, Ready for the Future: The only layer one purpose-built for DeFi and composability — faster, safer, smarter.',
-                  'Modular & Scalable: Start small. Grow big. Add modules as your community evolves.',
-                  'Actually Transparent: Every vote, rule, and transfer is on-chain. Full trust. No tricks.',
+                  "Built for Radix, Ready for the Future: The only layer one purpose-built for DeFi and composability — faster, safer, smarter.",
+                  "Modular & Scalable: Start small. Grow big. Add modules as your community evolves.",
+                  "Actually Transparent: Every vote, rule, and transfer is on-chain. Full trust. No tricks.",
                 ],
               },
             ].map((section, i) => (
               <motion.div
                 key={i}
-                className="mb-20 relative"
+                className="mb-32 relative py-6 px-4"
                 variants={fadeInUp}
               >
                 <motion.div
@@ -298,7 +300,7 @@ const OurStory = () => {
                 
                 {section.content && (
                   <motion.p 
-                    className="text-brand7 text-lg leading-relaxed"
+                    className={`text-brand7 text-lg leading-relaxed mb-8 ${section.className || ''}`}
                     variants={fadeIn}
                   >
                     {section.content}
@@ -307,7 +309,7 @@ const OurStory = () => {
                 
                 {section.list && (
                   <motion.ul 
-                    className="space-y-8 mt-6"
+                    className="space-y-12 mt-8"
                     variants={staggerContainer}
                     initial="hidden"
                     whileInView="show"
@@ -316,23 +318,27 @@ const OurStory = () => {
                     {section.list.map((item, idx) => (
                       <motion.li 
                         key={idx} 
-                        className="flex items-start"
+                        className="flex items-start p-3 rounded-lg hover:bg-white/5"
                         variants={fadeInUp}
-                        whileHover={{ x: 5 }}
+                        whileHover={{ x: 5, backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
                       >
-                        <motion.span 
-                          className="text-green-500 mr-4 text-xl"
-                          initial={{ scale: 0 }}
-                          whileInView={{ scale: 1 }}
+                        <motion.div 
+                          className="flex items-center justify-center bg-green-500/20 rounded-full p-1 mr-5 min-w-[32px] h-[32px]"
+                          initial={{ scale: 0, opacity: 0 }}
+                          whileInView={{ scale: 1, opacity: 1 }}
                           transition={{ type: "spring", stiffness: 400 }}
                           viewport={{ once: true }}
                         >
-                          &#10003;
-                        </motion.span>
-                        <p className="text-brand7 text-lg">
-                          <strong>{item.split(':')[0]}:</strong> 
-                          {item.split(':').slice(1).join(':').trim()}
-                        </p>
+                          <span className="text-green-500 text-xl">&#10003;</span>
+                        </motion.div>
+                        <div className="flex flex-col space-y-1 flex-1">
+                          <h3 className="text-brand5 text-xl font-medium">
+                            {item.split(':')[0]}:
+                          </h3>
+                          <p className="text-brand7 text-lg leading-relaxed">
+                            {item.split(':').slice(1).join(':').trim()}
+                          </p>
+                        </div>
                       </motion.li>
                     ))}
                   </motion.ul>
@@ -360,14 +366,14 @@ const OurStory = () => {
             
             <div className="p-8 rounded-xl">
               <h2 className="text-4xl font-bold text-brand5 mb-6">At PANDAO</h2>
-              <p className="text-brand7 text-lg leading-relaxed">
-                At <motion.strong
-                  whileHover={{ color: "#B59AEC" }}
-                >PandaoLive</motion.strong>, we aim to empower both communities and developers by redefining the way DAOs operate.
-                We believe that decentralization fosters transparency, accountability, and sustainable growth.
-                Our goal is to break down the traditional barriers of centralized control, enabling anyone—from seasoned experts to newcomers—to create impactful digital organizations with ease and confidence.
-                Through intuitive tools and a forward-thinking approach, we are democratizing access to the power of blockchain technology.
-              </p>
+                <p className="text-brand7 text-lg leading-relaxed">
+                  At <motion.strong
+                    whileHover={{ color: "#B59AEC" }}
+                  >PandaoLive</motion.strong>, we aim to empower both communities and developers by redefining the way DAOs operate.
+                  We believe that decentralization fosters transparency, accountability, and sustainable growth.
+                  Our goal is to break down the traditional barriers of centralized control, enabling anyone—from seasoned experts to newcomers—to create impactful digital organizations with ease and confidence.
+                  Through intuitive tools and a forward-thinking approach, we are democratizing access to the power of blockchain technology.
+                </p>
             </div>
           </motion.div>
 
@@ -509,7 +515,7 @@ const OurStory = () => {
 
 // Custom typing effect component
 const TypingEffect = ({ text, className }) => {
-  const [displayText, setDisplayText] = useState("");
+  const [displayText, setDisplayText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   
   useEffect(() => {
@@ -517,7 +523,7 @@ const TypingEffect = ({ text, className }) => {
       const timeout = setTimeout(() => {
         setDisplayText(prev => prev + text[currentIndex]);
         setCurrentIndex(prev => prev + 1);
-      }, 100);
+      }, 40);
       
       return () => clearTimeout(timeout);
     }
@@ -534,6 +540,11 @@ const TypingEffect = ({ text, className }) => {
       )}
     </h2>
   );
+};
+
+TypingEffect.propTypes = {
+  text: PropTypes.string.isRequired,
+  className: PropTypes.string
 };
 
 export default OurStory;
