@@ -226,7 +226,7 @@ const WelcomePage = () => {
           className="flex flex-col md:flex-wrap gap-16 items-center justify-center z-10"
         >
           {/* Catalyst Suite Section */}
-          <div className="flex flex-col gap-12 items-center justify-center w-full max-w-7xl px-4">
+          <div className="flex flex-col gap-12 items-center justify-center w-full pb-20 max-w-7xl px-4">
             <div className="text-center">
               <p className="text-[#B59AEC] w-full text-2xl max-w-3xl mx-auto">
                 Empowering DAOs at every stage of their evolution. The Catalyst Suite offers a tiered approach to decentralized governance and community-building.
