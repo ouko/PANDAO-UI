@@ -2,11 +2,10 @@ import { useAccount } from '@/AccountContext'
 import BrandButton from '@/components/ui/myComponents/brand-button'
 import TileEffect from '@/components/ui/myComponents/grid-bg-2'
 import { Spotlight } from '@/components/ui/myComponents/spotlight'
-import { useNavigate } from 'react-router-dom'
+import { TextLoop } from '@/components/ui/myComponents/Textloop';
 
 const HomeSection = () => {
   const { accounts } = useAccount()
-  const navigate = useNavigate()
 
   return (
     <>
@@ -36,7 +35,20 @@ const HomeSection = () => {
 
 
               <div className="text-white text-left font-mono md:text-base text-sm font-medium relative pr-4 ">
-                Lorem ipsum dolor sit amet elitsed
+                
+
+                 <TextLoop className='font-mono text-sm'>
+                   <span>Build Your DAO. Govern Your Future.</span>
+                   <span>The Fastest Way to Launch a DAO on Radix.</span>
+                   <span>Governance Made Simple. Power Made Scalable</span>
+                   <span>Create. Govern. Evolve. All in One.</span>
+                   <span>Turn Ideas Into Action – Instantly on Pandao.</span>
+                   <span>Plug Into the Future of Decentralized Governance</span>
+                   <span>Radically Easy DAO Deployment</span>
+                   <span>Precision DAOs. Automated by Design.</span>
+                   <span>Finance-Grade DAOs Built for Everyone.</span>
+                   <span>Where Communities Become Institutions</span>
+                 </TextLoop>
               </div>
             </div>
           </div>
