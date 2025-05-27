@@ -23,7 +23,7 @@ export function TextLoop({
   useEffect(() => {
     if (!trigger) return;
 
-    const intervalMs = interval * 1000;
+    const intervalMs = interval * 4000;
     const timer = setInterval(() => {
       setCurrentIndex((current) => {
         const next = (current + 1) % items.length;
