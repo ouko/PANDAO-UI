@@ -11,11 +11,19 @@ function Join() {
           />
         </div>
         
-        <div className="absolute right-0 top-0 z-0 max-w-[50%] md:max-w-[400px]">
+        <div className="absolute left-10 bottom-0  max-w-[50%] md:max-w-[400px]">
           <img
-            className="w-full h-auto opacity-60"
+            className="w-full h-auto opacity-20"
             src="/c.svg"
             alt="Background decoration"
+          />
+        </div>
+        
+        <div className="absolute right-10 bottom-0 z-0 max-w-[50%] md:max-w-[400px]">
+          <img
+            className="w-full h-auto opacity-50"
+            src="/c.svg"
+            alt="Backgr decoration"
           />
         </div>
 
