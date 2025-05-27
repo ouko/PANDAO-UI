@@ -159,9 +159,9 @@ const DaoCard = ({ daoData, isUserParticipant,  setExecOpen, onSuccess, isOwner 
 
               <p
                 className="cursor-pointer"
-                onClick={() => handleCopy(daoData.owner_address)}
+                onClick={() => handleCopy2(daoData.component_address)}
               >
-                {copied ? (
+                {copied1 ? (
                   <Check className="h-4 w-4 text-white" />
                 ) : (
                   <Copy className="h-4 w-4 text-white" />
@@ -323,7 +323,6 @@ const DaoCard = ({ daoData, isUserParticipant,  setExecOpen, onSuccess, isOwner 
 DaoCard.propTypes = {
   daoData: PropTypes.object.isRequired,
   isUserParticipant: PropTypes.bool.isRequired,
-  setTransferOpen: PropTypes.func.isRequired,
   setExecOpen: PropTypes.func.isRequired,
   onSuccess: PropTypes.func.isRequired,
   isOwner: PropTypes.bool.isRequired,
