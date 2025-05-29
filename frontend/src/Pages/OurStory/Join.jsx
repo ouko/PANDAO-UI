@@ -1,3 +1,5 @@
+import BrandButton from "@/components/ui/myComponents/brand-button";
+
 function Join() {
   return (
     <div className="min-h-screen pt-20  relative z-50 ">
@@ -36,6 +38,10 @@ function Join() {
             <p className="text-brand7 text-lg md:text-xl lg:text-2xl font-medium font-clash">
               Whether you are a buzzing community, a solo builder rallying your tribe, or a founder dreaming of transparent governance — PandaoLive is your launchpad.
             </p>
+             <div className="flex flex-wrap justify-start items-start gap-5 mt-10">
+                    <BrandButton title="Lunch your dao Now" href="" />
+                  </div>
+            
           </div>
         </div>
       </div>
