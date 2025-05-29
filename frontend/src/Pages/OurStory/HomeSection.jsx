@@ -25,7 +25,7 @@ function HomeSection() {
           democratize decentralized organizations for everyone, everywhere.
         </p>
 
-        <div className=" left-0 top-[100px] justify-start absolute items-start gap-5 opacity-10">
+        <div className=" left-0 top-[100px] justify-start absolute items-start gap-5 opacity-5">
         <img
           src="/ic.svg" alt=""
           className="w-[400px] h-[400px] object-cover"
@@ -37,7 +37,7 @@ function HomeSection() {
         <BrandButton title="Get Started" href="" />
       </div>
 
-      <div className=" right-0 top-[500px] justify-start absolute items-start gap-5 opacity-10">
+      <div className=" right-0 top-[650px] justify-start absolute items-start gap-5 opacity-10">
         <img
           src="/ic.svg" alt=""
           className="w-[250px] h-[250px] object-cover"
