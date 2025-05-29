@@ -416,7 +416,7 @@ const BondIssue = () => {
                         name="initial_exchange_date"
                         value={bond.initial_exchange_date}
                         onChange={handleChange}
-                        min={new Date().toISOString().split('T')[0]}
+                        // min={new Date().toISOString().split('T')[0]}
                         placeholder="Start date of bond exchange"
                       />
                     </div>
