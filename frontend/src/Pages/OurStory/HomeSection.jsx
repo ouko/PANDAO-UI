@@ -13,7 +13,7 @@ function HomeSection() {
         <TileEffect4 />
       </div>
       <div className="flex flex-col items-center gap-6 pt-40 text-center mx-auto z-50">
-        <h2 className="text-center font-semibold text-[40px] md:text-[64px] self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent">
+        <h2 className="text-center font-semibold text-[50px] md:text-[69px] self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent">
           The Journey Begins
         </h2>
         <p className="text-xl md:text-2xl text-brand6 leading-relaxed max-w-4xl">

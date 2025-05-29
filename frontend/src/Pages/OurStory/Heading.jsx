@@ -28,7 +28,7 @@ function Heading() {
             Lorem ipsum dolor sit amet consectetur adipisi minus magnam architecto, maiores sunt
              quaerat qui sapiente accusantium! Similique magni eaque labore!
         </p>
-    <div className="relative w-full max-w-5xl mx-auto py-12 px-12 md:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div className="relative w-full max-w-6xl mx-auto py-12 px-12 md:px-8 grid grid-cols-1 md:grid-cols-3 gap-12">
       {cardData.map((card, index) => (
         <div
           key={index}
@@ -54,7 +54,7 @@ function Heading() {
 
     <div className="w-full max-w-4xl mx-auto h-[55px] relative flex items-center justify-between">
 
-      <div className="relative">
+      <div >
        
         <div className="bg-purple-500/22 rounded-full w-[55px] h-[55px] flex items-center justify-center">
      
@@ -65,7 +65,7 @@ function Heading() {
 
       <div className="h-1 bg-gradient-to-b from-brand5 to-brand3 flex-1 mx-2"></div>
 
-      <div className="relative">
+      <div >
 
         <div className="bg-purple-500/22 rounded-full w-[55px] h-[55px] flex items-center justify-center">
    
@@ -76,7 +76,7 @@ function Heading() {
     
       <div className="h-1 bg-gradient-to-b from-brand5 to-brand3 flex-1 mx-2"></div>
 
-      <div className="relative">
+      <div>
     
         <div className="bg-purple-500/22 rounded-full w-[55px] h-[55px] flex items-center justify-center">
        
