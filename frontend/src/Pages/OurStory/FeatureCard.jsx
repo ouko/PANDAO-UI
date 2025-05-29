@@ -2,7 +2,7 @@ const FeatureCard = () => {
 
   return (
     
-    <div className=" p-10 grid grid-cols-12 gap-10 px-20 relative z-50">
+    <div className=" p-10 grid grid-cols-12 gap-10 px-20 relative  z-50">
       <div className="col-span-6">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium mb-6 bg-gradient-to-r from-brand7 to-[#6359e9] bg-clip-text text-transparent font-['ClashDisplayVariable-Medium',_sans-serif]">
           Heading:
@@ -13,7 +13,7 @@ const FeatureCard = () => {
       </div>
 
       <div className="col-span-3">
-        <div className="rounded-[24.69px] border-2 border-solid p-6 md:p-7  h-[400px] w-full overflow-hidden bg-gradient-to-b from-[rgba(132,74,249,0.12)] via-[rgba(132,74,249,0.04)] to-[rgba(132,74,249,0.07)] border-[rgba(132,74,249,0.5)] shadow-[inset_0px_0px_0.92px_0.92px_rgba(255,255,255,0.4)] backdrop-blur-[19.28px]">
+        <div className="rounded-[24.69px] border-2 border-solid p-6 md:p-7  h-[400px]  overflow-hidden bg-gradient-to-b from-[rgba(132,74,249,0.12)] via-[rgba(132,74,249,0.04)] to-[rgba(132,74,249,0.07)] border-[rgba(132,74,249,0.5)] shadow-[inset_0px_0px_0.92px_0.92px_rgba(255,255,255,0.4)] backdrop-blur-[19.28px]">
           <div className="bg-neutral-n900 rounded-xl p-4 inline-flex mb-6">
             <img
               className="w-16 h-16"
@@ -29,7 +29,7 @@ const FeatureCard = () => {
         </div>
       </div>
       <div className="col-span-3">
-        <div className="rounded-[24.69px] border-2 border-solid p-6 md:p-7   w-full overflow-hidden bg-gradient-to-b from-[rgba(132,74,249,0.12)] via-[rgba(132,74,249,0.04)] to-[rgba(132,74,249,0.07)] border-[rgba(132,74,249,0.5)] shadow-[inset_0px_0px_0.92px_0.92px_rgba(255,255,255,0.4)] backdrop-blur-[19.28px]">
+        <div className="rounded-[24.69px] border-2 border-solid p-6 md:p-7    overflow-hidden bg-gradient-to-b from-[rgba(132,74,249,0.12)] via-[rgba(132,74,249,0.04)] to-[rgba(132,74,249,0.07)] border-[rgba(132,74,249,0.5)] shadow-[inset_0px_0px_0.92px_0.92px_rgba(255,255,255,0.4)] backdrop-blur-[19.28px]">
 
           <div className="bg-neutral-n900 rounded-xl p-4 inline-flex mb-6">
             <img
@@ -47,7 +47,7 @@ const FeatureCard = () => {
       </div>
 
       <div className="col-span-6">
-       <div className="rounded-[24.69px] border-2 border-solid p-6 md:p-7 h-[390px]  w-full overflow-hidden bg-gradient-to-b from-[rgba(132,74,249,0.12)] via-[rgba(132,74,249,0.04)] to-[rgba(132,74,249,0.07)] border-[rgba(132,74,249,0.5)] shadow-[inset_0px_0px_0.92px_0.92px_rgba(255,255,255,0.4)] backdrop-blur-[19.28px]">
+       <div className="rounded-[24.69px] border-2 border-solid p-6 md:p-7 h-[390px]   overflow-hidden bg-gradient-to-b from-[rgba(132,74,249,0.12)] via-[rgba(132,74,249,0.04)] to-[rgba(132,74,249,0.07)] border-[rgba(132,74,249,0.5)] shadow-[inset_0px_0px_0.92px_0.92px_rgba(255,255,255,0.4)] backdrop-blur-[19.28px]">
 
           <div className="bg-neutral-n-900 rounded-xl p-4 inline-flex mb-6">
             <img
@@ -64,7 +64,7 @@ const FeatureCard = () => {
         </div>
       </div>
       <div className="col-span-3">
-        <div className="rounded-[24.69px] border-2 border-solid p-6 md:p-7   w-full overflow-hidden bg-gradient-to-b from-[rgba(132,74,249,0.12)] via-[rgba(132,74,249,0.04)] to-[rgba(132,74,249,0.07)] border-[rgba(132,74,249,0.5)] shadow-[inset_0px_0px_0.92px_0.92px_rgba(255,255,255,0.4)] backdrop-blur-[19.28px]">
+        <div className="rounded-[24.69px] border-2 border-solid p-6 md:p-7    overflow-hidden bg-gradient-to-b from-[rgba(132,74,249,0.12)] via-[rgba(132,74,249,0.04)] to-[rgba(132,74,249,0.07)] border-[rgba(132,74,249,0.5)] shadow-[inset_0px_0px_0.92px_0.92px_rgba(255,255,255,0.4)] backdrop-blur-[19.28px]">
 
           <div className="bg-neutral-n900 rounded-xl p-4 inline-flex mb-6">
             <img
@@ -81,7 +81,7 @@ const FeatureCard = () => {
         </div>
       </div>
       <div className="col-span-3">
-        <div className="rounded-[24.69px] border-2 border-solid p-6 md:p-7   w-full overflow-hidden bg-gradient-to-b from-[rgba(132,74,249,0.12)] via-[rgba(132,74,249,0.04)] to-[rgba(132,74,249,0.07)] border-[rgba(132,74,249,0.5)] shadow-[inset_0px_0px_0.92px_0.92px_rgba(255,255,255,0.4)] backdrop-blur-[19.28px]">
+        <div className="rounded-[24.69px] border-2 border-solid p-6 md:p-7    overflow-hidden bg-gradient-to-b from-[rgba(132,74,249,0.12)] via-[rgba(132,74,249,0.04)] to-[rgba(132,74,249,0.07)] border-[rgba(132,74,249,0.5)] shadow-[inset_0px_0px_0.92px_0.92px_rgba(255,255,255,0.4)] backdrop-blur-[19.28px]">
 
           <div className="bg-neutral-n900 rounded-xl p-4 inline-flex mb-6">
             <img
