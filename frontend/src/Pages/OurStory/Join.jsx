@@ -1,6 +1,6 @@
 function Join() {
   return (
-    <div className="bg-gradient-to-br from-[#100821] to-[rgb(8,6,42)] relative border-2 border-[#5228A4] w-[90%] mt-20 mb-20 mx-auto rounded-3xl overflow-hidden">
+    <div className="bg-gradient-to-br from-[#100821] to-[rgb(8,6,42)] relative border-2 border-[#5228A4] w-[90%] mt-20 mb-20 mx-auto rounded-3xl overflow-hidden z-50">
       <div className="relative min-h-[460px] px-6 md:px-12 lg:px-16 py-10 flex items-center">
         
         <div className="absolute right-0 top-[195px]  max-w-[50%] md:max-w-[443px]">

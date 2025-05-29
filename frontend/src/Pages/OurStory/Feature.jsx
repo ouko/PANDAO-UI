@@ -1,7 +1,7 @@
 function Feature() {
   return (
 
-    <div className="bg-[#100821] w-full pb-40 pt-20 ">
+    <div className=" w-full pb-40 pt-20 relative z-50">
        <h2 className="text-center font-semibold text-[64px] self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent" >
           Why PandaoLive?
         </h2>

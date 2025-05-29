@@ -20,7 +20,7 @@ const cardData = [
 
 function Heading() {
   return (
-    <div className="bg-[#100821] pb-20">
+    <div className="pb-20 relative z-50">
          <h2 className="text-center font-semibold text-[64px] self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent" >
           Heading
         </h2>
@@ -28,7 +28,7 @@ function Heading() {
             Lorem ipsum dolor sit amet consectetur adipisi minus magnam architecto, maiores sunt
              quaerat qui sapiente accusantium! Similique magni eaque labore!
         </p>
-    <div className="bg-[#100821]  w-full max-w-5xl mx-auto py-12 px-12 md:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div className="relative w-full max-w-5xl mx-auto py-12 px-12 md:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
       {cardData.map((card, index) => (
         <div
           key={index}
