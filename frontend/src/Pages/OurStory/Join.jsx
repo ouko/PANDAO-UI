@@ -25,7 +25,7 @@ function Join() {
         
           <div className="absolute right-10 bottom-0 z-50 max-w-[50%] md:max-w-[400px]">
             <img
-              className="w-full h-auto opacity-60"
+              className="w-full h-auto opacity-80"
               src="/c.svg"
               alt="Backgr decoration"
             />
