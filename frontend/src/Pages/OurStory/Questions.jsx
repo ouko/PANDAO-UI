@@ -30,13 +30,9 @@ function Questions() {
     setOpenIndex(openIndex === index ? null : index);
   };
   
-  const toggleSection = (section) => {
-    setActiveSection(section);
-    setOpenIndex(null);
-  };
 
   return (
-    <div className="flex flex-col items-center justify-center py-12 px-4 w-full min-h-screen z-50 container mx-auto">
+    <div className="flex flex-col items-center justify-center py-12 px-4 w-full min-h-[600px] z-50 container mx-auto">
 
       
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full px-4 z-50">
@@ -97,9 +93,7 @@ function Questions() {
               ? 'The principles that guide everything we do at PandaoLive' 
               : 'How we empower communities through decentralized governance'}
           </p>
-          <div className="pt-6">
-           <BrandButton title='Get Started' href='' />
-           </div>
+         
         </div>
       </div>
     </div>

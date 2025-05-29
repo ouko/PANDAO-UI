@@ -24,7 +24,7 @@ function Heading() {
          <h2 className="text-center font-semibold text-[64px] self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent" >
           Heading
         </h2>
-        <p className="text-xl text-center max-w-4xl mx-auto items-center justify-center flex md:text-2xl text-white leading-relaxed">
+        <p className="text-xl text-center max-w-4xl mx-auto items-center justify-center flex md:text-2xl text-brand7 leading-relaxed">
             Lorem ipsum dolor sit amet consectetur adipisi minus magnam architecto, maiores sunt
              quaerat qui sapiente accusantium! Similique magni eaque labore!
         </p>

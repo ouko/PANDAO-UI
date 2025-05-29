@@ -18,16 +18,22 @@ function Question() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center  py-12 px-4 w-full min-h-screen z-50 container mx-auto">
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full  px-4 z-50">
+    <div className="flex flex-col items-center justify-center  w-full min-h-[600px] z-50 container mx-auto">
+       <h2 className="text-center font-semibold text-[64px] z-50 self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent" >
+          Question
+        </h2>
+        <p className="text-xl text-center max-w-4xl z-50 mx-auto items-center justify-center flex md:text-2xl text-brand7 leading-relaxed">
+            Lorem ipsum dolor sit amet consectetur 
+             quaerat qui sapiente accusantium! Similique magni eaque labore!
+        </p>
+       
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full pt-20  px-4 z-50">
         <div className="flex flex-col items-start justify-start mt-5 text-center lg:text-left">
           <h1 className="text-4xl md:text-5xl font-clash font-bold bg-gradient-to-r  from-white to-indigo-500 bg-clip-text text-transparent">
             Our Ethos
           </h1>
           <p className="text-gray-400 text-lg mt-2 font-clash">The principles that guide everything we do at PandaoLive</p>
-          <div className="pt-6">
-           <BrandButton title='Get Started' href='' />
-           </div>
+          
         </div>
         
         
