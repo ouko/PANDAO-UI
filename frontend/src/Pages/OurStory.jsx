@@ -1,4 +1,3 @@
-import TileEffect4 from "@/components/ui/myComponents/grid-bg-4"
 import Footer from "./HomeSection/homeSectionComponents/Footer"
 import Feature from "./OurStory/Feature"
 import FeatureCard from "./OurStory/FeatureCard"
