@@ -98,7 +98,7 @@ const Withdraw = () => {
           </div>
           <div className="flex flex-col gap-1.5">
             <div className="text-[#5228A4] font-semibold uppercase text-xl">
-              Total Issued Bonds:
+              Total Withdraw:
             </div>
             <div className="text-white text-[56px] font-medium text-center">
               ${totalWithdrawAmount.toFixed(2)} USD

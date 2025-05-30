@@ -151,7 +151,7 @@ const Members = () => {
                     <div
                       className="text-[#5228A4] font-semibold uppercase text-xl"
                     >
-                      Total Issued Bonds:
+                      Total Members:
                     </div>
                     <div
                       className="text-gray-300 text-[56px] font-medium text-center"
