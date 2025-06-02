@@ -50,6 +50,7 @@ const Members = () => {
   const sendTransaction = useSendTransaction()
   const [loading2, setLoading2] = useState(false)
   const queryClient = useQueryClient();
+  const [openParticipantIndex, setOpenParticipantIndex] = useState(null);
 
   const [modalOpen, setModalOpen] = useState(false);
   const { data: participants = [], isLoading: loading } = useQuery({
@@ -104,7 +105,7 @@ const Members = () => {
             },
           )
           toast.success('Transfer Token Successfully!')
-          setModalOpen(false)
+          setOpenParticipantIndex(null)
 
           queryClient.invalidateQueries({ queryKey: ['participants', params.id] });
         } catch (submitError) {
@@ -127,13 +128,14 @@ const Members = () => {
     navigate('/')
     return null
   }
+  console.log(participants, "fdasf")
   return (
     <div className=" items-start gap-3 justify-start min-h-screen overflow-hidden z-50 text-brand7 ">
       <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
         <div className="space-y-6 md:w-[100%] ">
           <div className="flex md:flex-row flex-col  mx-auto gap-2">
             <div className="md:w-[100%] space-y-6 mx-[1px] ">
- 
+
               <div
                 className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden"
               >
@@ -220,21 +222,21 @@ const Members = () => {
                         </div>
                         <div>
                           {participant.is_executive_member && (
-                           
+
                             <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger>
-                              <BadgeCheck className=" px-3 py-1 text-xs rounded-full w-12 h-12"/>
-                           
-                              </TooltipTrigger>
-                              <TooltipContent className="bg-[#5228A4] border-[#7F42F9] text-white">
-                                <p>This member is Executive Member</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                          
+                              <Tooltip>
+                                <TooltipTrigger>
+                                  <BadgeCheck className=" px-3 py-1 text-xs rounded-full w-12 h-12" />
+
+                                </TooltipTrigger>
+                                <TooltipContent className="bg-[#5228A4] border-[#7F42F9] text-white">
+                                  <p>This member is Executive Member</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+
                           )}
-                          
+
                           {participant.badges && participant.badges.length > 0 && (
                             <div className="flex mt-2">
                               {participant.badges.map((badge) => (
@@ -242,8 +244,8 @@ const Members = () => {
                                   <Tooltip>
                                     <TooltipTrigger>
                                       <div className="relative mr-2">
-                                        <img 
-                                          src={badge.badge_image} 
+                                        <img
+                                          src={badge.badge_image}
                                           alt={badge.badge_name}
                                           className="w-8 h-8 rounded-full"
                                           onError={(e) => {
@@ -270,7 +272,9 @@ const Members = () => {
                       </div>
 
                       <div className="flex flex-col md:flex-row z-20 items-start md:items-center  gap-4">
-                        <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+                        <Dialog open={openParticipantIndex === index}
+                          onOpenChange={(isOpen) => setOpenParticipantIndex(isOpen ? index : null)}
+                          key={index}>
                           <DialogTrigger>
                             <div className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-white text-[14px] leading-5 font-medium">
                               View Details
@@ -317,13 +321,13 @@ const Members = () => {
                                     </h3>
                                     <div className="flex flex-wrap gap-3">
                                       {participant.badges.map((badge) => (
-                                        <div 
-                                          key={badge.badge_id} 
+                                        <div
+                                          key={badge.badge_id}
                                           className="bg-[rgba(82,40,164,0.3)] border border-[#7F42F9] rounded-lg p-3 flex items-start gap-3 max-w-xs"
                                         >
                                           <div className="relative">
-                                            <img 
-                                              src={badge.badge_image} 
+                                            <img
+                                              src={badge.badge_image}
                                               alt={badge.badge_name}
                                               className="w-12 h-12 rounded-full object-cover"
                                               onError={(e) => {
@@ -474,15 +478,6 @@ const Members = () => {
                     </div>
                   )))}
               </div>
-
-
-
-
-              {/* {loading && (
-                <div className="flex flex-col h-[200px] items-center justify-center text-center  mt-5  ">
-                                      <SkeletonCard />
-                                    </div>
-              )} */}
 
 
             </div>
