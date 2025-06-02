@@ -761,14 +761,30 @@ const Proposals = () => {
 
                 <Tabs
                   defaultValue="PENDING"
-                  className="w-full py-5"
+                  className="w-full py-5 border-2  bg-[rgba(169,126,255,0.08)] rounded-[10px] border-[#8861d7]"
                   onValueChange={setActiveTab}
                 >
-                  <TabsList className=" z-50 bg-brand1 space-x-2">
-                    <TabsTrigger value="PENDING" disabled={false} className="tab-trigger">
+                  <TabsList className="z-50 bg-brand1  p-2 flex gap-3 mx-auto shadow-md w-full items-center justify-start mb-3">
+                    <TabsTrigger
+                      value="PENDING"
+                      disabled={false}
+                      className={`tab-trigger px-6 py-2  font-semibold transition-all duration-200
+                        data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-brand3
+                        data-[state=active]:text-white data-[state=active]:shadow-lg
+                        data-[state=inactive]:bg-transparent data-[state=inactive]:text-brand7
+                        hover:bg-brand2 focus:outline-none focus:ring-2 focus:ring-brand3`}
+                    >
                       Pending
                     </TabsTrigger>
-                    <TabsTrigger value="EXECUTED" disabled={false} className="tab-trigger">
+                    <TabsTrigger
+                      value="EXECUTED"
+                      disabled={false}
+                      className="tab-trigger px-6 py-2  font-semibold transition-all duration-200
+        data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-brand3
+        data-[state=active]:text-white data-[state=active]:shadow-lg
+        data-[state=inactive]:bg-transparent data-[state=inactive]:text-brand7
+        hover:bg-brand2 focus:outline-none focus:ring-2 focus:ring-brand3"
+                    >
                       Executed
                     </TabsTrigger>
                   </TabsList>
