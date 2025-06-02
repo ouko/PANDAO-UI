@@ -174,10 +174,10 @@ const DaoCard = ({ daoData, isUserParticipant,  setExecOpen, onSuccess, isOwner 
   <div className="text-[#AE85FF] text-left text-base font-normal uppercase relative self-stretch">
     Description:
   </div>
-  <div className="flex flex-col gap-1 items-start w-full">
-    <div className={`text-[#ffffff] text-start text-xl font-normal ${!showFullDescription ? 'line-clamp-2 sm:line-clamp-3 md:line-clamp-2' : ''}`}>
+  <div className="flex flex-col gap-1 items-start w-[526px]">
+    <div className={`text-[#ffffff] text-start text-[16px] font-normal ${!showFullDescription ? 'line-clamp-2 sm:line-clamp-3 md:line-clamp-2' : ''}`}>
       {daoData.description || 'No description available'}
-    </div>
+        </div>
     {daoData.description && (
       <button
         onClick={() => setShowFullDescription(!showFullDescription)}
