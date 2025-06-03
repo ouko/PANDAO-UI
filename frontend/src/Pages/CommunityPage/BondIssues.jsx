@@ -12,9 +12,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { Button } from '@/components/ui/button'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
 import {
   Select,
   SelectContent,
@@ -22,15 +19,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Button } from '@/components/ui/button'
+import axios from 'axios'
+import { useEffect, useState, useMemo, useCallback } from 'react'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { useSendTransaction } from '@/hooks/useSendTransaction'
+
 const FormInput = ({
   label,
   type = 'text',
@@ -80,6 +78,7 @@ FormInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   tooltipText: PropTypes.string,
   disabled: PropTypes.bool,
+  min: PropTypes.number,
 }
 
 FormInput.defaultProps = {
@@ -91,17 +90,74 @@ const BondIssue = () => {
   const params = useParams()
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
-  const [manifest, setManifest] = useState('')
   const sendTransaction = useSendTransaction()
-  const { bond, updateBond, resetBond } = useBondFormStore((state) => state)
+  const { bond, updateBond } = useBondFormStore((state) => state)
   const [isFormComplete, setIsFormComplete] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [modalOpen, setModalOpen] = useState(false)
   const [nfts, setNfts] = useState([]) // State to store the NFTs array
+  const [timeRemaining, setTimeRemaining] = useState(0) // Timer for bond creation cooldown
+  const [bondCreated, setBondCreated] = useState(false) // Track if a bond has been created
+  
+  // Check if there's a stored timestamp in localStorage
+  useEffect(() => {
+    const storedTimestamp = localStorage.getItem('lastBondCreationTime');
+    if (storedTimestamp) {
+      const lastCreationTime = parseInt(storedTimestamp);
+      const currentTime = new Date().getTime();
+      const elapsedSeconds = Math.floor((currentTime - lastCreationTime) / 1000);
+      const cooldownPeriod = 5 * 60; // 5 minutes in seconds
+      
+      if (elapsedSeconds < cooldownPeriod) {
+        // If less than 5 minutes have passed, set the remaining time and bondCreated flag
+        setTimeRemaining(cooldownPeriod - elapsedSeconds);
+        setBondCreated(true);
+      } else {
+        // If more than 5 minutes have passed, reset the timer
+        localStorage.removeItem('lastBondCreationTime');
+        setTimeRemaining(0);
+        setBondCreated(false);
+      }
+    }
+  }, []);
+  
+  // Timer effect to count down from timeRemaining
+  useEffect(() => {
+    if (timeRemaining <= 0) return;
+    
+    const timer = setInterval(() => {
+      setTimeRemaining(prevTime => {
+        if (prevTime <= 1) {
+          clearInterval(timer);
+          toast.info('5 minutes have passed. You can create another bond now.');
+          setBondCreated(false);
+          localStorage.removeItem('lastBondCreationTime');
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+    
+    return () => clearInterval(timer);
+  }, [timeRemaining]);
+  
+  // Memoize the formatted time to prevent re-renders
+  const formattedTime = useMemo(() => {
+    const minutes = Math.floor(timeRemaining / 60);
+    const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+    return `${minutes}:${seconds}`;
+  }, [timeRemaining]);
   const handleformSubmit = async (e) => {
     e.preventDefault()
+    
+    // Check if a bond has already been created within the 5-minute window
+    if (bondCreated) {
+      toast.error('You can only create one bond every 5 minutes.')
+      setOpen(false)
+      return
+    }
+    
     setLoading(true) // Set loading to true at the start of the process
-    setModalOpen()
+    // Process form submission
 
     try {
       // Initial post request to submit the bond data
@@ -119,7 +175,6 @@ const BondIssue = () => {
       )
 
       if (res.status === 200) {
-        setManifest(res.data)
         console.log('Form submitted successfully', res.data)
 
         // Wait for manifest to update before sending the transaction
@@ -143,7 +198,16 @@ const BondIssue = () => {
               },
             )
             console.log(response.data)
-            toast.success('Bond Issued')
+            
+            // Store the timestamp when the bond was created
+            const currentTime = new Date().getTime();
+            localStorage.setItem('lastBondCreationTime', currentTime.toString());
+            
+            // Set the timer to 5 minutes
+            setTimeRemaining(5 * 60);
+            setBondCreated(true);
+            
+            toast.success('Bond Issued. You can create another bond after 5 minutes.')
             navigate(`/community/detail/${params.id}`)
           } catch (error) {
             console.error('Error in submit-tx:', error)
@@ -165,38 +229,19 @@ const BondIssue = () => {
     }
   }
 
-  const openModal = () => {
-    setModalOpen(true)
-  }
+  // Modal state is managed by the Dialog component directly
 
-  const closeModal = () => {
-    setModalOpen(false)
-  }
-
-  const fetchNfts = async () => {
+  // Wrap fetchNfts in useCallback to prevent it from changing on every render
+  const fetchNfts = useCallback(async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/users/wallets/assets/${accounts[0].address
-        }`,
+        `${import.meta.env.VITE_BACKEND_URL}/users/wallets/assets/${accounts[0]?.address}`,
       )
-
-      // const processedData = Array.from(
-      //   new Map(
-      //     response.data.flat().map((item) => [
-      //       item.address,
-      //       {
-      //         name: item.name || '',
-      //         icon_url: item.icon_url || '',
-      //         address: item.address,
-      //       },
-      //     ]),
-      //   ).values(),
-      // )
       setNfts(response.data)
     } catch (error) {
       console.log(error)
     }
-  }
+  }, [accounts])
   // Function to handle change in form inputs
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -262,7 +307,7 @@ const BondIssue = () => {
     if (accounts && accounts.length > 0) {
       fetchNfts()
     }
-  }, [accounts])
+  }, [accounts, fetchNfts])
   if (!accounts || accounts.length === 0) {
     navigate('/')
     return null
@@ -276,21 +321,38 @@ const BondIssue = () => {
             <div className="md:w-[100%] space-y-6  ">
               <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-5 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
                 <div className="z-50 flex items-center justify-between w-full ">
-
-
                   <div>
-
                     <span className=" text-[40px] leading-[130%] z-50 font-semibold text-start text-amber-50">Create a Bond</span>
-
                   </div>
-
-                  <Card className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)]  px-5 py-3">
-                    <div className="flex flex-row gap-[11px] items-center">
-                      <Info className='text-purple-400' />
-                      <div className="text-[#ac97de] text-base font-normal uppercase">Only One Bond Allowed</div>
-                    </div>
-                    <div className="text-white text-xl font-normal"></div>
-                  </Card>
+    
+                  <div className="flex flex-row gap-4 items-center">
+                    {/* Timer Card */}
+                    {bondCreated && (
+                      <Card className="flex flex-col gap-1 items-center justify-center bg-[rgba(0,0,0,0.30)] rounded-[15px] border border-[rgba(255,255,255,0.15)] px-5 py-3">
+                        <div className="flex flex-row gap-[8px] items-center">
+                          <BookDown className='text-brand5' />
+                          <div className="text-brand5 text-base font-medium">
+                            NEXT BOND IN
+                          </div>
+                        </div>
+                        <div className="text-white text-2xl font-bold">
+                          {formattedTime}
+                        </div>
+                        <div className="text-[#ac97de] text-xs font-normal">
+                          Please wait to create another bond
+                        </div>
+                      </Card>
+                    )}
+                    
+                    {/* Info Card */}
+                    <Card className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)]  px-5 py-3">
+                      <div className="flex flex-row gap-[11px] items-center">
+                        <Info className='text-purple-400' />
+                        <div className="text-[#ac97de] text-base font-normal uppercase">Only One Bond Allowed</div>
+                      </div>
+                      <div className="text-white text-xl font-normal"></div>
+                    </Card>
+                  </div>
                 </div>
                 <div className="text-[#ffffff]  z-50 text-xl leading-[130%] font-normal text-center">
                   Start simple and learn as you go. You can always evolve your DAO in the future
@@ -595,15 +657,24 @@ const BondIssue = () => {
                     </Select>
                   </div>
 
-                  <div className="flex items-center z-50 py-4 justify-end">
-                    <Button
-                      className="flex-1 rounded-2xl p-3 h-14 text-xl z-50 py-4 text-white "
-                      variant="brand"
-                      onClick={() => setOpen(!open)}
-                      disabled={!isFormComplete}
-                    >
-                      Submit
-                    </Button>
+                  <div className="flex flex-col items-center z-50 py-4 gap-2">
+                    <div className="w-full text-center mb-2">
+                      {bondCreated && (
+                        <p className="text-brand6 font-medium">
+                          Wait time: {formattedTime} before creating another bond
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex items-center z-50 py-4 justify-end">
+                      <Button
+                        className="flex-1 rounded-full p-3 h-14 w-[300px] text-xl z-50 py-4 text-white "
+                        variant="brand"
+                        onClick={() => setOpen(!open)}
+                        disabled={bondCreated || !isFormComplete}
+                      >
+                        Submit
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -618,7 +689,7 @@ const BondIssue = () => {
 
             <div className="p-4 text-left max-h-96 overflow-y-auto rounded-md bg-[rgba(133,115,170,0.2)] ">
               <ul className="space-y-2 px-2">
-              <li>
+                <li>
                   <strong>Community ID:</strong> {params.id}
                 </li>
                 <li>
@@ -667,31 +738,20 @@ const BondIssue = () => {
                 </li>
                 <li>
                   <strong>NFT:</strong> {bond.nft}
-                </li>         
-                        {/* <li>
-              <strong>Bond Icon:</strong>
-              <div className="mt-2">
-                <img
-                  src={item.icon_url}
-                  alt="Bond Icon"
-                  className="h-16 w-16 rounded-full shadow-md"
-                />
-              </div>
-            </li> */}
+                </li>
               </ul>
             </div>
 
-            <div className="flex items-center justify-end space-x-4">
+            <div className="flex items-center justify-end  space-x-4">
               <Button
                 variant="brand"
-                disabled={loading}
+                disabled={loading || bondCreated}
                 onClick={handleformSubmit}
               >
-                Confirm
+                {bondCreated ? 'Wait 5 Minutes' : 'Confirm'}
               </Button>
             </div>
           </DialogContent>
-
         </Dialog>
       </div>
     </div>
