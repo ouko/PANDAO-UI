@@ -2,7 +2,7 @@ function Feature() {
   return (
 
     <div className=" w-full pb-40 pt-20 relative z-50">
-       <h2 className="text-center font-semibold text-[54px] sm:text[30px] self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent" >
+       <h2 className="text-center font-semibold text-4xl sm:text-5xl md:text-6xl lg:text-[54px] self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent" >
           Why PandaoLive?
         </h2>
         <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-center max-w-4xl mx-auto mb-10 md:mb-16 text-brand7 leading-relaxed px-4">

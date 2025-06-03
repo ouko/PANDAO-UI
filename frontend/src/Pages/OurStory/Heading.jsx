@@ -32,7 +32,7 @@ function Heading() {
       {cardData.map((card, index) => (
         <div
           key={index}
-          className=" w-full max-w-sm mx-auto rounded-[50px] border-4 border-brand2 p-6 md:p-8 h-[557px] overflow-hidden bg-gradient-to-b from-brand-500/12 via-purple-500/4 to-purple-500/7 backdrop-blur-lg"
+          className="w-full max-w-sm mx-auto rounded-[50px] border-4 border-brand2 p-6 md:p-8 h-[400px] sm:h-[450px] md:h-[500px] lg:h-[557px] overflow-hidden bg-gradient-to-b from-brand-500/12 via-purple-500/4 to-purple-500/7 backdrop-blur-lg"
         >
          
           
