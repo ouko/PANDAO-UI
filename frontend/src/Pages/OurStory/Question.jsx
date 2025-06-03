@@ -1,4 +1,3 @@
-import BrandButton from "@/components/ui/myComponents/brand-button";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -18,46 +17,46 @@ function Question() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center  w-full min-h-[600px] z-50 container mx-auto">
-       <h2 className="text-center font-semibold text-[64px] z-50 self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent" >
+    <div className="flex flex-col items-center justify-center w-full min-h-[600px] z-50 container mx-auto px-4 sm:px-6 md:px-8">
+       <h2 className="text-center font-semibold text-4xl sm:text-5xl md:text-[64px] z-50 self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent" >
           Question
         </h2>
-        <p className="text-xl text-center max-w-4xl z-50 mx-auto items-center justify-center flex md:text-2xl text-brand7 leading-relaxed">
+        <p className="text-base sm:text-lg md:text-xl text-center max-w-4xl z-50 mx-auto items-center justify-center flex md:text-2xl text-brand7 leading-relaxed px-4 sm:px-0">
             Lorem ipsum dolor sit amet consectetur 
              quaerat qui sapiente accusantium! Similique magni eaque labore!
         </p>
        
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full pt-20  px-4 z-50">
-        <div className="flex flex-col items-start justify-start mt-5 text-center lg:text-left">
-          <h1 className="text-4xl md:text-5xl font-clash font-bold bg-gradient-to-r  from-white to-indigo-500 bg-clip-text text-transparent">
+      <div className="flex flex-col md:items-start md:justify-start lg:flex-row lg:items-center lg:justify-between w-full pt-10 sm:pt-16 md:pt-20 px-4 z-50 gap-6 md:gap-8">
+        <div className="flex flex-col items-center md:items-start justify-start mt-5 text-center md:text-left w-full md:w-auto">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-clash font-bold bg-gradient-to-r from-white to-indigo-500 bg-clip-text text-transparent">
             Our Ethos
           </h1>
-          <p className="text-gray-400 text-lg mt-2 font-clash">The principles that guide everything we do at PandaoLive</p>
+          <p className="text-gray-400 text-base sm:text-lg mt-2 font-clash">The principles that guide everything we do at PandaoLive</p>
           
         </div>
         
         
-        <div className="flex flex-col gap-4 w-full lg:w-[40rem] mt-8 lg:mt-0">
+        <div className="flex flex-col gap-3 sm:gap-4 w-full lg:w-[40rem] mt-6 sm:mt-8 lg:mt-0">
           {ethos.map((item, index) => (
             <motion.div 
               key={index} 
-              className="p-[2px] rounded-lg bg-gradient-to-r from-[#1e0165] to-[#48386c]"
+              className="p-[2px] rounded-lg bg-gradient-to-r from-[#1e0165] to-[#48386c] w-full"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className="rounded-lg bg-[#12082a] pt-4 pb-4">
+              <div className="rounded-lg bg-[#12082a] pt-3 pb-3 sm:pt-4 sm:pb-4">
                 <div
                   onClick={() => toggleAccordion(index)}
-                  className="cursor-pointer text-lg md:text-xl font-semibold text-white flex items-center gap-2 px-4"
+                  className="cursor-pointer text-base sm:text-lg md:text-xl font-semibold text-white flex items-center gap-2 px-3 sm:px-4"
                 >
                   <div className="flex items-center justify-between w-full">
                     <span>{item.title}</span>
                     <div>
                       {index === openIndex ? (
-                        <img src="/close.png" alt="Open" />
+                        <img src="/close.png" alt="Open" className="w-5 h-5 sm:w-auto sm:h-auto" />
                       ) : (
-                        <img src="/open.png" alt="Close" />
+                        <img src="/open.png" alt="Close" className="w-5 h-5 sm:w-auto sm:h-auto" />
                       )}
                     </div>
                   </div>
@@ -71,8 +70,8 @@ function Question() {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
-                      <div className="p-4">
-                        <p className="text-gray-300 text-sm md:text-base">{item.description}</p>
+                      <div className="p-3 sm:p-4">
+                        <p className="text-gray-300 text-xs sm:text-sm md:text-base">{item.description}</p>
                       </div>
                     </motion.div>
                   )}

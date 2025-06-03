@@ -33,13 +33,12 @@ function Questions() {
 
   return (
     <div className="flex flex-col items-center justify-center py-12 px-4 w-full min-h-[600px] z-50 container mx-auto">
-
       
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full px-4 z-50">
+      <div className="flex flex-col md:items-center lg:flex-row lg:items-center lg:justify-between w-full px-4 z-50">
         
         
         
-        <div className="flex flex-col gap-4 w-full lg:w-[40rem] mt-8 lg:mt-0">
+        <div className="flex flex-col gap-4 w-full md:w-4/5 lg:w-[40rem] mt-8 md:mx-auto order-1 md:order-2 lg:mx-0 lg:mt-0  ">
           {whatWeDo.map((item, index) => (
             <motion.div 
               key={index} 
@@ -84,16 +83,15 @@ function Questions() {
           ))}
         </div>
 
-        <div className="flex flex-col items-start justify-start mt-5 text-center lg:text-left">
+        <div className="flex flex-col items-center justify-center text-center w-full md:w-auto mt-5 order-2 md:order-2 lg:items-start lg:text-left lg:justify-start md:mx-auto lg:mx-0">
           <h1 className="text-4xl md:text-5xl font-clash font-bold bg-gradient-to-r from-white to-indigo-500 bg-clip-text text-transparent">
             {activeSection === 'ethos' ? 'Our Ethos' : 'What We Do'}
           </h1>
-          <p className="text-gray-400 text-lg mt-2 font-clash">
+          <p className="text-gray-400 text-lg mt-2 font-clash max-w-md mx-auto lg:mx-0">
             {activeSection === 'ethos' 
               ? 'The principles that guide everything we do at PandaoLive' 
               : 'How we empower communities through decentralized governance'}
           </p>
-         
         </div>
       </div>
     </div>
