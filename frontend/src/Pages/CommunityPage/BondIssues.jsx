@@ -345,13 +345,13 @@ const BondIssue = () => {
                     )}
                     
                     {/* Info Card */}
-                    <Card className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)]  px-5 py-3">
+                    {/* <Card className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)]  px-5 py-3">
                       <div className="flex flex-row gap-[11px] items-center">
                         <Info className='text-purple-400' />
                         <div className="text-[#ac97de] text-base font-normal uppercase">Only One Bond Allowed</div>
                       </div>
                       <div className="text-white text-xl font-normal"></div>
-                    </Card>
+                    </Card> */}
                   </div>
                 </div>
                 <div className="text-[#ffffff]  z-50 text-xl leading-[130%] font-normal text-center">
