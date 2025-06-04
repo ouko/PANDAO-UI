@@ -240,7 +240,7 @@ const DescribeView = () => {
             {/* Community Image */}
             <div className="flex-1">
               <label className="text-white text-2xl leading-[120%] font-medium  ">
-                Community Image URL:
+                Community Image:
               </label>
               <CommunityImageUrl onUploadSuccess={handleUrlId} onChange={handleUrlId} />
 
@@ -250,7 +250,7 @@ const DescribeView = () => {
 
             <div className="flex-1">
               <label className="text-white text-2xl leading-[120%] font-medium  mt-4">
-                Token Image URL:
+                Token Image:
               </label>
 
 
