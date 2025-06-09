@@ -17,7 +17,7 @@ function Question() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full min-h-[600px] z-50 container mx-auto px-4 sm:px-6 md:px-8">
+    <div className="flex flex-col items-center justify-center w-full min-h-[600px] pb-20 pt-20 z-50 container mx-auto px-4 sm:px-6 md:px-8">
        <h2 className="text-center font-semibold text-4xl sm:text-5xl md:text-[64px] z-50 self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent" >
           ACTUS Standard Contracts
         </h2>
