@@ -44,7 +44,7 @@ function App() {
 
   const options = {
     router: true,
-    excludedRoutes: ['/' ,'/ourstory'],
+    excludedRoutes: ['/' ,'/ourstory' ,'/resources'],
   }
   const isMobile = useMobileDetection(options)
   useEffect(() => {

@@ -65,10 +65,10 @@ const ResourceSection = () => {
 
   console.log(posts)
   return (
-    <div className="min-h-screen flex flex-col z-50 items-start max-w-[1000px] mx-auto mb-2">
+    <div className="min-h-screen flex flex-col z-50 pb-20 pt-20 items-start max-w-[1000px] mx-auto mb-2">
       
       <div className="flex flex-col  items-start  gap-5 justify-center w-full p-5">
-        <div className="text-4xl font-semibold z-50 bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent">Video Guide</div>
+        <div className="text-5xl font-semibold z-50 bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent">Video Guide</div>
         <p className="md:w-2/3 text-brand7 z-50 font-thin">Don&apos;t know where to start?</p>
       </div>
       <div className="w-full md:h-[60vh] px-2 z-50">
@@ -81,7 +81,7 @@ const ResourceSection = () => {
       </div>
 
       <div className="flex flex-col  items-start z-50 gap-5 justify-center w-full p-5 mt-6">
-        <div className="text-4xl text-brand7 font-semibold">Get Information</div>
+        <div className="text-5xl text-brand7 font-semibold">Get Information</div>
         <p className="md:w-2/3 z-50 text-brand7 font-thin">
           Don&apos;t know where to start? Explore insightful blogs about the
           PandaO platform and the AboutActus initiative
@@ -100,10 +100,14 @@ const ResourceSection = () => {
         </div>
       )} */}
       {!loading && !error && (
-        <div className="p-5 grid md:grid-cols-3 grid-cols-1 w-full max-w-[1000px] mx-auto gap-7">
-          {posts.map((post, index) => (
-            <ResourceCard key={index} post={post} />
-          ))}
+        <div className="p-5 w-full max-w-[1200px] mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-40">
+            {posts.map((post, index) => (
+              <div key={index} className="flex justify-center">
+                <ResourceCard post={post} />
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
