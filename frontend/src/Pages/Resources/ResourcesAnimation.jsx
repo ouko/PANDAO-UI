@@ -1,4 +1,4 @@
-import OrbitingCircles from "@/components/ui/myComponents/orbitingCircl";
+import OrbitingCircles from "@/components/ui/myComponents/orbitingCircle";
 import {  LibraryBig } from "lucide-react";
 
 export function ResourcesAnimation() {
