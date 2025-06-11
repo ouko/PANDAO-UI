@@ -11,7 +11,7 @@ const Matter = () => {
       <div className="w-full max-w-[1200px] h-[865px] relative">
         {/* Background SVGs */}
         <img
-          className="rounded-none w-full max-w-[1197px] h-[587px] absolute left-6 top-[278px] overflow-visible opacity-40"
+          className="rounded-none w-full max-w-[1197px] h-[587px] absolute left-6 top-[278px] overflow-visible opacity-70"
           src="/Union.svg"
           alt="Background pattern"
         />
