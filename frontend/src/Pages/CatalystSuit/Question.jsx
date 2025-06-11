@@ -9,7 +9,16 @@ function Question() {
     { 
       title: "Community Plan", 
       description: "Designed for new or experimental DAOs ready to take their first steps in decentralized governance. The Community Plan provides access to foundational tools and educational resources to help you set up your DAO, onboard contributors, and launch your first proposals.",
-      type: "community"
+      type: "community",
+      features: [
+        "DAO creation wizard",
+        "Basic proposal and voting tools",
+        "Contributor role setup and permissions",
+        "Templates for DAO charters and governance policies",
+        "Access to the Catalyst community support forum",
+        "Educational resources and DAO best practice guides"
+      ],
+      idealFor: "Hackathon projects, mission-aligned communities, small collectives, NFT-based groups, and testnets."
     },
     { 
       title: "Growth Plan", 
@@ -30,7 +39,18 @@ function Question() {
     { 
       title: "Enterprise Plan", 
       description: "The Enterprise Plan is a white-glove solution tailored for large DAOs and decentralized organizations with complex coordination needs. We work with you to build deeply customized governance architecture, integrations, compliance pathways, and scaling strategies.",
-      type: "enterprise"
+      type: "enterprise",
+      features: [
+        "All Growth Plan features",
+        "Custom smart contract modules",
+        "API access and system integrations",
+        "Layer-2 scaling options",
+        "On-chain/off-chain identity verification",
+        "Governance consulting and training",
+        "Dedicated account manager + 24/7 support",
+        "SLA-based onboarding and support"
+      ],
+      idealFor: "Protocol DAOs, large treasuries, enterprise-aligned networks, multi-team foundations, cross-chain ecosystems, and institutional DAO use cases."
     }
   ];
 
@@ -117,7 +137,7 @@ function Question() {
                         {item.features && (
                           <div className="mt-4">
                             <h4 className="text-white text-base mb-2">What's included:</h4>
-                            <ul className="space-y-1 text-gray-300 text-sm">
+                            <ul className="space-y-1 text-brand5 text-sm">
                               {item.features.map((feature, i) => (
                                 <li key={i} className="flex items-start">
                                   <span className="mr-2">●</span>
