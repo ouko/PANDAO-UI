@@ -66,7 +66,7 @@ const ResourceSection = () => {
   console.log(posts)
   return (
     <div className="min-h-screen flex flex-col z-50 pb-20 pt-20 items-start max-w-[1000px] mx-auto mb-2">
-      
+
       <div className="flex flex-col  items-start  gap-5 justify-center w-full p-5">
         <div className="text-5xl font-semibold z-50 bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent">Video Guide</div>
         <p className="md:w-2/3 text-brand7 z-50 font-thin">Don&apos;t know where to start?</p>
@@ -101,13 +101,14 @@ const ResourceSection = () => {
       )} */}
       {!loading && !error && (
         <div className="p-5 w-full max-w-[1200px] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-40">
+          <div className="flex flex-wrap -mx-24">
             {posts.map((post, index) => (
-              <div key={index} className="flex justify-center">
+              <div key={index} className="w-full sm:w-1/2 md:w-1/3 px-2 mb-4 flex  justify-center">
                 <ResourceCard post={post} />
               </div>
             ))}
           </div>
+
         </div>
       )}
     </div>
