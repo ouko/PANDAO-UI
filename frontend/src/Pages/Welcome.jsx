@@ -1,6 +1,7 @@
 import HomeSection from "./CatalystSuit/HomeSection"
 import Question from "./CatalystSuit/Question"
 import Questions from "./CatalystSuit/Questions"
+import WhyWeAreBetter from "./CatalystSuit/WhyWeAreBetter"
 import Footer from "./HomeSection/homeSectionComponents/Footer"
 
 
@@ -21,6 +22,7 @@ function Welcome() {
       <HomeSection/>
       <Question/>
       <Questions/>
+      <WhyWeAreBetter/>
       <Footer/>
 
       </div>
