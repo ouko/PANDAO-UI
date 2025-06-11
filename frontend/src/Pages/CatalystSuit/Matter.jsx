@@ -2,7 +2,10 @@
 
 const Matter = () => {
   return (
-    <div className="flex flex-col gap-20 z-50 items-center justify-start relative py-16">
+    <div className="flex flex-col gap-20 z-50 items-center justify-start pt-20 pb-20 relative py-16">
+      <h2 className="text-center font-semibold pb-20 text-4xl sm:text-5xl md:text-[64px] z-50 self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent" >
+          Why It Matter for DAO's ?
+        </h2>
       {/* Main design background */}
       
       <div className="w-full max-w-[1200px] h-[865px] relative">
@@ -11,11 +14,6 @@ const Matter = () => {
           className="rounded-none w-full max-w-[1197px] h-[587px] absolute left-6 top-[278px] overflow-visible opacity-40"
           src="/Union.svg"
           alt="Background pattern"
-        />
-        <img
-          className="w-full max-w-[1197px] h-[587px] absolute left-6 top-[278px] overflow-visible"
-          src="mask-group0.svg"
-          alt="Mask overlay"
         />
         
         {/* Top Row */}
