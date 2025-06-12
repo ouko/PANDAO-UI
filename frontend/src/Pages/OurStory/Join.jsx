@@ -1,4 +1,5 @@
 import BrandButton from "@/components/ui/myComponents/brand-button";
+import BrandButton2 from "@/components/ui/myComponents/brand-button-2";
 
 function Join() {
   return (
@@ -23,7 +24,7 @@ function Join() {
             />
           </div>
         
-          <div className="absolute right-10 bottom-0 z-50 max-w-[50%] md:max-w-[400px]">
+          <div className="absolute md:block hidden right-10 bottom-0 z-50 max-w-[50%] md:max-w-[400px]">
             <img
               className="w-full h-auto opacity-80"
               src="/c.svg"
@@ -39,7 +40,7 @@ function Join() {
               Whether you are a buzzing community, a solo builder rallying your tribe, or a founder dreaming of transparent governance — PandaoLive is your launchpad.
             </p>
              <div className="flex flex-wrap justify-start items-start gap-5 mt-10">
-                    <BrandButton title="Lunch your dao Now" href="" />
+                    <BrandButton2 title="Launch your dao Now" href="" />
                   </div>
             
           </div>

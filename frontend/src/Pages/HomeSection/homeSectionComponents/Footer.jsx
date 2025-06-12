@@ -22,7 +22,7 @@ const FooterSection = ({ title, items }) => (
 
 const Footer = () => {
   return (
-    <div className="grid md:grid-cols-2 grid-cols-1 items-start justify-between p-8 container text-center md:text-left z-50  relative overflow-hidden mt-20  ">
+    <div className="grid md:grid-cols-2 grid-cols-1 items-start justify-between p-8 container text-center md:text-left z-50  relative overflow-hidden md:mt-20  ">
      
       {/* Branding Section */}
       <div className="w-full md:w-auto max-w-sm md:max-w-md lg:max-w-lg mb-6 md:mb-0 z-50 ">
