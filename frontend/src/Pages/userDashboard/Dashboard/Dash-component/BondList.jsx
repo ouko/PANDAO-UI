@@ -4,7 +4,7 @@ import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogTrigger } from '@radix-ui/react-dialog';
 import { formatDate } from '@/utils/functions/ConvertDate'
 
-const BondList = ({ bonds, check, setCheck, loading, handleRetrieveBond, setOpenPay, setSelectedBond, setSelectedInfo, setShowInfo , showInfo ,selectedInfo}) => {
+const BondList = ({ bonds, check, setCheck, loading, handleRetrieveBond, handleDeposit, setOpenPay, setSelectedBond, setSelectedInfo, setShowInfo, showInfo, selectedInfo}) => {
   return (
     <div>
       <div className="bg-[#39246b] p-3 flex justify-between items-center rounded-md mb-6 ">
@@ -51,7 +51,7 @@ const BondList = ({ bonds, check, setCheck, loading, handleRetrieveBond, setOpen
 
                 )}
                 {check && bond.has_withdrawn && (
-                  <Button disabled={loading} onClick={() => { setOpenPay(true); setSelectedBond(bond); }}>Deposit</Button>
+                  <Button disabled={loading} onClick={() => { setOpenPay(true); setSelectedBond(bond); handleDeposit(bond); }}>Deposit</Button>
                 )}
               </div>
 

@@ -281,6 +281,7 @@ const handleOnEdit=()=>{
                 setCheck={setCheck}
                 loading={retrieveBondMutation.isPending || depositMutation.isPending}
                 handleRetrieveBond={handleRetrieveBond}
+                handleDeposit={handleDeposit}
                 setOpenPay={setOpenPay}
                 setSelectedBond={setSelectedBond}
                 setSelectedInfo={setSelectedInfo}
