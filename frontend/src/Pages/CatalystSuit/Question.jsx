@@ -77,7 +77,7 @@ function Question() {
           <div className="flex flex-col gap-7 items-start justify-start w-[799px]">
             <p className="text- text-brand7 eft font-[&quot;ClashDisplayVariable-Regular&quot;,_sans-serif] text-xl md:text-2xl font-normal">
               The Catalyst Suite offers a tiered approach to decentralized
-              governance and community-building — whether you're just starting out
+              governance and community-building — whether you&apos;re just starting out
               or scaling toward complex, enterprise-grade coordination.
             </p>
           </div>
@@ -136,7 +136,7 @@ function Question() {
                         
                         {item.features && (
                           <div className="mt-4">
-                            <h4 className="text-white text-base mb-2">What's included:</h4>
+                            <h4 className="text-white text-base mb-2">What&apos;s included:</h4>
                             <ul className="space-y-1 text-brand5 text-sm">
                               {item.features.map((feature, i) => (
                                 <li key={i} className="flex items-start">

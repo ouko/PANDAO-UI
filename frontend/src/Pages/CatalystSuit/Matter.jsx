@@ -4,7 +4,7 @@ const Matter = () => {
   return (
     <div className="flex flex-col gap-20 z-50 items-center justify-start pt-20 pb-20 relative py-16">
       <h2 className="text-center font-semibold pb-20 text-4xl sm:text-5xl md:text-[64px] z-50 self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent" >
-          Why It Matter for DAO's ?
+          Why It Matter for DAO&apos;s ?
         </h2>
       {/* Main design background */}
       
