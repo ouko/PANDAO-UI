@@ -3,7 +3,7 @@ import BrandButton2 from "@/components/ui/myComponents/brand-button-2";
 
 function Join() {
   return (
-    <div className="min-h-screen pt-20  relative z-50 ">
+    <div className=" py-20  relative z-50 ">
     <div className="rotating-border-container w-[90%] mt-20 mb-20 mx-auto rounded-3xl ">
       <div className="bg-gradient-to-br from-[#100821] to-[rgb(8,6,42)] relative w-full h-full rounded-3xl overflow-hidden z-20">
         <div className="relative min-h-[460px] px-6 md:px-12 lg:px-16 py-10 flex items-center">
