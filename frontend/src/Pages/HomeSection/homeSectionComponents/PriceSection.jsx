@@ -9,10 +9,9 @@ import { Check, CircleCheck } from 'lucide-react';
 export const PricingCard = ({ title, description, price, features, buttonText, highlight }) => {
   return (
     <div
-      className={`rounded-[32px] border border-brand2 p-10 w-full flex flex-col relative overflow-hidden ${highlight ? 'z-10' : ''}`}
+      className={`rounded-[32px] border border-brand2 p-10 w-full flex flex-col relative overflow-hidden ${highlight ? 'z-10 md:-translate-y-10' : ''}`}
       style={{
         background: 'linear-gradient(195.05deg, rgba(192, 161, 255, 0.1) 0%, rgba(192, 161, 255, 0.02) 50%, rgba(192, 161, 255, 0.06) 100%)',
-        transform: highlight ? 'translateY(-24px)' : undefined,
         transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)'
       }}
     >
@@ -144,8 +143,8 @@ const PriceSection = () => {
     <div className="flex  flex-col gap-[10px] z-50 items-center justify-start ">
       <div className="flex flex-col gap-3 items-center justify-start self-stretch z-50">
         <div className="text-center font-semibold md:text-[64px] text-[30px] leading-[120%]  self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent">
-          The Perfect Pricing to Power Your DAO Development.
-        </div>
+          The Perfect Pricing to Power Your DAO Development. 
+        </div> 
         <div className="text-[#B59AEC] text-center font-normal md:text-2xl text-xl leading-[120%] relative self-stretch px-3" >
           At PANDAO, we believe in transparency, not just in governance but also in costs.
         </div>
