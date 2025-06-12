@@ -22,7 +22,7 @@ function Question() {
        
       <div className="flex flex-col md:items-start md:justify-start lg:flex-row lg:items-center lg:justify-between w-full pt-10 sm:pt-16 md:pt-20 px-4 z-50 gap-6 md:gap-8">
         <div className="flex flex-col items-center md:items-start justify-start mt-5 text-center md:text-left w-full md:w-auto">
-        <h1 className="text-4xl md:text-5xl w-full font-bold bg-gradient-to-r text-center md:text-right from-white to-indigo-500 bg-clip-text text-transparent">
+        <h1 className="text-4xl md:text-5xl w-full font-bold bg-gradient-to-r text-center md:text-left from-white to-indigo-500 bg-clip-text text-transparent">
         Our Ethos
           </h1>
           <p className="text-gray-400 text-base sm:text-lg mt-2 font-clash">The principles that guide everything we do at PandaoLive</p>
