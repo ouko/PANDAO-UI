@@ -4,6 +4,10 @@ import { useAccount } from "@/AccountContext";
 import { toast } from "sonner";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 // Components
 import NavBar from "./Dash-component/NavBar";
@@ -198,8 +202,14 @@ const handleOnEdit=()=>{
   const handleRetrieveBond = (bond) => {
     retrieveBondMutation.mutate(bond);
   };
-  const handleDeposit = (bond) => {
-    depositMutation.mutate(bond);
+  const handleDeposit = () => {
+    if (!selectedBond) return;
+    if (!xrdToPay || xrdToPay <= 0) {
+      toast.error("Please enter a valid amount to deposit");
+      return;
+    }
+    depositMutation.mutate(selectedBond);
+    setOpenPay(false);
   };
 
   return (
@@ -293,6 +303,49 @@ const handleOnEdit=()=>{
           )}
         </div>
       </div>
+
+      {/* Deposit Dialog */}
+      <Dialog open={openPay} onOpenChange={setOpenPay}>
+        <DialogContent className="sm:max-w-md bg-brand1 border border-brand2 text-white">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-semibold text-brand6">Deposit XRD</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="xrdAmount" className="text-right">
+                XRD Amount
+              </Label>
+              <Input
+                id="xrdAmount"
+                type="number"
+                min="0.001"
+                step="0.001"
+                value={xrdToPay || ''}
+                onChange={(e) => setXrdToPay(e.target.value === '' ? '' : parseFloat(e.target.value) || 0)}
+                className="col-span-3 bg-brand1 border-brand3 text-white"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button 
+              type="button" 
+              onClick={() => setOpenPay(false)}
+              variant="outline"
+              className="border-brand3 text-white hover:bg-brand3/20"
+            >
+              Cancel
+            </Button>
+            <Button 
+              type="button" 
+              onClick={handleDeposit}
+              disabled={depositMutation.isPending || !xrdToPay || xrdToPay <= 0}
+              className="bg-gradient-to-r from-brand2 to-brand3 hover:from-brand3 hover:to-brand2 text-white"
+            >
+              {depositMutation.isPending ? "Processing..." : "Deposit"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
