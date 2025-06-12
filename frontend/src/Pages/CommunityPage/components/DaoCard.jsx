@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Check, Copy, Info } from 'lucide-react';
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import { Button } from '@/components/ui/button';
@@ -23,7 +23,9 @@ import PropTypes from 'prop-types';
 const DaoCard = ({ daoData, isUserParticipant,  setExecOpen, onSuccess, isOwner }) => {
   const [copied, setCopied] = useState(false);
   const [copied1, setCopied1] = useState(false);
-  const [quickStartOpen, setQuickStartOpen] = useState(false)
+  const [quickStartOpen, setQuickStartOpen] = useState(false);
+  const [userBondEarnings, setUserBondEarnings] = useState(null);
+  const [loadingEarnings, setLoadingEarnings] = useState(false);
   const { slug } = useBluePrintSlugStore()
 
   const { accounts } = useAccount()
@@ -31,7 +33,39 @@ const DaoCard = ({ daoData, isUserParticipant,  setExecOpen, onSuccess, isOwner 
   const navigate = useNavigate()
   const [showFullDescription, setShowFullDescription] = useState(false);
 
- 
+  // Fetch user bond earnings when component mounts or when accounts/params change
+  useEffect(() => {
+    if (accounts && accounts.length > 0 && params.id && isUserParticipant) {
+      fetchUserBondEarnings();
+    }
+  }, [accounts, params.id, isUserParticipant]);
+
+  // Function to fetch user bond earnings
+  const fetchUserBondEarnings = async () => {
+    if (!accounts || accounts.length === 0) return;
+    
+    setLoadingEarnings(true);
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/community/bond/user-earnings/${accounts[0].address}`,
+        {
+          params: {
+            community_id: params.id
+          }
+        }
+      );
+      
+      if (response.data) {
+        console.log('User Bond Earnings:', response.data);
+        setUserBondEarnings(response.data);
+      }
+    } catch (error) {
+      console.error('Error fetching user bond earnings:', error);
+      toast.error('Failed to fetch bond earnings');
+    } finally {
+      setLoadingEarnings(false);
+    }
+  };
 
 
   const handleJoinCommunity = async () => {
@@ -227,28 +261,64 @@ const DaoCard = ({ daoData, isUserParticipant,  setExecOpen, onSuccess, isOwner 
             )}
 
             {isUserParticipant && (
-              <div className='flex items-center gap-2'>
-                {/* <Button
-                  className="bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] px-5 py-2 text-white font-semibold rounded-full"
+              <div className='flex flex-col gap-2'>
+                <div className='flex items-center gap-2'>
+                  {/* <Button
+                    className="bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] px-5 py-2 text-white font-semibold rounded-full"
 
-                  onClick={() => setTransferOpen(true)}>
-                  Transfer Executive Badge
-                </Button> */}
-                {isOwner && <Button
-                  variant="brand"
-                  onClick={() => setExecOpen(true)}>
-                  Mint Executive Badge
-                </Button>}
+                    onClick={() => setTransferOpen(true)}>
+                    Transfer Executive Badge
+                  </Button> */}
+                  {isOwner && <Button
+                    variant="brand"
+                    onClick={() => setExecOpen(true)}>
+                    Mint Executive Badge
+                  </Button>}
 
-                <Button
-                  variant="brand"
-                  className="text-white"
-
-
-                  onClick={() => setQuickStartOpen(true)}>
-                  Quick Start
-                </Button>
-
+                  <Button
+                    variant="brand"
+                    className="text-white"
+                    onClick={() => setQuickStartOpen(true)}>
+                    Quick Start
+                  </Button>
+                </div>
+                
+                {/* Display user bond earnings */}
+                {loadingEarnings ? (
+                  <div className="text-brand7 text-sm mt-2">Loading bond earnings...</div>
+                ) : userBondEarnings ? (
+                  <div className="bg-[rgba(169,126,255,0.15)] p-3 rounded-lg mt-2">
+                    <h3 className="text-brand7 font-medium text-sm mb-1">Your Bond Earnings</h3>
+                    <div className="flex flex-col gap-1">
+                      <div className="flex justify-between">
+                        <span className="text-gray-300 text-xs">Total Earnings:</span>
+                        <span className=" text-xs text-green-400 font-medium">
+                          {userBondEarnings.total_earnings || '0'} XRD
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-300 text-xs">Total Return Value:</span>
+                        <span className="text-green-400 text-xs font-medium">
+                          {userBondEarnings.total_return_value || '0'} XRD
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-300 text-xs">Total Bonds:</span>
+                        <span className="text-white text-xs font-medium">
+                          {userBondEarnings.total_bonds || '0'}
+                        </span>
+                      </div>
+                     
+                      <Button 
+                        variant="link" 
+                        className="text-brand7 text-xs p-0 mt-1 hover:text-brand5"
+                        onClick={() => navigate(`/community/detail/${params.id}/bondrecipt`)}
+                      >
+                        View All Bonds
+                      </Button>
+                    </div>
+                  </div>
+                ) : null}
               </div>
             )}
           </div>
