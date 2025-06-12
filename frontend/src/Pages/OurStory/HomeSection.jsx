@@ -4,7 +4,7 @@ import { Spotlight } from "@/components/ui/myComponents/spotlight";
 
 function HomeSection() {
   return (
-    <div className="flex flex-col  items-start justify-start  relative max-w-[3000px] mx-auto overflow-hidden">
+    <div className="flex flex-col  items-start justify-start  relative  mx-auto overflow-hidden">
       <Spotlight
                   className="-right-[800px] top-28 h-[129%]"
                   fill="#B59AEC"
@@ -17,13 +17,10 @@ function HomeSection() {
                   className="-right-[200px] -top-48"
                   fill="#B59AEC"
                 />
-    <div className=" w-full h-full min-h-screen flex  flex-col items-center px-4 py-16 md:px-8">
+    <div className=" w-full h-full md:min-h-[800px] min-h-screen  flex  flex-col items-center px-4 py-16 md:px-8">
       {/* Background elements */}
       
-      <div className="absolute inset-0"></div>
-      <div className="absolute bottom-[100px] left-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px]"></div>
-      <div className="absolute top-[10px] right-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px]"></div>
-      <div className="absolute top-[600px] right-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px]"></div>
+
       
       <div className="w-full absolute overflow-hidden opacity-40 h-[600px]">
         
