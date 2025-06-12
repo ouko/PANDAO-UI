@@ -48,8 +48,8 @@ const Card = ({ icon, heading, content, className }) => (
         </div>
       </div>
       <div className="flex flex-col gap-2 items-start w-full mt-10">
-        <div className="text-white text-lg md:text-xl font-semibold">{heading}</div>
-        <div className="text-gray-400 text-sm md:text-base leading-relaxed">{content}</div>
+        <div className="text-white text-[26px] md:text-xl font-semibold">{heading}</div>
+        <div className="text-gray-400 text-[20px] md:text-base leading-relaxed">{content}</div>
       </div>
     </div>
   </div>
