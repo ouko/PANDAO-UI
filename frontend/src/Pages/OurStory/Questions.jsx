@@ -1,11 +1,8 @@
-import BrandButton from "@/components/ui/myComponents/brand-button";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 function Questions() {
   const [openIndex, setOpenIndex] = useState(null);
-  const [activeSection, setActiveSection] = useState('whatWeDo');
-
 
   const whatWeDo = [
     { 
@@ -22,23 +19,19 @@ function Questions() {
     },
     {
       title: "Customize Everything, or Keep it Simple",
-      description: "Pick a pre-built template or start from scratch — it’s your DAO, your way."
+      description: "Pick a pre-built template or start from scratch — it's your DAO, your way."
     }
   ];
 
   const toggleAccordion = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
-  
 
   return (
-    <div className="flex flex-col items-center justify-center py-12 px-4 w-full min-h-[600px] z-50 container mx-auto">
-      
-      <div className="flex flex-col md:items-center lg:flex-row lg:items-center lg:justify-between w-full px-4 z-50">
+    <div className="flex flex-col items-center py-12 px-4 min-h-[600px] container mx-auto z-50 w-full ">
+      <div className="flex  md:flex-row flex-col-reverse items-center justify-between w-full px-4 z-50">
         
-        
-        
-        <div className="flex flex-col gap-4 w-full md:w-4/5 lg:w-[40rem] mt-8 md:mx-auto order-1 md:order-2 lg:mx-0 lg:mt-0  ">
+        <div className="flex flex-col gap-4 w-full md:px-10 mt-8 lg:mt-0 z-50">
           {whatWeDo.map((item, index) => (
             <motion.div 
               key={index} 
@@ -47,18 +40,18 @@ function Questions() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className="rounded-lg bg-[#12082a] pt-4 pb-4">
+              <div className="rounded-lg bg-[#12082a] py-4">
                 <div
                   onClick={() => toggleAccordion(index)}
-                  className="cursor-pointer text-lg md:text-xl font-semibold text-white flex items-center gap-2 px-4"
+                  className="cursor-pointer text-lg md:text-xl font-semibold text-white px-4"
                 >
-                  <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center justify-between">
                     <span>{item.title}</span>
                     <div>
                       {index === openIndex ? (
-                        <img src="/close.png" alt="Open" />
+                        <img src="/close.png" alt="Close" />
                       ) : (
-                        <img src="/open.png" alt="Close" />
+                        <img src="/open.png" alt="Open" />
                       )}
                     </div>
                   </div>
@@ -83,14 +76,12 @@ function Questions() {
           ))}
         </div>
 
-        <div className="flex flex-col items-center justify-center text-center w-full md:w-auto mt-5 order-2 md:order-2 lg:items-start lg:text-left lg:justify-start md:mx-auto lg:mx-0">
-          <h1 className="text-4xl md:text-5xl font-clash font-bold bg-gradient-to-r from-white to-indigo-500 bg-clip-text text-transparent">
-            {activeSection === 'ethos' ? 'Our Ethos' : 'What We Do'}
+        <div className="flex flex-col items-center w-full mt-5 text-right md:text-center">
+          <h1 className="text-4xl md:text-5xl w-full font-bold bg-gradient-to-r text-center md:text-right from-white to-indigo-500 bg-clip-text text-transparent">
+            What We Do
           </h1>
-          <p className="text-gray-400 text-lg mt-2 font-clash max-w-md mx-auto lg:mx-0">
-            {activeSection === 'ethos' 
-              ? 'The principles that guide everything we do at PandaoLive' 
-              : 'How we empower communities through decentralized governance'}
+          <p className="text-gray-400 text-lg mt-2 w-full text-center md:text-right">
+            How we empower communities through decentralized governance
           </p>
         </div>
       </div>
@@ -98,4 +89,4 @@ function Questions() {
   );
 }
 
-export default  Questions;
+export default Questions;

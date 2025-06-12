@@ -1,4 +1,3 @@
-import BrandButton from "@/components/ui/myComponents/brand-button";
 import BrandButton2 from "@/components/ui/myComponents/brand-button-2";
 
 function Join() {
