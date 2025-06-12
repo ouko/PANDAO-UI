@@ -3,7 +3,7 @@ import BrandButton2 from "@/components/ui/myComponents/brand-button-2";
 function Join() {
   return (
     <div className=" py-20  relative z-50  container mx-auto ">
-    <div className="rotating-border-container w-[90%] mt-20 mb-20 mx-auto rounded-3xl ">
+    <div className="rotating-border-container  mt-20 mb-20 mx-auto rounded-3xl ">
       <div className="bg-gradient-to-br from-[#100821] to-[rgb(8,6,42)] relative w-full h-full rounded-3xl overflow-hidden z-20">
         <div className="relative min-h-[460px] px-6 md:px-12 lg:px-16 py-10 flex items-center">
         
@@ -38,9 +38,7 @@ function Join() {
             <p className="text-brand7 text-lg md:text-xl lg:text-2xl font-medium font-clash">
               Whether you are a buzzing community, a solo builder rallying your tribe, or a founder dreaming of transparent governance — PandaoLive is your launchpad.
             </p>
-             <div className="flex flex-wrap justify-start items-start gap-5 mt-10">
                     <BrandButton2 title="Launch your dao Now" href="" />
-                  </div>
             
           </div>
         </div>

@@ -4,7 +4,7 @@ const BrandButton2 = ({ title = "Get Started", href = "/" }) => {
   return (
     <a
       href={href}
-      className="relative w-[349px] h-[59px] shrink-0 flex items-center justify-center rounded-full border border-violet-900 bg-black overflow-hidden cursor-pointer hover:shadow-[0px_3px_100px_2px_#ed64a6] transition-shadow duration-500 z-30"
+      className="relative w-[280px] h-[59px] shrink-0 flex items-center justify-center rounded-full border border-violet-900 bg-black overflow-hidden cursor-pointer hover:shadow-[0px_3px_100px_2px_#ed64a6] transition-shadow duration-500 z-30"
 
     >
 
