@@ -28,7 +28,7 @@ const Footer = () => {
       <div className="w-full md:w-auto max-w-sm md:max-w-md lg:max-w-lg mb-6 md:mb-0 z-50 ">
         <div className="text-white text-4xl font-bold text-left">PanDAO</div>
         <div className="text-white text-lg mt-2 text-left">
-          Sign up for a free trial today,  and experience <br /> the difference!
+          Sign up for a free trial today,  and experience the difference!
         </div>
       </div>
 
