@@ -8,33 +8,33 @@ const ResourceCard = ({ post }) => {
   return (
     <div
       onClick={() => navigate(`/reasources/${postId}`)}
-      className="relative h-[718px] w-[363px] flex-shrink-0 overflow-hidden rounded-[32px] border-[0.5px] z-50 border-brand3   backdrop-blur-[42px] shadow-[inset_0_0_2px_2px_rgba(255,255,255,0.4)] bg-gradient-to-b from-[rgba(192,161,255,0.12)] via-[rgba(192,161,255,0.04)] to-[rgba(192,161,255,0.07)] cursor-pointer"
+      className="overflow-hidden rounded-[32px] h-full border-[0.5px] z-40 border-brand3 backdrop-blur-[42px] shadow-[inset_0_0_2px_2px_rgba(255,255,255,0.4)] bg-gradient-to-b from-[rgba(192,161,255,0.12)] via-[rgba(192,161,255,0.04)] to-[rgba(192,161,255,0.07)] cursor-pointer"
     >
-      <div className="absolute left-[50px] top-[-39px] h-[79px] w-[259px] rounded-full bg-[#652fd0] opacity-40 blur-[62px]" />
-      <div className="absolute left-[27px] top-8 flex w-[309px] flex-col items-center gap-[30px]">
+      <div className="p-7 flex flex-col gap-[30px]">
         {post.coverImage ? (
-          <div className="h-[191px] w-full relative shrink-0 rounded-[17px] border-[0.5px] border-[#322351] overflow-hidden">
+          <div className="aspect-[309/191] w-full rounded-[17px] border-[0.5px] border-[#322351] overflow-hidden">
             <img
               src={post.coverImage.url}
               alt={post.title}
-              className="h-full w-full  top-0 left-0 object-cover"
+              className="h-full w-full object-cover"
             />
           </div>
         ) : (
-          <div className="h-[191px] w-full shrink-0 rounded-[17px] border border-[#322351] bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center">
+          <div className="aspect-[309/191] w-full rounded-[17px] border border-[#322351] bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center">
             <span className="text-gray-400">No image available</span>
           </div>
         )}
-        
-        <div className="flex flex-col gap-[43px] w-full">
-          <div className="flex flex-col gap-[15px] w-[293px]">
+                
+        <div className="flex flex-col justify-between  w-full">
+          <div className="flex flex-col gap-[15px]">
             <h2 className="text-2xl font-semibold leading-[120%] text-white font-clash">
               {post.title}
             </h2>
-            <p className="text-base leading-[120%] text-white/70 font-inter">
+            <p className="text-base leading-[120%] text-white/70 font-inter line-clamp-3">
               {post.brief || 'Visit the PanDAO homepage...'}
             </p>
           </div>
+          
           <div className="flex flex-col gap-[20px] w-full">
             <div className="flex items-center gap-3">
               <img src="/calendar0.svg" alt="calendar" className="h-[18px] w-[18px]" />
@@ -49,7 +49,7 @@ const ResourceCard = ({ post }) => {
             <div className="flex justify-between items-center text-base w-full">
               <span className="text-white/45 font-inter">{post.readTimeInMinutes} min read</span>
             </div>
-            
+                        
             <button className="w-full py-3 px-4 bg-gradient-to-r from-[rgba(192,161,255,0.2)] to-[rgba(192,161,255,0.1)] rounded-[14px] border border-[#322351] hover:border-[#bf9fff] transition-all duration-300 group flex items-center justify-center gap-3">
               <span className="text-[#bf9fff] font-inter font-medium group-hover:text-white transition-colors duration-300">Read More</span>
               <img src="/vector-240.svg" alt="arrow" className="h-[1px] w-7 group-hover:translate-x-1 transition-transform duration-300" />
@@ -76,4 +76,3 @@ ResourceCard.propTypes = {
 };
 
 export default ResourceCard;
-

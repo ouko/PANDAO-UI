@@ -71,7 +71,7 @@ const ResourceSection = () => {
         <div className="text-5xl font-semibold z-50 bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent">Video Guide</div>
         <p className="md:w-2/3 text-brand7 z-50 font-thin">Don&apos;t know where to start?</p>
       </div>
-      <div className="w-full md:h-[60vh] px-2 z-50">
+      <div className="w-full md:h-[60vh] h-[30vh]  px-2 z-50">
         <ReactPlayer
           url="https://youtu.be/6cDtHjgpCyE?si=ZJSmDCNT80mOSbPi"
           className=" w-full z-50 rounded-2xl h-full"
@@ -100,15 +100,12 @@ const ResourceSection = () => {
         </div>
       )} */}
       {!loading && !error && (
-        <div className="p-5 w-full max-w-[1200px] mx-auto">
-          <div className="flex flex-wrap -mx-24">
-            {posts.map((post, index) => (
-              <div key={index} className="w-full sm:w-1/2 md:w-1/3 px-2 mb-4 flex  justify-center">
-                <ResourceCard post={post} />
-              </div>
-            ))}
-          </div>
-
+        <div className="p-5 w-full max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 ">
+          {posts.map((post, index) => (
+            <div key={index} className="z-40 w-full">
+              <ResourceCard post={post} />
+            </div>
+          ))}
         </div>
       )}
     </div>
