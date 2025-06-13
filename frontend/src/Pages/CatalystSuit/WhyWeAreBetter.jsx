@@ -23,14 +23,14 @@ const cardData = [
   },
   {
     icon: "light.svg",
-    heading: "Heading",
+    heading: "DAO Blueprints",
     content:
       "Prebuilt DAO Templates for Specific Use-Cases",
     className: "lg:col-span-2 md:col-span-2 col-span-1",
   },
   {
     icon: "light.svg",
-    heading: "Heading",
+    heading: "Standardized Finance",
     content:
       "Supports Financial Contracts with ACTUS Standardization",
     className: "lg:col-span-2 md:col-span-2 col-span-1",
@@ -48,7 +48,7 @@ const Card = ({ icon, heading, content, className }) => (
         </div>
       </div>
       <div className="flex flex-col gap-2 items-start w-full mt-10">
-        <div className="text-brand6 text-[26px] md:text-xl font-semibold">{heading}</div>
+        <div className="text-white text-[26px] md:text-xl font-semibold">{heading}</div>
         <div className="text-gray-400 text-[20px] md:text-base leading-relaxed">{content}</div>
       </div>
     </div>
