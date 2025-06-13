@@ -88,11 +88,11 @@ function Questions() {
             </motion.div>
           ))}
         </div>
-        <div className="flex flex-col items-center md:items-start justify-start mt-5 text-center md:text-left w-[600px] ">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-clash font-bold bg-gradient-to-r from-white to-indigo-500 bg-clip-text text-transparent">
+        <div className="flex flex-col items-center md:items-start justify-start mt-5 text-center md:text-left w-full max-w-[600px] px-4 md:px-0">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-clash font-bold bg-gradient-to-r from-white to-indigo-500 bg-clip-text text-transparent">
             What Are ACTUS Standard Contracts?
           </h1>
-          <p className="text-gray-400 text-base sm:text-lg mt-2 font-clash">
+          <p className="text-gray-400 text-sm sm:text-base md:text-lg mt-2 md:mt-4 font-clash px-2 md:px-0">
             ACTUS defines a taxonomy of machine-executable financial contract types, representing everything from bonds and loans to swaps and annuities. These standards make
              financial products transparent, interoperable, and automatable.
             </p>
