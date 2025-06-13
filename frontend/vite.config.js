@@ -12,9 +12,9 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg}']
       },
       manifest: {
-        name: 'Your App Name',
-        short_name: 'AppName',
-        description: 'Your app description',
+        name: 'Pandao',
+        short_name: 'Pandao',
+        description: 'Join the DAO',
         theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',
