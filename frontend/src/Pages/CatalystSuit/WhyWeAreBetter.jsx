@@ -2,37 +2,37 @@
 const cardData = [
   {
     icon: "light.svg",
-    heading: "Heading",
+    heading: "Composability without collisions:",
     content:
-      "Lorem ipsum dolor sit amet consectetur. Aliquam risus sit vehicula congue diam sapien. Libero aliquam luctus pellentesque",
+      "Radix allows secure contract composability by design—DAOs can interoperate natively without risking breakage.",
     className: "lg:col-span-2 md:col-span-2 col-span-1",
   },
   {
     icon: "light.svg",
-    heading: "Heading",
+    heading: "Built-in account abstraction",
     content:
-      "Lorem ipsum dolor sit amet consectetur. Aliquam risus sit vehicula congue diam sapien. Libero aliquam luctus pellentesque",
+      "Radix wallets support “personas” and multi-resource accounts, making DAO membership and governance cleaner and safer",
+    className: "lg:col-span-1 md:col-span-1 col-span-1",
+  },
+  {
+    icon: "light.svg",
+    heading: "No gas fee unpredictability",
+    content:
+      "Radix has fixed-fee, scalable execution unlike Ethereum’s variable gas prices",
     className: "lg:col-span-1 md:col-span-1 col-span-1",
   },
   {
     icon: "light.svg",
     heading: "Heading",
     content:
-      "Lorem ipsum dolor sit amet consectetur. Aliquam risus sit vehicula congue diam sapien. Libero aliquam luctus pellentesque",
-    className: "lg:col-span-1 md:col-span-1 col-span-1",
-  },
-  {
-    icon: "light.svg",
-    heading: "Heading",
-    content:
-      "Lorem ipsum dolor sit amet consectetur. Aliquam risus sit vehicula congue diam sapien. Libero aliquam luctus pellentesque",
+      "Prebuilt DAO Templates for Specific Use-Cases",
     className: "lg:col-span-2 md:col-span-2 col-span-1",
   },
   {
     icon: "light.svg",
     heading: "Heading",
     content:
-      "Lorem ipsum dolor sit amet consectetur. Aliquam risus sit vehicula congue diam sapien. Libero aliquam luctus pellentesque. Lorem ipsum dolor sit amet consectetur.",
+      "Supports Financial Contracts with ACTUS Standardization",
     className: "lg:col-span-2 md:col-span-2 col-span-1",
   },
 ];
@@ -48,7 +48,7 @@ const Card = ({ icon, heading, content, className }) => (
         </div>
       </div>
       <div className="flex flex-col gap-2 items-start w-full mt-10">
-        <div className="text-white text-[26px] md:text-xl font-semibold">{heading}</div>
+        <div className="text-brand6 text-[26px] md:text-xl font-semibold">{heading}</div>
         <div className="text-gray-400 text-[20px] md:text-base leading-relaxed">{content}</div>
       </div>
     </div>
