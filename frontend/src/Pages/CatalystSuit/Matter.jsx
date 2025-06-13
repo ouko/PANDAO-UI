@@ -2,16 +2,16 @@
 
 const Matter = () => {
   return (
-    <div className="flex flex-col gap-20 z-50 items-center justify-start pt-20 pb-40 relative py-16">
+    <div className="flex flex-col gap-20 z-40 items-center justify-start pt-20 pb-20 md:pb-40 relative py-16">
       <h2 className="text-center font-semibold pb-20 text-4xl sm:text-5xl md:text-[64px] z-50 self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent" >
           Why It Matter for DAO&apos;s ?
         </h2>
       {/* Main design background */}
       
-      <div className="w-full max-w-[1200px] h-[865px] relative">
+      <div className="w-full max-w-[1200px] h-auto md:h-[865px] relative pb-20 md:pb-0">
         {/* Background SVGs */}
         <img
-  className="hidden md:block rounded-none w-full max-w-[1297px] h-[887px] absolute left-6 top-[100px] overflow-visible opacity-70"
+  className="hidden md:block rounded-none w-full max-w-[1297px] h-auto md:h-[887px] absolute left-6 top-[100px] overflow-visible opacity-70"
   src="/Union.svg"
   alt="Background pattern"
 />
@@ -167,7 +167,7 @@ const Matter = () => {
         <div className="flex flex-wrap justify-center gap-8 md:gap-16 lg:gap-28 px-4 w-full relative ">
 
   {/* Analytics & Insights Card */}
-  <div className="relative w-full sm:w-[280px] mb-16 flex flex-col items-center">
+  <div className="relative w-full sm:w-[280px] mb-8 md:mb-16 flex flex-col items-center">
     {/* Floating Icon */}
     <div className="absolute -top-16">
       <img
@@ -198,7 +198,7 @@ const Matter = () => {
   </div>
 
   {/* Pandao API Card */}
-  <div className="relative w-full sm:w-[280px] mb-16 flex flex-col items-center">
+  <div className="relative w-full sm:w-[280px] mb-8 md:mb-16 flex flex-col items-center">
     {/* Floating Icon */}
     <div className="absolute -top-16">
       <img
