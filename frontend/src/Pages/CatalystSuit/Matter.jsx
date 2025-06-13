@@ -11,10 +11,11 @@ const Matter = () => {
       <div className="w-full max-w-[1200px] h-[865px] relative">
         {/* Background SVGs */}
         <img
-          className="rounded-none w-full max-w-[1197px] h-[587px] absolute left-6 top-[278px] overflow-visible opacity-70"
-          src="/Union.svg"
-          alt="Background pattern"
-        />
+  className="hidden md:block rounded-none w-full max-w-[1197px] h-[587px] absolute left-6 top-[278px] overflow-visible opacity-70"
+  src="/Union.svg"
+  alt="Background pattern"
+/>
+
         
         {/* Top Row */}
         <div className="flex flex-row gap-8 md:gap-16 lg:gap-32 items-start justify-center absolute left-1/2 transform -translate-x-1/2 top-0 w-full px-4 flex-wrap">
