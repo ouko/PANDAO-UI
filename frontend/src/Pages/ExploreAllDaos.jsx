@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SkeletonCard } from "@/components/ui/myComponents/card-skeleton";
 import TileEffect4 from "@/components/ui/myComponents/grid-bg-4";
+import Footer from "./HomeSection/homeSectionComponents/Footer";
 
 const debounce = (func, delay) => {
   let timer;
@@ -84,7 +85,7 @@ const ExploreAllDao = () => {
   const dropdownTags = tags.slice(5);
 
   return (
-    <div className="bg-brand1 relative min-h-screen pb-20 font-clash overflow-hidden">
+    <div className="bg-brand1 relative min-h-screen pb-16 sm:pb-20 md:pb-10 font-clash overflow-hidden">
       <div className="bg-black/50 absolute inset-0"></div>
       <div className="absolute bottom-[100px] left-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px] animate-pulse"></div>
       <div className="absolute top-[10px] right-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px] animate-pulse"></div>
@@ -93,12 +94,12 @@ const ExploreAllDao = () => {
         <TileEffect4 />
       </div>
 
-      <div className="min-h-screen bg-brand1 z-50 pt-20 max-w-[1200px] mx-auto">
-        <div className="flex items-center w-full justify-between pr-3">
-          <div className="text-[40px] md:text-[64px] z-50 leading-tight font-semibold bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent text-center font-clash">
+      <div className="min-h-screen bg-brand1 z-50 pt-20 sm:pt-16 md:pt-20 max-w-[1200px] mx-auto px-4 sm:px-6">
+        <div className="flex flex-col sm:flex-row items-center justify-center sm:items-center sm:justify-between w-full gap-4 sm:gap-6">
+          <div className="text-center sm:text-left text-[32px] sm:text-[40px] md:text-[64px] z-50 leading-tight font-semibold bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent font-clash">
             Explore All DAOs
           </div>
-          <div>
+          <div className="w-full sm:w-auto min-w-[200px] md:min-w-[250px]">
             <Input
               type="text"
               placeholder="Search for a DAO..."
@@ -109,12 +110,12 @@ const ExploreAllDao = () => {
           </div>
         </div>
         
-        <div className="mt-4 flex gap-3 px-2 flex-wrap relative items-center">
+        <div className="mt-4 flex gap-2 sm:gap-3 px-0 sm:px-2 flex-wrap relative items-center overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-brand3 scrollbar-track-transparent">
           {/* Show first 5 tags */}
           {visibleTags.map((tag) => (
             <button
               key={tag.label}
-              className={`px-4 py-2 text-sm rounded-md ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm whitespace-nowrap rounded-md ${
                 activeTag === tag.label ? "bg-brand2 text-white" : "bg-brand7 text-black"
               }`}
               onClick={() => handleTagClick(tag)}
@@ -126,10 +127,10 @@ const ExploreAllDao = () => {
           {/* Dropdown for remaining tags */}
           {dropdownTags.length > 0 && (
             <DropdownMenu>
-              <DropdownMenuTrigger className="px-4 py-2 text-sm rounded-md bg-brand7 text-black flex items-center">
-                More Tags <ChevronDown className="ml-1 h-4 w-4" />
+              <DropdownMenuTrigger className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm whitespace-nowrap rounded-md bg-brand7 text-black flex items-center">
+                More Tags <ChevronDown className="ml-1 h-3 w-3 sm:h-4 sm:w-4" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
+              <DropdownMenuContent className="max-h-[40vh] overflow-y-auto">
                 {dropdownTags.map((tag) => (
                   <DropdownMenuItem 
                     key={tag.label}
@@ -146,7 +147,7 @@ const ExploreAllDao = () => {
           {/* Clear filter button */}
           {activeTag && (
             <button
-              className="px-4 py-2 text-sm bg-red-500 text-white rounded-md"
+              className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-red-500 text-white rounded-md"
               onClick={clearFilter}
             >
               Clear Filter
@@ -155,13 +156,13 @@ const ExploreAllDao = () => {
         </div>
         
         {!isLoading && daos.length === 0 && (
-          <div className="flex items-center justify-center relative bg-brand2 text-white mt-3 h-32 rounded-lg shadow-xl">
+          <div className="flex items-center justify-center relative bg-brand2 text-white mt-3 h-24 sm:h-32 rounded-lg shadow-xl text-sm sm:text-base">
             No Deployed DAOs
           </div>
         )}
 
         {isLoading ? (
-          <div className="mt-5 grid md:grid-cols-3 relative grid-cols-1 gap-3">
+          <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 relative gap-3 sm:gap-4">
             <SkeletonCard />      
             <SkeletonCard />
             <SkeletonCard />
@@ -170,11 +171,12 @@ const ExploreAllDao = () => {
             <SkeletonCard />
           </div>
         ) : (
-          <div className="relative">
-          <BrandCard daos={daos}  />
+          <div className="relative pb-10 sm:pb-20">
+          <BrandCard daos={daos} />
           </div>
         )}
       </div>
+      <Footer/>
     </div>
   );
 };
