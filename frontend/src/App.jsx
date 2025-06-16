@@ -44,7 +44,7 @@ function App() {
 
   const options = {
     router: true,
-    excludedRoutes: ['/' ,'/ourstory' ,'/resources' , '/catalystsuite'],
+    excludedRoutes: ['/' ,'/ourstory' ,'/resources' , '/catalystsuite' , '/price'],
   }
   const isMobile = useMobileDetection(options)
   useEffect(() => {

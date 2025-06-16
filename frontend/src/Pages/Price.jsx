@@ -10,9 +10,9 @@ import TileEffect4 from '@/components/ui/myComponents/grid-bg-4';
 const PricingCard = ({ title, description, price, features, buttonText, highlight }) => {
   return (
     <div
-   className={`rounded-[32px] border p-10 w-full flex flex-col relative overflow-hidden
+   className={`rounded-[32px] border p-6 sm:p-8 md:p-10 w-full flex flex-col relative overflow-hidden
   ${highlight 
-    ? 'z-10 -translate-y-10 border-brand3 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand1 via-brand1  to-brand3' 
+    ? 'z-10 md:-translate-y-10 border-brand3 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand1 via-brand1  to-brand3' 
     : 'border-brand2 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand2 via-brand2 to-brand1'
   }`}
 
@@ -26,9 +26,9 @@ const PricingCard = ({ title, description, price, features, buttonText, highligh
         />
       )} */}
 
-      <div className="flex flex-col gap-8 mb-8">
+      <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 mb-6 md:mb-8">
         {/* Header section */}
-        <div className="flex pt-20 flex-col gap-6">
+        <div className="flex pt-10 sm:pt-16 md:pt-20 flex-col gap-4 sm:gap-6">
           <div className="rounded-[100px] w-10 h-10 relative bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(192,161,255,0.88)]">
             <div className="bg-black rounded-full w-5 h-5 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
           </div>
@@ -44,7 +44,7 @@ const PricingCard = ({ title, description, price, features, buttonText, highligh
         </div>
 
         {/* Price section */}
-        <div className="text-white font-clash text-4xl leading-[56px] font-medium">
+        <div className="text-white font-clash text-2xl sm:text-3xl md:text-4xl leading-tight md:leading-[56px] font-medium">
           {price}
         </div>
       </div>
@@ -57,7 +57,7 @@ const PricingCard = ({ title, description, price, features, buttonText, highligh
         </Button>
       </div>
       {/* Features section */}
-      <Separator className="my-10 bg-brand2"/>
+      <Separator className="my-6 sm:my-8 md:my-10 bg-brand2"/>
       <div className="flex flex-col gap-4 mb-8">
         {/* <div className="text-white font-medium text-base leading-6">
           {features.intro}
@@ -145,7 +145,7 @@ const PriceSection = () => {
   ];
 
   return (
-     <div className="bg-brand1 relative min-h-screen pb-20 font-clash overflow-hidden">
+     <div className="bg-brand1 relative min-h-screen  sm:pb-16 md:pb-20 pb-20 font-clash overflow-hidden">
       {/* Background elements */}
       <div className="bg-black/50 absolute inset-0"></div>
       <div className="absolute bottom-[100px] left-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px]"></div>
@@ -155,16 +155,16 @@ const PriceSection = () => {
         <TileEffect4 />
       </div>
 0
-    <div className="flex  flex-col gap-[10px] z-50 items-center justify-start pt-20 ">
+    <div className="flex flex-col gap-[10px] z-50 items-center justify-start pt-10 sm:pt-16 md:pt-20">
       <div className="flex flex-col gap-3 items-center justify-start self-stretch z-50">
-        <div className="text-center font-semibold md:text-[64px] text-[30px] leading-[120%]  self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent">
+        <div className="text-center font-semibold text-[28px] sm:text-[40px] md:text-[64px] leading-[120%] self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent px-4">
           The Perfect Pricing to Power Your DAO Development.
         </div>
-        <div className="text-[#B59AEC] text-center font-normal md:text-2xl text-xl leading-[120%] relative self-stretch px-3" >
+        <div className="text-[#B59AEC] text-center font-normal text-lg sm:text-xl md:text-2xl leading-[120%] relative self-stretch px-4 sm:px-6 md:px-8" >
           At PANDAO, we believe in transparency, not just in governance but also in costs.
         </div>
       </div>
-      <div className="flex flex-col gap-[34px] items-center justify-start z-50 px-3 md:px-0">
+      <div className="flex flex-col gap-[20px] sm:gap-[28px] md:gap-[34px] items-center justify-start z-50 px-4 sm:px-6 md:px-8 lg:px-0 w-full">
         {/* <div className="bg-[rgba(255,255,255,0.08)] rounded-[29px] border-solid border-[rgba(255,255,255,0.12)] border p-1 flex flex-row gap-0 items-start justify-center backdrop-blur-[6px]">
           <motion.div
             className="absolute top-0 bottom-0 left-0 w-1/2 h-full  bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] rounded-full shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)]"
@@ -190,7 +190,7 @@ const PriceSection = () => {
             Annually
           </button>
         </div> */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-20 max-w-[1200px] mx-auto ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-10 sm:mt-16 md:mt-20 max-w-[1200px] mx-auto w-full">
           {plans.map((plan, index) => (
             <PricingCard key={index} {...plan} />
           ))}
