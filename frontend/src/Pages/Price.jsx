@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Check, CircleCheck } from 'lucide-react';
 import TileEffect4 from '@/components/ui/myComponents/grid-bg-4';
+import Footer from "./HomeSection/homeSectionComponents/Footer"
 
 const PricingCard = ({ title, description, price, features, buttonText, highlight }) => {
   return (
@@ -190,14 +191,16 @@ const PriceSection = () => {
             Annually
           </button>
         </div> */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-10 sm:mt-16 md:mt-20 max-w-[1200px] mx-auto w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 pb-20 lg:grid-cols-3 gap-6 sm:gap-8 mt-10 sm:mt-16 md:mt-20 max-w-[1200px] mx-auto w-full">
           {plans.map((plan, index) => (
             <PricingCard key={index} {...plan} />
           ))}
         </div>
 
       </div>
+      <Footer />
     </div>
+
     </div>
   );
 };
