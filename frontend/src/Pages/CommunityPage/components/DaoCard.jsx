@@ -287,17 +287,17 @@ const DaoCard = ({ daoData, isUserParticipant,  setExecOpen, onSuccess, isOwner 
                 {loadingEarnings ? (
                   <div className="text-brand7 text-sm mt-2">Loading bond earnings...</div>
                 ) : userBondEarnings ? (
-                  <div className="bg-[rgba(169,126,255,0.15)] p-3 rounded-lg mt-2">
+                  <div className="bg-[rgba(169,126,255,0.15)] p-3 w-full px-8 rounded-lg mt-2">
                     <h3 className="text-brand7 font-medium text-sm mb-1">Your Bond Earnings</h3>
                     <div className="flex flex-col gap-1">
                       <div className="flex justify-between">
-                        <span className="text-gray-300 text-xs">Total Earnings:</span>
+                        <span className="text-gray-300 text-xs  ">Total Earnings:</span>
                         <span className=" text-xs text-green-400 font-medium">
                           {userBondEarnings.total_earnings || '0'} XRD
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-300 text-xs">Total Return Value:</span>
+                        <span className="text-gray-300 text-xs">Total Return:</span>
                         <span className="text-green-400 text-xs font-medium">
                           {userBondEarnings.total_return_value || '0'} XRD
                         </span>
