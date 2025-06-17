@@ -238,7 +238,7 @@ const DescribeView = () => {
             </div>
             {/* Token Image */}
 
-            {/* <div className="flex-1">
+            <div className="flex-1">
               <label className="text-white text-2xl leading-[120%] font-medium  mt-4">
                 Token Image:
               </label>
@@ -246,7 +246,7 @@ const DescribeView = () => {
 
               <TokenImageURL onUploadComplete2={handleTokenUrl} onChange={handleUrlId} />
 
-            </div> */}
+            </div>
           </div>
 
           {/* Purpose */}

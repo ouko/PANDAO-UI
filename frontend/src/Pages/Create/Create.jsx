@@ -6,6 +6,7 @@ import DescribeView from "./components/DescribeDao";
 import DeployView from "./components/DeployView";
 import FinancialView from "./components/FinancialDao";
 import TileEffect4 from "@/components/ui/myComponents/grid-bg-4";
+import TokenView from "./components/TokenView";
 
 const Create = () => {
   const {view} = useViewStore();
@@ -26,13 +27,17 @@ const Create = () => {
          {view === "2" && (
        <TemplateView/>
       )}
-            {view === "3" && (
+            {view === "4" && (
        <DescribeView/>
       )}
-              {view === "4" && (
+                {view === "3" && (
+       <TokenView/>
+      )}
+              {view === "5" && (
        <DeployView/>
       )}
-           {view === "5" && (
+    
+           {view === "6" && (
        <FinancialView/>
       )}
     </div>
