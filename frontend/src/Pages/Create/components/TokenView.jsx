@@ -5,8 +5,7 @@ import TokenImageURL from '@/Pages/components/TokenImage';
 
 const TokenView = () => {
   const { formFields, setFormFields } = useTokenWeightStore();
-  const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
+
 
   const allFieldsFilled = () => (
     formFields.token.tokenImageUrl.trim() !== '' &&
@@ -61,107 +60,85 @@ const TokenView = () => {
   return (
     <>
   
-      <div className='bg-[#100821] min-h-screen flex flex-col items-center justify-center mt-10'>
-        <div className="h-[42px] relative w-full ">
-          <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] h-[42px]"></div>
-          <div className="rounded-[300px] w-[98%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
-          <div className="bg-[#8f58ff] rounded-full w-[24.55px] h-[21px] absolute left-[75%] top-1/2 -translate-y-1/2 blur-[18.95px]"></div>
-        </div>
-        <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-[1221px] h-[147px] z-50 mt-10  border border-[#5228A4] flex flex-col justify-start items-start mb-10">
-          <div className=" ms-6 mt-7  text-[40px] leading-[130%] font-semibold text-start">
-
-            <span>
-              <span className="step-2-describe-your-dao-span text-[#AE85FF]">STEP -3 :</span>
-              <span className="step-2-describe-your-dao-span2"></span>
-              <span className="step-2-describe-your-dao-span3 text-amber-50"> Token</span>
-            </span>
-          </div>
-          <div className="text-[#ffffff] text-xl ms-6 mt-4 leading-[130%] font-normal text-center">
-            Start simple and learn as you go. You can always evolve your DAO in the future
-          </div>
-        </div>
+  <div className="z-50 container mx-auto flex flex-col items-center justify-center mt-10 w-full">
 
 
-        <div className="w-[1221px] mx-auto pt-10 gap-15 z-50 text-white shadow-lg rounded-lg  ">
-          <div className="w-full gap-2.5  py-7 ">
-            <label className="text-white text-2xl leading-[120%] mb-6  font-medium ">
-              Token Supply:
-            </label>
-            <input
-              type="number"
-              name="tokenSupply"
-              placeholder="Enter Token Supply"
-              value={formFields.token.tokenSupply}
-              onChange={handleInputChange}
-              required
-              min="0"
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] mt-5 rounded-md text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
-            />
-          </div>
-          <div className="w-full gap-2.5 pb-8">
-            <label className="text-white text-2xl leading-[120%] font-medium ">
-              Token Price In XRD :
-            </label>
-            <input
-              type="number"
-              name="tokenPrice"
-              placeholder="Enter Token Price"
-              value={formFields.token.tokenPrice}
-              onChange={handleInputChange}
-              required
-              min="0"
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5  text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
-            />
-          </div>
-          <div className="w-full gap-2.5">
-            <label className="text-white text-2xl leading-[120%] font-medium">
-              Token Buy Back Price In XRD:
-            </label>
-            <input
-              type="number"
-              name="tokenWithDrawPrice"
-              placeholder="Enter Token Withdraw Price"
-              value={formFields.token.tokenWithDrawPrice}
-              onChange={handleInputChange}
-              required
-              min="0"
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
-            />
-          </div>
-             <div className="flex-1 my-5">
-              <label className="text-white text-2xl leading-[120%] font-medium  mt-4">
-                Token Image:
-              </label>
+<div className="h-[42px] relative w-full ">
+  <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] w-full h-[42px]"></div>
+  <div className="rounded-[300px] w-[55%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
+  <div className="bg-[#8f58ff] rounded-full w-[24.55px] h-[21px] absolute left-[75%] top-1/2 -translate-y-1/2 blur-[18.95px]"></div>
+</div>
+
+{/* Step 2 Section */}
+<div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-10 gap-7 p-10 border border-[#5228A4] flex flex-col justify-start items-start mb-10">
+  <div className="  text-[40px] leading-[130%] font-semibold text-start">
 
 
-              <TokenImageURL onUploadComplete2={handleTokenUrl}  />
+    <span>
+      <span className="step-2-describe-your-dao-span text-[#AE85FF]">STEP -3 :</span>
+      <span className="step-2-describe-your-dao-span2"></span>
+      <span className="step-2-describe-your-dao-span3 text-amber-50">Token Details</span>
+    </span>
+  </div>
+  <div className="text-[#ffffff]   text-xl leading-[130%] font-normal text-center">
+Fill in the details of your token
+  </div>
+</div>
 
+
+        <div className="w-[1221px] mx-auto pt-10 gap-15 z-50 text-white shadow-lg rounded-lg">
+          <div className="grid grid-cols-1 gap-3 w-full">
+            <div className="w-full gap-2.5 py-2 flex flex-col">
+              <label className="text-white text-lg font-medium">Token Name:</label>
+              <input type="text" name="name" value={formFields.token.name} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
             </div>
+            <div className="w-full gap-2.5 py-2 flex flex-col">
+              <label className="text-white text-lg font-medium">Token Symbol:</label>
+              <input type="text" name="symbol" value={formFields.token.symbol} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
+            </div>
+            <div className="w-full gap-2.5 py-2  items-center hidden">
+              <label className="text-white text-lg font-medium mr-2">Is Mintable:</label>
+              <input type="checkbox" name="isMintable" checked={formFields.token.isMintable} onChange={handleInputChange} className="mr-2" />
+              <span className="text-white">Mintable</span>
+            </div>
+            <div className="w-full gap-2.5 py-2 flex flex-col">
+              <label className="text-white text-lg font-medium">Total Supply:</label>
+              <input type="number" name="totalSupply" value={formFields.token.totalSupply} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
+            </div>
+            <div className="w-full gap-2.5 py-2 flex flex-col">
+              <label className="text-white text-lg font-medium">Token Supply:</label>
+              <input type="number" name="tokenSupply" value={formFields.token.tokenSupply} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
+            </div>
+            <div className="w-full gap-2.5 py-2 flex flex-col">
+              <label className="text-white text-lg font-medium">Token Price (XRD):</label>
+              <input type="number" name="tokenPrice" value={formFields.token.tokenPrice} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
+            </div>
+            <div className="w-full gap-2.5 py-2 flex flex-col">
+              <label className="text-white text-lg font-medium">Token Withdraw Price (XRD):</label>
+              <input type="number" name="tokenWithDrawPrice" value={formFields.token.tokenWithDrawPrice} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
+            </div>
+            <div className="w-full gap-2.5 py-2">
+              <label className="text-white text-lg font-medium">Token Image URL:</label>
+              <TokenImageURL onUploadComplete2={handleTokenUrl} />
+            </div>
+          </div>
           <div className="flex flex-row text-2xl gap-6 mt-10 w-full">
             <button
               type="button"
               className="flex-1 bg-primary-500 rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"
-            >
+          onClick={() => setView('3')}
+          >
               Back
             </button>
-            {loading ? (
-              <button
-                type="button"
-                className="flex-1 rounded-2xl p-3 text-white font-semibold bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner opacity-50 cursor-not-allowed"
-                disabled
-              >
-                Deploying...
-              </button>
-            ) : (
-              <button
+            <button
                 type="submit"
                 className={`flex-1 rounded-2xl p-3 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner ${!allFieldsFilled() ? 'opacity-50 cursor-not-allowed' : ''}`}
                 disabled={!allFieldsFilled()}
-                onClick={() => setOpen(true)}
+                onClick={() => setView('4')}
               >
-                Deploy
+                Next
               </button>
-            )}
+          
           </div>
 
         </div>

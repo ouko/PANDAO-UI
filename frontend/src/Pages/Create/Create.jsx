@@ -27,10 +27,10 @@ const Create = () => {
          {view === "2" && (
        <TemplateView/>
       )}
-            {view === "4" && (
+            {view === "3" && (
        <DescribeView/>
       )}
-                {view === "3" && (
+                {view === "4" && (
        <TokenView/>
       )}
               {view === "5" && (
