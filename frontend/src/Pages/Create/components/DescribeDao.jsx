@@ -25,23 +25,17 @@ const DescribeView = () => {
   const [data, setData] = useState([])
   const [predefinedTags, setPreDefinedTags] = useState([])
 
-  // const predefinedTags = [
-  //   { value: 'blockchain', label: 'Blockchain' },
-  //   { value: 'web3', label: 'Web3' },
-  //   { value: 'nft', label: 'NFT' },
-  //   { value: 'defi', label: 'DeFi' },
-  //   { value: 'community', label: 'Community' },
-  // ]
+
 
   const handleUrlId = (id) => {
     const url = `https://ucarecdn.com/${id}/-/preview/1000x562/`
     setFormFields({ communityImage: url })
   }
 
-  const handleTokenUrl = (id2) => {
-    const url2 = `https://ucarecdn.com/${id2}/-/preview/1000x562/`
-    setFormFields({ tokenImage: url2 })
-  }
+  // const handleTokenUrl = (id2) => {
+  //   const url2 = `https://ucarecdn.com/${id2}/-/preview/1000x562/`
+  //   setFormFields({ tokenImage: url2 })
+  // }
 
   useEffect(() => {
     if (accounts && accounts.length > 0) {
@@ -93,16 +87,12 @@ const DescribeView = () => {
     return (
       formFields.communityName.trim() !== '' &&
       formFields.description.trim() !== '' &&
-      formFields.community_token_name.trim() !== '' &&
       formFields.communityImage.trim() !== '' &&
-      formFields.tokenImage.trim() !== '' &&
       formFields.purpose.trim() !== '' &&
       formFields.tags &&
-      formFields.tags.length > 0 &&
-      formFields.proposal_right.trim() !== ''
+      formFields.tags.length > 0
     )
   }
-
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormFields({ [name]: value })
@@ -211,7 +201,7 @@ const DescribeView = () => {
 
 
 
-          <div className="flex flex-col gap-2.5 items-start justify-start py-2 self-stretch shrink-0 relative">
+          {/* <div className="flex flex-col gap-2.5 items-start justify-start py-2 self-stretch shrink-0 relative">
             <label
               className="text-white text-left  text-2xl leading-[120%] font-medium relative self-stretch"
               for="community-token-name"
@@ -232,7 +222,7 @@ const DescribeView = () => {
               type="text"
               placeholder="Type your Community’s token Name..."
               className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400" />
-          </div>
+          </div> */}
 
 
           {/* Image Uploads */}
@@ -248,7 +238,7 @@ const DescribeView = () => {
             </div>
             {/* Token Image */}
 
-            <div className="flex-1">
+            {/* <div className="flex-1">
               <label className="text-white text-2xl leading-[120%] font-medium  mt-4">
                 Token Image:
               </label>
@@ -256,7 +246,7 @@ const DescribeView = () => {
 
               <TokenImageURL onUploadComplete2={handleTokenUrl} onChange={handleUrlId} />
 
-            </div>
+            </div> */}
           </div>
 
           {/* Purpose */}
@@ -316,7 +306,7 @@ const DescribeView = () => {
           </div>
 
           {/* Proposal Rights */}
-          <div className="flex flex-col text-white gap-1 mt-4">
+          {/* <div className="flex flex-col text-white gap-1 mt-4">
             <span className="text-white text-2xl leading-[120%] font-medium  ">Who can create Proposal:</span>
             <Select2 onValueChange={handleDaoPrposalCreator}>
               <SelectTrigger className="w-full bg-[#1B0D37] rounded-md border border-[#5228A4] p-4 h-14 shadow-xs">
@@ -328,7 +318,7 @@ const DescribeView = () => {
                 <SelectItem value="TokenHolder">Token Holder</SelectItem>
               </SelectContent>
             </Select2>
-          </div>
+          </div> */}
           {/* Buttons */}
           <div className="flex gap-4 pt-8 text-2xl w-full">
             <button

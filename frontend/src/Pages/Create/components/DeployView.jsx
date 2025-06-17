@@ -15,7 +15,6 @@ import ReceiptModal from '@/Pages/components/ReceiptModal'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -160,218 +159,234 @@ const DeployView = () => {
       formFields.communityName.trim() !== '' &&
       formFields.description.trim() !== '' &&
       formFields.communityImage.trim() !== '' &&
-      formFields.tokenImage.trim() !== '' &&
-      formFields.tokenSupply > 0 &&
-      formFields.tokenPrice > 0 &&
-      formFields.tokenWithDrawPrice > 0
-    )
+      formFields.token.tokenImageUrl.trim() !== '' &&
+      Number(formFields.token.tokenSupply) > 0 &&
+      Number(formFields.token.tokenPrice) > 0 &&
+      Number(formFields.token.tokenWithDrawPrice) > 0
+    );
   }
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    const numericValue = parseFloat(value)
+    const { name, value } = e.target;
+    const numericValue = parseFloat(value);
 
-    if (name === 'tokenWithDrawPrice') {
-      if (numericValue > parseFloat(formFields.tokenPrice)) {
-        toast.error('Token Withdraw Price cannot be greater than Token Price')
-        return
+    // For fields inside token
+    const tokenFields = ['tokenSupply', 'tokenPrice', 'tokenWithDrawPrice', 'tokenImageUrl', 'name', 'symbol'];
+
+    if (tokenFields.includes(name)) {
+      // Validation for tokenWithDrawPrice and tokenPrice
+      if (name === 'tokenWithDrawPrice') {
+        if (numericValue > parseFloat(formFields.token.tokenPrice)) {
+          toast.error('Token Withdraw Price cannot be greater than Token Price');
+          return;
+        }
       }
+      if (name === 'tokenPrice') {
+        if (parseFloat(formFields.token.tokenWithDrawPrice) > numericValue) {
+          setFormFields({
+            token: {
+              ...formFields.token,
+              [name]: value,
+              tokenWithDrawPrice: value
+            }
+          });
+          return;
+        }
+      }
+      setFormFields({
+        token: {
+          ...formFields.token,
+          [name]: value
+        }
+      });
+      return;
     }
 
-    if (name === 'tokenPrice') {
-      if (parseFloat(formFields.tokenWithDrawPrice) > numericValue) {
-        setFormFields({
-          [name]: value,
-          tokenWithDrawPrice: value
-        })
-        return
-      }
-    }
-
-    setFormFields({ [name]: value })
+    // For all other fields
+    setFormFields({ [name]: value });
   }
 
   return (
     <>
-<Dialog open={open} onOpenChange={setOpen}>
-  <DialogTrigger></DialogTrigger>
-  <DialogContent className="bg-[rgba(169,126,255,0.34)] backdrop-blur-md rounded-[20px] w-full max-w-5xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
-    <DialogHeader>
- 
-    </DialogHeader>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger></DialogTrigger>
+        <DialogContent className="bg-[rgba(169,126,255,0.34)] backdrop-blur-md rounded-[20px] w-full max-w-5xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
+          <DialogHeader>
 
-    <div className="space-y-2 text-gray-200 text-lg">
+          </DialogHeader>
 
-      <div><strong>Community Name:</strong> {formFields.communityName}</div>
-      <div><strong>Description:</strong> {formFields.description}</div>
-      <div><strong>Token Name:</strong> {formFields.community_token_name}</div>
+          <div className="space-y-2 text-gray-200 text-lg">
 
-      <div className="grid grid-cols-2 gap-10 pb-12">
-        <div>
-          <div className="font-medium my-2">Community Image</div>
-          {formFields.communityImage && (
-            <img
-              src={formFields.communityImage}
-              alt="Community Image"
-              className="size-10 aspect-video object-cover h-full w-full rounded-lg border"
-            />
-          )}
-        </div>
-        <div>
-          <div className="font-medium my-2">Token Image</div>
-          {formFields.tokenImage && (
-            <img
-              src={formFields.tokenImage}
-              alt="Token Image"
-              className="size-10 aspect-video object-cover h-full w-full rounded-lg border"
-            />
-          )}
-        </div>
-      </div>
+            <div><strong>Community Name:</strong> {formFields.communityName}</div>
+            <div><strong>Description:</strong> {formFields.description}</div>
+            <div><strong>Token Name:</strong> {formFields.token.name}</div>
+
+            <div className="grid grid-cols-2 gap-10 pb-12">
+              <div>
+                <div className="font-medium my-2">Community Image</div>
+                {formFields.communityImage && (
+                  <img
+                    src={formFields.communityImage}
+                    alt="Community Image"
+                    className="size-10 aspect-video object-cover h-full w-full rounded-lg border"
+                  />
+                )}
+              </div>
+              <div>
+                <div className="font-medium my-2">Token Image</div>
+                {formFields.token.tokenImageUrl && (
+                  <img
+                    src={formFields.token.tokenImageUrl}
+                    alt="Token Image"
+                    className="size-10 aspect-video object-cover h-full w-full rounded-lg border"
+                  />
+                )}
+              </div>
+            </div>
 
 
-      <div><strong>Token Supply:</strong> {formFields.tokenSupply} XRD</div>
-      <div><strong>Token Price:</strong> {formFields.tokenPrice} XRD</div>
-      <div><strong>Who can Vote:</strong> {formFields.proposal_right}</div>
-      <div className="capitalize"><strong>Purpose:</strong> {formFields.purpose}</div>
-      <div><strong>Token Withdraw Price:</strong> {formFields.tokenWithDrawPrice}</div>
-      <div>
-        {formFields.tags.length > 0 && (
-          <div>
-            <strong>Tags:</strong>{' '}
-            {formFields.tags.map((tag) => (
-              <span key={tag} className="px-2 py-1 bg-brand2 rounded-lg mr-2">
-                {tag}
-              </span>
-            ))}
+            <div><strong>Token Supply:</strong> {formFields.token.tokenSupply} XRD</div>
+            <div><strong>Token Price:</strong> {formFields.token.tokenPrice} XRD</div>
+            <div><strong>Who can Vote:</strong> {formFields.governance.proposal_right}</div>
+            <div className="capitalize"><strong>Purpose:</strong> {formFields.purpose}</div>
+            <div><strong>Token Withdraw Price:</strong> {formFields.token.tokenWithDrawPrice}</div>
+            <div>
+              {formFields.tags.length > 0 && (
+                <div>
+                  <strong>Tags:</strong>{' '}
+                  {formFields.tags.map((tag) => (
+                    <span key={tag} className="px-2 py-1 bg-brand2 rounded-lg mr-2">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-        )}
-      </div>
-    </div>
 
 
-    <div className="flex items-start gap-3 text-sm text-gray-300 border-t border-gray-600 pt-6">
-      <input
-        type="checkbox"
-        id="terms"
-        checked={agreed}
-        onChange={() => setAgreed(!agreed)}
-        className="mt-1 accent-brand2"
-        disabled={!hasReadTerms}
-      />
-      <label htmlFor="terms">
-        I agree to the{' '}
-        <button 
-          type="button"
-          onClick={() => setTermsDialogOpen(true)} 
-          className="underline text-brand4 hover:text-brand5"
-        >
-          Terms & Conditions
-        </button>{' '}
-        and acknowledge that once the Community is deployed, it cannot be modified or reversed.
-        {!hasReadTerms && (
-          <span className="block text-amber-400 mt-1">
-            Please read the Terms & Conditions first
-          </span>
-        )}
-      </label>
-    </div>
+          <div className="flex items-start gap-3 text-sm text-gray-300 border-t border-gray-600 pt-6">
+            <input
+              type="checkbox"
+              id="terms"
+              checked={agreed}
+              onChange={() => setAgreed(!agreed)}
+              className="mt-1 accent-brand2"
+              disabled={!hasReadTerms}
+            />
+            <label htmlFor="terms">
+              I agree to the{' '}
+              <button
+                type="button"
+                onClick={() => setTermsDialogOpen(true)}
+                className="underline text-brand4 hover:text-brand5"
+              >
+                Terms & Conditions
+              </button>{' '}
+              and acknowledge that once the Community is deployed, it cannot be modified or reversed.
+              {!hasReadTerms && (
+                <span className="block text-amber-400 mt-1">
+                  Please read the Terms & Conditions first
+                </span>
+              )}
+            </label>
+          </div>
 
- 
-    {loading ? (
-      <button
-        className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF]
+
+          {loading ? (
+            <button
+              className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF]
           hover:to-[#391483] disabled:bg-brand3 disabled:cursor-not-allowed"
-        disabled
-      >
-        Deploying....
-      </button>
-    ) : (
-      <button
-        type="button"
-        disabled={!allFieldsFilled() || !agreed}
-        onClick={handleClaimToken}
-        className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] disabled:bg-brand3 disabled:cursor-not-allowed"
-      >
-        Deploy
-      </button>
-    )}
-  </DialogContent>
-</Dialog>
+              disabled
+            >
+              Deploying....
+            </button>
+          ) : (
+            <button
+              type="button"
+              disabled={!allFieldsFilled() || !agreed}
+              onClick={handleClaimToken}
+              className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] disabled:bg-brand3 disabled:cursor-not-allowed"
+            >
+              Deploy
+            </button>
+          )}
+        </DialogContent>
+      </Dialog>
 
-{/* Terms and Conditions Dialog */}
-<Dialog open={termsDialogOpen} onOpenChange={setTermsDialogOpen}>
-  <DialogContent className="bg-[rgba(169,126,255,0.34)] backdrop-blur-md rounded-[20px] w-full max-w-4xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
-    <DialogHeader>
-      <DialogTitle className="text-2xl font-bold text-white">Terms & Conditions</DialogTitle>
-    </DialogHeader>
-    
-    <div className="space-y-4 text-gray-200 text-md overflow-y-auto max-h-[50vh] pr-2 custom-scrollbar">
-      <h2 className="text-xl font-semibold text-white">1. Introduction</h2>
-      <p>
-        Welcome to PANDAO. By using our platform, you agree to these Terms & Conditions, which constitute a legally binding agreement between you and PANDAO.
-      </p>
-      
-      <h2 className="text-xl font-semibold text-white">2. Community Deployment</h2>
-      <p>
-        When you deploy a community on PANDAO:
-      </p>
-      <ul className="list-disc pl-5 space-y-2">
-        <li>You understand that blockchain transactions are immutable and cannot be reversed.</li>
-        <li>The community structure, token economics, and governance parameters you set during deployment will be permanent.</li>
-        <li>You take full responsibility for the configuration of your community.</li>
-      </ul>
-      
-      <h2 className="text-xl font-semibold text-white">3. Token Issuance</h2>
-      <p>
-        When issuing tokens through our platform:
-      </p>
-      <ul className="list-disc pl-5 space-y-2">
-        <li>You are responsible for ensuring compliance with all applicable laws and regulations in your jurisdiction.</li>
-        <li>PANDAO does not guarantee the value, utility, or legality of any tokens issued through our platform.</li>
-        <li>Token economics parameters (supply, price, etc.) cannot be modified after deployment.</li>
-      </ul>
-      
-      <h2 className="text-xl font-semibold text-white">4. Governance</h2>
-      <p>
-        Community governance is determined by the parameters you set during deployment:
-      </p>
-      <ul className="list-disc pl-5 space-y-2">
-        <li>Voting rights, proposal mechanisms, and decision-making processes are established at creation.</li>
-        <li>PANDAO is not responsible for governance decisions made within your community.</li>
-      </ul>
-      
-      <h2 className="text-xl font-semibold text-white">5. Limitation of Liability</h2>
-      <p>
-        PANDAO shall not be liable for:
-      </p>
-      <ul className="list-disc pl-5 space-y-2">
-        <li>Any financial losses related to token value fluctuations.</li>
-        <li>Community governance decisions or disputes.</li>
-        <li>Technical issues with the underlying blockchain network.</li>
-        <li>Regulatory changes that may affect your community or tokens.</li>
-      </ul>
-      
-      <h2 className="text-xl font-semibold text-white">6. Acknowledgment</h2>
-      <p>
-        By deploying a community, you acknowledge that you have read, understood, and agree to these terms. You also confirm that you understand the permanent nature of blockchain deployments and accept full responsibility for your community configuration.
-      </p>
-    </div>
-    
-    <div className="flex flex-col gap-4 pt-4 border-t border-gray-600">
-      <button
-        type="button"
-        onClick={() => {
-          setHasReadTerms(true);
-          setTermsDialogOpen(false);
-        }}
-        className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483]"
-      >
-        I Have Read and Understood
-      </button>
-    </div>
-  </DialogContent>
-</Dialog>
+      {/* Terms and Conditions Dialog */}
+      <Dialog open={termsDialogOpen} onOpenChange={setTermsDialogOpen}>
+        <DialogContent className="bg-[rgba(169,126,255,0.34)] backdrop-blur-md rounded-[20px] w-full max-w-4xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-white">Terms & Conditions</DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-4 text-gray-200 text-md overflow-y-auto max-h-[50vh] pr-2 custom-scrollbar">
+            <h2 className="text-xl font-semibold text-white">1. Introduction</h2>
+            <p>
+              Welcome to PANDAO. By using our platform, you agree to these Terms & Conditions, which constitute a legally binding agreement between you and PANDAO.
+            </p>
+
+            <h2 className="text-xl font-semibold text-white">2. Community Deployment</h2>
+            <p>
+              When you deploy a community on PANDAO:
+            </p>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>You understand that blockchain transactions are immutable and cannot be reversed.</li>
+              <li>The community structure, token economics, and governance parameters you set during deployment will be permanent.</li>
+              <li>You take full responsibility for the configuration of your community.</li>
+            </ul>
+
+            <h2 className="text-xl font-semibold text-white">3. Token Issuance</h2>
+            <p>
+              When issuing tokens through our platform:
+            </p>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>You are responsible for ensuring compliance with all applicable laws and regulations in your jurisdiction.</li>
+              <li>PANDAO does not guarantee the value, utility, or legality of any tokens issued through our platform.</li>
+              <li>Token economics parameters (supply, price, etc.) cannot be modified after deployment.</li>
+            </ul>
+
+            <h2 className="text-xl font-semibold text-white">4. Governance</h2>
+            <p>
+              Community governance is determined by the parameters you set during deployment:
+            </p>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>Voting rights, proposal mechanisms, and decision-making processes are established at creation.</li>
+              <li>PANDAO is not responsible for governance decisions made within your community.</li>
+            </ul>
+
+            <h2 className="text-xl font-semibold text-white">5. Limitation of Liability</h2>
+            <p>
+              PANDAO shall not be liable for:
+            </p>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>Any financial losses related to token value fluctuations.</li>
+              <li>Community governance decisions or disputes.</li>
+              <li>Technical issues with the underlying blockchain network.</li>
+              <li>Regulatory changes that may affect your community or tokens.</li>
+            </ul>
+
+            <h2 className="text-xl font-semibold text-white">6. Acknowledgment</h2>
+            <p>
+              By deploying a community, you acknowledge that you have read, understood, and agree to these terms. You also confirm that you understand the permanent nature of blockchain deployments and accept full responsibility for your community configuration.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-4 pt-4 border-t border-gray-600">
+            <button
+              type="button"
+              onClick={() => {
+                setHasReadTerms(true);
+                setTermsDialogOpen(false);
+              }}
+              className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483]"
+            >
+              I Have Read and Understood
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <ReceiptModal>
         {Recipt ? (
@@ -382,7 +397,7 @@ const DeployView = () => {
           ''
         )}
       </ReceiptModal>
-      <div className='bg-[#100821] min-h-screen flex flex-col items-center justify-center'>
+      <div className='bg-[#100821] min-h-screen flex flex-col items-center justify-center mt-10'>
         <div className="h-[42px] relative w-full ">
           <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] h-[42px]"></div>
           <div className="rounded-[300px] w-[98%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
@@ -412,7 +427,7 @@ const DeployView = () => {
               type="number"
               name="tokenSupply"
               placeholder="Enter Token Supply"
-              value={formFields.tokenSupply}
+              value={formFields.token.tokenSupply}
               onChange={handleInputChange}
               required
               min="0"
@@ -421,13 +436,13 @@ const DeployView = () => {
           </div>
           <div className="w-full gap-2.5 pb-8">
             <label className="text-white text-2xl leading-[120%] font-medium ">
-            Token Price In XRD :
+              Token Price In XRD :
             </label>
             <input
               type="number"
               name="tokenPrice"
               placeholder="Enter Token Price"
-              value={formFields.tokenPrice}
+              value={formFields.token.tokenPrice}
               onChange={handleInputChange}
               required
               min="0"
@@ -436,13 +451,13 @@ const DeployView = () => {
           </div>
           <div className="w-full gap-2.5">
             <label className="text-white text-2xl leading-[120%] font-medium">
-            Token Buy Back Price In XRD:
+              Token Buy Back Price In XRD:
             </label>
             <input
               type="number"
               name="tokenWithDrawPrice"
               placeholder="Enter Token Withdraw Price"
-              value={formFields.tokenWithDrawPrice}
+              value={formFields.token.tokenWithDrawPrice}
               onChange={handleInputChange}
               required
               min="0"
