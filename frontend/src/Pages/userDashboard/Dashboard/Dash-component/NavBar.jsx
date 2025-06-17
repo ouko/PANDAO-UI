@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ClockIcon, Activity } from 'lucide-react';
 
-const Navbar = ({ userImage, userName, accounts, isAdmin }) => {
+const Navbar = ({ accounts, isAdmin }) => {
   const scrolled = useScrollTop();
   const [notifications, setNotifications] = useState([]);
   const [hasFetched, setHasFetched] = useState(false);
@@ -47,19 +47,15 @@ const Navbar = ({ userImage, userName, accounts, isAdmin }) => {
   return (
     <div className="flex items-center flex-wrap justify-center">
       <div
-        className={`mx-auto flex bg-brand1/80 text-white fixed w-full z-20 transition-all duration-300 items-center justify-between h-16 p-5 ${
-          scrolled
-            ? 'top-6 max-w-[1300px] rounded-[77px] border border-violet-900 pt-[13px] pr-[25px] pb-[13px] pl-[25px]'
-            : 'top-0 max-w-full border-violet-900'
-        }`}
+        className={`mx-auto flex bg-brand1/80 border border-violet-900 border-l-0 border-r-0 text-white fixed w-full z-20 transition-all duration-300 items-center justify-between h-16 p-5 ${scrolled ? 'top-0' : 'top-0'}`}
       >
         <div className="w-auto">
           <Link to="/">
             <img src="/logo.png" alt="Logo" className="h-12" />
           </Link>
         </div>
-
-        <ul className="md:flex hidden items-start gap-4 font-semibold text-lg ">
+<div className='flex items-center gap-4'>
+<ul className="md:flex  items-start gap-4 font-semibold text-lg ">
           {isAdmin && (
             <Popover className="ml-11">
               <PopoverTrigger asChild  >
@@ -115,10 +111,13 @@ const Navbar = ({ userImage, userName, accounts, isAdmin }) => {
             </Popover>
           )}
 
+        </ul>
+        
       <div id="connect-btn">
       <radix-connect-button />
        </div>
-        </ul>
+</div>
+       
       </div>
     </div>
   );

@@ -232,7 +232,6 @@ const handleOnEdit=()=>{
         </div>
 
         <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] border mt-24 border-brand2 mr-10 w-full relative overflow-hidden backdrop-blur-[6.7px]">
-          {/* Tab navigation */}
           <div className="flex border-b bg-black/60 border-brand1 py-2">
             {tabs.map((tab, index) => (
               <button
@@ -254,9 +253,8 @@ const handleOnEdit=()=>{
             ))}
           </div>
 
-          {/* Tab content */}
           {activeTab === 0 && (
-            <section className="py-6">
+            <section className="">
               <UserCommunities communities={createdCommunities} />
               <WorkExperience userData={userData} />
               <CommunitiesParticipated participatedCommunities={participatedCommunities} />
@@ -264,13 +262,13 @@ const handleOnEdit=()=>{
           )}
 
           {activeTab === 1 && (
-            <section className="py-6">
+            <section className="">
               <UserActivity activityData={activityData?.data} />
             </section>
           )}
 
           {activeTab === 2 && (
-            <section className="py-6">
+            <section className="">
               <div className="bg-[#39246b] p-3 flex items-center justify-start rounded-md mb-6">
                 <h2 className="text-white text-2xl font-semibold">User Transaction</h2>
               </div>
