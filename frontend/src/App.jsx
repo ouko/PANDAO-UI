@@ -42,45 +42,45 @@ function App() {
     }
   }
 
-  const options = {
-    router: true,
-    excludedRoutes: ['/' ,'/ourstory' ,'/resources' , '/catalystsuite' , '/price' ,'/explore'],
-  }
-  const isMobile = useMobileDetection(options)
-  useEffect(() => {
-    if (accounts && accounts.length > 0) {
-      const interval = setInterval(() => {
-        fetchNotification()
-      }, 10000)
+  // const options = {
+  //   router: true,
+  //   excludedRoutes: ['/' ,'/ourstory' ,'/resources' , '/catalystsuite' , '/price' ,'/explore'],
+  // }
+  // const isMobile = useMobileDetection(options)
+  // useEffect(() => {
+  //   if (accounts && accounts.length > 0) {
+  //     const interval = setInterval(() => {
+  //       fetchNotification()
+  //     }, 10000)
 
-      return () => clearInterval(interval)
-    }
-  }, [accounts]) // Add accounts as a dependency
+  //     return () => clearInterval(interval)
+  //   }
+  // }, [accounts]) // Add accounts as a dependency
 
-  if (isMobile) {
-    return (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-          textAlign: 'center',
-          backgroundColor: '#f8f8f8',
-          color: '#333',
-          fontFamily: 'Arial, sans-serif',
-        }}
-      >
-        <div>
-          <h1 className="font-bold text-2xl my-2">Desktop Only Application</h1>
-          <p className="text-balance">
-            This application is designed to work on desktop devices only. Please
-            access it from a desktop browser.
-          </p>
-        </div>
-      </div>
-    )
-  }
+  // if (isMobile) {
+  //   return (
+  //     <div
+  //       style={{
+  //         display: 'flex',
+  //         justifyContent: 'center',
+  //         alignItems: 'center',
+  //         height: '100vh',
+  //         textAlign: 'center',
+  //         backgroundColor: '#f8f8f8',
+  //         color: '#333',
+  //         fontFamily: 'Arial, sans-serif',
+  //       }}
+  //     >
+  //       <div>
+  //         <h1 className="font-bold text-2xl my-2">Desktop Only Application</h1>
+  //         <p className="text-balance">
+  //           This application is designed to work on desktop devices only. Please
+  //           access it from a desktop browser.
+  //         </p>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
   return (
     <BrowserRouter>
