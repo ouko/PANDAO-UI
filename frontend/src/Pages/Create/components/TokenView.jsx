@@ -128,13 +128,13 @@ const TokenView = () => {
               className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
-             <div className="flex-1">
+             <div className="flex-1 my-5">
               <label className="text-white text-2xl leading-[120%] font-medium  mt-4">
                 Token Image:
               </label>
 
 
-              <TokenImageURL onUploadComplete2={handleTokenUrl} onChange={handleUrlId} />
+              <TokenImageURL onUploadComplete2={handleTokenUrl}  />
 
             </div>
           <div className="flex flex-row text-2xl gap-6 mt-10 w-full">
