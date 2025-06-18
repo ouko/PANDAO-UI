@@ -419,7 +419,6 @@ const DeployView = () => {
           
           
           <div className="w-full mt-10 mb-6">
-            <h2 className="text-white text-3xl font-semibold mb-6">Governance Settings</h2>
           </div>
           
           <div className="w-full gap-2.5 pb-8">
