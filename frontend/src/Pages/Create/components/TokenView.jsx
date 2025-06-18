@@ -1,24 +1,39 @@
-import { useState } from 'react';
 import useTokenWeightStore from '@/store/templateStore/tokenWeightStore';
+import useViewStore from '@/store/view';
 import { toast } from 'sonner';
 import TokenImageURL from '@/Pages/components/TokenImage';
 
 const TokenView = () => {
   const { formFields, setFormFields } = useTokenWeightStore();
+  const { setView } = useViewStore();
 
 
-  const allFieldsFilled = () => (
-    formFields.token.tokenImageUrl.trim() !== '' &&
-    formFields.token.name.trim() !== '' &&
-    formFields.token.symbol.trim() !== '' &&
-    Number(formFields.token.tokenSupply) > 0 &&
-    Number(formFields.token.tokenPrice) > 0 &&
-    Number(formFields.token.tokenWithDrawPrice) > 0
-  );
+  const allFieldsFilled = () => {
+    // For debugging
+    console.log('Token fields:', formFields.token);
+    
+    return (
+      formFields.token.name.trim() !== '' &&
+      formFields.token.symbol.trim() !== '' &&
+      formFields.token.totalSupply > 0 &&
+      formFields.token.tokenPrice > 0 &&
+      formFields.token.tokenWithDrawPrice > 0 &&
+      formFields.token.tokenImageUrl && formFields.token.tokenImageUrl.trim() !== ''
+    );
+  };
 
   const handleTokenUrl = (id2) => {
     const url2 = `https://ucarecdn.com/${id2}/-/preview/1000x562/`;
     setFormFields({ token: { ...formFields.token, tokenImageUrl: url2 } });
+  };
+
+  const handleViewChange = (e) => {
+    e.preventDefault();
+    if (allFieldsFilled()) {
+      setView('5');
+    } else {
+      toast.warning('Please fill all required token fields before proceeding');
+    }
   };
 
   const handleInputChange = (e) => {
@@ -65,7 +80,7 @@ const TokenView = () => {
 
 <div className="h-[42px] relative w-full ">
   <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] w-full h-[42px]"></div>
-  <div className="rounded-[300px] w-[55%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
+  <div className="rounded-[300px] w-[48%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
   <div className="bg-[#8f58ff] rounded-full w-[24.55px] h-[21px] absolute left-[75%] top-1/2 -translate-y-1/2 blur-[18.95px]"></div>
 </div>
 
@@ -106,10 +121,6 @@ Fill in the details of your token
               <input type="number" name="totalSupply" value={formFields.token.totalSupply} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
             </div>
             <div className="w-full gap-2.5 py-2 flex flex-col">
-              <label className="text-white text-lg font-medium">Token Supply:</label>
-              <input type="number" name="tokenSupply" value={formFields.token.tokenSupply} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
-            </div>
-            <div className="w-full gap-2.5 py-2 flex flex-col">
               <label className="text-white text-lg font-medium">Token Price (XRD):</label>
               <input type="number" name="tokenPrice" value={formFields.token.tokenPrice} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
             </div>
@@ -126,19 +137,24 @@ Fill in the details of your token
             <button
               type="button"
               className="flex-1 bg-primary-500 rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"
-          onClick={() => setView('3')}
-          >
+              onClick={(e) => {
+                e.preventDefault();
+                setView('3');
+              }}
+            >
               Back
             </button>
             <button
-                type="submit"
-                className={`flex-1 rounded-2xl p-3 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner ${!allFieldsFilled() ? 'opacity-50 cursor-not-allowed' : ''}`}
-                disabled={!allFieldsFilled()}
-                onClick={() => setView('4')}
-              >
-                Next
-              </button>
-          
+              disabled={!allFieldsFilled()}
+              onClick={handleViewChange}
+              type="submit"
+              className={`flex-1 rounded-2xl p-3 font-semibold shadow-inner ${allFieldsFilled()
+                ? "text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF]"
+                : "bg-brand2 text-gray-300 cursor-not-allowed"
+              }`}
+            >
+              Next
+            </button>
           </div>
 
         </div>

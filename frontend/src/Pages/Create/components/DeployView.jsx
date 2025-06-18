@@ -1,12 +1,9 @@
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { Progress } from '@/components/ui/progress'
 import { useEffect, useState } from 'react'
 import { useAccount } from '@/AccountContext'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { Input } from '@/components/ui/input'
 import useTokenWeightStore from '@/store/templateStore/tokenWeightStore'
+import useViewStore from '@/store/view'
 
 import extractTransactionsData from '@/utils/TranscationsRecipt'
 import { useSendTransaction } from '@/hooks/useSendTransaction'
@@ -15,19 +12,23 @@ import ReceiptModal from '@/Pages/components/ReceiptModal'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+
 } from '@/components/ui/dialog'
 import { toast } from 'sonner'
 const DeployView = () => {
   const navigate = useNavigate()
   const { accounts } = useAccount()
-  const { formFields, setFormFields, resetFormFields } = useTokenWeightStore()
+  const { formFields, setFormFields } = useTokenWeightStore()
   const [Recipt, setRecipt] = useState(null)
   const sendTransaction = useSendTransaction()
-  const [manifest, setManifest] = useState('')
-  const { successOpen, setSuccessOpen } = useModalStore()
+  // Using setManifest in handleClaimToken function
+  const [, setManifest] = useState('')
+  // Using setSuccessOpen in handleClaimToken function
+  const { setSuccessOpen } = useModalStore()
   const [open, setOpen] = useState(false)
 
   const [loading, setLoading] = useState(false)
@@ -36,6 +37,8 @@ const DeployView = () => {
   const [agreed, setAgreed] = useState(false);
   const [termsDialogOpen, setTermsDialogOpen] = useState(false);
   const [hasReadTerms, setHasReadTerms] = useState(false);
+  const [governanceDialogOpen, setGovernanceDialogOpen] = useState(false);
+  const { setView } = useViewStore();
 
   useEffect(() => {
     if (accounts && accounts.length > 0) {
@@ -53,10 +56,34 @@ const DeployView = () => {
     setLoading(true)
 
     try {
+      // Create a deep copy of formFields to modify
+      const formData = JSON.parse(JSON.stringify(formFields));
+      
+      // Convert datetime strings to timestamps
+      if (formData.airDrop && formData.airDrop.airDropStartTime) {
+        formData.airDrop.airDropStartTime = new Date(formData.airDrop.airDropStartTime).getTime() / 1000;
+      }
+      
+      if (formData.airDrop && formData.airDrop.airDropEndTime) {
+        formData.airDrop.airDropEndTime = new Date(formData.airDrop.airDropEndTime).getTime() / 1000;
+      }
+      
+      // Ensure governance.passThresholdPercentage is at least 50
+      if (formData.governance && formData.governance.passThresholdPercentage) {
+        const passThreshold = Number(formData.governance.passThresholdPercentage);
+        if (passThreshold < 50) {
+          formData.governance.passThresholdPercentage = '50';
+        }
+      }
+      
+      // Log the full URL for debugging
+      const deployUrl = `${import.meta.env.VITE_BACKEND_URL}/manifest/build/deploy-dao`;
+      console.log('Deploying to URL:', deployUrl);
+      console.log('Form data being sent:', formData);
+      
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL
-        }/manifest/build/deploy_token_weighted_dao`,
-        formFields,
+        deployUrl,
+        formData,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -64,7 +91,7 @@ const DeployView = () => {
         },
       )
 
-      console.log(response.data)
+      console.log('Response data:', response.data);
       setManifest(response.data)
 
       const { receipt } = await sendTransaction(response.data).finally(() =>
@@ -129,12 +156,6 @@ const DeployView = () => {
     }
   }
 
-  const handleDeploy = () => {
-    console.log(formFields)
-    resetFormFields()
-    navigate('/')
-  }
-
   useEffect(() => {
     const fetchBluePrint = async () => {
       try {
@@ -156,13 +177,12 @@ const DeployView = () => {
 
   const allFieldsFilled = () => {
     return (
-      formFields.communityName.trim() !== '' &&
-      formFields.description.trim() !== '' &&
-      formFields.communityImage.trim() !== '' &&
-      formFields.token.tokenImageUrl.trim() !== '' &&
-      Number(formFields.token.tokenSupply) > 0 &&
-      Number(formFields.token.tokenPrice) > 0 &&
-      Number(formFields.token.tokenWithDrawPrice) > 0
+      formFields.governance.proposalThreshold > 0 &&
+      formFields.governance.quorumPercentage > 0 &&
+      formFields.governance.votingPeriodDays > 0 &&
+      formFields.governance.passThresholdPercentage > 0 &&
+      formFields.governance.proposal_right.trim() !== '' &&
+      formFields.governance.proposal_minimum_token > 0
     );
   }
 
@@ -202,6 +222,19 @@ const DeployView = () => {
       return;
     }
 
+    // For fields inside governance
+    const governanceFields = ['proposalThreshold', 'quorumPercentage', 'votingPeriodDays', 'passThresholdPercentage', 'proposal_right', 'proposal_minimum_token'];
+    
+    if (governanceFields.includes(name)) {
+      setFormFields({
+        governance: {
+          ...formFields.governance,
+          [name]: value
+        }
+      });
+      return;
+    }
+
     // For all other fields
     setFormFields({ [name]: value });
   }
@@ -216,52 +249,13 @@ const DeployView = () => {
           </DialogHeader>
 
           <div className="space-y-2 text-gray-200 text-lg">
-
-            <div><strong>Community Name:</strong> {formFields.communityName}</div>
-            <div><strong>Description:</strong> {formFields.description}</div>
-            <div><strong>Token Name:</strong> {formFields.token.name}</div>
-
-            <div className="grid grid-cols-2 gap-10 pb-12">
-              <div>
-                <div className="font-medium my-2">Community Image</div>
-                {formFields.communityImage && (
-                  <img
-                    src={formFields.communityImage}
-                    alt="Community Image"
-                    className="size-10 aspect-video object-cover h-full w-full rounded-lg border"
-                  />
-                )}
-              </div>
-              <div>
-                <div className="font-medium my-2">Token Image</div>
-                {formFields.token.tokenImageUrl && (
-                  <img
-                    src={formFields.token.tokenImageUrl}
-                    alt="Token Image"
-                    className="size-10 aspect-video object-cover h-full w-full rounded-lg border"
-                  />
-                )}
-              </div>
-            </div>
-
-
-            <div><strong>Token Supply:</strong> {formFields.token.tokenSupply} XRD</div>
-            <div><strong>Token Price:</strong> {formFields.token.tokenPrice} XRD</div>
-            <div><strong>Who can Vote:</strong> {formFields.governance.proposal_right}</div>
-            <div className="capitalize"><strong>Purpose:</strong> {formFields.purpose}</div>
-            <div><strong>Token Withdraw Price:</strong> {formFields.token.tokenWithDrawPrice}</div>
-            <div>
-              {formFields.tags.length > 0 && (
-                <div>
-                  <strong>Tags:</strong>{' '}
-                  {formFields.tags.map((tag) => (
-                    <span key={tag} className="px-2 py-1 bg-brand2 rounded-lg mr-2">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
+            <div className="pt-4 pb-2 font-semibold text-xl">Governance Settings</div>
+            <div><strong>Proposal Threshold:</strong> {formFields.governance.proposalThreshold}</div>
+            <div><strong>Quorum Percentage:</strong> {formFields.governance.quorumPercentage}%</div>
+            <div><strong>Voting Period:</strong> {formFields.governance.votingPeriodDays} days</div>
+            <div><strong>Pass Threshold:</strong> {formFields.governance.passThresholdPercentage}%</div>
+            <div><strong>Who can Propose:</strong> {formFields.governance.proposal_right}</div>
+            <div><strong>Minimum Tokens to Propose:</strong> {formFields.governance.proposal_minimum_token}</div>
           </div>
 
 
@@ -319,6 +313,9 @@ const DeployView = () => {
         <DialogContent className="bg-[rgba(169,126,255,0.34)] backdrop-blur-md rounded-[20px] w-full max-w-4xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-white">Terms & Conditions</DialogTitle>
+            <DialogDescription className="text-gray-300">
+              Please read these terms carefully before deploying your community.
+            </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 text-gray-200 text-md overflow-y-auto max-h-[50vh] pr-2 custom-scrollbar">
@@ -407,7 +404,7 @@ const DeployView = () => {
           <div className=" ms-6 mt-7  text-[40px] leading-[130%] font-semibold text-start">
 
             <span>
-              <span className="step-2-describe-your-dao-span text-[#AE85FF]">STEP -3 :</span>
+              <span className="step-2-describe-your-dao-span text-[#AE85FF]">STEP -6 :</span>
               <span className="step-2-describe-your-dao-span2"></span>
               <span className="step-2-describe-your-dao-span3 text-amber-50"> Deploy Your Community</span>
             </span>
@@ -419,45 +416,105 @@ const DeployView = () => {
 
 
         <div className="w-[1221px] mx-auto pt-10 gap-15 z-50 text-white shadow-lg rounded-lg  ">
-          <div className="w-full gap-2.5  py-7 ">
-            <label className="text-white text-2xl leading-[120%] mb-6  font-medium ">
-              Token Supply:
-            </label>
-            <input
-              type="number"
-              name="tokenSupply"
-              placeholder="Enter Token Supply"
-              value={formFields.token.tokenSupply}
-              onChange={handleInputChange}
-              required
-              min="0"
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] mt-5 rounded-md text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
-            />
+          
+          
+          <div className="w-full mt-10 mb-6">
+            <h2 className="text-white text-3xl font-semibold mb-6">Governance Settings</h2>
           </div>
+          
           <div className="w-full gap-2.5 pb-8">
-            <label className="text-white text-2xl leading-[120%] font-medium ">
-              Token Price In XRD :
+            <label className="text-white text-2xl leading-[120%] font-medium">
+              Proposal Threshold:
             </label>
             <input
               type="number"
-              name="tokenPrice"
-              placeholder="Enter Token Price"
-              value={formFields.token.tokenPrice}
+              name="proposalThreshold"
+              placeholder="Enter Proposal Threshold"
+              value={formFields.governance.proposalThreshold}
               onChange={handleInputChange}
               required
               min="0"
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5  text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
+          
+          <div className="w-full gap-2.5 pb-8">
+            <label className="text-white text-2xl leading-[120%] font-medium">
+              Quorum Percentage:
+            </label>
+            <input
+              type="number"
+              name="quorumPercentage"
+              placeholder="Enter Quorum Percentage"
+              value={formFields.governance.quorumPercentage}
+              onChange={handleInputChange}
+              required
+              min="0"
+              max="100"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+            />
+          </div>
+          
+          <div className="w-full gap-2.5 pb-8">
+            <label className="text-white text-2xl leading-[120%] font-medium">
+              Voting Period (Days):
+            </label>
+            <input
+              type="number"
+              name="votingPeriodDays"
+              placeholder="Enter Voting Period in Days"
+              value={formFields.governance.votingPeriodDays}
+              onChange={handleInputChange}
+              required
+              min="1"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+            />
+          </div>
+          
+          <div className="w-full gap-2.5 pb-8">
+            <label className="text-white text-2xl leading-[120%] font-medium">
+              Pass Threshold Percentage:
+            </label>
+            <input
+              type="number"
+              name="passThresholdPercentage"
+              placeholder="Enter Pass Threshold Percentage"
+              value={formFields.governance.passThresholdPercentage}
+              onChange={handleInputChange}
+              required
+              min="0"
+              max="100"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+            />
+          </div>
+          
+          <div className="w-full gap-2.5 pb-8">
+            <label className="text-white text-2xl leading-[120%] font-medium">
+              Who Can Propose:
+            </label>
+            <select
+              name="proposal_right"
+              value={formFields.governance.proposal_right}
+              onChange={handleInputChange}
+              required
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+            >
+              <option value="">Select who can propose</option>
+              <option value="all_members">All Members</option>
+              <option value="token_holders">Token Holders Only</option>
+              <option value="council_members">Council Members Only</option>
+            </select>
+          </div>
+          
           <div className="w-full gap-2.5">
             <label className="text-white text-2xl leading-[120%] font-medium">
-              Token Buy Back Price In XRD:
+              Minimum Tokens to Propose:
             </label>
             <input
               type="number"
-              name="tokenWithDrawPrice"
-              placeholder="Enter Token Withdraw Price"
-              value={formFields.token.tokenWithDrawPrice}
+              name="proposal_minimum_token"
+              placeholder="Enter Minimum Tokens Required to Propose"
+              value={formFields.governance.proposal_minimum_token}
               onChange={handleInputChange}
               required
               min="0"
@@ -468,6 +525,7 @@ const DeployView = () => {
             <button
               type="button"
               className="flex-1 bg-primary-500 rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"
+              onClick={() => setView('6')}
             >
               Back
             </button>
@@ -482,9 +540,14 @@ const DeployView = () => {
             ) : (
               <button
                 type="submit"
-                className={`flex-1 rounded-2xl p-3 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner ${!allFieldsFilled() ? 'opacity-50 cursor-not-allowed' : ''}`}
-                disabled={!allFieldsFilled()}
-                onClick={() => setOpen(true)}
+                className={`flex-1 rounded-2xl p-3 text-white font-semibold hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] shadow-inner ${!allFieldsFilled() ? 'opacity-50' : ''}`}
+                onClick={() => {
+                  if (allFieldsFilled()) {
+                    setOpen(true);
+                  } else {
+                    setGovernanceDialogOpen(true);
+                  }
+                }}
               >
                 Deploy
               </button>

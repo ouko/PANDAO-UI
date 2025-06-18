@@ -7,6 +7,8 @@ import DeployView from "./components/DeployView";
 import FinancialView from "./components/FinancialDao";
 import TileEffect4 from "@/components/ui/myComponents/grid-bg-4";
 import TokenView from "./components/TokenView";
+import MetaData from "./components/MetaData";
+import AirDrop from "./components/AirDrop";
 
 const Create = () => {
   const {view} = useViewStore();
@@ -33,11 +35,18 @@ const Create = () => {
                 {view === "4" && (
        <TokenView/>
       )}
-              {view === "5" && (
+       {view === "5" && (
+       <MetaData/>
+      )}
+
+       {view === "6" && (
+       <AirDrop/>
+      )}
+              {view === "7" && (
        <DeployView/>
       )}
     
-           {view === "6" && (
+           {view === "8" && (
        <FinancialView/>
       )}
     </div>
