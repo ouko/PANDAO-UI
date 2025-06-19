@@ -518,7 +518,7 @@ const DeployView = () => {
   {/* Step Section */}
   <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-10 gap-4 p-6 md:p-10 border border-[#5228A4] flex flex-col items-start mb-10">
     <div className="text-2xl md:text-4xl font-semibold text-start text-white">
-      <span className="text-[#AE85FF]">STEP -7 :</span>{' '}
+      <span className="text-[#AE85FF]">STEP -6 :</span>{' '}
       <span className="text-amber-50">Deploy Your Community</span>
     </div>
     <div className="text-[#ffffff] text-base md:text-xl font-normal text-center">
