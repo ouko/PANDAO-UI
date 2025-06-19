@@ -52,6 +52,13 @@ const PersonalDetail = () => {
     const [selectedTags, setSelectedTags] = useState(storedTags || []);
     const [useWalletName, setUseWalletName] = useState(false);
     const [isFormValid, setIsFormValid] = useState(false);
+    const [touched, setTouched] = useState({
+        username: false,
+        email: false,
+        bio: false,
+        display_image: false,
+        tags: false
+    });
 
     // Individual validation states
     const [isUsernameValid, setIsUsernameValid] = useState(true);
@@ -65,11 +72,18 @@ const PersonalDetail = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const usernameRegex = /^[a-zA-Z0-9_ ]{3,}$/; // allow spaces
 
-        const validUsername = username?.trim().length >= 3 && usernameRegex.test(username);
-        const validEmail = email?.trim().length > 0 && emailRegex.test(email);
-        const validBio = bio?.trim().length >= 10 && bio.trim().length <= 300;
-        const validDisplayImage = typeof display_image === 'string' && display_image.trim().length > 0;
-        const validTags = Array.isArray(selectedTags) && selectedTags.length >= 5 && selectedTags.length <= 10;
+        const isValidUsername = username?.trim().length >= 3 && usernameRegex.test(username);
+        const isValidEmail = email?.trim().length > 0 && emailRegex.test(email);
+        const isValidBio = bio?.trim().length >= 10 && bio.trim().length <= 300;
+        const isValidDisplayImage = typeof display_image === 'string' && display_image.trim().length > 0;
+        const isValidTags = Array.isArray(selectedTags) && selectedTags.length >= 5 && selectedTags.length <= 10;
+
+        // Only validate fields that have been touched or when submitting
+        const validUsername = !touched.username || isValidUsername;
+        const validEmail = !touched.email || isValidEmail;
+        const validBio = !touched.bio || isValidBio;
+        const validDisplayImage = !touched.display_image || isValidDisplayImage;
+        const validTags = !touched.tags || isValidTags;
 
         setIsUsernameValid(validUsername);
         setIsEmailValid(validEmail);
@@ -77,8 +91,9 @@ const PersonalDetail = () => {
         setIsDisplayImageValid(validDisplayImage);
         setIsTagsValid(validTags);
 
-        setIsFormValid(validUsername && validEmail && validBio && validDisplayImage && validTags);
-    }, [username, email, bio, display_image, selectedTags]);
+        // Form is only valid if all fields are actually valid (not just not-invalid)
+        setIsFormValid(isValidUsername && isValidEmail && isValidBio && isValidDisplayImage && isValidTags);
+    }, [username, email, bio, display_image, selectedTags, touched]);
 
     // Sync wallet name
     useEffect(() => {
@@ -114,12 +129,24 @@ const PersonalDetail = () => {
     };
 
     const handleNextClick = () => {
-        useSignupFormStore.getState().setName(username);
-        useSignupFormStore.getState().setEmail(email);
-        useSignupFormStore.getState().setBio(bio);
-        useSignupFormStore.getState().setTags(selectedTags);
-        handleSendEmail();
-        handleNext();
+        // Mark all fields as touched when trying to submit
+        setTouched({
+            username: true,
+            email: true,
+            bio: true,
+            display_image: true,
+            tags: true
+        });
+
+        // Only proceed if form is valid
+        if (isFormValid) {
+            useSignupFormStore.getState().setName(username);
+            useSignupFormStore.getState().setEmail(email);
+            useSignupFormStore.getState().setBio(bio);
+            useSignupFormStore.getState().setTags(selectedTags);
+            handleSendEmail();
+            handleNext();
+        }
     };
 
     return (
@@ -131,9 +158,14 @@ const PersonalDetail = () => {
                             label="Enter your Name"
                             placeholder="John Doe"
                             value={username || ''}
-                            onChange={(e) => setName(e.target.value)}
+                            onChange={(e) => {
+                                setName(e.target.value);
+                                setTouched(prev => ({...prev, username: true}));
+                            }}
+                            onBlur={() => setTouched(prev => ({...prev, username: true}))}
                             disabled={useWalletName}
                             isValid={isUsernameValid}
+                            showError={touched.username}
                         />
                         <label className="flex items-center gap-2 text-white text-sm mt-3">
                             <input
@@ -149,8 +181,13 @@ const PersonalDetail = () => {
                         label="Enter your E-mail"
                         placeholder="Enter your email"
                         value={email || ''}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                            setTouched(prev => ({...prev, email: true}));
+                        }}
+                        onBlur={() => setTouched(prev => ({...prev, email: true}))}
                         isValid={isEmailValid}
+                        showError={touched.email}
                     />
                 </div>
                 <InputField
@@ -165,8 +202,13 @@ const PersonalDetail = () => {
                     placeholder="Tell us something about yourself!"
                     isTextArea
                     value={bio || ''}
-                    onChange={(e) => setBio(e.target.value)}
+                    onChange={(e) => {
+                        setBio(e.target.value);
+                        setTouched(prev => ({...prev, bio: true}));
+                    }}
+                    onBlur={() => setTouched(prev => ({...prev, bio: true}))}
                     isValid={isBioValid}
+                    showError={touched.bio}
                 />
                 <DropdownMenu>
                     <div className="relative inline-block w-full">
@@ -176,8 +218,9 @@ const PersonalDetail = () => {
                         <DropdownMenuTrigger asChild>
                             <button
                                 className={`bg-[#1B0D37] border p-2 rounded-md w-full flex flex-wrap gap-2 min-h-[40px] items-center mt-2 ${
-                                    isTagsValid ? 'border-brand5' : 'border-rose-500'
+                                    !touched.tags || isTagsValid ? 'border-brand5' : 'border-rose-500'
                                 }`}
+                                onClick={() => setTouched(prev => ({...prev, tags: true}))}
                             >
                                 {selectedTags.length > 0 ? (
                                     selectedTags.map((tag) => (
@@ -209,7 +252,7 @@ const PersonalDetail = () => {
                                 ))
                             )}
                         </DropdownMenuContent>
-                        {!isTagsValid && (
+                        {touched.tags && !isTagsValid && (
                             <span className="text-rose-500 text-sm">
                                 Select between 5 and 10 tags.
                             </span>
@@ -220,8 +263,14 @@ const PersonalDetail = () => {
                     <Label htmlFor="display_image" className="text-xl font-bold">
                         Upload your Profile picture here
                     </Label>
-                    <ImageUpload onUploadSuccess={handleFileId} imageUrl={display_image} />
-                    {!isDisplayImageValid && (
+                    <ImageUpload 
+                        onUploadSuccess={(id) => {
+                            handleFileId(id);
+                            setTouched(prev => ({...prev, display_image: true}));
+                        }} 
+                        imageUrl={display_image} 
+                    />
+                    {touched.display_image && !isDisplayImageValid && (
                         <span className="text-rose-500 text-sm">
                             Profile image is required.
                         </span>
@@ -244,13 +293,23 @@ const PersonalDetail = () => {
 };
 
 // Updated InputField component
-const InputField = ({ label, placeholder, isTextArea = false, value, onChange, disabled = false, isValid }) => (
+const InputField = ({ 
+    label, 
+    placeholder, 
+    isTextArea = false, 
+    value, 
+    onChange, 
+    onBlur,
+    disabled = false, 
+    isValid,
+    showError = true 
+}) => (
     <div className="flex flex-col gap-2.5 w-full">
         <label className="text-white text-xl font-medium">{label}</label>
         {isTextArea ? (
             <textarea
                 className={`bg-[#1B0D37] rounded-md border p-4 w-full ${
-                    isValid ? 'border-brand5' : 'border-rose-500'
+                    showError && !isValid ? 'border-rose-500' : 'border-brand5'
                 }`}
                 placeholder={placeholder}
                 value={value}
@@ -261,7 +320,8 @@ const InputField = ({ label, placeholder, isTextArea = false, value, onChange, d
         ) : (
             <input
                 className={`bg-[#1B0D37] rounded-md border p-4 w-full ${
-                    disabled ? 'opacity-70 cursor-not-allowed' : isValid ? 'border-brand5' : 'border-rose-500'
+                    disabled ? 'opacity-70 cursor-not-allowed' : 
+                    (showError && !isValid ? 'border-rose-500' : 'border-brand5')
                 }`}
                 placeholder={placeholder}
                 value={value}
