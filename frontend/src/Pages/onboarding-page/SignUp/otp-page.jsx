@@ -182,7 +182,7 @@ const Otp = () => {
     // console.log(username, email, public_address, bio, display_image,tags, "fasial")
 
     return (
-        <div className="h-full w-full flex justify-center items-center gap-8 relative overflow-hidden container">
+        <div className="h-full w-full flex justify-center items-center gap-8 relative overflow-hidden container  ">
             <div className="flex flex-col gap-8 w-full">
                 <h1 className="text-white font-medium pt-5 flex justify-center text-xl">
                     Enter the OTP sent to your e-mail:
@@ -192,7 +192,7 @@ const Otp = () => {
                     {otpFields.map((value, index) => (
                         <div
                             key={index}
-                            className="w-[91px] h-[108px] bg-[#1B0D37] border border-[#9268E4] rounded-md flex items-center justify-center shadow-xs"
+                            className="md:w-[91px] md:h-[108px] w-[40px] h-[50px] bg-[#1B0D37] border border-[#9268E4] rounded-md flex items-center justify-center shadow-xs"
                         >
                             <input
                                 id={`otp-input-${index}`}
@@ -200,7 +200,7 @@ const Otp = () => {
                                 type="text"
                                 maxLength="1"
                                 value={value}
-                                className="w-full h-full bg-transparent text-5xl text-center text-white focus:outline-none"
+                                className="w-full h-full bg-transparent md:text-5xl text-2xl text-center text-white focus:outline-none"
                                 onChange={(e) => handleOtpChange(e, index)}
                                 onKeyDown={(e) => handleKeyDown(e, index)}
                                 onPaste={index === 0 ? handlePaste : undefined}
