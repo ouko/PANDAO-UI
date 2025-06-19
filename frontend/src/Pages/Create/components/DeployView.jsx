@@ -35,8 +35,8 @@ const DeployView = () => {
 
   const [data, setData] = useState([])
   const [agreed, setAgreed] = useState(false);
-  const [termsDialogOpen, setTermsDialogOpen] = useState(false);
-  const [hasReadTerms, setHasReadTerms] = useState(false);
+  const [termsDialogOpen, setTermsDialogOpen] = useState(true);
+  const [hasReadTerms, setHasReadTerms] = useState(true);
   const [governanceDialogOpen, setGovernanceDialogOpen] = useState(false);
   const { setView } = useViewStore();
 
@@ -281,20 +281,95 @@ const DeployView = () => {
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger></DialogTrigger>
-        <DialogContent className="bg-[rgba(169,126,255,0.34)] backdrop-blur-md rounded-[20px] w-full max-w-5xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
+        <DialogContent className="bg-[rgba(169,126,255,0.34)] text-white backdrop-blur-md rounded-[20px] w-full max-w-5xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
           <DialogHeader>
 
           </DialogHeader>
 
           <div className="space-y-2 text-gray-200 text-lg">
-            <div className="pt-4 pb-2 font-semibold text-xl">Governance Settings</div>
-            <div><strong>Proposal Threshold:</strong> {formFields.governance.proposalThreshold}</div>
-            <div><strong>Quorum Percentage:</strong> {formFields.governance.quorumPercentage}%</div>
-            <div><strong>Voting Period:</strong> {formFields.governance.votingPeriodDays} days</div>
-            <div><strong>Pass Threshold:</strong> {formFields.governance.passThresholdPercentage}%</div>
-            <div><strong>Who can Propose:</strong> {formFields.governance.proposal_right}</div>
-            <div><strong>Minimum Tokens to Propose:</strong> {formFields.governance.proposal_minimum_token}</div>
-          </div>
+  {/* Basic Info */}
+  <div className="space-y-8 text-gray-200 text-base">
+  {/* Images */}
+  <div className="grid grid-cols-2 gap-10 pb-12">
+    <div>
+      <div className="font-medium my-2">Community Image</div>
+      {formFields.communityImage && (
+        <img
+          src={formFields.communityImage}
+          alt="Community"
+          className="size-10 aspect-video object-contain h-full w-full rounded-lg border"
+        />
+      )}
+    </div>
+    <div>
+      <div className="font-medium my-2">Token Image</div>
+      {formFields.token.tokenImageUrl && (
+        <img
+          src={formFields.token.tokenImageUrl}
+          alt="Token"
+          className="size-10 aspect-video object-contain h-full w-full rounded-lg border"
+        />
+      )}
+    </div>
+  </div>
+
+  {/* Basic Info */}
+  <div>
+    <div className="text-xl text-brand6 font-semibold pb-2">Basic Information</div>
+    <div><strong>User Address:</strong> {formFields.userAddress}</div>
+    <div><strong>Community Name:</strong> {formFields.communityName}</div>
+    <div><strong>Description:</strong> {formFields.description}</div>
+    <div><strong>Purpose:</strong> {formFields.purpose}</div>
+    <div><strong>Tags:</strong> {formFields.tags.join(', ')}</div>
+    <div><strong>Package Address:</strong> {formFields.package_addr}</div>
+  </div>
+
+  {/* Token Info */}
+  <div>
+    <div className="text-xl text-brand6 font-semibold pb-2">Token Details</div>
+    <div><strong>Name:</strong> {formFields.token.name}</div>
+    <div><strong>Symbol:</strong> {formFields.token.symbol}</div>
+    <div><strong>Is Mintable:</strong> {formFields.token.isMintable ? 'Yes' : 'No'}</div>
+    <div><strong>Total Supply:</strong> {formFields.token.totalSupply}</div>
+    <div><strong>Token Supply:</strong> {formFields.token.tokenSupply}</div>
+    <div><strong>Token Price:</strong> {formFields.token.tokenPrice}</div>
+    <div><strong>Withdraw Price:</strong> {formFields.token.tokenWithDrawPrice}</div>
+  </div>
+
+  {/* Metadata */}
+  <div>
+    <div className="text-xl text-brand6 font-semibold pb-2">Metadata</div>
+    <div><strong>Website:</strong> {formFields.metaData.website}</div>
+    <div><strong>Discord:</strong> {formFields.metaData.discord}</div>
+    <div><strong>Telegram:</strong> {formFields.metaData.telegram}</div>
+    <div><strong>Forum:</strong> {formFields.metaData.forum}</div>
+  </div>
+
+  {/* Airdrop Info */}
+  <div>
+    <div className="text-xl text-brand6 font-semibold pb-2">Airdrop Settings</div>
+    <div><strong>Public Sale:</strong> {formFields.airDrop.publicSale}</div>
+    <div><strong>Founding Team:</strong> {formFields.airDrop.foundingTeam}</div>
+    <div><strong>Treasury:</strong> {formFields.airDrop.treasury}</div>
+    <div><strong>Community Incentives:</strong> {formFields.airDrop.communityIncentives}</div>
+    <div><strong>Airdrop Start Time:</strong> {formFields.airDrop.airDropStartTime}</div>
+    <div><strong>Airdrop End Time:</strong> {formFields.airDrop.airDropEndTime}</div>
+    <div><strong>Amount per Airdrop:</strong> {formFields.airDrop.amount_per_air_drop}</div>
+  </div>
+
+  {/* Governance Info */}
+  <div>
+    <div className="text-xl text-brand6 font-semibold pb-2">Governance Settings</div>
+    <div><strong>Proposal Threshold:</strong> {formFields.governance.proposalThreshold}</div>
+    <div><strong>Quorum Percentage:</strong> {formFields.governance.quorumPercentage}%</div>
+    <div><strong>Voting Period:</strong> {formFields.governance.votingPeriodDays} days</div>
+    <div><strong>Pass Threshold:</strong> {formFields.governance.passThresholdPercentage}%</div>
+    <div><strong>Who can Propose:</strong> {formFields.governance.proposal_right}</div>
+    <div><strong>Minimum Tokens to Propose:</strong> {formFields.governance.proposal_minimum_token}</div>
+  </div>
+</div>
+
+</div>
 
 
           <div className="flex items-start gap-3 text-sm text-gray-300 border-t border-gray-600 pt-6">
