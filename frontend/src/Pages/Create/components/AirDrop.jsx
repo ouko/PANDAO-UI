@@ -15,10 +15,32 @@ function AirDrop() {
     });
   };
 
-  const allFieldsFilled = () => {
-    return Object.values(formFields.airDrop).every(value => value !== '');
-  };
+ const allFieldsFilled = () => {
+  const ad = formFields.airDrop;
+  
+  // Convert percentage values to numbers for validation
+  const publicSale = parseFloat(ad.publicSale) || 0;
+  const foundingTeam = parseFloat(ad.foundingTeam) || 0;
+  const treasury = parseFloat(ad.treasury) || 0;
+  const communityIncentives = parseFloat(ad.communityIncentives) || 0;
+  
+  // Calculate total percentage
+  const totalPercentage = publicSale + foundingTeam + treasury + communityIncentives;
+  
+  // Check if all fields are filled and valid
+  return (
+    publicSale > 0 &&
+    foundingTeam > 0 &&
+    treasury > 0 &&
+    communityIncentives > 0 &&
+    totalPercentage === 100 && // Ensure percentages sum to exactly 100%
+    ad.airDropStartTime && // Check that datetime fields exist
+    ad.airDropEndTime &&
+    parseFloat(ad.amount_per_air_drop) > 0 // Ensure amount is positive
+  );
+};
 
+   
   const handleViewChange = () => {
     if (allFieldsFilled()) {
       setView('7');

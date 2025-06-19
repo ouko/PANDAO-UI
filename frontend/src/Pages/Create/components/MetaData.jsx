@@ -17,10 +17,14 @@ function MetaData() {
   };
 
   const allFieldsFilled = () => {
-    // All fields are optional in metadata, so we can proceed even if some are empty
-    // But we'll require at least one field to be filled
-    return Object.values(formFields.metaData).some(value => value !== '');
-  };
+  const meta = formFields.metaData;
+  return (
+    meta.website.trim() !== '' &&
+    meta.discord.trim() !== '' &&
+    meta.telegram.trim() !== '' &&
+    meta.forum.trim() !== ''
+  );
+};
 
   const handleViewChange = () => {
     if (allFieldsFilled()) {
@@ -31,10 +35,10 @@ function MetaData() {
   return (
     <div className="z-50 container mx-auto flex flex-col items-center justify-center mt-10 w-full">
       <div className="h-[42px] relative w-full ">
-        <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] w-full h-[42px]"></div>
-        <div className="rounded-[300px] w-[65%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
-        <div className="bg-[#8f58ff] rounded-full w-[24.55px] h-[21px] absolute left-[85%] top-1/2 -translate-y-1/2 blur-[18.95px]"></div>
-      </div>
+      <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] w-full h-[42px]"></div>
+      <div className="rounded-[300px] w-[65%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
+      <div className="bg-[#8f58ff] rounded-full w-[24.55px] h-[21px] absolute left-[85%] top-1/2 -translate-y-1/2 blur-[18.95px]"></div>
+    </div>
 
       <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-10 gap-7 p-10 border border-[#5228A4] flex flex-col justify-start items-start mb-10">
         <div className="text-[40px] leading-[130%] font-semibold text-start">
@@ -43,11 +47,11 @@ function MetaData() {
             <span className="step-2-describe-your-dao-span2"></span>
             <span className="step-2-describe-your-dao-span3 text-amber-50">Meta Data</span>
           </span>
-        </div>
-        <div className="text-[#ffffff] text-xl leading-[130%] font-normal text-center">
-          Add your community&apos;s social media and website links
-        </div>
       </div>
+        <div className="text-[#ffffff] text-xl leading-[130%] font-normal text-center">
+        Add your community&apos;s social media and website links
+      </div>
+    </div>
 
       <div className="w-[1221px] mx-auto pt-10 gap-4 shadow-lg rounded-lg">
         <div className="space-y-4">

@@ -101,7 +101,29 @@ const DeployView = () => {
       let txId = receipt.transaction.intent_hash
 
       if (txId) {
-        const response = await axios.post(
+        // Step 1: Extract transaction data first to get component addresses
+        const recipt = await extractTransactionsData(txId)
+        console.log('Transaction receipt:', recipt)
+        setRecipt(() => recipt)
+
+        // Step 2: Extract component address from receipt
+        // This assumes extractTransactionsData returns component addresses in a specific format
+        // You may need to adjust this based on your actual receipt structure
+        const componentAddresses = recipt.componentAddresses || [];
+        const componentAddress = componentAddresses.length > 0 ? componentAddresses[0] : null;
+        
+        // If we don't have a component address from the receipt, check other receipt properties
+        // This is a fallback mechanism - modify according to your actual receipt structure
+        const fallbackAddress = 
+          componentAddress || 
+          recipt.newComponents?.[0]?.address || 
+          recipt.entities?.[0]?.address ||
+          recipt.resources?.[0]?.resourceAddress;
+        
+        console.log('Extracted component address:', fallbackAddress);
+        
+        // Step 3: Submit transaction ID to backend
+        const submitResponse = await axios.post(
           `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
           {
             tx_id: txId,
@@ -114,43 +136,59 @@ const DeployView = () => {
           },
         )
 
-        console.log(response.data)
+        console.log('Submit TX response:', submitResponse.data)
 
-        // Step 4: Extract transaction data
-        const recipt = await extractTransactionsData(txId)
-        console.log(recipt)
-        setRecipt(() => recipt)
+        // Step 4: Register community with the actual component address
+        // Only proceed if we have a valid component address
+        if (fallbackAddress && fallbackAddress !== 'undefined') {
+          let communityPostBody = {
+            name: formFields.communityName,
+            component_address: fallbackAddress,
+            description: formFields.description,
+            blueprint_slug: formFields.blueprint_slug || 'token_weighted_dao',
+            owner_token_address: fallbackAddress, // This might need to be a different address from the receipt
+            image: formFields.communityImage,
+            owner_address: accounts[0].address,
+            funds: 0,
+            purpose: formFields.purpose || 'governance',
+            executive_badge_address: fallbackAddress, // This might need to be a different address from the receipt
+            is_featured: true,
+            is_disabled_by_admin: false,
+            created_on_blockchain: true
+          };
+
+          try {
+            const communityResponse = await axios.post(
+              `${import.meta.env.VITE_BACKEND_URL}/community`,
+              communityPostBody,
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
+            console.log('Community registration response:', communityResponse.data);
+            toast.success('Community registered successfully!');
+          } catch (communityError) {
+            console.error('Error registering community:', communityError);
+            toast.error('Community deployment succeeded, but registration failed: ' + 
+              (communityError.response?.data?.detail || communityError.message));
+          }
+        } else {
+          console.warn('No valid component address found in transaction receipt');
+          toast.warning('DAO deployed, but no component address was found. Community registration skipped.');
+        }
 
         // Step 5: Open success modal
-        setSuccessOpen(true)
-
-        // Optional: Community registration code can be included here if needed
-        /*
-        let communityPostBody = {
-          name: organizationName,
-          component_address: "not defined",
-          description: organizationDescription,
-          owner_address: accounts[0].address,
-        };
-  
-        const communityResponse = await axios.post(
-          `${import.meta.env.VITE_BACKEND_URL}/community`,
-          communityPostBody,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-  
-        console.log(communityResponse.data);
-        */
+        setSuccessOpen(true);
+        
       } else {
         throw new Error('Transaction ID not found')
       }
     } catch (error) {
       console.error('Error occurred:', error)
-      window.alert(error.message || 'An error occurred. Please try again.')
+      toast.error(error.response?.data?.detail || error.message || 'An error occurred. Please try again.');
     } finally {
       setLoading(false) // Ensure loading state is reset
     }
