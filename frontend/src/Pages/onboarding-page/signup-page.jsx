@@ -65,7 +65,7 @@ const OnboardingFlow = () => {
         <div className="absolute top-[50%] right-[30%] bg-brand2 z-10 size-[350px] rounded-full blur-[170px]"></div>
         <div className="absolute top-[10%] left-[50%] bg-brand3 z-10 size-[250px] rounded-full blur-[120px]"></div>
 
-        <div className="grid md:grid-cols-2 grid-cols-1  font-clash  pb-20 px-3 md:px-0">
+        <div className="grid md:grid-cols-2 grid-cols-1  font-clash  pb-20 ">
             <div className=" w-full z-50  ">
                 <div className="flex items-center justify-center  m-10">
                     <img src="/logo.png" alt="logo" className="w-56" />

@@ -150,7 +150,7 @@ const PersonalDetail = () => {
     };
 
     return (
-        <div className="w-full relative justify-center items-start flex h-full">
+        <div className="w-full relative justify-center items-start flex h-full container">
             <div className="flex flex-col pt-10 gap-8 text-white">
                 <div className="flex gap-8">
                     <div className="w-full">
