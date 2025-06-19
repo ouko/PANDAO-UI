@@ -33,27 +33,26 @@ function MetaData() {
   };
 
   return (
-    <div className="z-50 container mx-auto flex flex-col items-center justify-center mt-10 w-full">
-      <div className="h-[42px] relative w-full ">
-      <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] w-full h-[42px]"></div>
-      <div className="rounded-[300px] w-[65%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
-      <div className="bg-[#8f58ff] rounded-full w-[24.55px] h-[21px] absolute left-[85%] top-1/2 -translate-y-1/2 blur-[18.95px]"></div>
-    </div>
+    <div className="z-50 container mx-auto flex flex-col items-center justify-center mt-10 w-full px-4">
+  {/* Progress Bar */}
+  <div className="h-[42px] relative w-full">
+    <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] w-full h-[42px]"></div>
+    <div className="rounded-[300px] w-[60%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
+    <div className="bg-[#8f58ff] rounded-full w-[24.55px] h-[21px] absolute left-[75%] top-1/2 -translate-y-1/2 blur-[18.95px]"></div>
+  </div>
 
-      <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-10 gap-7 p-10 border border-[#5228A4] flex flex-col justify-start items-start mb-10">
-        <div className="text-[40px] leading-[130%] font-semibold text-start">
-          <span>
-            <span className="step-2-describe-your-dao-span text-[#AE85FF]">STEP -5 :</span>
-            <span className="step-2-describe-your-dao-span2"></span>
-            <span className="step-2-describe-your-dao-span3 text-amber-50">Meta Data</span>
-          </span>
-      </div>
-        <div className="text-[#ffffff] text-xl leading-[130%] font-normal text-center">
-        Add your community&apos;s social media and website links
-      </div>
+  {/* Step Section */}
+  <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-10 gap-4 p-6 md:p-10 border border-[#5228A4] flex flex-col items-start mb-10">
+    <div className="text-2xl md:text-4xl font-semibold text-start text-white">
+      <span className="text-[#AE85FF]">STEP -4 :</span>{' '}
+      <span className="text-amber-50">Meta Data</span>
     </div>
+    <div className="text-[#ffffff] text-base md:text-xl font-normal text-center">
+     Add your community&apos;s social media and website links
+    </div>
+  </div>
 
-      <div className="w-[1221px] mx-auto pt-10 gap-4 shadow-lg rounded-lg">
+      <div className="w-full max-w-screen-lg text-white mx-auto pt-6 md:pt-10 gap-4 shadow-lg rounded-lg space-y-6">
         <div className="space-y-4">
           {/* Website */}
           <div className="flex flex-col gap-2.5 items-start justify-start py-2 self-stretch shrink-0 relative">
