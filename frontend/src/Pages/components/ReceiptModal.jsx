@@ -24,7 +24,7 @@ navigate("/");
   return (
     <div>
       <Dialog open={successOpen} setOpen={setSuccessOpen}>
-        <DialogContent>
+        <DialogContent  className="bg-[rgba(169,126,255,0.34)] backdrop-blur-md rounded-[20px] w-full max-w-4xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
           <DialogHeader>
             <DialogTitle className="text-3xl font-semibold" >Receipt</DialogTitle>
             <DialogDescription className="max-h-[400px] h-full w-full  overflow-y-auto p-2 ">
