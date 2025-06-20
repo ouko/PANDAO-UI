@@ -19,6 +19,27 @@ import {
 
 } from '@/components/ui/dialog'
 import { toast } from 'sonner'
+import { Coins, ImageIcon } from 'lucide-react'
+import { Checkbox } from '@/components/ui/checkbox'
+const Section = ({ title, children }) => (
+  <div className="space-y-4">
+    <h3 className="text-xl font-bold text-white border-b border-purple-900/50 pb-2 flex items-center gap-2">
+      {title}
+    </h3>
+    <div className="space-y-4">
+      {children}
+    </div>
+  </div>
+);
+
+const InfoItem = ({ label, value }) => (
+  <div className="space-y-1">
+    <div className="text-sm font-medium text-purple-300">{label}</div>
+    <div className="text-white text-base font-normal">
+      {typeof value === 'string' || typeof value === 'number' ? value : value}
+    </div>
+  </div>
+);
 const DeployView = () => {
   const navigate = useNavigate()
   const { accounts } = useAccount()
@@ -279,128 +300,187 @@ const DeployView = () => {
 
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger></DialogTrigger>
-        <DialogContent className="bg-[rgba(169,126,255,0.34)] text-white backdrop-blur-md rounded-[20px] w-full max-w-5xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
-          <DialogHeader>
+     <Dialog open={open} onOpenChange={setOpen}>
+  <DialogTrigger></DialogTrigger>
+  <DialogContent className="bg-[#0F0828] text-white backdrop-blur-md rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto p-0 border-2 border-[#2A1B5E]">
+    <div className="p-8">
+      <DialogHeader>
+        <DialogTitle className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+          Review & Deploy
+        </DialogTitle>
+        <DialogDescription className="text-gray-300 mt-2">
+          Please review all details before deploying your community
+        </DialogDescription>
+      </DialogHeader>
 
-          </DialogHeader>
+      <div className="mt-8 space-y-10">
+        {/* Images Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <h3 className="text-lg font-semibold text-purple-300 flex items-center gap-2">
+              <ImageIcon className="h-5 w-5" /> Community Image
+            </h3>
+            {formFields.communityImage && (
+              <div className="relative aspect-video rounded-xl border-2 border-purple-900/50 overflow-hidden bg-gradient-to-br from-purple-900/20 to-pink-900/20">
+                <img
+                  src={formFields.communityImage}
+                  alt="Community"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-lg font-semibold text-purple-300 flex items-center gap-2">
+              <Coins className="h-5 w-5" /> Token Image
+            </h3>
+            {formFields.token.tokenImageUrl && (
+              <div className="relative aspect-square w-32 h-32 rounded-xl border-2 border-purple-900/50 overflow-hidden bg-gradient-to-br from-purple-900/20 to-pink-900/20">
+                <img
+                  src={formFields.token.tokenImageUrl}
+                  alt="Token"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
+          </div>
+        </div>
 
-          <div className="space-y-2 text-gray-200 text-lg">
-  {/* Basic Info */}
-  <div className="space-y-8 text-gray-200 text-base">
-  {/* Images */}
-  <div className="grid grid-cols-2 gap-10 pb-12">
-    <div>
-      <div className="font-medium my-2">Community Image</div>
-      {formFields.communityImage && (
-        <img
-          src={formFields.communityImage}
-          alt="Community"
-          className="size-10 aspect-video object-contain h-full w-full rounded-lg border"
-        />
-      )}
-    </div>
-    <div>
-      <div className="font-medium my-2">Token Image</div>
-      {formFields.token.tokenImageUrl && (
-        <img
-          src={formFields.token.tokenImageUrl}
-          alt="Token"
-          className="size-10 aspect-video object-contain h-full w-full rounded-lg border"
-        />
-      )}
-    </div>
-  </div>
-
-  {/* Basic Info */}
-  <div>
-    <div className="text-xl text-brand6 font-semibold pb-2">Basic Information</div>
-    <div><strong>User Address:</strong> {formFields.userAddress}</div>
-    <div><strong>Community Name:</strong> {formFields.communityName}</div>
-    <div><strong>Description:</strong> {formFields.description}</div>
-    <div><strong>Purpose:</strong> {formFields.purpose}</div>
-    <div><strong>Tags:</strong> {formFields.tags.join(', ')}</div>
-    <div><strong>Package Address:</strong> {formFields.package_addr}</div>
-  </div>
-
-  {/* Token Info */}
-  <div>
-    <div className="text-xl text-brand6 font-semibold pb-2">Token Details</div>
-    <div><strong>Name:</strong> {formFields.token.name}</div>
-    <div><strong>Symbol:</strong> {formFields.token.symbol}</div>
-    <div><strong>Is Mintable:</strong> {formFields.token.isMintable ? 'Yes' : 'No'}</div>
-    <div><strong>Total Supply:</strong> {formFields.token.totalSupply}</div>
-    <div><strong>Token Supply:</strong> {formFields.token.tokenSupply}</div>
-    <div><strong>Token Price:</strong> {formFields.token.tokenPrice}</div>
-    <div><strong>Withdraw Price:</strong> {formFields.token.tokenWithDrawPrice}</div>
-  </div>
-
-  {/* Metadata */}
-  <div>
-    <div className="text-xl text-brand6 font-semibold pb-2">Metadata</div>
-    <div><strong>Website:</strong> {formFields.metaData.website}</div>
-    <div><strong>Discord:</strong> {formFields.metaData.discord}</div>
-    <div><strong>Telegram:</strong> {formFields.metaData.telegram}</div>
-    <div><strong>Forum:</strong> {formFields.metaData.forum}</div>
-  </div>
-
-  {/* Airdrop Info */}
-  <div>
-    <div className="text-xl text-brand6 font-semibold pb-2">Airdrop Settings</div>
-    <div><strong>Public Sale:</strong> {formFields.airDrop.publicSale}</div>
-    <div><strong>Founding Team:</strong> {formFields.airDrop.foundingTeam}</div>
-    <div><strong>Treasury:</strong> {formFields.airDrop.treasury}</div>
-    <div><strong>Community Incentives:</strong> {formFields.airDrop.communityIncentives}</div>
-    <div><strong>Airdrop Start Time:</strong> {formFields.airDrop.airDropStartTime}</div>
-    <div><strong>Airdrop End Time:</strong> {formFields.airDrop.airDropEndTime}</div>
-    <div><strong>Amount per Airdrop:</strong> {formFields.airDrop.amount_per_air_drop}</div>
-  </div>
-
-  {/* Governance Info */}
-  <div>
-    <div className="text-xl text-brand6 font-semibold pb-2">Governance Settings</div>
-    <div><strong>Proposal Threshold:</strong> {formFields.governance.proposalThreshold}</div>
-    <div><strong>Quorum Percentage:</strong> {formFields.governance.quorumPercentage}%</div>
-    <div><strong>Voting Period:</strong> {formFields.governance.votingPeriodDays} days</div>
-    <div><strong>Pass Threshold:</strong> {formFields.governance.passThresholdPercentage}%</div>
-    <div><strong>Who can Propose:</strong> {formFields.governance.proposal_right}</div>
-    <div><strong>Minimum Tokens to Propose:</strong> {formFields.governance.proposal_minimum_token}</div>
-  </div>
-</div>
-
-</div>
-
-
-          <div className="flex items-start gap-3 text-sm text-gray-300 border-t border-gray-600 pt-6">
-            <input
-              type="checkbox"
-              id="terms"
-              checked={agreed}
-              onChange={() => setAgreed(!agreed)}
-              className="mt-1 accent-brand2"
-              disabled={!hasReadTerms}
+        {/* Content Sections */}
+        <div className="space-y-8">
+          {/* Basic Info */}
+          <Section title="Basic Information">
+            <InfoItem label="Community Name" value={formFields.communityName} />
+            <InfoItem label="Description" value={formFields.description} />
+            <InfoItem label="Purpose" value={formFields.purpose} />
+            <InfoItem 
+              label="Tags" 
+              value={
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {formFields.tags.map((tag, i) => (
+                    <span key={i} className="px-3 py-1 bg-purple-900/30 text-purple-200 rounded-full text-sm">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              } 
             />
-            <label htmlFor="terms">
+          </Section>
+
+          {/* Token Info */}
+          <Section title="Token Details">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <InfoItem label="Name" value={formFields.token.name} />
+              <InfoItem label="Symbol" value={formFields.token.symbol} />
+              <InfoItem 
+                label="Total Supply" 
+                value={`${Number(formFields.token.totalSupply).toLocaleString()} ${formFields.token.symbol}`} 
+              />
+              <InfoItem 
+                label="Token Price" 
+                value={`${formFields.token.tokenPrice} SUI`} 
+              />
+            </div>
+          </Section>
+
+          {/* Airdrop Info */}
+          <Section title="Airdrop Distribution">
+            <div className="space-y-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <InfoItem 
+                  label="Public Sale" 
+                  value={`${formFields.airDrop.publicSale}%`} 
+                />
+                <InfoItem 
+                  label="Founding Team" 
+                  value={`${formFields.airDrop.foundingTeam}%`} 
+                />
+                <InfoItem 
+                  label="Treasury" 
+                  value={`${formFields.airDrop.treasury}%`} 
+                />
+                <InfoItem 
+                  label="Community Incentives" 
+                  value={`${formFields.airDrop.communityIncentives}%`} 
+                />
+              </div>
+              <div className="mt-4 bg-purple-900/20 p-4 rounded-lg">
+                <InfoItem 
+                  label="Amount per Airdrop" 
+                  value={`${formFields.airDrop.amount_per_air_drop} ${formFields.token.symbol}`} 
+                />
+                <InfoItem 
+                  label="Airdrop Period" 
+                  value={`${new Date(formFields.airDrop.airDropStartTime).toLocaleString()} - ${new Date(formFields.airDrop.airDropEndTime).toLocaleString()}`} 
+                />
+              </div>
+            </div>
+          </Section>
+
+          {/* Governance Info */}
+          <Section title="Governance Settings">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <InfoItem 
+                label="Proposal Threshold" 
+                value={`${formFields.governance.proposalThreshold} ${formFields.token.symbol}`} 
+              />
+              <InfoItem 
+                label="Quorum" 
+                value={`${formFields.governance.quorumPercentage}%`} 
+              />
+              <InfoItem 
+                label="Voting Period" 
+                value={`${formFields.governance.votingPeriodDays} days`} 
+              />
+              <InfoItem 
+                label="Pass Threshold" 
+                value={`${formFields.governance.passThresholdPercentage}%`} 
+              />
+              <InfoItem 
+                label="Proposal Rights" 
+                value={formFields.governance.proposal_right.split('_').map(word => 
+                  word.charAt(0).toUpperCase() + word.slice(1)
+                ).join(' ')} 
+              />
+            </div>
+          </Section>
+        </div>
+
+        {/* Terms and Conditions */}
+        <div className="bg-[#1A0F3A] p-6 rounded-xl border border-purple-900/50">
+          <div className="flex items-start gap-3">
+            <div className="mt-1">
+              <Checkbox
+                id="terms"
+                checked={agreed}
+                onCheckedChange={() => setAgreed(!agreed)}
+                className="h-5 w-5 border-2 border-purple-400 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500 bg-[#1A0F3A]"
+                disabled={!hasReadTerms}
+              />
+            </div>
+            <label htmlFor="terms" className="text-sm text-gray-300 leading-relaxed">
               I agree to the{' '}
               <button
                 type="button"
                 onClick={() => setTermsDialogOpen(true)}
-                className="underline text-brand4 hover:text-brand5"
+                className="text-purple-300 hover:text-white font-medium underline underline-offset-4"
               >
                 Terms & Conditions
               </button>{' '}
               and acknowledge that once the Community is deployed, it cannot be modified or reversed.
               {!hasReadTerms && (
-                <span className="block text-amber-400 mt-1">
-                  Please read the Terms & Conditions first
-                </span>
+                <div className="mt-2 text-amber-400 flex items-center gap-2">
+                  <AlertCircle className="h-4 w-4" />
+                  <span>Please read the Terms & Conditions first</span>
+                </div>
               )}
             </label>
           </div>
+        </div>
 
-
-          {loading ? (
+        {/* Deploy Button */}
+        <div className="pt-4">
+        {loading ? (
             <button
               className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF]
           hover:to-[#391483] disabled:bg-brand3 disabled:cursor-not-allowed"
@@ -418,8 +498,11 @@ const DeployView = () => {
               Deploy
             </button>
           )}
-        </DialogContent>
-      </Dialog>
+        </div>
+      </div>
+    </div>
+  </DialogContent>
+</Dialog>
 
       {/* Terms and Conditions Dialog */}
       <Dialog open={termsDialogOpen} onOpenChange={setTermsDialogOpen}>
