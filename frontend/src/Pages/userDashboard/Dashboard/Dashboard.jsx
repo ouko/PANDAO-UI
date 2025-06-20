@@ -226,12 +226,12 @@ const handleOnEdit=()=>{
       {/* Safe access to usermetadata */}
       <NavBar userImage={userData?.usermetadata?.image_url || null} isAdmin={true} />
 
-      <div className="flex flex-row items-start justify-between relative max-w-[1600px] mx-auto gap-5">
-        <div className="sticky top-0 h-full">
+      <div className="flex flex-row items-start justify-between relative container mx-auto gap-5">
+        <div className="sticky top-0 h-full hidden md:block">
           <Sidebar userData={userData || {}} onEdit={handleOnEdit} />
         </div>
 
-        <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] border mt-24 border-brand2 mr-10 w-full relative overflow-hidden backdrop-blur-[6.7px]">
+        <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] border mt-24 border-brand2  w-full relative overflow-hidden backdrop-blur-[6.7px]">
           <div className="flex border-b bg-black/60 border-brand1 py-2">
             {tabs.map((tab, index) => (
               <button
