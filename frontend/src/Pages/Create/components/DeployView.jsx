@@ -610,7 +610,6 @@ const DeployView = () => {
               required
               className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             >
-              <option value="">Select who can propose</option>
               <option value="all_members">All Members</option>
               <option value="token_holders">Token Holders Only</option>
               <option value="council_members">Council Members Only</option>
