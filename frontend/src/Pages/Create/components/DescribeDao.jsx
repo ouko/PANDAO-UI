@@ -136,7 +136,7 @@ const DescribeView = () => {
       <span className="text-[#AE85FF]">STEP -2 :</span>{' '}
       <span className="text-amber-50">Describe your DAO</span>
     </div>
-    <div className="text-[#ffffff] text-base md:text-xl font-normal text-center">
+    <div className="text-[#ffffff] text-base md:text-xl font-normal text-left">
       Start simple and learn as you go. You can always evolve your DAO in the future.
     </div>
   </div>

@@ -47,7 +47,7 @@ function MetaData() {
       <span className="text-[#AE85FF]">STEP -4 :</span>{' '}
       <span className="text-amber-50">Meta Data</span>
     </div>
-    <div className="text-[#ffffff] text-base md:text-xl font-normal text-center">
+    <div className="text-[#ffffff] text-base md:text-xl font-normal text-left">
      Add your community&apos;s social media and website links
     </div>
   </div>

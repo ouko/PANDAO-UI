@@ -62,7 +62,7 @@ function AirDrop() {
       <span className="text-[#AE85FF]">STEP -5 :</span>{' '}
       <span className="text-amber-50">AirDrop</span>
     </div>
-    <div className="text-[#ffffff] text-base md:text-xl font-normal text-center">
+    <div className="text-[#ffffff] text-base md:text-xl font-normal text-left">
       Configure your token distribution and airdrop settings
     </div>
   </div>
