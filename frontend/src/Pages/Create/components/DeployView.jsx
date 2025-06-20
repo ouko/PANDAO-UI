@@ -302,7 +302,7 @@ const DeployView = () => {
     <>
      <Dialog open={open} onOpenChange={setOpen}>
   <DialogTrigger></DialogTrigger>
-  <DialogContent className="bg-[#0F0828] text-white backdrop-blur-md rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto p-0 border-2 border-[#2A1B5E]">
+  <DialogContent className="bg-[#0F0828] text-white backdrop-blur-md rounded-2xl w-full max-w-4xl  max-h-[90vh] overflow-y-auto p-0 border-2 border-[#2A1B5E]">
     <div className="p-8">
       <DialogHeader>
         <DialogTitle className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
@@ -320,29 +320,33 @@ const DeployView = () => {
             <h3 className="text-lg font-semibold text-purple-300 flex items-center gap-2">
               <ImageIcon className="h-5 w-5" /> Community Image
             </h3>
-            {formFields.communityImage && (
-              <div className="relative aspect-video rounded-xl border-2 border-purple-900/50 overflow-hidden bg-gradient-to-br from-purple-900/20 to-pink-900/20">
+            <div className="relative aspect-square rounded-xl border-2 border-purple-900/50 overflow-hidden bg-gradient-to-br from-purple-900/20 to-pink-900/20 flex items-center justify-center">
+              {formFields.communityImage ? (
                 <img
                   src={formFields.communityImage}
                   alt="Community"
                   className="w-full h-full object-cover"
                 />
-              </div>
-            )}
+              ) : (
+                <span className="text-gray-400">No image</span>
+              )}
+            </div>
           </div>
           <div className="space-y-2">
             <h3 className="text-lg font-semibold text-purple-300 flex items-center gap-2">
               <Coins className="h-5 w-5" /> Token Image
             </h3>
-            {formFields.token.tokenImageUrl && (
-              <div className="relative aspect-square w-32 h-32 rounded-xl border-2 border-purple-900/50 overflow-hidden bg-gradient-to-br from-purple-900/20 to-pink-900/20">
+            <div className="relative aspect-square rounded-xl border-2 border-purple-900/50 overflow-hidden bg-gradient-to-br from-purple-900/20 to-pink-900/20 flex items-center justify-center">
+              {formFields.token.tokenImageUrl ? (
                 <img
                   src={formFields.token.tokenImageUrl}
                   alt="Token"
                   className="w-full h-full object-cover"
                 />
-              </div>
-            )}
+              ) : (
+                <span className="text-gray-400">No image</span>
+              )}
+            </div>
           </div>
         </div>
 

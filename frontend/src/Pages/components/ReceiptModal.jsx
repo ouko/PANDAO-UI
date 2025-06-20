@@ -10,38 +10,60 @@ import {
 import useModalStore from "@/store/modal";
 import useTokenWeightStore from "@/store/templateStore/tokenWeightStore";
 import { useNavigate } from "react-router-dom";
+import { CheckCircle2 } from 'lucide-react';
+import BrandButton from "@/components/ui/myComponents/brand-button";
 
-const ReceiptModal = ({children}) => {
-  const { successOpen,setSuccessOpen } = useModalStore();
+const ReceiptModal = ({ children }) => {
+  const { successOpen, setSuccessOpen } = useModalStore();
   const { resetFormFields } = useTokenWeightStore();
   const navigate = useNavigate();
 
-  const handleOk=()=>{
-    setSuccessOpen(false)
-    resetFormFields()
-navigate("/");
-  }
+  const handleOk = () => {
+    setSuccessOpen(false);
+    resetFormFields();
+    navigate("/");
+  };
+
   return (
-    <div>
-      <Dialog open={successOpen} setOpen={setSuccessOpen}>
-        <DialogContent  className="bg-[rgba(169,126,255,0.34)] backdrop-blur-md rounded-[20px] w-full max-w-4xl flex flex-col gap-7 border border-[#5228A4] max-h-[90vh] overflow-y-auto p-6">
-          <DialogHeader>
-            <DialogTitle className="text-3xl font-semibold" >Receipt</DialogTitle>
-            <DialogDescription className="max-h-[400px] h-full w-full  overflow-y-auto p-2 ">
-             {children}
-            </DialogDescription>
-            <Button onClick={handleOk} > 
-                OK
-            </Button>
+    <Dialog open={successOpen} onOpenChange={setSuccessOpen}>
+      <DialogContent className="bg-[#0F0828] text-white backdrop-blur-md rounded-2xl w-full max-w-2xl border-2 border-[#2A1B5E] p-0 overflow-hidden max-h-[93vh]">
+        <div className="p-8">
+          <DialogHeader className="items-center text-center">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-500/20 mb-4">
+              <CheckCircle2 className="h-10 w-10 text-green-400" />
+            </div>
+            <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              Success!
+            </DialogTitle>
+            {/* <DialogDescription className="text-gray-300 mt-2">
+              Your community has been successfully deployed
+            </DialogDescription> */}
           </DialogHeader>
-        </DialogContent>
-      </Dialog>
-    </div>
+
+          <div className="mt-8 max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
+            <div className="bg-[#1A0F3A] rounded-xl border border-purple-900/50 p-6">
+              <h3 className="text-lg font-semibold text-purple-300 mb-4">Transaction Details</h3>
+              <div className="space-y-4">
+                {children}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 flex justify-center">
+            <BrandButton
+            title="Back to Home"
+            href="/"
+            />
+         
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };
+
 ReceiptModal.propTypes = {
-    children: PropTypes.node.isRequired,
-  };
-  
+  children: PropTypes.node.isRequired,
+};
 
 export default ReceiptModal;
