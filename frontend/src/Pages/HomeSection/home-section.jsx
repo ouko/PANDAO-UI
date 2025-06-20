@@ -5,6 +5,7 @@ import Reviews from "./homeSectionComponents/Reviews";
 import ExploreSection from "./homeSectionComponents/ExploreSection";
 import Welcome from "./homeSectionComponents/welcome";
 import PriceSection from "./homeSectionComponents/PriceSection";
+import Carousel from "./homeSectionComponents/Carousel";
 
 const HomePage = () => {
     return (
@@ -20,6 +21,9 @@ const HomePage = () => {
             <div className="absolute top-[50%] right-[30%] bg-brand2 z-10 size-[350px] rounded-full blur-[170px]"></div>
             <div className="absolute top-[10%] left-[50%] bg-brand3 z-10 size-[250px] rounded-full blur-[120px]"></div>
             <HomeSection />
+            <div className="container mx-auto px-4 pt-20  md:pt-32  z-50">
+            <Carousel/>
+      </div>
             <ExploreSection />
             <Welcome />
             <Reviews />

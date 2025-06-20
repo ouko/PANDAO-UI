@@ -140,7 +140,7 @@ const PriceSection = () => {
   ];
 
   return (
-    <div className="flex  flex-col gap-[10px] z-50 items-center justify-start ">
+    <div className="flex  flex-col gap-[10px] z-50 items-center justify-start container mx-auto px-4">
       <div className="flex flex-col gap-3 items-center justify-start self-stretch z-50">
         <div className="text-center font-semibold md:text-[64px] text-[30px] leading-[120%]  self-stretch bg-gradient-to-r from-white to-[rgba(99,89,233,1)] bg-clip-text text-transparent">
           The Perfect Pricing to Power Your DAO Development. 

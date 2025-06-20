@@ -59,7 +59,7 @@ const HomeSection = () => {
               <span className="text-white md:text-3xl text-xl  font-thin tracking-wide">Effortless, Effective, Empowering.</span>
             </span>
           </div>
-          <div className="text-[#B59AEC] font-clash text-center md:text-left  text-md md:text-xl leading-normal font-medium tracking-wider relative max-w-[627.74px]">
+          <div className="text-[#B59AEC] font-clash text-center md:text-left  text-md md:text-xl leading-normal font-medium tracking-wider relative md:max-w-[627.74px] px-3 md:px-0">
             Making Blockchain Accessible and DAO Governance Effortless.
           </div>
 

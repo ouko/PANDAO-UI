@@ -5,7 +5,7 @@ const Welcome = () => {
         <div className="text-[35px] md:text-[64px] leading-tight font-semibold bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent text-center font-clash z-50">
             Welcome to the Future of Decentralized Governance
         </div>
-        <div className="text-[24px]  leading-tight font-semibold bg-gradient-to-r from-white to-[#9290bb] bg-clip-text text-transparent text-center  z-50 pb-10 font-mono">
+        <div className="md:text-[24px] text-[18px]  leading-tight font-semibold bg-gradient-to-r from-white to-[#9290bb] bg-clip-text text-transparent text-center  z-50 pb-10 ">
             Discover how Urify is empowering users to take control of their finances effortlessly.
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 max-w-7xl mx-auto w-full z-50">

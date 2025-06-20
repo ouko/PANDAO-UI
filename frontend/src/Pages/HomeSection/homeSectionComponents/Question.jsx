@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import BrandButton from "@/components/ui/myComponents/brand-button";
 import React, { useState } from "react";
 
@@ -23,12 +24,16 @@ function Question() {
             Got Questions? We&apos;ve Got Answers!
           </h1>
           <p className="text-gray-400 text-lg mt-2 font-clash">Find answers to the most common questions below.</p>
-          <div className="pt-6">
-           <BrandButton title='Get Started' href='' />
-           </div>
+          <div className="pt-6 w-full">
+            <Button variant="brand" className="w-full md:w-60">
+              <span className="text-[#ffffff] text-[14px] leading-5 font-medium">
+                Get Started
+              </span>
+            </Button>
+          </div>
         </div>
-        
-        
+
+
         <div className="flex flex-col gap-4 w-full lg:w-[40rem] mt-8 lg:mt-0">
           {faqs.map((faq, index) => (
             <div key={index} className="p-[2px] rounded-lg bg-gradient-to-r from-[#1e0165] to-[#48386c]">
@@ -38,14 +43,14 @@ function Question() {
                   className="cursor-pointer text-lg md:text-xl font-semibold text-white flex items-center gap-2 px-4"
                 >
                   <div className="flex items-center justify-between w-full">
-                  <span>{faq.question}</span>
-                  <div>
-  {index === openIndex ? (
-    <img src="/close.png" alt="Open" />
-  ) : (
-    <img src="/open.png" alt="Close" />
-  )}
-</div>
+                    <span>{faq.question}</span>
+                    <div>
+                      {index === openIndex ? (
+                        <img src="/close.png" alt="Open" />
+                      ) : (
+                        <img src="/open.png" alt="Close" />
+                      )}
+                    </div>
 
                   </div>
                 </div>
@@ -63,4 +68,4 @@ function Question() {
   );
 }
 
-export default  Question;
+export default Question;
