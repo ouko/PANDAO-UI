@@ -34,7 +34,7 @@ const MobileSidebar = () => {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild >
-        <Button size="icon">
+        <Button size="icon" variant="ghost" className="bg-transparent">
           <Menu />
         </Button>
       </SheetTrigger>
