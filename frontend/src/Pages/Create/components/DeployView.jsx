@@ -21,6 +21,7 @@ import {
 import { toast } from 'sonner'
 import { Coins, ImageIcon } from 'lucide-react'
 import { Checkbox } from '@/components/ui/checkbox'
+import { FiHelpCircle } from 'react-icons/fi'
 const Section = ({ title, children }) => (
   <div className="space-y-4">
     <h3 className="text-xl font-bold text-white border-b border-purple-900/50 pb-2 flex items-center gap-2">
@@ -79,16 +80,16 @@ const DeployView = () => {
     try {
       // Create a deep copy of formFields to modify
       const formData = JSON.parse(JSON.stringify(formFields));
-      
+
       // Convert datetime strings to timestamps
       if (formData.airDrop && formData.airDrop.airDropStartTime) {
         formData.airDrop.airDropStartTime = new Date(formData.airDrop.airDropStartTime).getTime() / 1000;
       }
-      
+
       if (formData.airDrop && formData.airDrop.airDropEndTime) {
         formData.airDrop.airDropEndTime = new Date(formData.airDrop.airDropEndTime).getTime() / 1000;
       }
-      
+
       // Ensure governance.passThresholdPercentage is at least 50
       if (formData.governance && formData.governance.passThresholdPercentage) {
         const passThreshold = Number(formData.governance.passThresholdPercentage);
@@ -96,12 +97,12 @@ const DeployView = () => {
           formData.governance.passThresholdPercentage = '50';
         }
       }
-      
+
       // Log the full URL for debugging
       const deployUrl = `${import.meta.env.VITE_BACKEND_URL}/manifest/build/deploy-dao`;
       console.log('Deploying to URL:', deployUrl);
       console.log('Form data being sent:', formData);
-      
+
       const response = await axios.post(
         deployUrl,
         formData,
@@ -132,17 +133,17 @@ const DeployView = () => {
         // You may need to adjust this based on your actual receipt structure
         const componentAddresses = recipt.componentAddresses || [];
         const componentAddress = componentAddresses.length > 0 ? componentAddresses[0] : null;
-        
+
         // If we don't have a component address from the receipt, check other receipt properties
         // This is a fallback mechanism - modify according to your actual receipt structure
-        const fallbackAddress = 
-          componentAddress || 
-          recipt.newComponents?.[0]?.address || 
+        const fallbackAddress =
+          componentAddress ||
+          recipt.newComponents?.[0]?.address ||
           recipt.entities?.[0]?.address ||
           recipt.resources?.[0]?.resourceAddress;
-        
+
         console.log('Extracted component address:', fallbackAddress);
-        
+
         // Step 3: Submit transaction ID to backend
         const submitResponse = await axios.post(
           `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
@@ -193,7 +194,7 @@ const DeployView = () => {
             toast.success('Community registered successfully!');
           } catch (communityError) {
             console.error('Error registering community:', communityError);
-            toast.error('Community deployment succeeded, but registration failed: ' + 
+            toast.error('Community deployment succeeded, but registration failed: ' +
               (communityError.response?.data?.detail || communityError.message));
           }
         } else {
@@ -203,7 +204,7 @@ const DeployView = () => {
 
         // Step 5: Open success modal
         setSuccessOpen(true);
-        
+
       } else {
         throw new Error('Transaction ID not found')
       }
@@ -283,7 +284,7 @@ const DeployView = () => {
 
     // For fields inside governance
     const governanceFields = ['proposalThreshold', 'quorumPercentage', 'votingPeriodDays', 'passThresholdPercentage', 'proposal_right', 'proposal_minimum_token'];
-    
+
     if (governanceFields.includes(name)) {
       setFormFields({
         governance: {
@@ -300,213 +301,213 @@ const DeployView = () => {
 
   return (
     <>
-     <Dialog open={open} onOpenChange={setOpen}>
-  <DialogTrigger></DialogTrigger>
-  <DialogContent className="bg-[#0F0828] text-white backdrop-blur-md rounded-2xl w-full max-w-4xl  max-h-[90vh] overflow-y-auto p-0 border-2 border-[#2A1B5E]">
-    <div className="p-8">
-      <DialogHeader>
-        <DialogTitle className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-          Review & Deploy
-        </DialogTitle>
-        <DialogDescription className="text-gray-300 mt-2">
-          Please review all details before deploying your community
-        </DialogDescription>
-      </DialogHeader>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger></DialogTrigger>
+        <DialogContent className="bg-[#0F0828] text-white backdrop-blur-md rounded-2xl w-full max-w-4xl  max-h-[90vh] overflow-y-auto p-0 border-2 border-[#2A1B5E]">
+          <div className="p-8">
+            <DialogHeader>
+              <DialogTitle className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Review & Deploy
+              </DialogTitle>
+              <DialogDescription className="text-gray-300 mt-2">
+                Please review all details before deploying your community
+              </DialogDescription>
+            </DialogHeader>
 
-      <div className="mt-8 space-y-10">
-        {/* Images Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <h3 className="text-lg font-semibold text-purple-300 flex items-center gap-2">
-              <ImageIcon className="h-5 w-5" /> Community Image
-            </h3>
-            <div className="relative aspect-square rounded-xl border-2 border-purple-900/50 overflow-hidden bg-gradient-to-br from-purple-900/20 to-pink-900/20 flex items-center justify-center">
-              {formFields.communityImage ? (
-                <img
-                  src={formFields.communityImage}
-                  alt="Community"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <span className="text-gray-400">No image</span>
-              )}
-            </div>
-          </div>
-          <div className="space-y-2">
-            <h3 className="text-lg font-semibold text-purple-300 flex items-center gap-2">
-              <Coins className="h-5 w-5" /> Token Image
-            </h3>
-            <div className="relative aspect-square rounded-xl border-2 border-purple-900/50 overflow-hidden bg-gradient-to-br from-purple-900/20 to-pink-900/20 flex items-center justify-center">
-              {formFields.token.tokenImageUrl ? (
-                <img
-                  src={formFields.token.tokenImageUrl}
-                  alt="Token"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <span className="text-gray-400">No image</span>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Content Sections */}
-        <div className="space-y-8">
-          {/* Basic Info */}
-          <Section title="Basic Information">
-            <InfoItem label="Community Name" value={formFields.communityName} />
-            <InfoItem label="Description" value={formFields.description} />
-            <InfoItem label="Purpose" value={formFields.purpose} />
-            <InfoItem 
-              label="Tags" 
-              value={
-                <div className="flex flex-wrap gap-2 mt-1">
-                  {formFields.tags.map((tag, i) => (
-                    <span key={i} className="px-3 py-1 bg-purple-900/30 text-purple-200 rounded-full text-sm">
-                      {tag}
-                    </span>
-                  ))}
+            <div className="mt-8 space-y-10">
+              {/* Images Section */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold text-purple-300 flex items-center gap-2">
+                    <ImageIcon className="h-5 w-5" /> Community Image
+                  </h3>
+                  <div className="relative aspect-square rounded-xl border-2 border-purple-900/50 overflow-hidden bg-gradient-to-br from-purple-900/20 to-pink-900/20 flex items-center justify-center">
+                    {formFields.communityImage ? (
+                      <img
+                        src={formFields.communityImage}
+                        alt="Community"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-gray-400">No image</span>
+                    )}
+                  </div>
                 </div>
-              } 
-            />
-          </Section>
-
-          {/* Token Info */}
-          <Section title="Token Details">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <InfoItem label="Name" value={formFields.token.name} />
-              <InfoItem label="Symbol" value={formFields.token.symbol} />
-              <InfoItem 
-                label="Total Supply" 
-                value={`${Number(formFields.token.totalSupply).toLocaleString()} ${formFields.token.symbol}`} 
-              />
-              <InfoItem 
-                label="Token Price" 
-                value={`${formFields.token.tokenPrice} SUI`} 
-              />
-            </div>
-          </Section>
-
-          {/* Airdrop Info */}
-          <Section title="Airdrop Distribution">
-            <div className="space-y-2">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <InfoItem 
-                  label="Public Sale" 
-                  value={`${formFields.airDrop.publicSale}%`} 
-                />
-                <InfoItem 
-                  label="Founding Team" 
-                  value={`${formFields.airDrop.foundingTeam}%`} 
-                />
-                <InfoItem 
-                  label="Treasury" 
-                  value={`${formFields.airDrop.treasury}%`} 
-                />
-                <InfoItem 
-                  label="Community Incentives" 
-                  value={`${formFields.airDrop.communityIncentives}%`} 
-                />
-              </div>
-              <div className="mt-4 bg-purple-900/20 p-4 rounded-lg">
-                <InfoItem 
-                  label="Amount per Airdrop" 
-                  value={`${formFields.airDrop.amount_per_air_drop} ${formFields.token.symbol}`} 
-                />
-                <InfoItem 
-                  label="Airdrop Period" 
-                  value={`${new Date(formFields.airDrop.airDropStartTime).toLocaleString()} - ${new Date(formFields.airDrop.airDropEndTime).toLocaleString()}`} 
-                />
-              </div>
-            </div>
-          </Section>
-
-          {/* Governance Info */}
-          <Section title="Governance Settings">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <InfoItem 
-                label="Proposal Threshold" 
-                value={`${formFields.governance.proposalThreshold} ${formFields.token.symbol}`} 
-              />
-              <InfoItem 
-                label="Quorum" 
-                value={`${formFields.governance.quorumPercentage}%`} 
-              />
-              <InfoItem 
-                label="Voting Period" 
-                value={`${formFields.governance.votingPeriodDays} days`} 
-              />
-              <InfoItem 
-                label="Pass Threshold" 
-                value={`${formFields.governance.passThresholdPercentage}%`} 
-              />
-              <InfoItem 
-                label="Proposal Rights" 
-                value={formFields.governance.proposal_right.split('_').map(word => 
-                  word.charAt(0).toUpperCase() + word.slice(1)
-                ).join(' ')} 
-              />
-            </div>
-          </Section>
-        </div>
-
-        {/* Terms and Conditions */}
-        <div className="bg-[#1A0F3A] p-6 rounded-xl border border-purple-900/50">
-          <div className="flex items-start gap-3">
-            <div className="mt-1">
-              <Checkbox
-                id="terms"
-                checked={agreed}
-                onCheckedChange={() => setAgreed(!agreed)}
-                className="h-5 w-5 border-2 border-purple-400 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500 bg-[#1A0F3A]"
-                disabled={!hasReadTerms}
-              />
-            </div>
-            <label htmlFor="terms" className="text-sm text-gray-300 leading-relaxed">
-              I agree to the{' '}
-              <button
-                type="button"
-                onClick={() => setTermsDialogOpen(true)}
-                className="text-purple-300 hover:text-white font-medium underline underline-offset-4"
-              >
-                Terms & Conditions
-              </button>{' '}
-              and acknowledge that once the Community is deployed, it cannot be modified or reversed.
-              {!hasReadTerms && (
-                <div className="mt-2 text-amber-400 flex items-center gap-2">
-                  <AlertCircle className="h-4 w-4" />
-                  <span>Please read the Terms & Conditions first</span>
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold text-purple-300 flex items-center gap-2">
+                    <Coins className="h-5 w-5" /> Token Image
+                  </h3>
+                  <div className="relative aspect-square rounded-xl border-2 border-purple-900/50 overflow-hidden bg-gradient-to-br from-purple-900/20 to-pink-900/20 flex items-center justify-center">
+                    {formFields.token.tokenImageUrl ? (
+                      <img
+                        src={formFields.token.tokenImageUrl}
+                        alt="Token"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-gray-400">No image</span>
+                    )}
+                  </div>
                 </div>
-              )}
-            </label>
-          </div>
-        </div>
+              </div>
 
-        {/* Deploy Button */}
-        <div className="pt-4">
-        {loading ? (
-            <button
-              className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF]
+              {/* Content Sections */}
+              <div className="space-y-8">
+                {/* Basic Info */}
+                <Section title="Basic Information">
+                  <InfoItem label="Community Name" value={formFields.communityName} />
+                  <InfoItem label="Description" value={formFields.description} />
+                  <InfoItem label="Purpose" value={formFields.purpose} />
+                  <InfoItem
+                    label="Tags"
+                    value={
+                      <div className="flex flex-wrap gap-2 mt-1">
+                        {formFields.tags.map((tag, i) => (
+                          <span key={i} className="px-3 py-1 bg-purple-900/30 text-purple-200 rounded-full text-sm">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    }
+                  />
+                </Section>
+
+                {/* Token Info */}
+                <Section title="Token Details">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <InfoItem label="Name" value={formFields.token.name} />
+                    <InfoItem label="Symbol" value={formFields.token.symbol} />
+                    <InfoItem
+                      label="Total Supply"
+                      value={`${Number(formFields.token.totalSupply).toLocaleString()} ${formFields.token.symbol}`}
+                    />
+                    <InfoItem
+                      label="Token Price"
+                      value={`${formFields.token.tokenPrice} SUI`}
+                    />
+                  </div>
+                </Section>
+
+                {/* Airdrop Info */}
+                <Section title="Airdrop Distribution">
+                  <div className="space-y-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <InfoItem
+                        label="Public Sale"
+                        value={`${formFields.airDrop.publicSale}%`}
+                      />
+                      <InfoItem
+                        label="Founding Team"
+                        value={`${formFields.airDrop.foundingTeam}%`}
+                      />
+                      <InfoItem
+                        label="Treasury"
+                        value={`${formFields.airDrop.treasury}%`}
+                      />
+                      <InfoItem
+                        label="Community Incentives"
+                        value={`${formFields.airDrop.communityIncentives}%`}
+                      />
+                    </div>
+                    <div className="mt-4 bg-purple-900/20 p-4 rounded-lg">
+                      <InfoItem
+                        label="Amount per Airdrop"
+                        value={`${formFields.airDrop.amount_per_air_drop} ${formFields.token.symbol}`}
+                      />
+                      <InfoItem
+                        label="Airdrop Period"
+                        value={`${new Date(formFields.airDrop.airDropStartTime).toLocaleString()} - ${new Date(formFields.airDrop.airDropEndTime).toLocaleString()}`}
+                      />
+                    </div>
+                  </div>
+                </Section>
+
+                {/* Governance Info */}
+                <Section title="Governance Settings">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <InfoItem
+                      label="Proposal Threshold"
+                      value={`${formFields.governance.proposalThreshold} ${formFields.token.symbol}`}
+                    />
+                    <InfoItem
+                      label="Quorum"
+                      value={`${formFields.governance.quorumPercentage}%`}
+                    />
+                    <InfoItem
+                      label="Voting Period"
+                      value={`${formFields.governance.votingPeriodDays} days`}
+                    />
+                    <InfoItem
+                      label="Pass Threshold"
+                      value={`${formFields.governance.passThresholdPercentage}%`}
+                    />
+                    <InfoItem
+                      label="Proposal Rights"
+                      value={formFields.governance.proposal_right.split('_').map(word =>
+                        word.charAt(0).toUpperCase() + word.slice(1)
+                      ).join(' ')}
+                    />
+                  </div>
+                </Section>
+              </div>
+
+              {/* Terms and Conditions */}
+              <div className="bg-[#1A0F3A] p-6 rounded-xl border border-purple-900/50">
+                <div className="flex items-start gap-3">
+                  <div className="mt-1">
+                    <Checkbox
+                      id="terms"
+                      checked={agreed}
+                      onCheckedChange={() => setAgreed(!agreed)}
+                      className="h-5 w-5 border-2 border-purple-400 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500 bg-[#1A0F3A]"
+                      disabled={!hasReadTerms}
+                    />
+                  </div>
+                  <label htmlFor="terms" className="text-sm text-gray-300 leading-relaxed">
+                    I agree to the{' '}
+                    <button
+                      type="button"
+                      onClick={() => setTermsDialogOpen(true)}
+                      className="text-purple-300 hover:text-white font-medium underline underline-offset-4"
+                    >
+                      Terms & Conditions
+                    </button>{' '}
+                    and acknowledge that once the Community is deployed, it cannot be modified or reversed.
+                    {!hasReadTerms && (
+                      <div className="mt-2 text-amber-400 flex items-center gap-2">
+                        <AlertCircle className="h-4 w-4" />
+                        <span>Please read the Terms & Conditions first</span>
+                      </div>
+                    )}
+                  </label>
+                </div>
+              </div>
+
+              {/* Deploy Button */}
+              <div className="pt-4">
+                {loading ? (
+                  <button
+                    className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF]
           hover:to-[#391483] disabled:bg-brand3 disabled:cursor-not-allowed"
-              disabled
-            >
-              Deploying....
-            </button>
-          ) : (
-            <button
-              type="button"
-              disabled={!allFieldsFilled() || !agreed}
-              onClick={handleClaimToken}
-              className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] disabled:bg-brand3 disabled:cursor-not-allowed"
-            >
-              Deploy
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
-  </DialogContent>
-</Dialog>
+                    disabled
+                  >
+                    Deploying....
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    disabled={!allFieldsFilled() || !agreed}
+                    onClick={handleClaimToken}
+                    className="w-full text-xl rounded-full py-2 text-white font-semibold shadow-inner bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] disabled:bg-brand3 disabled:cursor-not-allowed"
+                  >
+                    Deploy
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Terms and Conditions Dialog */}
       <Dialog open={termsDialogOpen} onOpenChange={setTermsDialogOpen}>
@@ -595,35 +596,45 @@ const DeployView = () => {
         )}
       </ReceiptModal>
       <div className="z-50 container mx-auto flex flex-col items-center justify-center mt-10 w-full px-4">
-  {/* Progress Bar */}
-  <div className="h-[42px] relative w-full overflow-hidden">
-    <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] w-full h-[42px]"></div>
-    <div className="rounded-[300px]  w-[94%] md:w-[98%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
-    <div className="bg-[#8f58ff] rounded-full w-[24.55px] h-[21px] absolute left-[75%] top-1/2 -translate-y-1/2 blur-[18.95px]"></div>
-  </div>
+        {/* Progress Bar */}
+        <div className="h-[42px] relative w-full overflow-hidden">
+          <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] w-full h-[42px]"></div>
+          <div className="rounded-[300px]  w-[94%] md:w-[98%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
+          <div className="bg-[#8f58ff] rounded-full w-[24.55px] h-[21px] absolute left-[75%] top-1/2 -translate-y-1/2 blur-[18.95px]"></div>
+        </div>
 
-  {/* Step Section */}
-  <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-10 gap-4 p-6 md:p-10 border border-[#5228A4] flex flex-col items-start mb-10">
-    <div className="text-2xl md:text-4xl font-semibold text-start text-white">
-      <span className="text-[#AE85FF]">STEP -6 :</span>{' '}
-      <span className="text-amber-50">Deploy Your Community</span>
-    </div>
-    <div className="text-[#ffffff] text-base md:text-xl font-normal text-left">
-      Start simple and learn as you go. You can always evolve your DAO in the future
-    </div>
-  </div>
+        {/* Step Section */}
+        <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-10 gap-4 p-6 md:p-10 border border-[#5228A4] flex flex-col items-start mb-10">
+          <div className="text-2xl md:text-4xl font-semibold text-start text-white">
+            <span className="text-[#AE85FF]">STEP -6 :</span>{' '}
+            <span className="text-amber-50">Deploy Your Community</span>
+          </div>
+          <div className="text-[#ffffff] text-base md:text-xl font-normal text-left">
+            Start simple and learn as you go. You can always evolve your DAO in the future
+          </div>
+        </div>
 
 
         <div className="w-full max-w-screen-lg text-white mx-auto pt-6 md:pt-10 gap-4 shadow-lg rounded-lg space-y-6 ">
-          
-          
+
+
           <div className="w-full mt-10 mb-6">
           </div>
-          
+
           <div className="w-full gap-2.5 pb-8">
-            <label className="text-white text-2xl leading-[120%] font-medium">
-              Proposal Threshold:
-            </label>
+            <div className="flex items-center justify-between">
+              <label className="text-white text-2xl leading-[120%] font-medium">
+                Proposal Threshold
+              </label>
+              <FiHelpCircle
+                className="text-[#b59aec] cursor-pointer"
+                size={20}
+                title="Minimum number of tokens required to submit a proposal."
+              />
+            </div>
+            <div className="text-[#b59aec] text-sm mt-2 font-normal">
+              Minimum number of tokens required to submit a proposal.
+            </div>
             <input
               type="number"
               name="proposalThreshold"
@@ -632,14 +643,24 @@ const DeployView = () => {
               onChange={handleInputChange}
               required
               min="0"
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-2 shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
-          
+
           <div className="w-full gap-2.5 pb-8">
-            <label className="text-white text-2xl leading-[120%] font-medium">
-              Quorum Percentage:
-            </label>
+            <div className="flex items-center justify-between">
+              <label className="text-white text-2xl leading-[120%] font-medium">
+                Quorum Percentage
+              </label>
+              <FiHelpCircle
+                className="text-[#b59aec] cursor-pointer"
+                size={20}
+                title="Minimum percentage of total votes required for the proposal to be valid."
+              />
+            </div>
+            <div className="text-[#b59aec] text-sm mt-2 font-normal">
+              Minimum percentage of total votes required for the proposal to be valid.
+            </div>
             <input
               type="number"
               name="quorumPercentage"
@@ -649,14 +670,24 @@ const DeployView = () => {
               required
               min="0"
               max="100"
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-2 shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
-          
+
           <div className="w-full gap-2.5 pb-8">
-            <label className="text-white text-2xl leading-[120%] font-medium">
-              Voting Period (Days):
-            </label>
+            <div className="flex items-center justify-between">
+              <label className="text-white text-2xl leading-[120%] font-medium">
+                Voting Period (Days)
+              </label>
+              <FiHelpCircle
+                className="text-[#b59aec] cursor-pointer"
+                size={20}
+                title="Duration (in days) that a proposal remains open for voting."
+              />
+            </div>
+            <div className="text-[#b59aec] text-sm mt-2 font-normal">
+              Duration (in days) that a proposal remains open for voting.
+            </div>
             <input
               type="number"
               name="votingPeriodDays"
@@ -665,14 +696,24 @@ const DeployView = () => {
               onChange={handleInputChange}
               required
               min="1"
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-2 shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
-          
+
           <div className="w-full gap-2.5 pb-8">
-            <label className="text-white text-2xl leading-[120%] font-medium">
-              Pass Threshold Percentage:
-            </label>
+            <div className="flex items-center justify-between">
+              <label className="text-white text-2xl leading-[120%] font-medium">
+                Pass Threshold Percentage
+              </label>
+              <FiHelpCircle
+                className="text-[#b59aec] cursor-pointer"
+                size={20}
+                title="Percentage of Yes votes required for the proposal to pass."
+              />
+            </div>
+            <div className="text-[#b59aec] text-sm mt-2 font-normal">
+              Percentage of Yes votes required for the proposal to pass.
+            </div>
             <input
               type="number"
               name="passThresholdPercentage"
@@ -682,31 +723,51 @@ const DeployView = () => {
               required
               min="0"
               max="100"
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-2 shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
-          
+
           <div className="w-full gap-2.5 pb-8">
-            <label className="text-white text-2xl leading-[120%] font-medium">
-              Who Can Propose:
-            </label>
+            <div className="flex items-center justify-between">
+              <label className="text-white text-2xl leading-[120%] font-medium">
+                Who Can Propose
+              </label>
+              <FiHelpCircle
+                className="text-[#b59aec] cursor-pointer"
+                size={20}
+                title="Role or user type who is allowed to create proposals (e.g., admin, member)."
+              />
+            </div>
+            <div className="text-[#b59aec] text-sm mt-2 font-normal">
+              Role or user type who is allowed to create proposals (e.g., admin, member).
+            </div>
             <select
               name="proposal_right"
               value={formFields.governance.proposal_right}
               onChange={handleInputChange}
               required
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-2 shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             >
               <option value="all_members">All Members</option>
               <option value="token_holders">Token Holders Only</option>
               <option value="council_members">Council Members Only</option>
             </select>
           </div>
-          
-          <div className="w-full gap-2.5">
-            <label className="text-white text-2xl leading-[120%] font-medium">
-              Minimum Tokens to Propose:
-            </label>
+
+          <div className="w-full gap-2.5 pb-8">
+            <div className="flex items-center justify-between">
+              <label className="text-white text-2xl leading-[120%] font-medium">
+                Minimum Tokens to Propose
+              </label>
+              <FiHelpCircle
+                className="text-[#b59aec] cursor-pointer"
+                size={20}
+                title="Minimum number of tokens a user must hold to gain proposal rights."
+              />
+            </div>
+            <div className="text-[#b59aec] text-sm mt-2 font-normal">
+              Minimum number of tokens a user must hold to gain proposal rights.
+            </div>
             <input
               type="number"
               name="proposal_minimum_token"
@@ -715,9 +776,12 @@ const DeployView = () => {
               onChange={handleInputChange}
               required
               min="0"
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-5 text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-2 shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
+
+
+
           <div className="flex flex-row text-2xl gap-6 mt-10 w-full">
             <button
               type="button"

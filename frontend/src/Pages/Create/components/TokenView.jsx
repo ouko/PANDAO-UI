@@ -2,6 +2,7 @@ import useTokenWeightStore from '@/store/templateStore/tokenWeightStore';
 import useViewStore from '@/store/view';
 import { toast } from 'sonner';
 import TokenImageURL from '@/Pages/components/TokenImage';
+import { FiHelpCircle } from 'react-icons/fi';
 
 const TokenView = () => {
   const { formFields, setFormFields } = useTokenWeightStore();
@@ -11,7 +12,7 @@ const TokenView = () => {
   const allFieldsFilled = () => {
     // For debugging
     console.log('Token fields:', formFields.token);
-    
+
     return (
       formFields.token.name.trim() !== '' &&
       formFields.token.symbol.trim() !== '' &&
@@ -74,56 +75,88 @@ const TokenView = () => {
 
   return (
     <>
-  
- <div className="z-50 container mx-auto flex flex-col items-center justify-center mt-10 w-full px-4">
-  {/* Progress Bar */}
-  <div className="h-[42px] relative w-full">
-    <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] w-full h-[42px]"></div>
-    <div className="rounded-[300px] w-[48%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
-    <div className="bg-[#8f58ff] rounded-full w-[24.55px] h-[21px] absolute left-[75%] top-1/2 -translate-y-1/2 blur-[18.95px]"></div>
-  </div>
 
-  {/* Step Section */}
-  <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-10 gap-4 p-6 md:p-10 border border-[#5228A4] flex flex-col items-start mb-10">
-    <div className="text-2xl md:text-4xl font-semibold text-start text-white">
-      <span className="text-[#AE85FF]">STEP -3 :</span>{' '}
-      <span className="text-amber-50">Describe your Token</span>
-    </div>
-    <div className="text-[#ffffff] text-base md:text-xl font-normal text-center">
-     Fill in the details of your token
-    </div>
-  </div>
+      <div className="z-50 container mx-auto flex flex-col items-center justify-center mt-10 w-full px-4">
+        {/* Progress Bar */}
+        <div className="h-[42px] relative w-full">
+          <div className="bg-[rgba(255,255,255,0.15)] rounded-[300px] w-full h-[42px]"></div>
+          <div className="rounded-[300px] w-[48%] h-[22px] absolute left-3.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[rgba(218,204,255,0)] via-[rgba(203,182,255,0.81)] to-[rgba(109,54,219,1)] shadow-md"></div>
+          <div className="bg-[#8f58ff] rounded-full w-[24.55px] h-[21px] absolute left-[75%] top-1/2 -translate-y-1/2 blur-[18.95px]"></div>
+        </div>
+
+        {/* Step Section */}
+        <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-10 gap-4 p-6 md:p-10 border border-[#5228A4] flex flex-col items-start mb-10">
+          <div className="text-2xl md:text-4xl font-semibold text-start text-white">
+            <span className="text-[#AE85FF]">STEP -3 :</span>{' '}
+            <span className="text-amber-50">Describe your Token</span>
+          </div>
+          <div className="text-[#ffffff] text-base md:text-xl font-normal text-center">
+            Fill in the details of your token
+          </div>
+        </div>
 
 
         <div className="w-full max-w-screen-lg text-white mx-auto pt-6 md:pt-10 gap-4 shadow-lg rounded-lg space-y-6">
           <div className="grid grid-cols-1 gap-3 w-full">
             <div className="w-full gap-2.5 py-2 flex flex-col">
-              <label className="text-white text-lg font-medium">Token Name:</label>
+              <div className="flex items-center justify-between">
+                <label className="text-white text-2xl font-medium">Token Name:</label>
+                <FiHelpCircle title="The full name of the token (e.g., Community Coin)" className="text-[#b59aec] cursor-pointer" size={20} />
+              </div>
+              <div className="text-[#b59aec] text-sm leading-[120%]">The full name of the token (e.g., Community Coin).</div>
               <input type="text" name="name" value={formFields.token.name} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
             </div>
+
+
             <div className="w-full gap-2.5 py-2 flex flex-col">
-              <label className="text-white text-lg font-medium">Token Symbol:</label>
+              <div className="flex items-center justify-between">
+                <label className="text-white text-2xl font-medium">Token Symbol:</label>
+                <FiHelpCircle title="The token symbol used in short form" className="text-[#b59aec] cursor-pointer" size={20} />
+              </div>
+              <div className="text-[#b59aec] text-sm leading-[120%]">The token symbol used in short form.</div>
               <input type="text" name="symbol" value={formFields.token.symbol} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
             </div>
-            <div className="w-full gap-2.5 py-2  items-center hidden">
-              <label className="text-white text-lg font-medium mr-2">Is Mintable:</label>
+
+     
+            <div className="w-full gap-2.5 py-2 items-center hidden">
+              <label className="text-white text-2xl font-medium mr-2">Is Mintable:</label>
               <input type="checkbox" name="isMintable" checked={formFields.token.isMintable} onChange={handleInputChange} className="mr-2" />
               <span className="text-white">Mintable</span>
             </div>
+
             <div className="w-full gap-2.5 py-2 flex flex-col">
-              <label className="text-white text-lg font-medium">Total Supply:</label>
-              <input type="number" name="totalSupply" value={formFields.token.totalSupply} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
+              <div className="flex items-center justify-between">
+                <label className="text-white text-2xl font-medium">Total Supply:</label>
+                <FiHelpCircle title="The total number of tokens that will ever exist" className="text-[#b59aec] cursor-pointer" size={20} />
+              </div>
+              <div className="text-[#b59aec] text-sm leading-[120%]">The total number of tokens that will ever exist.</div>
+              <input type="number" name="totalSupply" value={formFields.token.totalSupply} min={0} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
             </div>
+
             <div className="w-full gap-2.5 py-2 flex flex-col">
-              <label className="text-white text-lg font-medium">Token Price (XRD):</label>
-              <input type="number" name="tokenPrice" value={formFields.token.tokenPrice} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
+              <div className="flex items-center justify-between">
+                <label className="text-white text-2xl font-medium">Token Price (XRD):</label>
+                <FiHelpCircle title="The price of one token (in native currency or USD)" className="text-[#b59aec] cursor-pointer" size={20} />
+              </div>
+              <div className="text-[#b59aec] text-sm leading-[120%]">The price of one token (in native currency or USD).</div>
+              <input type="number" name="tokenPrice" value={formFields.token.tokenPrice} min={0} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
             </div>
+
             <div className="w-full gap-2.5 py-2 flex flex-col">
-              <label className="text-white text-lg font-medium">Token Withdraw Price (XRD):</label>
-              <input type="number" name="tokenWithDrawPrice" value={formFields.token.tokenWithDrawPrice} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
+              <div className="flex items-center justify-between">
+                <label className="text-white text-2xl font-medium">Token Withdraw Price (XRD):</label>
+                <FiHelpCircle title="Price at which users can withdraw or redeem tokens" className="text-[#b59aec] cursor-pointer" size={20} />
+              </div>
+              <div className="text-[#b59aec] text-sm leading-[120%]">Price at which users can withdraw or redeem tokens.</div>
+              <input type="number" name="tokenWithDrawPrice" value={formFields.token.tokenWithDrawPrice} min={0} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
             </div>
+
             <div className="w-full gap-2.5 py-2">
-              <label className="text-white text-lg font-medium">Token Image URL:</label>
+              <div className="flex items-center justify-between">
+                <label className="text-white text-2xl font-medium">Token Image URL:</label>
+                <FiHelpCircle title="Token logo or image" className="text-[#b59aec] cursor-pointer" size={20} />
+              </div>
+              <div className="text-[#b59aec] text-sm leading-[120%]">Token logo or image.</div>
               <TokenImageURL onUploadComplete2={handleTokenUrl} />
             </div>
           </div>
@@ -145,7 +178,7 @@ const TokenView = () => {
               className={`flex-1 rounded-2xl p-3 font-semibold shadow-inner ${allFieldsFilled()
                 ? "text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF]"
                 : "bg-brand2 text-gray-300 cursor-not-allowed"
-              }`}
+                }`}
             >
               Next
             </button>
