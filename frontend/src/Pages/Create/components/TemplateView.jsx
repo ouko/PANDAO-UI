@@ -74,7 +74,7 @@ const TemplateView = () => {
           </span>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-5 items-center justify-start relative">
+      <div className="grid md:grid-cols-3 grid-cols-1 gap-5 items-center justify-start relative">
         {isLoading
           ? Array.from({ length: 3 }, (_, index) => <DaoCard key={index} />)
           : [...data].map((project, index) => (
@@ -126,7 +126,7 @@ const TemplateView = () => {
   onClick={handleViewChange}
   type="button"
   disabled={selectedCard === null}
-  className={`w-1/4 text-2xl rounded-2xl p-3 text-white font-semibold shadow-inner
+  className={`w-full md:w-1/4 text-2xl rounded-2xl p-3 text-white font-semibold shadow-inner
     ${selectedCard === null 
       ? 'bg-brand2 cursor-not-allowed' 
       : 'bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:from-[#C0A1FF] hover:to-[#391483]'

@@ -191,9 +191,11 @@ function AirDrop() {
               name="airDropStartTime"
               value={formFields.airDrop.airDropStartTime}
               onChange={handleInputChange}
+              onClick={(e) => e.target.showPicker()}
               id="airdrop-start-time"
               type="datetime-local"
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400 cursor-pointer"
+              style={{ WebkitAppearance: 'none' }}
             />
           </div>
 
@@ -214,6 +216,8 @@ function AirDrop() {
               name="airDropEndTime"
               value={formFields.airDrop.airDropEndTime}
               onChange={handleInputChange}
+              onClick={(e) => e.target.showPicker()}
+
               id="airdrop-end-time"
               type="datetime-local"
               className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
