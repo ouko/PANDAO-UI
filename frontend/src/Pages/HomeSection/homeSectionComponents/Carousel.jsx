@@ -68,7 +68,7 @@ const Carousel = () => {
 
   return (
     <div 
-      className="relative w-full h-[60vh] overflow-hidden rounded-2xl shadow-2xl group z-50"
+      className="relative w-full h-[70vh] overflow-hidden rounded-2xl shadow-2xl group z-50"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
