@@ -63,7 +63,9 @@ const TemplateView = () => {
     </div>
     <div className="text-white text-base md:text-xl leading-[130%] font-normal text-left">
       <span>
-        Check out our various template models that you can use to make your process of developing your DAO less bulky...
+       Check out our various template models that you can use to make your process of developing your DAO less bulky. Customize these models to use as
+            the basis to organize your stakeholders, defining different roles and responsibilities, setting your governance policies, and more. Using a template model
+            can fasten your development process, so you should swiftly get back to pushing for more adoptions and innovations.
       </span>
     </div>
   </div>
