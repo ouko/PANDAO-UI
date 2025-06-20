@@ -119,12 +119,15 @@ const Navbar = () => {
         </li>
       ))}
     </ul>
+    <div className="flex items-center gap-2">
     <div id="connect-btn">
       <radix-connect-button />
     </div>
     <div className="md:hidden block">
       <MobileSidebar />
     </div>
+    </div>
+ 
   </div>
 </div>
   )

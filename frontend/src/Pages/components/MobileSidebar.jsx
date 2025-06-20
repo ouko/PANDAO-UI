@@ -33,8 +33,10 @@ const MobileSidebar = () => {
   };
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger>
-        <Menu />
+      <SheetTrigger asChild >
+        <Button size="icon">
+          <Menu />
+        </Button>
       </SheetTrigger>
       <SheetContent className="z-[100] bg-brand1 overflow-hidden font-clash">
         <div className="fixed bottom-[-100px] left-1/3 bg-brand2 z-10 size-[500px] rounded-full blur-[200px]"></div>
