@@ -521,7 +521,7 @@ const DeployView = () => {
       <span className="text-[#AE85FF]">STEP -6 :</span>{' '}
       <span className="text-amber-50">Deploy Your Community</span>
     </div>
-    <div className="text-[#ffffff] text-base md:text-xl font-normal text-center">
+    <div className="text-[#ffffff] text-base md:text-xl font-normal text-left">
       Start simple and learn as you go. You can always evolve your DAO in the future
     </div>
   </div>
