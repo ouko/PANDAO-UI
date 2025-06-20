@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { convertUnixTimestamp } from './functions/ConvertDate';
 
 // Define internal functions 
 function FeePaid({ xrdSpent }) {
