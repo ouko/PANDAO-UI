@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 // Components
 import NavBar from "./Dash-component/NavBar";
 import Sidebar from "./Dash-component/sidebar";
@@ -37,7 +37,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const sendTransaction = useSendTransaction();
-  
+
   // State
   const [activeTab, setActiveTab] = useState(0);
   const [showInfo, setShowInfo] = useState(false);
@@ -55,10 +55,10 @@ const Dashboard = () => {
 
   const userAddress = accounts[0]?.address;
 
-const handleOnEdit=()=>{
+  const handleOnEdit = () => {
 
-  queryClient.refetchQueries({ queryKey: ['userData'] });
-}
+    queryClient.refetchQueries({ queryKey: ['userData'] });
+  }
 
   // Queries
   const { data: userData = {} } = useQuery({
@@ -126,24 +126,24 @@ const handleOnEdit=()=>{
         bond_id: bond.bond_id,
         user_address: userAddress,
       };
-      
+
       const response = await axios.post(
         `${API_BASE_URL}/manifest/zcb/withdraw-all`,
         data,
         { headers: { "Content-Type": "application/json" } }
       );
-      
+
       const manifest = typeof response.data === "string"
         ? response.data.trim()
         : JSON.stringify(response.data);
-      
+
       const { receipt } = await sendTransaction(manifest);
       const txId = receipt?.transaction?.intent_hash;
-      
+
       if (!txId) {
         throw new Error("Transaction ID not found in receipt");
       }
-      
+
       return axios.post(`${API_BASE_URL}/submit-tx`, {
         tx_id: txId,
         user_address: userAddress,
@@ -166,24 +166,24 @@ const handleOnEdit=()=>{
         user_address: userAddress,
         xrd_to_add: xrdToPay,
       };
-      
+
       const response = await axios.post(
         `${API_BASE_URL}/manifest/zcb/add-xrds`,
         data,
         { headers: { "Content-Type": "application/json" } }
       );
-      
+
       const manifest = typeof response.data === "string"
         ? response.data.trim()
         : JSON.stringify(response.data);
-      
+
       const { receipt } = await sendTransaction(manifest);
       const txId = receipt?.transaction?.intent_hash;
-      
+
       if (!txId) {
         throw new Error("Transaction ID not found in receipt");
       }
-      
+
       return axios.post(`${API_BASE_URL}/submit-tx`, {
         tx_id: txId,
         user_address: userAddress,
@@ -222,7 +222,7 @@ const handleOnEdit=()=>{
       <div className="w-full absolute overflow-hidden opacity-20 h-[600px]">
         <TileEffect4 />
       </div>
-0
+      0
       {/* Safe access to usermetadata */}
       <NavBar userImage={userData?.usermetadata?.image_url || null} isAdmin={true} />
 
@@ -232,15 +232,28 @@ const handleOnEdit=()=>{
         </div>
 
         <div className="bg-[rgba(169,126,255,0.08)] md:col-span-3 rounded-[20px] border md:mt-24 mt-10 border-brand2  w-full relative overflow-hidden backdrop-blur-[6.7px]">
-          <div className="flex border-b bg-black/60 border-brand1 py-2">
+
+          <Tabs defaultValue="account" className="w-[400px]">
+            <TabsList className="">
+              <TabsTrigger value="account"
+                className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
+
+              >Account</TabsTrigger>
+              <TabsTrigger value="password" className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
+              >Password</TabsTrigger>
+            </TabsList>
+            <TabsContent value="account" className="Text-white">Make changes to your account here.</TabsContent>
+            <TabsContent value="password">Change your password here.</TabsContent>
+          </Tabs>
+          <div className="flex border-b  py-2">
+
             {tabs.map((tab, index) => (
               <button
                 key={tab.id}
-                className={`flex-1 py-2 px-6 text-center font-medium relative text-lg ${
-                  activeTab === tab.id
-                    ? "text-brand6"
-                    : "text-white hover:text-primary-500"
-                } ${index !== 0 ? "border-l border-brand5" : ""}`}
+                className={`flex-1 py-2 px-6 text-center font-medium relative text-lg ${activeTab === tab.id
+                  ? "text-brand6"
+                  : "text-white hover:text-primary-500"
+                  } ${index !== 0 ? "border-l border-brand5" : ""}`}
                 onClick={() => setActiveTab(tab.id)}
               >
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -325,16 +338,16 @@ const handleOnEdit=()=>{
             </div>
           </div>
           <DialogFooter>
-            <Button 
-              type="button" 
+            <Button
+              type="button"
               onClick={() => setOpenPay(false)}
               variant="outline"
               className="border-brand3 text-white hover:bg-brand3/20"
             >
               Cancel
             </Button>
-            <Button 
-              type="button" 
+            <Button
+              type="button"
               onClick={handleDeposit}
               disabled={depositMutation.isPending || !xrdToPay || xrdToPay <= 0}
               className="bg-gradient-to-r from-brand2 to-brand3 hover:from-brand3 hover:to-brand2 text-white"
