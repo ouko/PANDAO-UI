@@ -33,6 +33,7 @@ import Navbar from "./userDashboard/Dashboard/Dash-component/NavBar";
 
 
 
+
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const fetchData = async (endpoint, params = {}) => {
@@ -45,7 +46,7 @@ const UserPublicProfile = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [coverUrl, setCoverUrl] = useState("");
-  
+
   const [totalPages, setTotalPages] = useState(1);
 
   const [copied, setCopied] = useState(false);
@@ -61,16 +62,16 @@ const UserPublicProfile = () => {
 
 
   const [createdComminities, setCreatedCommunities] = useState([]);
- 
+
   const [socialLinks, setSocialLinks] = useState({
     x_url: "",
     website_url: "",
     linkedin: "",
     tiktok: "",
   });
- 
+
   const user_address = accounts[0]?.address;
-   
+
   const handleCopy = (address) => {
     navigator.clipboard.writeText(address);
     setCopied(true);
@@ -151,7 +152,7 @@ const UserPublicProfile = () => {
         setLoading(false);
       }
     };
-  
+
 
     if (accounts && accounts.length > 0 && accounts[0].address) {
       fetchBluePrint();
@@ -196,7 +197,7 @@ const UserPublicProfile = () => {
   }
 
   return (
-    <div className="bg-brand1 relative min-h-screen pb-20 font-clash overflow-hidden">
+   <div className="bg-brand1 relative min-h-[1200px] md:min-h-screen pb-20 font-clash overflow-hidden ">
       <div className="bg-black/50 absolute inset-0"></div>
       <div className="absolute bottom-[100px] left-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px]"></div>
       <div className="absolute top-[10px] right-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px]"></div>
@@ -204,57 +205,50 @@ const UserPublicProfile = () => {
       <div className="w-full absolute overflow-hidden opacity-20 h-[600px]">
         <TileEffect4 />
       </div>
-       <Navbar userData={userData || {}}  isAdmin={false} />
-      <div className="flex flex-row items-start justify-between relative max-w-[1600px] mx-auto gap-5">
-       <div className="sticky top-0 h-full">
-
-       <Sidebar userData={userData || {}} onEdit={false}  isAdmin={false} />
-
-       </div>
-
-
-       <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] border mt-24 border-brand2 mr-10 w-full relative overflow-hidden backdrop-blur-[6.7px]">
-  {/* Tab navigation */}
-  <div className="flex border-b bg-black/60 border-brand1 py-2">
-    {['User Activity', 'Communities Participated'].map((label, index) => (
-      <button
-        key={index}
-        className={`flex-1 py-2 px-6 text-center font-medium relative text-lg ${
-          activeTab === index
-            ? "text-brand6"
-            : "text-white hover:text-primary-500"
-        } ${index !== 0 ? "border-l border-brand5" : ""}`}
-        onClick={() => setActiveTab(index)}
-      >
-        <div className="absolute inset-0 flex items-center justify-center">
-          {activeTab === index && (
-            <div className="absolute bottom-0 bg-gradient-to-l from-brand3 to-brand5 h-1 w-[80%]"></div>
-          )}
+      <Navbar userData={userData || {}} isAdmin={false} />
+      <div className="grid md:grid-cols-4 grid-cols-1 relative container mx-auto md:gap-5 ">
+        <div className="sticky top-0 h-full pt-10 md:pt-0">
+          <Sidebar userData={userData || {}} onEdit={false} isAdmin={false} />
         </div>
-        {label}
-      </button>
-    ))}
-  </div>
-
-  {/* Tab content */}
-  {activeTab === 0 && (
-    <section className="py-6">
-      <UserActivity activityData={activityData?.data || []} />
-    </section>
-  )}
-
-  {activeTab === 1 && (
-    <section className="py-6">
-      <CommunitiesParticipated participatedCommunities={participatedCommunities} />
-    </section>
-  )}
-</div>
 
 
+       <div className="bg-[rgba(169,126,255,0.08)] md:col-span-3 rounded-[20px] border md:mt-24 mt-10 border-brand2  w-full relative overflow-hidden backdrop-blur-[6.7px]">
+
+
+
+          <Tabs defaultValue="useractivity" className="w-full">
+            <TabsList className="w-full min-h-12 bg-black/60  h-full rounded-t-[20px] p-0">
+              <TabsTrigger
+                value="useractivity"
+                className="relative w-full h-[45px] py-5  text-lg rounded-none border-b-2 border-b-transparent bg-transparent px-4 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-white data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5"
+              >
+                User Activity
+              </TabsTrigger>
+
+              <TabsTrigger
+                value="communities"
+                className="relative w-full h-[45px] border-l-[2px] border-brand3 py-5 text-lg rounded-none border-b-2 border-b-transparent bg-transparent px-4 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-white data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5"
+              >
+                Participated
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="useractivity">
+              <section className="py-2">
+                <UserActivity activityData={activityData?.data || []} />
+              </section>
+            </TabsContent>
+
+            <TabsContent value="communities">
+              <section className="py-2">
+                <CommunitiesParticipated participatedCommunities={participatedCommunities} />
+              </section>
+            </TabsContent>
+          </Tabs>
+
+
+        </div>
       </div>
-
-
-
     </div>
 
 

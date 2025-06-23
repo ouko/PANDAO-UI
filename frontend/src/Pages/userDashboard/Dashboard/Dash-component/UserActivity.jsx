@@ -13,7 +13,7 @@ const UserActivity = ({activityData = [] }) => {
   return (
     <div>
       <div className="bg-[#39246b] p-4 flex items-center justify-start rounded-md mb-6">
-        <h2 className="text-white text-2xl font-semibold">User Activity</h2>
+        <h2 className="text-white md:text-2xl text-xl font-semibold">User Activity</h2>
       </div>
 
       <div className="w-full mt-4 flex flex-col justify-center items-center gap-4 px-3">

@@ -213,7 +213,8 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="bg-brand1 relative min-h-screen pb-20 font-clash overflow-hidden">
+   <div className="bg-brand1 relative min-h-[1200px] md:min-h-screen pb-20 font-clash overflow-hidden ">
+
       {/* Background elements */}
       <div className="bg-black/50 absolute inset-0"></div>
       <div className="absolute bottom-[100px] left-0 bg-brand2 z-0 size-[500px] rounded-full blur-[200px]"></div>
