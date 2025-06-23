@@ -31,8 +31,10 @@ const [open,setOpen]=useState(false)
         </DialogContent>
       </Dialog>
 
-      <div className="bg-[rgba(169,126,255,0.08)] mt-24   rounded-[20px] justify-center items-center flex border border-brand2 p-[13px_25px] w-[393px] min-h-[921px] h-full relative overflow-hidden backdrop-blur-[6.7px]">
-        <Avatar className="w-[182.76px] h-[182.76px] absolute left-1/2 top-[62px] transform -translate-x-1/2 border-[5px] border-brand5">
+      <div className="bg-[rgba(169,126,255,0.08)] mt-24 flex-col space-y-5    rounded-[20px] justify-center items-center flex border border-brand2 p-5 w-full h-fit relative overflow-hidden backdrop-blur-[6.7px]">
+     
+     <div className="flex md:flex-col flex-row items-center gap-5 mt-10 md:mt-0">
+     <Avatar className="md:size-[180px] size-[80px]  border-[5px] border-brand5">
           {userData.usermetadata?.image_url ? (
             <AvatarImage
               src={userData.usermetadata.image_url}
@@ -43,17 +45,17 @@ const [open,setOpen]=useState(false)
           )}
         </Avatar>
 
-        <div className="absolute top-[268px]">
-          <div className="text-white text-center font-semibold text-[26px]">
+        <div className="text-left">
+          <div className="text-white md:text-center font-semibold md:text-[26px] text-[20px] text-left">
             {userData.name || "Unknown User"}
           </div>
 
-          <div className="py-1 w-[300px] rounded-sm flex flex-wrap items-center text-brand5 justify-center relative group">
+          <div className="py-1 w-full rounded-sm flex  items-center text-brand5 justify-center relative group">
             {clipAddress(accounts[0]?.address || "")}
             <button
               onClick={() => handleCopy(accounts[0]?.address || "")}
               disabled={copied}
-              className="py-0 text-white rounded-md px-2 h-5 text-xs absolute top-2 -right-2 group-hover:block"
+              className="py-0 text-white rounded-md px-2 h-5 text-xs  group-hover:block"
             >
               {copied ? (
                 <Check className="h-4 w-4" />
@@ -63,9 +65,11 @@ const [open,setOpen]=useState(false)
             </button>
           </div>
         </div>
+     </div>
+      
 
         {/* Details */}
-        <div className="flex flex-col gap-10 items-start justify-start w-[322px] absolute left-1/2 top-[369px] transform -translate-x-1/2">
+        <div className="flex flex-col gap-10 items-start justify-start ">
           {/* Email */}
           {userData.email && (
             <div className="flex flex-col gap-5 w-full">
@@ -137,7 +141,7 @@ const [open,setOpen]=useState(false)
         {isAdmin && (
           <button
             onClick={() => setOpen(true)}
-            className="bg-primary-400 rounded-br-lg w-[53px] h-11 absolute left-[-1px] top-[-1px]"
+            className="bg-primary-400 rounded-br-lg w-[53px] h-11 absolute left-[-1px] top-[-25px]"
           >
             <img className="w-[43px] h-[43px]" src="/edit.svg" alt="Edit" />
           </button>
