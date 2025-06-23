@@ -233,85 +233,77 @@ const Dashboard = () => {
 
         <div className="bg-[rgba(169,126,255,0.08)] md:col-span-3 rounded-[20px] border md:mt-24 mt-10 border-brand2  w-full relative overflow-hidden backdrop-blur-[6.7px]">
 
-          <Tabs defaultValue="account" className="w-[400px]">
-            <TabsList className="">
-              <TabsTrigger value="account"
-                className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
-
-              >Account</TabsTrigger>
-              <TabsTrigger value="password" className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
-              >Password</TabsTrigger>
-            </TabsList>
-            <TabsContent value="account" className="Text-white">Make changes to your account here.</TabsContent>
-            <TabsContent value="password">Change your password here.</TabsContent>
-          </Tabs>
-          <div className="flex border-b  py-2">
-
-            {tabs.map((tab, index) => (
-              <button
-                key={tab.id}
-                className={`flex-1 py-2 px-6 text-center font-medium relative text-lg ${activeTab === tab.id
-                  ? "text-brand6"
-                  : "text-white hover:text-primary-500"
-                  } ${index !== 0 ? "border-l border-brand5" : ""}`}
-                onClick={() => setActiveTab(tab.id)}
+          <Tabs defaultValue="myprofile" className="w-full">
+            <TabsList className="w-full h-12 bg-transparent  ">
+              <TabsTrigger value="myprofile"
+                className="relative w-full h-[45px] text-xl rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-white data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5"
               >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  {activeTab === tab.id && (
-                    <div className="absolute bottom-0 bg-gradient-to-l from-brand3 to-brand5 h-1 w-[80%]"></div>
-                  )}
+                My Profile
+              </TabsTrigger>
+              <TabsTrigger value="useractivity" className="relative w-full h-[45px] text-xl rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5 data-[state=active]:text-white"
+              >
+                User Activity
+              </TabsTrigger>
+              <TabsTrigger value="transactions" className="relative w-full h-[45px] text-xl rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5 data-[state=active]:text-white"
+              >
+                Transactions
+              </TabsTrigger>
+              <TabsTrigger value="bonds" className="relative h-[45px] text-xl w-full rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5 data-[state=active]:text-white"
+              >
+                Bonds
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="myprofile" >
+              <section className="">
+                <UserCommunities communities={createdCommunities} />
+                <WorkExperience userData={userData} />
+                <CommunitiesParticipated participatedCommunities={participatedCommunities} />
+              </section>
+            </TabsContent>
+            <TabsContent value="useractivity">
+              <section className="">
+                <UserActivity activityData={activityData?.data} />
+              </section>
+            </TabsContent>
+            <TabsContent value="transactions">
+              <section className="">
+                <div className="bg-[#39246b] p-3 flex items-center justify-start rounded-md mb-6">
+                  <h2 className="text-white text-2xl font-semibold">User Transaction</h2>
                 </div>
-                {tab.label}
-              </button>
-            ))}
-          </div>
-
-          {activeTab === 0 && (
-            <section className="">
-              <UserCommunities communities={createdCommunities} />
-              <WorkExperience userData={userData} />
-              <CommunitiesParticipated participatedCommunities={participatedCommunities} />
-            </section>
-          )}
-
-          {activeTab === 1 && (
-            <section className="">
-              <UserActivity activityData={activityData?.data} />
-            </section>
-          )}
-
-          {activeTab === 2 && (
-            <section className="">
-              <div className="bg-[#39246b] p-3 flex items-center justify-start rounded-md mb-6">
-                <h2 className="text-white text-2xl font-semibold">User Transaction</h2>
-              </div>
-              <div className="flex flex-wrap gap-5 justify-center mb-6 px-3">
-                <UserTransaction
-                  expneseData={expenseData}
-                  failedTransaction={failedData}
+                <div className="flex flex-wrap gap-5 justify-center mb-6 px-3">
+                  <UserTransaction
+                    expneseData={expenseData}
+                    failedTransaction={failedData}
+                  />
+                </div>
+              </section>
+            </TabsContent>
+            <TabsContent value="bonds" className="">
+              <section>
+                <BondList
+                  bonds={createdBonds}
+                  check={check}
+                  setCheck={setCheck}
+                  loading={retrieveBondMutation.isPending || depositMutation.isPending}
+                  handleRetrieveBond={handleRetrieveBond}
+                  handleDeposit={handleDeposit}
+                  setOpenPay={setOpenPay}
+                  setSelectedBond={setSelectedBond}
+                  setSelectedInfo={setSelectedInfo}
+                  setShowInfo={setShowInfo}
+                  showInfo={showInfo}
+                  selectedInfo={selectedInfo}
                 />
-              </div>
-            </section>
-          )}
+              </section>
+            </TabsContent>
+          </Tabs>
 
-          {activeTab === 3 && (
-            <section>
-              <BondList
-                bonds={createdBonds}
-                check={check}
-                setCheck={setCheck}
-                loading={retrieveBondMutation.isPending || depositMutation.isPending}
-                handleRetrieveBond={handleRetrieveBond}
-                handleDeposit={handleDeposit}
-                setOpenPay={setOpenPay}
-                setSelectedBond={setSelectedBond}
-                setSelectedInfo={setSelectedInfo}
-                setShowInfo={setShowInfo}
-                showInfo={showInfo}
-                selectedInfo={selectedInfo}
-              />
-            </section>
-          )}
+
+
+
+
+
+
         </div>
       </div>
 
