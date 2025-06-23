@@ -252,7 +252,7 @@ const Dashboard = () => {
 
               <TabsTrigger
                 value="transactions"
-                className="relative w-full h-[45px] py-5 text-lg rounded-none border-l-[2px] border-brand3 border-b-2 border-b-transparent bg-transparent px-4 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-white data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5"
+                className="relative w-full h-[45px] py-5 text-lg rounded-none md:border-l-[2px] border-brand3 border-l-0  border-b-2 border-b-transparent bg-transparent px-4 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-white data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5"
               >
                 Transactions
               </TabsTrigger>
