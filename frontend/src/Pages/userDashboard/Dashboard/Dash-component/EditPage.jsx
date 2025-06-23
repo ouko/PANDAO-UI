@@ -104,130 +104,126 @@ const EditPage = ({onClose}) => {
     setWorkHistory(updatedWorkHistory);
   };
   return (
-    <div className=" bg-brand2 ">
-         {/* <Card className="w-full relative flex md:flex-row flex-col shadow-md items-center md:items-start max-w-[1200px] mx-auto rounded-sm  text-white border-b-0 h-48">
-            <img
-               src={coverUrl || "/Pandao.png"}
-              alt="Cover"
-              className="aspect-video h-48 w-full object-cover"
-            />
-            <div className="absolute bottom-0  right-0  flex items-end justify-end -mr-20">
-            <ImageUpdater onUploadSuccess={handleCoverId}  />
+   <div className="bg-transparent w-full px-4">
 
+      {/* <Card className="w-full max-w-screen-xl mx-auto relative border-none shadow-md overflow-hidden rounded-lg mb-4">
+        <img
+          src={coverUrl || "/Pandao.png"}
+          alt="Cover"
+          className="aspect-video w-full h-48 object-cover"
+        />
+        <div className="absolute bottom-2 right-4">
+          <ImageUpdater onUploadSuccess={handleCoverId} />
+        </div>
+      </Card> */}
+
+      <Card className="border-0 bg-transparent rounded-lg text-gray-300 mt-1 mx-auto p-4 w-full max-w-screen-xl">
+        <div className="flex flex-col md:flex-row items-center gap-6 w-full">
+          {/* Avatar + Upload */}
+          <div className="flex flex-col items-center">
+            <Avatar className="h-48 w-48 md:h-72 md:w-72 border-4 border-brand5">
+              <AvatarImage
+                src={fileUrl || userData.usermetadata?.image_url}
+                className="object-cover h-full w-full"
+              />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <div className="mt-3">
+              <ImageUpload onUploadSuccess={handleFileId} />
             </div>
-          </Card> */}
-      <Card className="border-0 rounded-t-none border-t-0   bg-brand2    flex   mt-1   mx-auto gap-3 p-5">
-        <CardHeader className="p-0 mt-4 flex flex-col items-center ">
-          <Avatar className="h-72 w-72 border-[5px] border-brand5">
-            <AvatarImage
-              src={fileUrl || userData.usermetadata?.image_url}
-              className="h-72 w-72 object-cover"
-            />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <ImageUpload onUploadSuccess={handleFileId} />
-        </CardHeader>
-        <CardContent className="text-xl font-bold flex flex-col gap-2 w-full px-2">
-          <div className="text-white font-semibold  text-4xl">
-            {userData.name}
           </div>
-          <Textarea
-            value={about}
-            onChange={(e) => setAbout(e.target.value)}
-            className="w-full bg-transparent border-brand1 bg-brand1 outline-none text-white"
-            maxLength="150"
-          />
-          <div className="text-white text-sm mt-5" >Social Accounts</div>
-          <div className="flex items-center w-full gap-2">
-            <FaXTwitter className="text-white" />
-            <input
-              value={socialLinks.x_url}
-              onChange={(e) =>
-                setSocialLinks({ ...socialLinks, x_url: e.target.value })
-              }
-              placeholder="Your X url"
-              className="px-3 py-1 text-sm w-full bg-transparent border-2 rounded-lg  border-brand1 outline-none text-white"
+
+          {/* Info Fields */}
+          <div className="flex-1 w-full">
+            <div className="text-white font-semibold text-2xl md:text-4xl mb-4 text-center md:text-left">
+              {userData.name}
+            </div>
+            <Textarea
+              value={about}
+              onChange={(e) => setAbout(e.target.value)}
+              className="w-full bg-brand1 border-brand1 text-white outline-none"
+              maxLength="150"
             />
+
+            {/* Social Links */}
+            <div className="mt-6">
+              <div className="text-white text-sm mb-2">Social Accounts</div>
+
+              {[
+                {
+                  icon: <FaXTwitter className="text-white" />,
+                  placeholder: "Your X url",
+                  value: socialLinks.x_url,
+                  onChange: (e) =>
+                    setSocialLinks({ ...socialLinks, x_url: e.target.value }),
+                },
+                {
+                  icon: <Globe className="text-white" />,
+                  placeholder: "Your website URL",
+                  value: socialLinks.website_url,
+                  onChange: (e) =>
+                    setSocialLinks({
+                      ...socialLinks,
+                      website_url: e.target.value,
+                    }),
+                },
+                {
+                  icon: <FaLinkedinIn className="text-white" />,
+                  placeholder: "Your LinkedIn",
+                  value: socialLinks.linkedin,
+                  onChange: (e) =>
+                    setSocialLinks({ ...socialLinks, linkedin: e.target.value }),
+                },
+              ].map((field, i) => (
+                <div key={i} className="flex items-center gap-2 w-full my-2">
+                  {field.icon}
+                  <input
+                    value={field.value}
+                    onChange={field.onChange}
+                    placeholder={field.placeholder}
+                    className="flex-1 px-3 py-2 text-sm bg-transparent border rounded-lg border-brand1 outline-none text-white"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="flex items-center w-full gap-2">
-            <Globe className="text-white" />
-            <input
-              value={socialLinks.website_url}
-              onChange={(e) =>
-                setSocialLinks({
-                  ...socialLinks,
-                  website_url: e.target.value,
-                })
-              }
-              placeholder="Your website URL"
-              className="px-3 py-1 text-sm w-full bg-transparent border-2 rounded-lg  border-brand1 outline-none text-white"
-            />
-          </div>
-          <div className="flex items-center w-full gap-2">
-            <FaLinkedinIn className="text-white" />
-            <input
-              value={socialLinks.linkedin}
-              onChange={(e) =>
-                setSocialLinks({
-                  ...socialLinks,
-                  linkedin: e.target.value,
-                })
-              }
-              placeholder="Your LinkedIn"
-              className="px-3 py-1 text-sm w-full bg-transparent border-2 rounded-lg  border-brand1 outline-none text-white"
-            />
-          </div>
-          {/* <div className="flex items-center w-full gap-2">
-            <FaTiktok className="text-white" />
-            <input
-              value={socialLinks.tiktok}
-              onChange={(e) =>
-                setSocialLinks({ ...socialLinks, tiktok: e.target.value })
-              }
-              placeholder="Your Tiktok"
-              className="px-3 py-1 text-sm w-full bg-transparent border-2 rounded-lg outline-none text-white"
-            />
-          </div> */}
-    
-   
-          {/* <div className="flex gap-2 items-center w-full">
-            <Button
-              onClick={handleUpdateUser}
-              className="bg-green-600 hover:bg-green-700 border-2 w-full"
-            >
-              Save
-            </Button>
-          </div> */}
-        </CardContent>
+        </div>
       </Card>
-      <Card className="max-w-[1200px] mx-auto bg-brand2  border-brand2 gap-3 p-5 mt-4">
-  {workHistory.map((item, index) => (
-    <EmploymentDetails
-      key={index}
-      history={item}
-      onChange={(value, field) => handleWorkHistoryChange(index, field, value)}
-      onRemove={() => handleRemoveWorkHistory(index)}
-      isOnboarding="false"
-    />
-  ))}
 
-  <Button className="w-full my-5" onClick={handleAddWorkHistory}>
-    Add Work History
-  </Button>
+      {/* Work History Section */}
+      <Card className="w-full max-w-screen-xl mx-auto bg-transparent border-transparent p-4 mt-4">
+        {workHistory.map((item, index) => (
+          <EmploymentDetails
+            key={index}
+            history={item}
+            onChange={(value, field) =>
+              handleWorkHistoryChange(index, field, value)
+            }
+            onRemove={() => handleRemoveWorkHistory(index)}
+            isOnboarding="false"
+          />
+        ))}
 
-  
-</Card>
+        <div className="flex justify-center mt-4">
+          <Button
+            className="w-full max-w-sm rounded-2xl"
+            onClick={handleAddWorkHistory}
+          >
+            Add Work History
+          </Button>
+        </div>
+      </Card>
 
-     <div className="flex items-center justify-center ">
-          <button
-            onClick={handleUpdateUser}
-           
-            className="flex-1 rounded-2xl p-3 text-white bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] hover:from-[#C0A1FF] hover:to-[#391483] font-semibold shadow-inner"
-            >
-            Save All
-          </button>
-          </div>
-          
+      {/* Save Button */}
+      <div className="flex justify-center items-center">
+        <Button
+          onClick={handleUpdateUser}
+          variant="brand"
+          className="w-full max-w-sm my-5"
+        >
+          Save All
+        </Button>
+      </div>
     </div>
   );
 };
