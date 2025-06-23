@@ -234,21 +234,21 @@ const Dashboard = () => {
         <div className="bg-[rgba(169,126,255,0.08)] md:col-span-3 rounded-[20px] border md:mt-24 mt-10 border-brand2  w-full relative overflow-hidden backdrop-blur-[6.7px]">
 
           <Tabs defaultValue="myprofile" className="w-full">
-            <TabsList className="w-full h-12 bg-transparent  ">
+            <TabsList className="w-full min-h-12 bg-transparent grid md:grid-cols-4 grid-cols-2  h-full rounded-t-[20px] p-0">
               <TabsTrigger value="myprofile"
-                className="relative w-full h-[45px] text-xl rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-white data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5"
+                className="relative w-full h-[45px] py-5 text-lg rounded-none border-b-2 border-b-transparent bg-transparent px-4   font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-white data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5"
               >
                 My Profile
               </TabsTrigger>
-              <TabsTrigger value="useractivity" className="relative w-full h-[45px] text-xl rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5 data-[state=active]:text-white"
+              <TabsTrigger value="useractivity" className="relative w-full h-[45px]  py-5 text-lg rounded-none border-b-2 border-b-transparent bg-transparent px-4  font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5 data-[state=active]:text-white"
               >
                 User Activity
               </TabsTrigger>
-              <TabsTrigger value="transactions" className="relative w-full h-[45px] text-xl rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5 data-[state=active]:text-white"
+              <TabsTrigger value="transactions" className="relative w-full h-[45px] py-5 text-lg rounded-none border-b-2 border-b-transparent bg-transparent px-4  font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5 data-[state=active]:text-white"
               >
                 Transactions
               </TabsTrigger>
-              <TabsTrigger value="bonds" className="relative h-[45px] text-xl w-full rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5 data-[state=active]:text-white"
+              <TabsTrigger value="bonds" className="relative h-[45px] text-lg w-full py-5 rounded-none border-b-2 border-b-transparent bg-transparent px-4  font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5 data-[state=active]:text-white"
               >
                 Bonds
               </TabsTrigger>
