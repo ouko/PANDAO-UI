@@ -228,7 +228,7 @@ const Dashboard = () => {
       <NavBar userImage={userData?.usermetadata?.image_url || null} isAdmin={true} />
 
       <div className="grid md:grid-cols-4 grid-cols-1 relative container mx-auto md:gap-5 ">
-        <div className="sticky top-0 h-full ">
+        <div className="sticky top-0 h-full md:pt-0 pt-10 ">
           <Sidebar userData={userData || {}} onEdit={handleOnEdit} />
         </div>
 
@@ -280,7 +280,7 @@ const Dashboard = () => {
             <TabsContent value="transactions">
               <section className="">
                 <div className="bg-[#39246b] p-3 flex items-center justify-start rounded-md mb-6">
-                  <h2 className="text-white text-2xl font-semibold">User Transaction</h2>
+                  <h2 className="text-white md:text-2xl text-xl font-semibold">User Transaction</h2>
                 </div>
                 <div className="flex flex-wrap gap-5 justify-center mb-6 px-3">
                   <UserTransaction
