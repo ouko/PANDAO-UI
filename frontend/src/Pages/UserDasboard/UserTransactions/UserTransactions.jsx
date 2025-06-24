@@ -12,13 +12,21 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
       <TabsList className="bg-[rgba(169,126,255,0)] gap-4">
         <TabsTrigger
           value="account"
-          className="tab-trigger"
+          className={`tab-trigger px-6 py-2 font-semibold transition-all duration-200
+      data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-brand3
+      data-[state=active]:text-white data-[state=active]:shadow-lg
+      data-[state=inactive]:bg-transparent data-[state=inactive]:text-brand7
+      hover:bg-brand2 focus:outline-none focus:ring-2 focus:ring-brand3`}
         >
           Success
         </TabsTrigger>
         <TabsTrigger
           value="password"
-          className="tab-trigger"
+          className={`tab-trigger px-6 py-2 font-semibold transition-all duration-200
+      data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-brand3
+      data-[state=active]:text-white data-[state=active]:shadow-lg
+      data-[state=inactive]:bg-transparent data-[state=inactive]:text-brand7
+      hover:bg-brand2 focus:outline-none focus:ring-2 focus:ring-brand3`}
         >
           Pending
         </TabsTrigger>
