@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import BrandButton from '@/components/ui/myComponents/brand-button';
 
 const fetchAirdrops = async () => {
   const res = await axios.get('https://pandao-backend-python-61ef.onrender.com/community/airdrops/live', {
@@ -88,9 +89,7 @@ const Carousel = () => {
                   <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">{slide.title}</h1>
                   <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-gray-200 leading-relaxed">{slide.description}</p>
                   <a href={slide.buttonLink}>
-                    <button className="bg-brand4 hover:bg-brand5 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
-                      {slide.buttonText}
-                    </button>
+                    <BrandButton title={slide.buttonText} />
                   </a>
                 </div>
               </div>
