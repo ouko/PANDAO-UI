@@ -31,7 +31,7 @@ const [open,setOpen]=useState(false)
         </DialogContent>
       </Dialog>
 
-      <div className="bg-[rgba(169,126,255,0.08)] mt-10 md:mt-24 flex flex-col space-y-6 rounded-[20px]  justify-center items-center border border-brand2 p-4 sm:p-5 h-[500px] md:h-[800px]  relative overflow-hidden backdrop-blur-[6.7px]">
+      <div className="bg-[rgba(169,126,255,0.08)] mt-10 md:mt-24 flex flex-col space-y-6 rounded-[20px]  justify-center items-center border border-brand2 px-4 sm:px-5 py-10    relative overflow-hidden backdrop-blur-[6.7px]">
         
         {/* Avatar + Name + Address */}
         <div className="flex flex-col md:flex-col sm:flex-row items-center gap-4 md:gap-5 mt-4 md:mt-0 w-full sm:w-auto">
