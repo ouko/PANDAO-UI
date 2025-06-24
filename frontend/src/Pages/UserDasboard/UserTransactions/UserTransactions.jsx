@@ -47,27 +47,26 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
             {expneseData.length > 0 &&
               expneseData.map((activity, index) => (
                 <div key={index} className='flex flex-col p-4 border-2 bg-gradient-to-br from-[rgba(39,18,76,0.68)] to-brand1 shadow-lg border-brand2 rounded-lg group hover:shadow-md'>
-                  <div className=" flex items-center space-x-4 mb-4">
-                    {/* Community Image */}
+                  <div className="flex flex-col md:flex-row md:items-center gap-4 mb-4 p-4  rounded-xl">
                     <img
                       src={activity.community_image}
                       alt={`${activity.community_name} image`}
-                      className="w-16 h-16 rounded-sm"
+                      className="w-16 h-16 rounded-md object-cover self-start md:self-center"
                     />
-                    {/* Activity Details */}
-                    <div>
-                      <h3 className="text-lg font-semibold">
+                    <div className="flex-1 space-y-1">
+                      <h3 className="text-base md:text-lg font-semibold text-white">
                         {activity.community_name}
                       </h3>
-                      <p className="text-sm text-gray-500">
+
+                      <p className="text-sm text-gray-400">
                         {activity.xrd_spent_on}
                       </p>
 
-                      <p className="text-sm font-bold text-red-500">
-                        XRD Spent transactions: {activity.xrd_spent_on_transactions}
+                      <p className="text-sm font-semibold text-red-500">
+                        XRD Spent Transactions: {activity.xrd_spent_on_transactions}
                       </p>
 
-                      <p className="text-sm font-bold text-gray-500">
+                      <p className="text-sm font-semibold text-gray-300">
                         XRD Spent On Assets: {activity.xrd_spent_on_assets ?? 0}
                       </p>
 
@@ -79,31 +78,31 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
                       >
                         Spent: {Math.abs(activity.xrd_spent)} XRD
                       </p>
-                      <p className="text-sm text-gray-400">
+
+                      <p className="text-xs text-gray-500">
                         Date: {new Date(activity.date).toLocaleString()}
                       </p>
                     </div>
-
-
                   </div>
+
                   <Separator className="bg-brand2" />
-                  <div className='mt-4'>
-                    <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium" >
-                      <Link
-                        to={`/community/detail/${activity.community_id}`}
-                      >
-                        View Community
-                      </Link>
-                    </button>{' '}
-                    <button className="rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-extrabold" >
-                      <Link
-                        to={`https://stokenet-dashboard.radixdlt.com/transaction/${activity.tx_hash}/summary`}
-                        target='_blank'
-                      >
-                        View Transaction
-                      </Link>
-                    </button>
+                  <div className="mt-4 flex  md:flex-row gap-2 md:gap-4 ">
+                    <Link
+                      to={`/community/detail/${activity.community_id}`}
+                      className="w-[150px] md:w-auto text-center rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                    >
+                      View Community
+                    </Link>
+                    <a
+                      href={`https://stokenet-dashboard.radixdlt.com/transaction/${activity.tx_hash}/summary`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className=" w-[150px] md:w-auto text-center rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-extrabold"
+                    >
+                      View Transaction
+                    </a>
                   </div>
+
                 </div>
               ))}
           </div>
@@ -125,8 +124,8 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
               failedTransaction.map((activity, index) => (
                 <div
                   key={index}
-                  className="w-full py-4 px-4 bg-gradient-to-br from-[rgba(39,18,76,0.68)] to-brand1 shadow-lg rounded-lg border border-brand3    items-start md:items-center transition-transform transform hover:scale-95 duration-300"
-                 >
+                  className="w-full py-4 px-4 bg-gradient-to-br from-[rgba(39,18,76,0.68)] to-brand1 shadow-lg rounded-lg border border-brand3    items-start md:items-center transition-transform transform "
+                >
                   {/* Transaction Details */}
                   <div className="flex items-center space-x-4">
                     <div className="flex-1">

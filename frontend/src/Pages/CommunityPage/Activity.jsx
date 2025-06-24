@@ -174,7 +174,7 @@ const Activity = () => {
                         {expenses && expenses.map((transaction) => (
                           <Card
                             key={transaction.id}
-                            className="flex items-start gap-4 bg-brand1 hover:scale-95 transition-transform duration-300 border-[1px] border-[#5228A4] rounded-2xl p-3 text-white"
+                            className="flex items-start gap-4 bg-brand1 transition-transform duration-300 border-[1px] border-[#5228A4] rounded-2xl p-3 text-white"
                           >
                             <Avatar className="h-16 w-20 object-cover rounded-lg mt-1 overflow-hidden shadow-md">
                               <img

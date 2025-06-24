@@ -19,7 +19,7 @@ const BondList = ({ bonds, check, setCheck, loading, handleRetrieveBond, handleD
         bonds.map((bond) => (
           <div
             key={bond.bond_id}
-            className={`w-full bg-gradient-to-br from-[rgba(39,18,76,0.68)] to-brand1 shadow-lg rounded-lg border border-brand3 p-5 mt-6 flex flex-col md:flex-row justify-between items-start md:items-center transition-transform transform hover:scale-95 duration-300 ${{
+            className={`w-full bg-gradient-to-br from-[rgba(39,18,76,0.68)] to-brand1 shadow-lg rounded-lg border border-brand3 p-5 mt-6 flex flex-col md:flex-row justify-between items-start md:items-center transition-transform transform  ${{
               'ring-2 ring-brand2': check && bond.maturity_date && new Date(bond.maturity_date) < new Date(),
               'ring-2 ring-purple-950': check && bond.maturity_date && new Date(bond.maturity_date) > new Date()
             }}`}
@@ -60,7 +60,7 @@ const BondList = ({ bonds, check, setCheck, loading, handleRetrieveBond, handleD
           </div>
         ))
       ) : (
-        <div className="flex items-center justify-center h-28 w-full text-gray-300 font-normal text-xl">
+        <div className="flex items-center justify-center h-28 w-full text-gray-300 font-normal ">
           No Bond Created
         </div>
       )}
