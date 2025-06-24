@@ -9,24 +9,16 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
   return (
 
     <Tabs defaultValue="account" className="w-full text-white ">
-      <TabsList className="bg-[rgba(169,126,255,0)] gap-4">
+      <TabsList className=" min-h-12 bg-black/60 grid grid-cols-2 w-1/2 p-0">
         <TabsTrigger
           value="account"
-          className={`tab-trigger px-6 py-2 font-semibold transition-all duration-200
-      data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-brand3
-      data-[state=active]:text-white data-[state=active]:shadow-lg
-      data-[state=inactive]:bg-transparent data-[state=inactive]:text-brand7
-      hover:bg-brand2 focus:outline-none focus:ring-2 focus:ring-brand3`}
+          className="relative w-full h-[45px] py-5 text-lg rounded-none border-b-2 border-b-transparent bg-transparent px-4 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-white data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5"
         >
           Success
         </TabsTrigger>
         <TabsTrigger
           value="password"
-          className={`tab-trigger px-6 py-2 font-semibold transition-all duration-200
-      data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-brand3
-      data-[state=active]:text-white data-[state=active]:shadow-lg
-      data-[state=inactive]:bg-transparent data-[state=inactive]:text-brand7
-      hover:bg-brand2 focus:outline-none focus:ring-2 focus:ring-brand3`}
+          className="relative w-full h-[45px] py-5 text-lg rounded-none border-b-2 border-b-transparent bg-transparent px-4 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-white data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5"
         >
           Pending
         </TabsTrigger>
@@ -86,10 +78,10 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
                   </div>
 
                   <Separator className="bg-brand2" />
-                  <div className="mt-4 flex  md:flex-row gap-2 md:gap-4 ">
+                  <div className="mt-4 flex flex-col sm:flex-row gap-3 w-full">
                     <Link
                       to={`/community/detail/${activity.community_id}`}
-                      className="w-[150px] md:w-auto text-center rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-medium"
+                      className="w-full sm:w-auto text-center rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-white text-[14px] leading-5 font-medium"
                     >
                       View Community
                     </Link>
@@ -97,11 +89,12 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
                       href={`https://stokenet-dashboard.radixdlt.com/transaction/${activity.tx_hash}/summary`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className=" w-[150px] md:w-auto text-center rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-black text-[14px] leading-5 font-extrabold"
+                      className="w-full sm:w-auto text-center rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-white text-[14px] leading-5 font-medium"
                     >
                       View Transaction
                     </a>
                   </div>
+
 
                 </div>
               ))}
@@ -157,13 +150,14 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
                       {new Date(activity.date).toLocaleString()}
                     </p>
                   </div>
-                  <Button className="w-40 mt-4">
+                  <button 
+                  className="w-full sm:w-auto text-center rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-white text-[14px] leading-5 font-medium">
                     <Link
                       to={`https://stokenet-dashboard.radixdlt.com/transaction/${activity.tx_hash}/summary`}
                     >
                       View Transaction
                     </Link>
-                  </Button>
+                  </button>
                 </div>
               ))}
           </div>
