@@ -104,7 +104,7 @@ const EditPage = ({onClose}) => {
     setWorkHistory(updatedWorkHistory);
   };
   return (
-   <div className="bg-transparent w-full px-4">
+   <div className=" w-full ">
 
       {/* <Card className="w-full max-w-screen-xl mx-auto relative border-none shadow-md overflow-hidden rounded-lg mb-4">
         <img
@@ -191,7 +191,7 @@ const EditPage = ({onClose}) => {
       </Card>
 
       {/* Work History Section */}
-      <Card className="w-full max-w-screen-xl mx-auto bg-transparent border-transparent p-4 mt-4">
+      <Card className="w-full   bg-transparent border-transparent  mt-4 ">
         {workHistory.map((item, index) => (
           <EmploymentDetails
             key={index}
@@ -219,7 +219,7 @@ const EditPage = ({onClose}) => {
         <Button
           onClick={handleUpdateUser}
           variant="brand"
-          className="w-full max-w-sm my-5"
+          className="w-full  my-5"
         >
           Save All
         </Button>

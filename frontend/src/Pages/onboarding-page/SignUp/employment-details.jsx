@@ -86,9 +86,9 @@ const EmploymentDetails = ({isOnboarding=true}) => {
 
 
   return (
-    <div className="h-full w-full relative justify-center items-center gap-8 flex overflow-hidden px-4">
-      <div className="flex flex-col pt-10 px-5 gap-8 text-white w-full">
-        <h2 className="text-3xl font-semibold">Employment Details</h2>
+    <div className="h-full w-full relative justify-center items-center gap-8 flex overflow-hidden md:px-4">
+      <div className="flex flex-col pt-10 md:px-5 gap-8 text-white w-full">
+        <h2 className="md:text-3xl text-xl font-semibold">Employment Details</h2>
 
         {work_history.map((entry, index) => (
           <div key={index} className="flex flex-col gap-6 w-full">
@@ -107,8 +107,8 @@ const EmploymentDetails = ({isOnboarding=true}) => {
               />
             </div>
 
-            <div className="flex gap-8 w-full">
-              <div className="flex flex-col gap-4 w-1/2">
+            <div className="flex md:flex-row flex-col  gap-8 w-full">
+              <div className="flex flex-col gap-4 md:w-1/2">
                 <label className="text-white text-xl  font-medium">
                   Enter Starting Date:
                 </label>
@@ -124,7 +124,7 @@ const EmploymentDetails = ({isOnboarding=true}) => {
                 />
               </div>
 
-              <div className="flex flex-col gap-4 w-1/2">
+              <div className="flex flex-col gap-4 md:w-1/2">
                 <label className="text-white text-xl font-medium">
                   Enter Ending Date:
                 </label>
@@ -200,10 +200,10 @@ const EmploymentDetails = ({isOnboarding=true}) => {
         ))}
 
         <div className="flex items-center gap-3 cursor-pointer" onClick={addWorkHistory}>
-          <Button variant="radix" size="icon" className="bg-[#9268E4] hover:bg-[#7D3DFF]">
+          <Button variant="radix" size="icon" className="bg-[#9268E4] hover:bg-[#7D3DFF] ">
             <Plus />
           </Button>
-          <span className="text-white text-xl">Add another work Experience.</span>
+          <span className="text-white md:text-xl text-sm">Add another work Experience.</span>
         </div>
 {isOnboarding === true &&    <div className="flex gap-4 w-full">
           <button
