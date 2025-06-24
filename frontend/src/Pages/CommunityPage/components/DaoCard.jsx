@@ -111,23 +111,23 @@ const DaoCard = ({ daoData, isUserParticipant,  setExecOpen, onSuccess, isOwner 
 
     <>
       <div
-        className="bg-[rgba(169,126,255,0.08)] rounded-[20px] border-solid border-[#5228A4] border pt-[13px]  pb-[13px] pl-[25px] self-stretch shrink-0 h-[410px] relative overflow-hidden"
+        className="bg-[rgba(169,126,255,0.08)]  rounded-[20px] border-solid border-[#5228A4] border pt-[13px]  pb-[13px] pl-[25px] self-stretch shrink-0 h-[410px] relative overflow-hidden"
 
       >
 
         <div className="flex flex-col gap-3.5 items-center justify-start w-[171px] absolute left-[43px] top-[21px]">
           <img
-            className="rounded-[50%] border-solid border-primary-300 border-[5px] shrink-0 w-[152px] h-[152px] relative object-cover"
+            className="rounded-[50%] border-solid border-primary-300 border-[5px] shrink-0 w-[152px] h-[152px] object-cover"
             src={daoData.image}
             alt="Community Logo"
           />
-          <div className="flex flex-col gap-[3px] items-center justify-start self-stretch shrink-0 relative">
-            <div className="flex flex-row gap-3 items-center justify-start shrink-0 relative">
-              <div className="text-[#AE85FF] text-left font-['Inter-Regular',_sans-serif] text-[10px] font-normal uppercase relative">
+          <div className="flex flex-col gap-[3px] items-center justify-start self-stretch shrink-0 ">
+            <div className="flex flex-row gap-3 items-center justify-start shrink-0 ">
+              <div className="text-[#AE85FF] text-left font-['Inter-Regular',_sans-serif] text-[10px] font-normal uppercase">
                 Community Name
               </div>
             </div>
-            <div className="text-[#ffffff] text-center font-['ClashDisplayVariable-Semibold',_sans-serif] text-[26px] font-semibold relative self-stretch">
+            <div className="text-[#ffffff] text-center font-['ClashDisplayVariable-Semibold',_sans-serif] text-[26px] font-semibold  self-stretch">
               {daoData.name ? (
                 daoData.name
               ) : (
@@ -137,13 +137,13 @@ const DaoCard = ({ daoData, isUserParticipant,  setExecOpen, onSuccess, isOwner 
           </div>
         </div>
 
-        <div className="flex flex-col gap-[10px] items-start justify-start w-[656px] absolute left-[255px] top-[30px]">
+        <div className="flex flex-col gap-[10px] items-start justify-start  absolute left-[255px] top-[30px]">
 
-          <div className="flex flex-col gap-1 items-start justify-start shrink-0  relative">
-            <div className="text-[#AE85FF] text-left text-base font-normal uppercase relative self-stretch">
+          <div className="flex flex-col gap-1 items-start justify-start shrink-0  marker:">
+            <div className="text-[#AE85FF] text-left text-base font-normal uppercase  self-stretch">
               Purpose:
             </div>
-            <div className="text-[#ffffff] text-center text-xl font-normal relative self-stretch">
+            <div className="text-[#ffffff] w-[380px]  text-xl font-normal">
               {daoData.purpose ? (
                 daoData.purpose
               ) : (
@@ -153,8 +153,8 @@ const DaoCard = ({ daoData, isUserParticipant,  setExecOpen, onSuccess, isOwner 
 
           </div>
 
-          <div className="flex flex-col gap-1.5 items-start justify-start shrink-0 relative z-30">
-            <div className="text-[#AE85FF] text-left text-base font-normal uppercase relative self-stretch">
+          <div className="flex flex-col gap-1.5 items-start justify-start shrink-0  z-30">
+            <div className="text-[#AE85FF] text-left text-base font-normal uppercase  self-stretch">
               Owner address:
             </div>
             <div className="flex items-center gap-2">
@@ -178,8 +178,8 @@ const DaoCard = ({ daoData, isUserParticipant,  setExecOpen, onSuccess, isOwner 
               </p>
             </div>
           </div>
-          <div className="flex flex-col gap-1.5 items-start justify-start shrink-0 relative z-30">
-            <div className="text-[#AE85FF] text-left text-base font-normal uppercase relative self-stretch">
+          <div className="flex flex-col gap-1.5 items-start justify-start shrink-0  z-30">
+            <div className="text-[#AE85FF] text-left text-base font-normal uppercase  self-stretch">
               Component Address:
             </div>
             <div className="flex items-center gap-2">
@@ -204,8 +204,8 @@ const DaoCard = ({ daoData, isUserParticipant,  setExecOpen, onSuccess, isOwner 
             </div>
           </div>
 
-          <div className="flex flex-col gap-1.5 items-start justify-start self-stretch shrink-0 relative z-30">
-  <div className="text-[#AE85FF] text-left text-base font-normal uppercase relative self-stretch">
+          <div className="flex flex-col gap-1.5 items-start justify-start self-stretch shrink-0 z-30">
+  <div className="text-[#AE85FF] text-left text-base font-normal uppercase self-stretch">
     Description:
   </div>
   <div className="flex flex-col gap-1 items-start w-[526px]">
@@ -226,7 +226,7 @@ const DaoCard = ({ daoData, isUserParticipant,  setExecOpen, onSuccess, isOwner 
 
         </div>
 
-        <div className="flex justify-end items-start relative w-full h-full p-4">
+        <div className="flex justify-end items-start  w-full h-full p-4">
           {/* First Box */}
           <Card className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)]  px-5 py-3">
             <div className="flex flex-row gap-[11px] items-center">
