@@ -3,53 +3,62 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-// ✅ Fetch function that handles nested response
 const fetchAirdrops = async () => {
-  const res = await axios.get('/community/airdrops/live');
-  // Handle both raw array and wrapped array in { data: [...] }
-  if (Array.isArray(res.data)) return res.data;
-  if (Array.isArray(res.data.data)) return res.data.data;
-  throw new Error("Unexpected API response format");
+  const res = await axios.get('https://pandao-backend-python-61ef.onrender.com/community/airdrops/live', {
+    headers: {
+      Accept: 'application/json',
+    },
+  });
+
+  if (!Array.isArray(res.data)) {
+    console.error('Unexpected API response:', res.data);
+    throw new Error('API did not return expected array');
+  }
+
+  return res.data;
 };
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
-  // ✅ Use TanStack Query
   const { data, isLoading, isError } = useQuery({
     queryKey: ['airdrops', 'live'],
     queryFn: fetchAirdrops,
   });
 
-  // ✅ Map API data to carousel slide format
   const slides = data?.map((item) => ({
     id: item.community_id,
     title: item.community_name,
     subtitle: `Airdrop: ${item.amount_per_air_drop}`,
     description: `Live from ${new Date(item.start_time).toLocaleDateString()} to ${new Date(item.end_time).toLocaleDateString()}.`,
     image: item.community_image,
-    buttonText: "View Community",
+    buttonText: 'View Community',
     buttonLink: `/community/detail/${item.community_id}`,
-  })) || [];
+  }));
 
   useEffect(() => {
-    if (!isAutoPlaying || slides.length === 0) return;
+    if (!isAutoPlaying || !slides || slides.length === 0) return;
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [isAutoPlaying, currentSlide, slides.length]);
+  }, [isAutoPlaying, currentSlide, slides]);
 
   const handleMouseEnter = () => setIsAutoPlaying(false);
   const handleMouseLeave = () => setIsAutoPlaying(true);
 
+  // UI States
   if (isLoading) {
     return <div className="h-[70vh] flex items-center justify-center text-white text-xl">Loading airdrops...</div>;
   }
 
-  if (isError || slides.length === 0) {
+  if (isError) {
     return <div className="h-[70vh] flex items-center justify-center text-white text-xl">Failed to load airdrops.</div>;
+  }
+
+  if (!slides || slides.length === 0) {
+    return <div className="h-[70vh] flex items-center justify-center text-white text-xl">No airdrops available right now.</div>;
   }
 
   return (
