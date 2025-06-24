@@ -141,7 +141,7 @@ const EditPage = ({onClose}) => {
             <Textarea
               value={about}
               onChange={(e) => setAbout(e.target.value)}
-              className="w-full bg-brand1 border-brand1 text-white outline-none"
+              className="w-full bg-brand1 border-brand1 text-white outline-2 outline-brand5 rounded-lg"
               maxLength="150"
             />
 
@@ -158,7 +158,7 @@ const EditPage = ({onClose}) => {
                     setSocialLinks({ ...socialLinks, x_url: e.target.value }),
                 },
                 {
-                  icon: <Globe className="text-white" />,
+                  icon: <Globe className="text-white size-5" />,
                   placeholder: "Your website URL",
                   value: socialLinks.website_url,
                   onChange: (e) =>
@@ -176,12 +176,14 @@ const EditPage = ({onClose}) => {
                 },
               ].map((field, i) => (
                 <div key={i} className="flex items-center gap-2 w-full my-2">
-                  {field.icon}
+                  <div className="size-4 mr-2">
+                    {field.icon}
+                  </div>
                   <input
                     value={field.value}
                     onChange={field.onChange}
                     placeholder={field.placeholder}
-                    className="flex-1 px-3 py-2 text-sm bg-transparent border rounded-lg border-brand1 outline-none text-white"
+                    className="flex-1 px-3 py-2 my-1 text-sm bg-transparent border rounded-lg border-brand5 outline-none text-white"
                   />
                 </div>
               ))}
