@@ -8,7 +8,7 @@ const BondList = ({ bonds, check, setCheck, loading, handleRetrieveBond, handleD
   return (
     <div>
       <div className="bg-[#39246b] p-3 flex justify-between items-center rounded-md mb-6 ">
-        <h2 className="text-white md:text-2xl text-xl font-medium">Created Bonds:</h2>
+        <h2 className="text-white md:text-2xl text-[16px] font-medium">Created Bonds:</h2>
         <div className="flex items-cente text-brand7 md:text-xl text-sm gap-2">
           <div >Purchased Bonds</div>
           <Switch className=" bg-brand5" checked={check} onCheckedChange={() => setCheck(!check)} />

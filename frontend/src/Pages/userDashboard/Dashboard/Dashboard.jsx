@@ -280,7 +280,7 @@ const Dashboard = () => {
             <TabsContent value="transactions">
               <section className="">
                 <div className="bg-[#39246b] p-3 flex items-center justify-start rounded-md mb-6">
-                  <h2 className="text-white md:text-2xl text-xl font-semibold">User Transaction</h2>
+                  <h2 className="text-white md:text-2xl text-[16px] font-semibold">User Transaction</h2>
                 </div>
                 <div className="flex flex-wrap gap-5 justify-center mb-6 px-3">
                   <UserTransaction
