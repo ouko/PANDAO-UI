@@ -117,48 +117,45 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
               failedTransaction.map((activity, index) => (
                 <div
                   key={index}
-                  className="w-full py-4 px-4 bg-gradient-to-br from-[rgba(39,18,76,0.68)] to-brand1 shadow-lg rounded-lg border border-brand3    items-start md:items-center transition-transform transform "
+                  className="w-full p-4 bg-gradient-to-br from-[rgba(39,18,76,0.68)] to-brand1 shadow-lg rounded-xl border border-brand3 flex flex-col gap-3 transition-transform transform"
                 >
-                  {/* Transaction Details */}
-                  <div className="flex items-center space-x-4">
-                    <div className="flex-1">
-                      <p className="text-lg font-bold text-red-500">
-                        Pending Transaction
-                      </p>
-                    </div>
+                  {/* Header */}
+                  <div className="flex justify-between items-center flex-wrap">
+                    <p className="text-base md:text-lg font-bold text-red-500">
+                      Pending Transaction
+                    </p>
                   </div>
 
-                  <div className="flex flex-col space-y-2">
-                    <p className="text-sm text-gray-300">
-                      <span className="font-semibold">Creator:</span>{' '}
-                      {activity.creator}
+                  {/* Details */}
+                  <div className="flex flex-col gap-2 text-sm text-gray-300">
+                    <p>
+                      <span className="font-semibold text-white">Creator:</span> {activity.creator}
                     </p>
-                    <p className="text-sm text-gray-300">
-                      <span className="font-semibold">Event Type:</span>{' '}
-                      {activity.event_type}
+                    <p>
+                      <span className="font-semibold text-white">Event Type:</span> {activity.event_type}
                     </p>
-                    <p className="text-sm text-gray-300">
-                      <span className="font-semibold">Error:</span>{' '}
-                      {activity.error}
+                    <p>
+                      <span className="font-semibold text-white">Error:</span> {activity.error}
                     </p>
-                    <p className="text-sm text-gray-300">
-                      <span className="font-semibold">Transaction Hash:</span>{' '}
-                      {activity.tx_hash}
+                    <p>
+                      <span className="font-semibold text-white">Transaction Hash:</span> {activity.tx_hash}
                     </p>
-                    <p className="text-sm text-gray-400">
-                      <span className="font-semibold">Date:</span>{' '}
-                      {new Date(activity.date).toLocaleString()}
+                    <p className="text-gray-400">
+                      <span className="font-semibold text-white">Date:</span> {new Date(activity.date).toLocaleString()}
                     </p>
                   </div>
-                  <button 
-                  className="w-full sm:w-auto text-center rounded-[26px] py-2 px-[15px] bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-white text-[14px] leading-5 font-medium">
+
+                  {/* Button */}
+                  <div className="mt-2">
                     <Link
                       to={`https://stokenet-dashboard.radixdlt.com/transaction/${activity.tx_hash}/summary`}
+                      className="block w-full sm:w-auto text-center rounded-[26px] py-2 px-4 bg-gradient-to-b from-purple-300 to-purple-600 text-white text-sm font-medium shadow-inner hover:shadow-lg hover:scale-[1.02] transition-all duration-300"
                     >
                       View Transaction
                     </Link>
-                  </button>
+                  </div>
                 </div>
+
               ))}
           </div>
         </div>
