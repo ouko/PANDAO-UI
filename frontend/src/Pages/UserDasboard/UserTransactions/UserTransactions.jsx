@@ -116,7 +116,7 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
           </div>
           <div className="w-full mt-4 flex flex-col gap-2 h-full">
             {failedTransaction.length === 0 && (
-              <div className="flex items-center justify-center text-center h-full">
+              <div className="flex items-center justify-center pt-20 text-center h-full">
                 No Pending Transaction
               </div>
             )}
