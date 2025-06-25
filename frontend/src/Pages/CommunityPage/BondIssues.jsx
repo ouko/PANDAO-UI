@@ -97,7 +97,7 @@ const BondIssue = () => {
   const [nfts, setNfts] = useState([]) // State to store the NFTs array
   const [timeRemaining, setTimeRemaining] = useState(0) // Timer for bond creation cooldown
   const [bondCreated, setBondCreated] = useState(false) // Track if a bond has been created
-  
+
   // Check if there's a stored timestamp in localStorage
   useEffect(() => {
     const storedTimestamp = localStorage.getItem('lastBondCreationTime');
@@ -106,7 +106,7 @@ const BondIssue = () => {
       const currentTime = new Date().getTime();
       const elapsedSeconds = Math.floor((currentTime - lastCreationTime) / 1000);
       const cooldownPeriod = 5 * 60; // 5 minutes in seconds
-      
+
       if (elapsedSeconds < cooldownPeriod) {
         // If less than 5 minutes have passed, set the remaining time and bondCreated flag
         setTimeRemaining(cooldownPeriod - elapsedSeconds);
@@ -119,11 +119,11 @@ const BondIssue = () => {
       }
     }
   }, []);
-  
+
   // Timer effect to count down from timeRemaining
   useEffect(() => {
     if (timeRemaining <= 0) return;
-    
+
     const timer = setInterval(() => {
       setTimeRemaining(prevTime => {
         if (prevTime <= 1) {
@@ -136,10 +136,10 @@ const BondIssue = () => {
         return prevTime - 1;
       });
     }, 1000);
-    
+
     return () => clearInterval(timer);
   }, [timeRemaining]);
-  
+
   // Memoize the formatted time to prevent re-renders
   const formattedTime = useMemo(() => {
     const minutes = Math.floor(timeRemaining / 60);
@@ -148,14 +148,14 @@ const BondIssue = () => {
   }, [timeRemaining]);
   const handleformSubmit = async (e) => {
     e.preventDefault()
-    
+
     // Check if a bond has already been created within the 5-minute window
     if (bondCreated) {
       toast.error('You can only create one bond every 5 minutes.')
       setOpen(false)
       return
     }
-    
+
     setLoading(true) // Set loading to true at the start of the process
     // Process form submission
 
@@ -198,15 +198,15 @@ const BondIssue = () => {
               },
             )
             console.log(response.data)
-            
+
             // Store the timestamp when the bond was created
             const currentTime = new Date().getTime();
             localStorage.setItem('lastBondCreationTime', currentTime.toString());
-            
+
             // Set the timer to 5 minutes
             setTimeRemaining(5 * 60);
             setBondCreated(true);
-            
+
             toast.success('Bond Issued. You can create another bond after 5 minutes.')
             navigate(`/community/detail/${params.id}`)
           } catch (error) {
@@ -319,18 +319,18 @@ const BondIssue = () => {
         <div className="space-y-6 md:w-[100%] ">
           <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
             <div className="md:w-[100%] space-y-6  ">
-              <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-5 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
-                <div className="z-50 flex items-center justify-between w-full ">
+              <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-5 gap-6 sm:gap-7 p-4 sm:p-10 border-2 border-brand5 flex flex-col justify-start items-start">
+                <div className="z-50 flex flex-col sm:flex-row items-start sm:items-center justify-between w-full gap-4 sm:gap-0">
                   <div>
-                    <span className=" text-[40px] leading-[130%] z-50 font-semibold text-start text-amber-50">Create a Bond</span>
+                    <span className="text-[28px] sm:text-[40px] leading-[130%] font-semibold text-start text-amber-50">
+                      Create a Bond
+                    </span>
                   </div>
-    
-                  <div className="flex flex-row gap-4 items-center">
-                    {/* Timer Card */}
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center w-full sm:w-auto">
                     {bondCreated && (
-                      <Card className="flex flex-col gap-1 items-center justify-center bg-[rgba(0,0,0,0.30)] rounded-[15px] border border-[rgba(255,255,255,0.15)] px-5 py-3">
+                      <Card className="flex flex-col gap-1 items-start justify-center bg-[rgba(0,0,0,0.30)] rounded-[15px] border border-[rgba(255,255,255,0.15)] px-4 py-3 w-full sm:w-auto">
                         <div className="flex flex-row gap-[8px] items-center">
-                          <BookDown className='text-brand5' />
+                          <BookDown className="text-brand5" />
                           <div className="text-brand5 text-base font-medium">
                             NEXT BOND IN
                           </div>
@@ -354,7 +354,7 @@ const BondIssue = () => {
                     </Card> */}
                   </div>
                 </div>
-                <div className="text-[#ffffff]  z-50 text-xl leading-[130%] font-normal text-center">
+                <div className="text-white text-base sm:text-xl leading-[130%] font-normal text-center sm:text-left w-full z-50">
                   Start simple and learn as you go. You can always evolve your DAO in the future
                 </div>
               </div>

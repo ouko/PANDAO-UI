@@ -137,41 +137,35 @@ const Members = () => {
             <div className="md:w-[100%] space-y-6 mx-[1px] ">
 
               <div
-                className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden"
+                className="rounded-2xl border-2 border-[#5228A4] p-4 sm:p-7 mt-5 flex flex-col gap-4 items-start justify-center relative overflow-hidden"
               >
-
-                <div className="flex flex-row  gap-10 items-center w-full">
-                  <div
-                    className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 items-center w-full">
+                  <div className="bg-[#554573] rounded-full p-4 sm:p-5 flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 mx-auto sm:mx-0">
                     <img
-                      className="w-14 h-14"
+                      className="w-12 h-12 sm:w-14 sm:h-14"
                       src="/member.svg"
                       alt="User Icon"
                     />
                   </div>
-                  <div className="flex flex-col gap-1.5">
-                    <div
-                      className="text-[#5228A4] font-semibold uppercase text-xl"
-                    >
+                  <div className="flex flex-col gap-2 items-center sm:items-start text-center sm:text-left w-full">
+                    <div className="text-[#5228A4] font-semibold uppercase text-lg sm:text-xl">
                       Total Members:
                     </div>
-                    <div
-                      className="text-gray-300 text-[56px] font-medium text-center"
-                    >
+                    <div className="text-gray-300 text-[36px] sm:text-[56px] font-medium">
                       {participants.length} Members
                     </div>
+
                     {participants.length > 4 && (
-                      <AvatarCircles
-                        numPeople={participants.length - 3}
-                        src1={participants[0].image_url}
-                      />
+                      <div className="mt-2 sm:mt-0">
+                        <AvatarCircles
+                          numPeople={participants.length - 3}
+                          src1={participants[0].image_url}
+                        />
+                      </div>
                     )}
                   </div>
                 </div>
               </div>
-
-
-
 
               <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4]  relative overflow-hidden">
                 <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">

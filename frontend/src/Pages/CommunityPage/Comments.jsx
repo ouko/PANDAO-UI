@@ -65,7 +65,7 @@ const Comments = () => {
       toast.error("Add something");
       return;
     }
-    
+
     const data = {
       user_addr: accounts[0].address,
       discussion_title: title,
@@ -119,7 +119,7 @@ const Comments = () => {
     },
     onError: (error) => {
       console.error("Error adding comment:", error);
-      
+
       if (error.message === "unauthorized") {
         toast.warning("You must be a community member to add comments");
         setNewComment("");
@@ -135,7 +135,7 @@ const Comments = () => {
       toast.error("Comment cannot be empty");
       return;
     }
-    
+
     const data = {
       user_addr: accounts[0].address,
       discussion_id: selectedDiscussion,
@@ -184,56 +184,52 @@ const Comments = () => {
 
 
 
-              <div
-                className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden"
-              >
-
-                <div className="flex flex-row gap-10  items-center w-full">
-                  <div className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
-                    <img className="w-14 h-14" src="/4.svg" alt="User Icon" />
+              <div className="rounded-2xl border-2 border-[#5228A4] p-4 sm:p-7 mt-5 flex flex-col gap-4 items-center sm:items-start justify-center relative overflow-hidden">
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 items-center w-full">
+                  <div className="bg-[#554573] rounded-full p-4 sm:p-5 flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24">
+                    <img className="w-12 h-12 sm:w-14 sm:h-14" src="/4.svg" alt="User Icon" />
                   </div>
-                  <div className="flex flex-col gap-1.5">
-                    {!selectedDiscussion && <div className="text-brand5 font-semibold uppercase text-xl">
-                      Total Discussions:
-                    </div>}
-
-                    <div className="text-white text-[56px] font-medium text-center">
+                  <div className="flex flex-col gap-2 text-center sm:text-left items-center sm:items-start w-full">
+                    {!selectedDiscussion && (
+                      <div className="text-brand5 font-semibold uppercase text-lg sm:text-xl">
+                        Total Discussions:
+                      </div>
+                    )}
+                    <div className="text-white text-[32px] sm:text-[56px] font-medium">
                       {selectedDiscussion
                         ? selectedDiscussionTitle
                         : `${communities?.length || 0} discussions so far.`}
                     </div>
                   </div>
                 </div>
-
-
-                <div className="absolute bottom-0 right-0 p-4">
+                <div className="mt-4 sm:mt-0 w-full sm:w-auto sm:absolute sm:bottom-0 sm:right-0 p-0 sm:p-4">
                   <Dialog open={open} onOpenChange={setOpen}>
                     {!selectedDiscussion && (
-                      <DialogTrigger>
-                        <Button
-                          variant="brand"
-                        >
+                      <DialogTrigger asChild>
+                        <Button variant="brand" className="w-full sm:w-auto">
                           Start new discussion
                         </Button>
                       </DialogTrigger>
                     )}
-                    <DialogContent className="  h-[250px] bg-[rgba(169,126,255,0.34)] backdrop-blur-md text-gray-300  border-[1px] border-brand3">
-                      <DialogTitle>Discussion Title</DialogTitle>
+                    <DialogContent
+                      className="h-auto w-[90%] max-w-md mx-auto bg-[rgba(169,126,255,0.34)] backdrop-blur-md 
+             text-gray-300 border border-brand3 rounded-xl p-4 sm:p-6"
+                    >
+                      <DialogTitle className="text-lg sm:text-xl mb-2">Discussion Title</DialogTitle>
                       <Input
                         placeholder="Enter the discussion title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
+                        className="mb-4"
                       />
-                      <Button
-                        variant="brand"
-                        onClick={handleAddDiscussion}>
+                      <Button variant="brand" onClick={handleAddDiscussion}>
                         Start
                       </Button>
                     </DialogContent>
+
                   </Dialog>
                 </div>
               </div>
-
               {!selectedDiscussion && (
                 <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] z-50 relative overflow-hidden">
                   <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
@@ -375,7 +371,7 @@ const Comments = () => {
                       ) : (
                         <div className="text-center py-20 text-white">No comments yet.</div>
                       )}
-                    
+
 
                   </div>
                   <div className="w-full flex flex-col items-end gap-y-4 py-6">
