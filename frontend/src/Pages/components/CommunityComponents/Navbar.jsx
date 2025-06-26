@@ -97,7 +97,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="relative  bg-[rgba(169,126,255,0.08)] border border-[#5228A4] rounded-[20px] text-white md:py-6 py-10 px-[5px] md:px-[40px] overflow-y-auto">
+    <div className="relative  bg-[rgba(169,126,255,0.08)] border border-[#5228A4] rounded-[20px] text-white md:py-6 py-10 px-[5px] md:px-[20px] w-[300px] overflow-y-auto">
       {getNavItems().map((item, index) => (
         <NavLink
           key={index}
