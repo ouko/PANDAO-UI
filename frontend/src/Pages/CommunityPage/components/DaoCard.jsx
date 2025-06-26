@@ -107,141 +107,189 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
     }, 1000);
   };
 
+  console.log(daoData)
   return (
 
     <>
       <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] border border-[#5228A4] pt-[13px] pb-[13px] px-[8px] h-auto relative overflow-hidden w-full">
-        <div className="flex flex-col md:flex-row gap-4 items-center  md:items-start  px-2">
-          <div className="flex flex-col gap-4 py-4  items-center  w-[50%] md:items-center mt-4 md:mt-4">
-            <img
-              className="rounded-full border-4 border-brand7  w-36 h-36 object-cover"
-              src={daoData.image}
-              alt="Community Logo"
-            />
-            <div className="text-xs text-[#AE85FF] text-center uppercase">Community Name</div>
-            <div className="text-white text-2xl font-semibold text-center md:text-left">
-              {daoData.name || <div className="w-40 h-8 bg-purple-300 animate-pulse rounded opacity-80" />}
-            </div>
+      <div className="flex flex-col md:flex-row gap-4 items-start md:items-start px-2">
+        {/* Left: Logo, Token, Tags */}
+        <div className="flex flex-col gap-3 py-4 items-center md:items-center w-full md:w-[260px] mt-4">
+          <img
+            className="rounded-full border-4 border-brand7 w-36 h-36 object-cover shadow-lg"
+            src={daoData.image}
+            alt="Community Logo"
+          />
+          <div className="text-white text-xl font-semibold">
+            {daoData.name}
           </div>
-
-          <div className="flex flex-col gap-4 w-full md:w-auto mt-4 md:mt-4">
-            <div>
-              <div className="text-[#AE85FF] text-sm uppercase">Purpose:</div>
-              <div className="text-white text-base mt-1 max-w-md">
-                {daoData.purpose || <div className="w-full h-4 bg-purple-300 animate-pulse rounded" />}
-              </div>
-            </div>
-            <div>
-              <div className="text-[#AE85FF] text-sm uppercase">Owner Address:</div>
-              <div className="flex items-center gap-2 mt-1 text-white text-base">
-                {daoData.owner_address ? clipAddress(daoData.owner_address) : <div className="h-5 w-40 bg-purple-300 animate-pulse rounded" />}
-                <p className="cursor-pointer" onClick={() => handleCopy(daoData.owner_address)}>
-                  {copied ? <Check className="h-4 w-4 text-white" /> : <Copy className="h-4 w-4 text-white" />}
-                </p>
-              </div>
-            </div>
-            <div>
-              <div className="text-[#AE85FF] text-sm uppercase">Component Address:</div>
-              <div className="flex items-center gap-2 mt-1 text-white text-base">
-                {daoData.component_address ? clipAddress(daoData.component_address) : <div className="h-5 w-40 bg-purple-300 animate-pulse rounded" />}
-                <p className="cursor-pointer" onClick={() => handleCopy2(daoData.component_address)}>
-                  {copied1 ? <Check className="h-4 w-4 text-white" /> : <Copy className="h-4 w-4 text-white" />}
-                </p>
-              </div>
-            </div>
-
-            <div className="w-full">
-              <div className="text-[#AE85FF] text-sm uppercase">Description:</div>
-              <div className={`text-white text-sm mt-1 ${!showFullDescription ? 'line-clamp-2 sm:line-clamp-3' : ''}`}>
-                {daoData.description || 'No description available'}
-              </div>
-              {daoData.description && (
-                <button
-                  onClick={() => setShowFullDescription(!showFullDescription)}
-                  className="text-purple-400 text-sm underline hover:text-purple-300 mt-1"
-                >
-                  {showFullDescription ? "See less" : "See more"}
-                </button>
-              )}
-            </div>
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2 mt-2 justify-center">
+            {daoData.tags && daoData.tags.map((tag, idx) => (
+              <span key={idx} className="bg-brand1/40 text-brand4 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider border border-brand3">
+                {tag}
+              </span>
+            ))}
           </div>
-          <div className="flex justify-end items-start gap-[4px] w-full h-full p-4">
-            {/* First Box */}
-            <Card className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)]  px-5 py-3">
-              <div className="flex flex-row gap-[11px] items-center">
-                <Info className='text-purple-400' />
-                <div className="text-[#AE85FF] text-base font-normal uppercase">DAO TYPE:</div>
-              </div>
-              <div className="text-white text-xl font-normal">{daoData.blueprint_slug} DAO</div>
-            </Card>
-
-            {/* Second Box */}
-            <Card className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)] px-5 py-3 ">
-              <div className="flex flex-row gap-[11px] items-center">
-                <Info className='text-purple-400' />
-                <div className="text-[#AE85FF] text-base font-normal uppercase">Proposal rights:</div>
-              </div>
-              <div className="text-white text-xl font-normal">
-                {daoData.proposal_rights === "EVERYONE" ? "Creation is open to all" : "Restricted Access"}
-              </div>
-            </Card>
-          </div>
+          {/* Token Info */}
+     
         </div>
 
+        {/* Center: Main Info */}
+        <div className="flex flex-col gap-4 w-full md:w-auto mt-4">
+          <div>
+            <div className="text-[#AE85FF] text-sm uppercase">Purpose:</div>
+            <div className="text-white text-base mt-1 max-w-md">
+              {daoData.purpose || <div className="w-full h-4 bg-purple-300 animate-pulse rounded" />}
+            </div>
+          </div>
+          <div>
+            <div className="text-[#AE85FF] text-sm uppercase">Owner Address:</div>
+            <div className="flex items-center gap-2 mt-1 text-white text-base">
+              {daoData.owner_address ? clipAddress(daoData.owner_address) : <div className="h-5 w-40 bg-purple-300 animate-pulse rounded" />}
+              <p className="cursor-pointer" onClick={() => handleCopy(daoData.owner_address)}>
+                {copied ? <Check className="h-4 w-4 text-white" /> : <Copy className="h-4 w-4 text-white" />}
+              </p>
+            </div>
+          </div>
+          <div>
+            <div className="text-[#AE85FF] text-sm uppercase">Component Address:</div>
+            <div className="flex items-center gap-2 mt-1 text-white text-base">
+              {daoData.component_address ? clipAddress(daoData.component_address) : <div className="h-5 w-40 bg-purple-300 animate-pulse rounded" />}
+              <p className="cursor-pointer" onClick={() => handleCopy2(daoData.component_address)}>
+                {copied1 ? <Check className="h-4 w-4 text-white" /> : <Copy className="h-4 w-4 text-white" />}
+              </p>
+            </div>
+          </div>
+          <div className="w-full">
+            <div className="text-[#AE85FF] text-sm uppercase">Description:</div>
+            <div className={`text-white text-sm mt-1 ${!showFullDescription ? 'line-clamp-2 sm:line-clamp-3' : ''}`}>
+              {daoData.description || 'No description available'}
+            </div>
+            {daoData.description && (
+              <button
+                onClick={() => setShowFullDescription(!showFullDescription)}
+                className="text-purple-400 text-sm underline hover:text-purple-300 mt-1"
+              >
+                {showFullDescription ? "See less" : "See more"}
+              </button>
+            )}
+          </div>
+          {/* Airdrop Section */}
+          {daoData.airdrop && (
+            <div className="w-full bg-brand1/20 rounded-xl p-4 mt-2 flex flex-col gap-2 border border-brand3">
+              <div className="flex flex-col md:flex-row gap-2 items-center justify-between">
+                <div className="text-brand4 font-semibold text-base flex items-center gap-2">
+                  <span className="bg-brand4/20 px-2 py-1 rounded">Airdrop</span>
+                  <span className="text-white">{daoData.airdrop.amount_per_air_drop} tokens</span>
+                </div>
+                <div className="text-xs text-gray-300">{new Date(daoData.airdrop.start_time).toLocaleDateString()} - {new Date(daoData.airdrop.end_time).toLocaleDateString()}</div>
+              </div>
+              {/* Allocation Breakdown */}
+              <div className="flex flex-wrap gap-2 mt-2">
+                {daoData.airdrop.allocations && Object.entries(daoData.airdrop.allocations).map(([key, value]) => (
+                  key !== 'total_allocated' && (
+                    <div key={key} className="flex flex-col items-center bg-brand2/20 rounded-lg px-3 py-1">
+                      <span className="text-xs text-brand4 capitalize">{key.replace('_', ' ')}</span>
+                      <span className="text-white font-semibold text-sm">{value}%</span>
+                    </div>
+                  )
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
 
+        {/* Right: DAO Type, Proposal Rights */}
+        <div className="flex flex-col gap-3 items-end justify-start md:w-1/3 w-full p-4">
+          {/* First Box */}
+          <Card className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)] px-5 py-3 w-full">
+            <div className="flex flex-row gap-[11px] items-center">
+              <Info className='text-purple-400' />
+              <div className="text-[#AE85FF] text-base font-normal uppercase">DAO TYPE:</div>
+            </div>
+            <div className="text-white text-xl font-normal">{daoData.blueprint_slug} DAO</div>
+          </Card>
+          {/* Second Box */}
+          <Card className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)] px-5 py-3 w-full">
+            <div className="flex flex-row gap-[11px] items-center">
+              <Info className='text-purple-400' />
+              <div className="text-[#AE85FF] text-base font-normal uppercase">Proposal rights:</div>
+            </div>
+            <div className="text-white text-xl font-normal">
+              {daoData.proposal_rights === "EVERYONE" ? "Creation is open to all" : "Restricted Access"}
+            </div>
+          </Card>
+          <Card className="flex  gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)] px-5 py-3 w-full">
+       
+          <img
+              src={daoData.token_image}
+              alt="Token"
+              className="w-10 h-10 rounded-full border-2 border-brand4 mb-1 bg-white/10"
+            />
+          <div className="flex flex-col items-center mt-2">
+        
+            <div className="text-xs text-brand4 font-semibold">Token Price: <span className="text-white">{daoData.token_price_in_fiat?.toFixed(4) || daoData.token_price || "-"} USD</span></div>
+            <div className="text-xs text-brand4 font-semibold">Buy Back: <span className="text-white">{daoData.token_buy_back_price_in_fiat?.toFixed(4) || daoData.token_buy_back_price || "-"} USD</span></div>
+          </div>
+          </Card>
+  
+        </div>
+      </div>
 
-        <div className="p-4 mt-2 w-full  ">
-          {!isUserParticipant && (
+      {/* Actions and Earnings */}
+      <div className="p-4 mt-2 w-full">
+        {!isUserParticipant && (
+          <div className="w-full flex items-center justify-end">
             <Button variant="brand" className="w-full sm:w-auto" onClick={handleJoinCommunity}>
               Join Community
             </Button>
-          )}
-
-          {isUserParticipant && (
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col sm:flex-row gap-2">
-                {isOwner && (
-                  <Button variant="brand" className="w-full sm:w-auto" onClick={() => setExecOpen(true)}>
-                    Mint Executive Badge
-                  </Button>
-                )}
-                <Button variant="brand" className="w-full sm:w-auto text-white" onClick={() => setQuickStartOpen(true)}>
-                  Quick Start
+          </div>
+        )}
+        {isUserParticipant && (
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col sm:flex-row gap-2">
+              {isOwner && (
+                <Button variant="brand" className="w-full sm:w-auto" onClick={() => setExecOpen(true)}>
+                  Mint Executive Badge
                 </Button>
-              </div>
-
-              {loadingEarnings ? (
-                <div className="text-brand7 text-sm">Loading bond earnings...</div>
-              ) : userBondEarnings ? (
-                <div className="bg-[rgba(169,126,255,0.15)] p-4 rounded-lg flex flex-col">
-                  <h3 className="text-brand7 font-medium text-sm mb-1">Your Bond Earnings</h3>
-                  <div className="flex flex-col gap-1 text-sm text-white">
-                    <div className="flex justify-between">
-                      <span className="text-gray-300">Total Earnings:</span>
-                      <span className="text-green-400">{userBondEarnings.total_earnings || '0'} XRD</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-300">Total Return:</span>
-                      <span className="text-green-400">{userBondEarnings.total_return_value || '0'} XRD</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-300">Total Bonds:</span>
-                      <span>{userBondEarnings.total_bonds || '0'}</span>
-                    </div>
-                    <Button
-                      variant="link"
-                      className="text-brand7 text-xs p-0 mt-1 hover:text-brand5"
-                      onClick={() => navigate(`/community/detail/${params.id}/bondrecipt`)}
-                    >
-                      View All Bonds
-                    </Button>
-                  </div>
-                </div>
-              ) : null}
+              )}
+              <Button variant="brand" className="w-full sm:w-auto text-white" onClick={() => setQuickStartOpen(true)}>
+                Quick Start
+              </Button>
             </div>
-          )}
-        </div>
+            {loadingEarnings ? (
+              <div className="text-brand7 text-sm">Loading bond earnings...</div>
+            ) : userBondEarnings ? (
+              <div className="bg-[rgba(169,126,255,0.15)] p-4 rounded-lg flex flex-col">
+                <h3 className="text-brand7 font-medium text-sm mb-1">Your Bond Earnings</h3>
+                <div className="flex flex-col gap-1 text-sm text-white">
+                  <div className="flex justify-between">
+                    <span className="text-gray-300">Total Earnings:</span>
+                    <span className="text-green-400">{userBondEarnings.total_earnings || '0'} XRD</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-300">Total Return:</span>
+                    <span className="text-green-400">{userBondEarnings.total_return_value || '0'} XRD</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-300">Total Bonds:</span>
+                    <span>{userBondEarnings.total_bonds || '0'}</span>
+                  </div>
+                  <Button
+                    variant="link"
+                    className="text-brand7 text-xs p-0 mt-1 hover:text-brand5"
+                    onClick={() => navigate(`/community/detail/${params.id}/bondrecipt`)}
+                  >
+                    View All Bonds
+                  </Button>
+                </div>
+              </div>
+            ) : null}
+          </div>
+        )}
       </div>
+    </div>
 
      <Dialog open={quickStartOpen} onOpenChange={setQuickStartOpen}>
   <DialogTrigger></DialogTrigger>
