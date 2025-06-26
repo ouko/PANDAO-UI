@@ -191,14 +191,12 @@ const Members = () => {
                   </div>
                 ) : (
                   participants.map((participant, index) => (
-
                     <div
-
                       key={index}
                       className="bg-gradient-to-br from-[rgba(24,18,45,0.59)] via-transparent to-brand1 hover:border-brand5 transition-transform duration-300 
-                        flex flex-col my-4  md:flex-row items-start md:items-center justify-between gap-4 md:gap-2  mx-4 p-4 border border-brand2 rounded-lg shadow-sm"
+    flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-2 mx-2 sm:mx-4 p-4 border border-brand2 rounded-lg shadow-sm"
                     >
-                      <div className="flex items-center gap-3">
+                       <div className="flex flex-col sm:flex-row w-full sm:w-auto items-start sm:items-center gap-3">
                         <Avatar>
                           <AvatarImage
                             alt="Avatar"
@@ -265,7 +263,7 @@ const Members = () => {
                         </div>
                       </div>
 
-                      <div className="flex flex-col md:flex-row z-20 items-start md:items-center  gap-4">
+                        <div className="flex flex-col sm:flex-row w-full sm:w-auto items-stretch sm:items-center gap-3">
                         <Dialog open={openParticipantIndex === index}
                           onOpenChange={(isOpen) => setOpenParticipantIndex(isOpen ? index : null)}
                           key={index}>
@@ -462,10 +460,10 @@ const Members = () => {
                           onClick={() =>
                             navigate(`/userDashboard/userProfile/${participant.public_address}`)
                           }
-                          className="rounded-[26px] py-2 px-[15px]  cursor-pointer bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-white text-[14px] leading-5 font-medium flex items-center justify-between"
+                          className="w-full sm:w-auto flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-1 sm:gap-2 rounded-[26px] py-2 px-[15px] cursor-pointer bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-white text-[14px] leading-5 font-medium text-center"
                         >
                           Visit Profile
-                          <ChevronRight className="h-5 w-5 group-hover:translate-x-1 duration-300 transition-transform" />
+                          {/* <ChevronRight className="h-5 w-5 group-hover:translate-x-1 duration-300 transition-transform" /> */}
                         </div>
 
                       </div>
