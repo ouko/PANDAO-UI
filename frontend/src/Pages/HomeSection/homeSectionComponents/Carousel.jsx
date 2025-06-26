@@ -5,7 +5,7 @@ import axios from 'axios';
 import BrandButton from '@/components/ui/myComponents/brand-button';
 
 const fetchAirdrops = async () => {
-  const res = await axios.get('https://pandao-backend-python-61ef.onrender.com/community/airdrops/live', {
+  const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/community/airdrops/live`, {
     headers: {
       Accept: 'application/json',
     },
