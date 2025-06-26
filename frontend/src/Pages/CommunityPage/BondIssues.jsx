@@ -321,11 +321,12 @@ const BondIssue = () => {
             <div className="md:w-[100%] space-y-6  ">
               <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-5 gap-6 sm:gap-7 p-4 sm:p-10 border-2 border-brand5 flex flex-col justify-start items-start">
                 <div className="z-50 flex flex-col sm:flex-row items-start sm:items-center justify-between w-full gap-4 sm:gap-0">
-                  <div>
-                    <span className="text-[28px] sm:text-[40px] leading-[130%] font-semibold text-start text-amber-50">
+                  <div className="w-full">
+                    <span className="text-[28px] sm:text-[40px] leading-[130%] font-semibold text-amber-50 text-center md:text-left block">
                       Create a Bond
                     </span>
                   </div>
+
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center w-full sm:w-auto">
                     {bondCreated && (
                       <Card className="flex flex-col gap-1 items-start justify-center bg-[rgba(0,0,0,0.30)] rounded-[15px] border border-[rgba(255,255,255,0.15)] px-4 py-3 w-full sm:w-auto">
@@ -343,7 +344,7 @@ const BondIssue = () => {
                         </div>
                       </Card>
                     )}
-                    
+
                     {/* Info Card */}
                     {/* <Card className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)]  px-5 py-3">
                       <div className="flex flex-row gap-[11px] items-center">
@@ -362,8 +363,8 @@ const BondIssue = () => {
 
 
               <div className="p-5 z-50">
-                <div className="flex flex-col w-full space-y-4">
-                  <div className="grid grid-cols-2 z-50 gap-5">
+                <div className="flex flex-col w-full space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 z-50">
                     <div className="flex flex-col w-full space-y-4">
                       <label
                         className="text-brand6 text-left text-xl leading-[120%] font-medium relative self-stretch"
