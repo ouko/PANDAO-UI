@@ -4,7 +4,7 @@ import { useRdt } from '@/hooks/useRdt';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const Sidebar = () => {
+const Sidebar = ({ handleClose }) => {
   const rdt = useRdt();
   const navigate = useNavigate();
   const params = useParams();
@@ -97,11 +97,12 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="relative  bg-[rgba(169,126,255,0.08)] border border-[#5228A4] rounded-[20px] text-white md:py-6 py-10 px-[5px] md:px-[40px] overflow-y-auto">
+    <div className="relative  md:bg-[rgba(169,126,255,0.08)] md:border md:border-[#5228A4] rounded-[20px] text-white md:py-6 py-10 px-[5px] md:px-[20px] w-[300px] overflow-y-auto">
       {getNavItems().map((item, index) => (
         <NavLink
           key={index}
           to={item.path}
+          onClick={handleClose}
           className={({ isActive }) =>
             `flex flex-row items-center justify-start my-0 md:my-3 cursor-pointer transition-all rounded-lg ${
               isActive ? 'bg-brand3 text-white' : 'text-purple-100'

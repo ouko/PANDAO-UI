@@ -716,59 +716,43 @@ const Proposals = () => {
           <div className="space-y-6 md:w-[100%] ">
             <div className="flex md:flex-row flex-col md:w-[100%] z-50 mx-auto gap-2">
               <div className="md:w-[100%] space-y-2  ">
-                <div
-                  className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden"
-                >
-
-                  <div className="flex flex-row  gap-10 items-center w-full">
-                    <div
-                      className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
-                      <img
-                        className="w-14 h-14"
-                        src="/member.svg"
-                        alt="User Icon"
-                      />
+                <div className="rounded-2xl border-2 border-[#5228A4] p-5 sm:p-7 mt-5 flex flex-col gap-5 sm:gap-4 items-start justify-center relative overflow-hidden">
+                  <div className="flex flex-col md:flex-row gap-5 md:gap-10 items-center w-full">
+                    <div className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24">
+                      <img className="w-10 h-10 sm:w-14 sm:h-14" src="/member.svg" alt="User Icon" />
                     </div>
-                    <div className="flex flex-col gap-1.5">
-                      <div
-                        className="text-[#5228A4] font-semibold uppercase text-xl"
-                      >
+                    <div className="flex flex-col items-center md:items-start gap-1.5 text-center md:text-left">
+                      <div className="text-[#5228A4] font-semibold uppercase text-base sm:text-xl">
                         Total Proposal:
                       </div>
-                      <div
-                        className="text-white text-[56px] font-medium text-center"
-                      >
+                      <div className="text-white text-[36px] sm:text-[56px] font-medium">
                         Proposal
-
                       </div>
-
                     </div>
-
                   </div>
-                  <div className="absolute bottom-0 right-0 p-4">
+                  <div className="w-full flex justify-center md:justify-end mt-4 md:mt-0">
                     <Button
                       variant="brand"
                       onClick={() => {
-                        setActiveProposal(null)
-                        setShowCategories(true)
+                        setActiveProposal(null);
+                        setShowCategories(true);
                       }}
-
                     >
                       Create Proposal
                     </Button>
                   </div>
-                </div>
 
+                </div>
                 <Tabs
                   defaultValue="PENDING"
-                  className="w-full py-5 border-2  bg-[rgba(169,126,255,0.08)] rounded-[10px] border-[#8861d7]"
+                  className="w-full py-5 border-2  bg-transparent rounded-[10px] border-[#8861d7]"
                   onValueChange={setActiveTab}
                 >
-                  <TabsList className="z-50 bg-brand1  p-2 flex gap-3 mx-auto shadow-md w-full items-center justify-start mb-3">
+                  <TabsList className="z-50 bg-transparent p-2 flex gap-3 mx-auto shadow-md w-full items-center justify-start mb-3">
                     <TabsTrigger
                       value="PENDING"
                       disabled={false}
-                      className={`tab-trigger px-6 py-2 font-semibold transition-all duration-200
+                      className={` px-6 py-2 font-semibold border-brand6 transition-all duration-200
       data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-brand3
       data-[state=active]:text-white data-[state=active]:shadow-lg
       data-[state=inactive]:bg-transparent data-[state=inactive]:text-brand7
@@ -779,7 +763,7 @@ const Proposals = () => {
                     <TabsTrigger
                       value="EXECUTED"
                       disabled={false}
-                      className="tab-trigger px-6 py-2 font-semibold transition-all duration-200
+                      className=" px-6 py-2 font-semibold transition-all duration-200
       data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-brand3
       data-[state=active]:text-white data-[state=active]:shadow-lg
       data-[state=inactive]:bg-transparent data-[state=inactive]:text-brand7
@@ -1119,7 +1103,7 @@ const Proposals = () => {
 
           </div>
           <div className="flex items-center justify-center z-50 p-2 w-full mx-auto">
-            <form className="w-[900px] flex z-50 flex-col py-5 space-y-4  gap-2" onSubmit={handleSubmit}>
+            <form className="w-full max-w-4xl flex flex-col z-50 py-5 space-y-6" onSubmit={handleSubmit}>
               <div className="flex flex-col w-full space-y-2 ">
                 <label
                   className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
@@ -1153,52 +1137,48 @@ const Proposals = () => {
 
 
               <div className="flex flex-col mt-3 gap-3 w-full space-y-4  ">
-                <div className="flex flex-col w-full space-y-2">
-                  <div className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch">
+                <div className="flex flex-col space-y-2">
+                  <label className="text-brand7 text-left text-xl sm:text-2xl font-medium">
                     Proposal Timing
-                  </div>
-                  <div className="flex items-center justify-between space-x-4">
-
-                    {/* From Date and Time */}
-                    <div className="flex items-center space-x-2">
-                      <div className="text-white">From:</div>
-                      <label className="flex items-center bg">
+                  </label>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    {/* From */}
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
+                      <span className="text-white">From:</span>
+                      <div className="flex w-full sm:w-auto gap-2">
                         <DatePicker
                           selected={startDate}
                           onChange={handleStartDateChange}
                           customInput={<CustomDatePicker />}
                           minDate={new Date()}
-                          className="p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
                         />
                         <input
                           type="time"
                           value={startTime}
                           onChange={(e) => setStartTime(e.target.value)}
-                          className="ml-2 w-fit p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
+                          className="w-full sm:w-fit p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
                         />
-                      </label>
+                      </div>
                     </div>
 
-                    {/* To Date and Time */}
-                    <div className="flex items-center space-x-2">
-                      <div className="text-white ">To:</div>
-                      <label className="flex items-center">
+                    {/* To */}
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
+                      <span className="text-white">To:</span>
+                      <div className="flex w-full sm:w-auto gap-2">
                         <DatePicker
                           selected={endDate}
                           onChange={handleEndDateChange}
                           customInput={<CustomDatePicker />}
                           minDate={new Date()}
-                          className="p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
                         />
                         <input
                           type="time"
                           value={endTime}
                           onChange={(e) => setEndTime(e.target.value)}
-                          className="ml-2 w-fit p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
+                          className="w-full sm:w-fit p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
                         />
-                      </label>
+                      </div>
                     </div>
-
                   </div>
                 </div>
 
@@ -1364,7 +1344,7 @@ const Proposals = () => {
           </div>
           <div className="flex items-center justify-center z-50 p-2 w-full mx-auto">
             <form
-              className="w-[900px] flex flex-col gap-2"
+              className="w-full max-w-4xl flex flex-col z-50 py-5 space-y-6"
               onSubmit={handleSubmitTokenChangeForm}
             >
               <div className="flex flex-col z-50 gap-2">
@@ -1387,33 +1367,34 @@ const Proposals = () => {
                   }
                 />
               </div>
-              <div className="flex flex-col mt-3 z-50 gap-3 w-full ">
-                <div className="text-2xl p-1">Proposal Timing</div>
-                <div className="flex items-center justify-between space-x-2">
-                  <div className="flex items-center">
-                    <div>From:</div>
-                    <label className="flex items-center">
+              <div className="flex flex-col space-y-3">
+                <div className="text-xl sm:text-2xl p-1 text-brand7 font-medium">Proposal Timing</div>
+
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+                  {/* From Section */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
+                    <span className="text-white">From:</span>
+                    <div className="flex gap-2 w-full sm:w-auto">
                       <DatePicker
                         selected={tokenPriceChangeForm.startDate}
-                        onChange={(date) =>
-                          handleInputChange('startDate', date)
-                        }
+                        onChange={(date) => handleInputChange('startDate', date)}
                         customInput={<CustomDatePicker />}
                         minDate={new Date()}
                       />
                       <Input
                         type="time"
                         value={tokenPriceChangeForm.startTime}
-                        onChange={(e) =>
-                          handleInputChange('startTime', e.target.value)
-                        }
-                        className="ml-2 w-fit"
+                        onChange={(e) => handleInputChange('startTime', e.target.value)}
+                        className="w-full sm:w-fit p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white"
                       />
-                    </label>
+                    </div>
                   </div>
-                  <div className="flex items-center">
-                    <div>To:</div>
-                    <label className="flex items-center">
+
+                  {/* To Section */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
+                    <span className="text-white">To:</span>
+                    <div className="flex gap-2 w-full sm:w-auto">
                       <DatePicker
                         selected={tokenPriceChangeForm.endDate}
                         onChange={(date) => handleInputChange('endDate', date)}
@@ -1423,14 +1404,15 @@ const Proposals = () => {
                       <Input
                         type="time"
                         value={tokenPriceChangeForm.endTime}
-                        onChange={(e) =>
-                          handleInputChange('endTime', e.target.value)
-                        }
-                        className="ml-2 w-fit"
+                        onChange={(e) => handleInputChange('endTime', e.target.value)}
+                        className="w-full sm:w-fit p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white"
                       />
-                    </label>
+                    </div>
                   </div>
+
                 </div>
+
+
                 <div className="flex flex-col  gap-2">
                   <Label className="text-2xl p-1">Minimum Quorum</Label>
                   <Input
@@ -1522,76 +1504,68 @@ const Proposals = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col mt-5  px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
-
-
-          <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4]  relative overflow-hidden ">
-            <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
-              <div className='flex items-center gap-2 '>
+        <div className="flex flex-col mt-5 px-4 md:px-6 py-6 md:py-12 max-w-[1440px] mx-auto">
+          <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] relative overflow-hidden">
+            <div className="bg-[#39246b] px-4 sm:px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 w-full py-4 sm:h-[63px] sticky top-0 left-0 z-50">
+              <div className="flex items-center gap-2 flex-wrap">
                 <div
                   onClick={() => setShowCategories(false)}
-                  type="button"
-                  className="flex items-center text-[20px] cursor-pointer "
-
+                  className="flex items-center text-[16px] sm:text-[18px] md:text-[20px] cursor-pointer text-white"
                 >
-                  <ChevronLeft /> <span >Back</span>
+                  <ChevronLeft className="mr-1" />
+                  <span>Back</span>
                 </div>
-                <div className='bg-purple-100 h-7  w-[1px] mx-1'></div>
-                <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
 
+                <div className="bg-purple-100 h-6 sm:h-7 w-[1px] mx-2" />
+
+                <div className="text-white text-left text-[17px] sm:text-xl md:text-2xl font-medium flex items-center gap-2">
                   What kind of proposal do you want to create?
                 </div>
               </div>
-
-              <div>
+              <div className="flex">
                 <Dialog>
-                  <DialogTrigger className='flex gap-1 items-center text-brand7 text-[16px] font-light'>
-                    <span>
-                      Not able to create proposal?
-
-                    </span>
-
-                    <CircleHelp className='size-4' />
-
+                  <DialogTrigger className="flex gap-1 items-center text-brand7 text-sm sm:text-base font-light underline underline-offset-2">
+                    <span>Not able to create proposal?</span>
+                    <CircleHelp className="size-4" />
                   </DialogTrigger>
-                  <DialogContent className='bg-[rgba(169,126,255,0.34)] text-gray-300 backdrop-blur-md border-[1px] border-brand3 rounded-lg shadow-lg'>
+                  <DialogContent className="bg-[rgba(169,126,255,0.34)] text-gray-300 backdrop-blur-md border-[1px] border-brand3 rounded-lg shadow-lg">
                     <DialogHeader>
-                      <DialogTitle>Please review the following points ?</DialogTitle>
+                      <DialogTitle>Please review the following points</DialogTitle>
                       <DialogDescription>
                         Ensure you have reviewed the following points before creating a proposal:
-                        <ul className="list-disc marker:text-green-500 marker:text-1xl px-5 py-3 text font-semibold ">
-
+                        <ul className="list-disc marker:text-green-500 marker:text-lg px-5 py-3 font-semibold space-y-1">
                           <li>You should be a member of the community.</li>
                           <li>You should buy at least one token.</li>
                           <li>There should be a bond for sale in Issued Bond menu.</li>
                           <li>The proposal must be written in a clear and concise manner.</li>
                         </ul>
-
                       </DialogDescription>
                     </DialogHeader>
                   </DialogContent>
                 </Dialog>
               </div>
             </div>
-
-            <div className=" grid grid-cols-3 gap-5 h-[250px] p-5  ">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 p-4 sm:p-5">
               {ProposalTypes.map((proposal, index) => (
                 <Card
                   key={index}
-                  className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-2  bg-brand1 border-b-2 border-[#5228A4] rounded-lg p-5 text-brand7 relative justify-between"
+                  className="flex flex-col hover:shadow-lg cursor-pointer items-start gap-3 bg-brand1 border-b-2 border-[#5228A4] rounded-lg p-4 sm:p-5 text-brand7 justify-between"
                 >
-                  <div className="font-bold  text-brand7 text-[22px] ">{proposal.title}</div>
-                  <div className="text-sm   text-gray-400 text-[16px] ">{proposal.description}</div>
+                  <div className="font-bold text-brand7 text-[18px] sm:text-xl">
+                    {proposal.title}
+                  </div>
+                  <div className="text-sm text-gray-400 leading-snug">
+                    {proposal.description}
+                  </div>
                   <div className="flex items-center justify-end w-full">
                     <Button
                       variant="brand"
+                      className="text-sm sm:text-base"
                       onClick={() => {
                         if (proposal.title === 'Custom Proposal') {
-                          setShowForm(true)
+                          setShowForm(true);
                         } else if (proposal.title === 'Token Price Change') {
-                          setShowTokenChangeForm(true)
-                        } else {
-                          null
+                          setShowTokenChangeForm(true);
                         }
                       }}
                     >
@@ -1602,12 +1576,6 @@ const Proposals = () => {
               ))}
             </div>
           </div>
-
-
-
-
-
-
         </div>
       )}
     </div>

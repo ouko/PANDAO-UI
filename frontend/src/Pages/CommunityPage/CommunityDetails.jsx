@@ -273,63 +273,58 @@ const CommunityDetails = () => {
   const isLoading = isLoadingCommunity || isLoadingParticipants || isLoadingCommunities || isLoadingWithdraw
 
   return (
-    <div className="pb-10 items-start font-clash gap-2 justify-start min-h-screen overflow-hidden mt-5 text-black px-2">
-      <CustomAlert />
-      <div className="flex md:flex-row flex-col md:py-12">
-        {isLoading ? (
-          <div className="w-full mx-4 space-y-6">
+   <div className="pb-10 items-start font-clash gap-2 justify-start min-h-screen overflow-hidden mt-5 text-black px-2">
+  <CustomAlert />
+
+  <div className="flex flex-col md:flex-row md:py-12 gap-4">
+    {isLoading ? (
+      <div className="w-full px-2 space-y-6">
+        <CardShimmer />
+        <div className="flex flex-col md:flex-row w-full gap-4">
+          <CardShimmer2 />
+          <div className="w-full space-y-4">
             <CardShimmer />
-            <div className="flex md:flex-row flex-col w-full mx-auto gap-[16px]">
-
-              <CardShimmer2 />
-
-
-
-              <div className="w-full   space-y-4">
-                <CardShimmer />
-                <CardShimmer />
-                <CardShimmer />
-              </div>
-            </div>
+            <CardShimmer />
+            <CardShimmer />
           </div>
-        ) : communityData ? (
-          <div className="w-full mx-4">
-            <DaoCard
-              daoData={communityData}
-              isUserParticipant={isUserParticipant}
-              setTransferOpen={setTransferOpen}
-              setExecOpen={setExecOpen}
-              isOwner={isOwner}
-              onSuccess={handleSuccess}
-            />
-
-            <div className="flex md:flex-row flex-col w-full mx-auto gap-[16px]">
-              <div className="w-full space-y-4">
-                <TokenCard data={communityData} onSuccess={handleSuccess} />
-                <TotalFund data={communityData} />
-                <WithdrawCard withDrawRequest={withDrawRequest} participant={participants} onSuccess={handleSuccess} />
-
-              </div>
-              <div className="w-full space-y-4">
-                <div>
-                  <TotalProposalsCard />
-                </div>
-                <ExecutiveMember participants={participants} />
-                <FundHistoryGraph />
-                <DiscussionCard communities={communities} />
-              </div>
-            </div>
-          </div>
-        ) : null}
+        </div>
       </div>
+    ) : communityData ? (
+      <div className="w-full px-2 mt-6 md:mt-0 space-y-0  ">
+        <DaoCard
+          daoData={communityData}
+          isUserParticipant={isUserParticipant}
+          setTransferOpen={setTransferOpen}
+          setExecOpen={setExecOpen}
+          isOwner={isOwner}
+          onSuccess={handleSuccess}
+        />
 
-      <Dialog open={execOpen} onOpenChange={setExecOpen}>
+        <div className="flex flex-col md:flex-row w-full gap-4 ">
+          <div className="w-full space-y-4" >
+            <TokenCard data={communityData} onSuccess={handleSuccess} />
+            <TotalFund data={communityData} />
+            <WithdrawCard withDrawRequest={withDrawRequest} participant={participants} onSuccess={handleSuccess} />
+          </div>
+          <div className="w-full space-y-4">
+            <TotalProposalsCard />
+            <ExecutiveMember participants={participants} />
+            <FundHistoryGraph />
+            <DiscussionCard communities={communities} />
+          </div>
+        </div>
+      </div>
+    ) : null}
+  </div>
+
+  {/* EXEC MINT MODAL */}
+  <Dialog open={execOpen} onOpenChange={setExecOpen}>
         <DialogTrigger></DialogTrigger>
         <DialogContent className="w-full  p-6 bg-[rgba(169,126,255,0.34)] text-gray-300 backdrop-blur-md border-[1px] border-brand3 rounded-lg shadow-lg ">
           <DialogHeader className="max-w-4xl w-full">
             <DialogTitle className="text-2xl font-semibold text-gray-100 w-full text-center">
-              Mint Executive Badges
-            </DialogTitle>
+          Mint Executive Badges
+        </DialogTitle>
             <DialogDescription className="flex flex-col justify-center items-center gap-4 mt-4 ">
               <div>
                 Mint Executive Badges
@@ -338,65 +333,65 @@ const CommunityDetails = () => {
                 <Label>
                   Executive
                 </Label>
-                <Input
-                  value={executiveName}
-                  onChange={(e) => setExecutiveName(e.target.value)}
-                />
-              </div>
-              <Button
-                variant="brand"
-                onClick={handleClickMint}
-                disabled={loadingMint}
-              >
-                Mint Executive Badge
-              </Button>
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
-      <Dialog open={transferOpen} onOpenChange={setTransferOpen}>
+            <Input
+              value={executiveName}
+              onChange={(e) => setExecutiveName(e.target.value)}
+            />
+          </div>
+          <Button
+            variant="brand"
+            onClick={handleClickMint}
+            disabled={loadingMint}
+          >
+            Mint Executive Badge
+          </Button>
+        </DialogDescription>
+      </DialogHeader>
+    </DialogContent>
+  </Dialog>
+  <Dialog open={transferOpen} onOpenChange={setTransferOpen}>
         <DialogTrigger></DialogTrigger>
         <DialogContent className="w-half pt-10 bg-[rgba(169,126,255,0.34)] text-gray-300 backdrop-blur-md  border-[1px] border-brand3 rounded-lg shadow-lg max-w-5xl overflow-y-auto max-h-[80vh]">
           <DialogHeader className="w-full overflow-auto">
             <DialogTitle className="text-2xl font-semibold text-gray-300 w-full text-center">
-              Transfer Executive Badges
-            </DialogTitle>
+          Transfer Executive Badges
+        </DialogTitle>
             <DialogDescription className="flex flex-col justify-center items-center gap-4 mt-4 w-full overflow-y-auto">
-              {participants.map((participant, index) => (
+          {participants.map((participant, index) => (
                 <div key={index} className="w-[500px] text-center border-b pb-4 mb-4">
                   <p className="text-lg font-medium text-gray-300">
                     Name:{participant.name}</p>
-                  <p
+              <p
                     className="text-sm text-gray-300 break-all cursor-pointer hover:text-blue-500"
-                    onClick={() => setTransferAddress(participant.public_address)}
-                  >
-                    {participant.public_address}
-                  </p>
-                  <p className="text-sm text-red-500 font-semibold">
-                    Total Invested: {participant.total_invested}
-                  </p>
-                </div>
-              ))}
+                onClick={() => setTransferAddress(participant.public_address)}
+              >
+                {participant.public_address}
+              </p>
+              <p className="text-sm text-red-500 font-semibold">
+                Total Invested: {participant.total_invested}
+              </p>
+            </div>
+          ))}
 
-              <div className="w-full">
-                <Label>Executive Badges</Label>
-                <Input
-                  value={transferAddress}
-                  onChange={(e) => setTransferAddress(e.target.value)}
-                />
-              </div>
+          <div className="w-full">
+            <Label>Executive Badges</Label>
+            <Input
+              value={transferAddress}
+              onChange={(e) => setTransferAddress(e.target.value)}
+            />
+          </div>
 
               <Button
                 variant="brand" onClick={handleTransfer} disabled={loadingMint}>
-                Transfer Executive Badge
-              </Button>
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
+            Transfer Executive Badge
+          </Button>
+        </DialogDescription>
+      </DialogHeader>
+    </DialogContent>
 
-      </Dialog>
+  </Dialog>
 
-    </div>
+</div>
   )
 }
 

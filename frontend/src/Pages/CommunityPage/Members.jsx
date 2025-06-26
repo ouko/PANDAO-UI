@@ -137,41 +137,35 @@ const Members = () => {
             <div className="md:w-[100%] space-y-6 mx-[1px] ">
 
               <div
-                className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden"
+                className="rounded-2xl border-2 border-[#5228A4] p-4 sm:p-7 mt-5 flex flex-col gap-4 items-start justify-center relative overflow-hidden"
               >
-
-                <div className="flex flex-row  gap-10 items-center w-full">
-                  <div
-                    className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 items-center w-full">
+                  <div className="bg-[#554573] rounded-full p-4 sm:p-5 flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 mx-auto sm:mx-0">
                     <img
-                      className="w-14 h-14"
+                      className="w-12 h-12 sm:w-14 sm:h-14"
                       src="/member.svg"
                       alt="User Icon"
                     />
                   </div>
-                  <div className="flex flex-col gap-1.5">
-                    <div
-                      className="text-[#5228A4] font-semibold uppercase text-xl"
-                    >
+                  <div className="flex flex-col gap-2 items-center sm:items-start text-center sm:text-left w-full">
+                    <div className="text-[#5228A4] font-semibold uppercase text-lg sm:text-xl">
                       Total Members:
                     </div>
-                    <div
-                      className="text-gray-300 text-[56px] font-medium text-center"
-                    >
+                    <div className="text-gray-300 text-[36px] sm:text-[56px] font-medium">
                       {participants.length} Members
                     </div>
+
                     {participants.length > 4 && (
-                      <AvatarCircles
-                        numPeople={participants.length - 3}
-                        src1={participants[0].image_url}
-                      />
+                      <div className="mt-2 sm:mt-0">
+                        <AvatarCircles
+                          numPeople={participants.length - 3}
+                          src1={participants[0].image_url}
+                        />
+                      </div>
                     )}
                   </div>
                 </div>
               </div>
-
-
-
 
               <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4]  relative overflow-hidden">
                 <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
@@ -197,48 +191,28 @@ const Members = () => {
                   </div>
                 ) : (
                   participants.map((participant, index) => (
-
                     <div
-
                       key={index}
-                      className="bg-gradient-to-br from-[rgba(24,18,45,0.59)] via-transparent to-brand1 hover:border-brand5 transition-transform duration-300 
-                        flex flex-col my-4  md:flex-row items-start md:items-center justify-between gap-4 md:gap-2  mx-4 p-4 border border-brand2 rounded-lg shadow-sm"
+                      className="bg-gradient-to-br from-[rgba(24,18,45,0.59)] via-transparent py-3 to-brand1 hover:border-brand5 transition-transform duration-300 
+                      flex flex-col md:flex-row items-start md:items-center my-4 justify-between gap-4 md:gap-2 mx-2 sm:mx-4 p-4 border border-brand2 rounded-lg shadow-sm"
                     >
-                      <div className="flex items-center gap-3">
-                        <Avatar>
-                          <AvatarImage
-                            alt="Avatar"
-                            src={participant.image_url}
-                          />
-                          <AvatarFallback>JD</AvatarFallback>
-                        </Avatar>
-                        <div className="text-left cursor-pointer text-ellipsis overflow-hidden">
-                          <p className="font-medium text-brand7 text-lg">
-                            {participant.name || 'Unnamed Participant'}
-                          </p>
-                          <div className="text-gray-200 dark:text-gray-400 text-sm truncate">
-                            {clipAddress(participant.public_address || '')}
-                          </div>
-                        </div>
-                        <div>
+                      <div className="flex flex-col sm:flex-row w-full sm:w-auto items-start sm:items-center gap-3 relative">
+                        <div className="absolute right-0 top-0 sm:static sm:mt-0 flex items-center gap-2 sm:flex-row flex-col">
                           {participant.is_executive_member && (
-
                             <TooltipProvider>
                               <Tooltip>
                                 <TooltipTrigger>
-                                  <BadgeCheck className=" px-3 py-1 text-xs rounded-full w-12 h-12" />
-
+                                  <BadgeCheck className="px-3 py-1 text-xs rounded-full w-8 h-8 sm:w-12 sm:h-12" />
                                 </TooltipTrigger>
                                 <TooltipContent className="bg-[#5228A4] border-[#7F42F9] text-white">
                                   <p>This member is Executive Member</p>
                                 </TooltipContent>
                               </Tooltip>
                             </TooltipProvider>
-
                           )}
 
                           {participant.badges && participant.badges.length > 0 && (
-                            <div className="flex mt-2">
+                            <div className="flex sm:mt-2 mt-0">
                               {participant.badges.map((badge) => (
                                 <TooltipProvider key={badge.badge_id}>
                                   <Tooltip>
@@ -269,9 +243,21 @@ const Members = () => {
                             </div>
                           )}
                         </div>
+                        <Avatar>
+                          <AvatarImage alt="Avatar" src={participant.image_url} />
+                          <AvatarFallback>JD</AvatarFallback>
+                        </Avatar>
+                        <div className="text-left cursor-pointer text-ellipsis overflow-hidden">
+                          <p className="font-medium text-brand7 text-lg">
+                            {participant.name || 'Unnamed Participant'}
+                          </p>
+                          <div className="text-gray-200 dark:text-gray-400 text-sm truncate">
+                            {clipAddress(participant.public_address || '')}
+                          </div>
+                        </div>
                       </div>
 
-                      <div className="flex flex-col md:flex-row z-20 items-start md:items-center  gap-4">
+                      <div className="flex flex-col sm:flex-row w-full sm:w-auto items-stretch sm:items-center gap-3">
                         <Dialog open={openParticipantIndex === index}
                           onOpenChange={(isOpen) => setOpenParticipantIndex(isOpen ? index : null)}
                           key={index}>
@@ -280,43 +266,39 @@ const Members = () => {
                               View Details
                             </div>
                           </DialogTrigger>
-                          <DialogContent className="max-w-[800px] bg-[rgba(169,126,255,0.34)] backdrop-blur-md text-gray-300  border-[1px] border-brand3 ">
-
+                          <DialogContent className="w-[90vw] sm:max-w-2xl p-4 sm:p-6 bg-[rgba(169,126,255,0.34)] text-gray-300 backdrop-blur-md border border-brand3 rounded-lg shadow-lg">
                             <DialogDescription>
-                              <div className="">
-                                <div className='flex items-center justify-between'>
-                                  <div className="flex items-center gap-3 ">
+                              <div className="space-y-6">
+                                {/* Header */}
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                                  <div className="flex items-center gap-3">
                                     <Avatar>
-                                      <AvatarImage
-                                        alt="Avatar"
-                                        src={participant.image_url}
-                                      />
+                                      <AvatarImage alt="Avatar" src={participant.image_url} />
                                       <AvatarFallback>JD</AvatarFallback>
                                     </Avatar>
-                                    <div className="text-left cursor-pointer text-ellipsis  overflow-hidden">
-                                      <p className="font-medium text-lg">
-                                        {participant.name ||
-                                          'Unnamed Participant'}
+                                    <div className="text-left overflow-hidden">
+                                      <p className="font-medium text-lg text-white">
+                                        {participant.name || 'Unnamed Participant'}
                                       </p>
-                                      <div className="text-gray-200 dark:text-gray-200 text-sm truncate">
-                                        {clipAddress(
-                                          participant.public_address || '',
-                                        )}
+                                      <div className="text-gray-200 text-sm truncate">
+                                        {clipAddress(participant.public_address || '')}
                                       </div>
                                     </div>
                                   </div>
-                                  <div>
-                                    <Button variant="brand" className="text-white" onClick={() => handleTransfer(participant.public_address)} disabled={loading2}>
-                                      Transfer Excutive Badge
-                                    </Button>
-                                  </div>
+
+                                  <Button
+                                    variant="brand"
+                                    className="text-white w-full sm:w- mx-4"
+                                    onClick={() => handleTransfer(participant.public_address)}
+                                    disabled={loading2}
+                                  >
+                                    Transfer Executive Badge
+                                  </Button>
                                 </div>
 
-
-                                {/* Badges Section */}
                                 {participant.badges && participant.badges.length > 0 && (
-                                  <div className="mt-4 mb-6">
-                                    <h3 className="text-lg font-medium text-white mb-2 flex items-center">
+                                  <div className="space-y-3">
+                                    <h3 className="text-lg font-medium text-white flex items-center">
                                       <FiAward className="mr-2" /> Member Badges
                                     </h3>
                                     <div className="flex flex-wrap gap-3">
@@ -349,113 +331,67 @@ const Members = () => {
                                   </div>
                                 )}
 
-                                <div className="grid grid-cols-2 gap-3 mt-10">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
                                   <div className="flex items-start gap-2">
-                                    <FiActivity className="text-gray-200 dark:text-gray-200" />
-                                    <p className="text-sm text-gray-300 font-medium">
-                                      Activities:
-                                    </p>
-                                    <span className="text-brand7">
-                                      {participant.activities}
-                                    </span>
+                                    <FiActivity className="text-gray-200" />
+                                    <p className="text-sm text-gray-300 font-medium">Activities:</p>
+                                    <span className="text-brand7">{participant.activities}</span>
                                   </div>
 
                                   <div className="flex items-start gap-2">
-                                    <FiDollarSign className="text-gray-200 dark:text-gray-400" />
-                                    <p className="text-sm text-gray-300 font-medium">
-                                      Total Invested:
-                                    </p>
-                                    <span
-                                      className={`font-medium ${participant.total_invested < 0
-                                        ? 'text-red-500'
-                                        : 'text-green-500'
-                                        }`}
-                                    >
-                                      {participant.total_invested.toFixed(
-                                        2,
-                                      )}{' '}
-                                      XRD
+                                    <FiDollarSign className="text-gray-200" />
+                                    <p className="text-sm text-gray-300 font-medium">Total Invested:</p>
+                                    <span className={`font-medium ${participant.total_invested < 0 ? 'text-red-500' : 'text-green-500'}`}>
+                                      {participant.total_invested.toFixed(2)} XRD
                                     </span>
                                   </div>
 
-                                  <div className="flex items-center gap-2">
-                                    <FiTag className="text-gray-200 dark:text-gray-400" />
-                                    <p className="text-sm text-gray-300 font-medium">
-                                      Times Tokens Bought:
-                                    </p>
-                                    <span className="font-medium text-brand7">
-                                      {participant.token_bought}
-                                    </span>
+                                  <div className="flex items-start gap-2">
+                                    <FiTag className="text-gray-200" />
+                                    <p className="text-sm text-gray-300 font-medium">Times Tokens Bought:</p>
+                                    <span className="font-medium text-brand7">{participant.token_bought}</span>
                                   </div>
 
-                                  <div className="flex items-center gap-2">
-                                    <FiTag className="text-gray-200 dark:text-gray-400" />
-                                    <p className="text-sm text-gray-300 font-medium">
-                                      Times Tokens Sold:
-                                    </p>
-                                    <span className="font-medium text-brand7">
-                                      {participant.token_sold}
-                                    </span>
+                                  <div className="flex items-start gap-2">
+                                    <FiTag className="text-gray-200" />
+                                    <p className="text-sm text-gray-300 font-medium">Times Tokens Sold:</p>
+                                    <span className="font-medium text-brand7">{participant.token_sold}</span>
                                   </div>
 
-                                  <div className="flex items-center gap-2">
-                                    <FiThumbsUp className="text-gray-200 dark:text-gray-400" />
-                                    <p className="text-sm text-gray-300 font-medium">
-                                      Proposals Voted:
-                                    </p>
-                                    <span className="font-medium text-brand7">
-                                      {participant.proposal_voted}
-                                    </span>
+                                  <div className="flex items-start gap-2">
+                                    <FiThumbsUp className="text-gray-200" />
+                                    <p className="text-sm text-gray-300 font-medium">Proposals Voted:</p>
+                                    <span className="font-medium text-brand7">{participant.proposal_voted}</span>
                                   </div>
 
-                                  <div className="flex items-center gap-2">
-                                    <FiMessageSquare className="text-gray-200 dark:text-gray-400" />
-                                    <p className="text-sm text-gray-300 font-medium">
-                                      Comments on Proposals:
-                                    </p>
-                                    <span className="font-medium text-brand7">
-                                      {participant.commented_on_proposal}
-                                    </span>
+                                  <div className="flex items-start gap-2">
+                                    <FiMessageSquare className="text-gray-200" />
+                                    <p className="text-sm text-gray-300 font-medium">Comments on Proposals:</p>
+                                    <span className="font-medium text-brand7">{participant.commented_on_proposal}</span>
                                   </div>
 
-                                  <div className="flex items-center gap-2">
-                                    <FiMessageSquare className="text-gray-200 dark:text-gray-400" />
-                                    <p className="text-sm text-gray-300 font-medium">
-                                      Discussion Comments:
-                                    </p>
-                                    <span className="font-medium text-brand7">
-                                      {participant.discussion_comment}
-                                    </span>
+                                  <div className="flex items-start gap-2">
+                                    <FiMessageSquare className="text-gray-200" />
+                                    <p className="text-sm text-gray-300 font-medium">Discussion Comments:</p>
+                                    <span className="font-medium text-brand7">{participant.discussion_comment}</span>
                                   </div>
 
-                                  <div className="flex items-center gap-2">
-                                    <FiFileText className="text-gray-200 dark:text-gray-400" />
-                                    <p className="text-sm text-gray-300 font-medium">
-                                      Proposals Created:
-                                    </p>
-                                    <span className="font-medium text-brand7">
-                                      {participant.proposal_created}
-                                    </span>
+                                  <div className="flex items-start gap-2">
+                                    <FiFileText className="text-gray-200" />
+                                    <p className="text-sm text-gray-300 font-medium">Proposals Created:</p>
+                                    <span className="font-medium text-brand7">{participant.proposal_created}</span>
                                   </div>
 
-                                  <div className="flex items-center gap-2">
-                                    <FiFileText className="text-gray-200 dark:text-gray-400" />
-                                    <p className="text-sm text-gray-300 font-medium">
-                                      Zero Coupon Bonds Created:
-                                    </p>
-                                    <span className="font-medium text-brand7">
-                                      {participant.zero_coupon_bond_created}
-                                    </span>
+                                  <div className="flex items-start gap-2">
+                                    <FiFileText className="text-gray-200" />
+                                    <p className="text-sm text-gray-300 font-medium">Zero Coupon Bonds Created:</p>
+                                    <span className="font-medium text-brand7">{participant.zero_coupon_bond_created}</span>
                                   </div>
 
-                                  <div className="flex items-center gap-2">
-                                    <FiFileText className="text-gray-200 dark:text-gray-400" />
-                                    <p className="text-sm text-gray-300 font-medium">
-                                      Discussions:
-                                    </p>
-                                    <span className="font-medium text-brand7">
-                                      {participant.discussion}
-                                    </span>
+                                  <div className="flex items-start gap-2">
+                                    <FiFileText className="text-gray-200" />
+                                    <p className="text-sm text-gray-300 font-medium">Discussions:</p>
+                                    <span className="font-medium text-brand7">{participant.discussion}</span>
                                   </div>
                                 </div>
                               </div>
@@ -468,10 +404,10 @@ const Members = () => {
                           onClick={() =>
                             navigate(`/userDashboard/userProfile/${participant.public_address}`)
                           }
-                          className="rounded-[26px] py-2 px-[15px]  cursor-pointer bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-white text-[14px] leading-5 font-medium flex items-center justify-between"
+                          className="w-full sm:w-auto flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-1 sm:gap-2 rounded-[26px] py-2 px-[15px] cursor-pointer bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-inner text-white text-[14px] leading-5 font-medium text-center"
                         >
                           Visit Profile
-                          <ChevronRight className="h-5 w-5 group-hover:translate-x-1 duration-300 transition-transform" />
+                          {/* <ChevronRight className="h-5 w-5 group-hover:translate-x-1 duration-300 transition-transform" /> */}
                         </div>
 
                       </div>

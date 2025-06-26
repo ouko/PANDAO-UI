@@ -35,7 +35,7 @@ const Activity = () => {
     const url = address === null
       ? `${import.meta.env.VITE_BACKEND_URL}/activity/${params.id}`
       : `${import.meta.env.VITE_BACKEND_URL}/activity/${params.id}?user_address=${address}`
-    
+
     const res = await axios.get(url)
     return res.data
   }
@@ -49,9 +49,9 @@ const Activity = () => {
   }
 
   // Use TanStack Query for participants data
-  const { 
-    data: participants = [], 
-    isLoading: isParticipantsLoading 
+  const {
+    data: participants = [],
+    isLoading: isParticipantsLoading
   } = useQuery({
     queryKey: ['participants', params.id],
     queryFn: fetchParticipants,
@@ -59,9 +59,9 @@ const Activity = () => {
   })
 
   // Use TanStack Query for activity data
-  const { 
-    data: activity = [], 
-    isLoading: isActivityLoading 
+  const {
+    data: activity = [],
+    isLoading: isActivityLoading
   } = useQuery({
     queryKey: ['activity', params.id, address],
     queryFn: fetchActivityData,
@@ -69,15 +69,15 @@ const Activity = () => {
   })
 
   // Use TanStack Query for fund history
-  const { 
-    data: expenses = [], 
-    isLoading: isExpensesLoading 
+  const {
+    data: expenses = [],
+    isLoading: isExpensesLoading
   } = useQuery({
     queryKey: ['expenses', params.id],
     queryFn: fetchFundHistory,
     onError: (error) => console.error('Error fetching fund history:', error)
   })
-  
+
   // Combine loading states
   const loading = isParticipantsLoading || isActivityLoading || isExpensesLoading
 
@@ -127,37 +127,29 @@ const Activity = () => {
           <div className="space-y-6 md:w-[100%] ">
             <div className="flex md:flex-row flex-col  mx-auto gap-2">
               <div className="md:w-[100%] space-y-6  ">
-
-
-                <div className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden">
-
-                  <div className="flex flex-row  gap-10 items-center w-full">
-                    <div
-                      className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
+                <div className="rounded-2xl border-2 border-[#5228A4] p-4 sm:p-7 mt-5 flex flex-col gap-4 items-center sm:items-start justify-center relative overflow-hidden">
+                  <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 items-center w-full">
+                    <div className="bg-[#554573] rounded-full p-4 sm:p-5 flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24">
                       <img
-                        className="w-14 h-14"
+                        className="w-12 h-12 sm:w-14 sm:h-14"
                         src="/6.svg"
                         alt="User Icon"
                       />
                     </div>
-                    <div className="flex flex-col gap-1.5">
-                      <div
-                        className="text-[#5228A4] font-semibold uppercase text-xl"
-                      >
+                    <div className="flex flex-col gap-2 text-center sm:text-left items-center sm:items-start w-full">
+                      <div className="text-[#5228A4] font-semibold uppercase text-lg sm:text-xl">
                         Total Expenses:
                       </div>
-                      <div
-                        className="text-white text-[56px] font-medium text-center"
-                      >
+                      <div className="text-white text-[32px] sm:text-[56px] font-medium">
                         {expenses.length} Expenses so far.
                       </div>
-
                     </div>
                   </div>
-                  <div className='absolute bottom-0 right-0 p-4'>
+                  <div className="mt-4 sm:mt-0 sm:absolute sm:bottom-0 sm:right-0 p-0 sm:p-4 w-full sm:w-auto">
                     <Button
                       variant="brand"
                       onClick={() => setShowExpenses(!showExpenses)}
+                      className="w-full sm:w-auto"
                     >
                       Show Activity
                     </Button>
@@ -224,70 +216,65 @@ const Activity = () => {
           <div className="space-y-6 md:w-[100%] ">
             <div className="flex md:flex-row flex-col w-full  mx-auto gap-2">
               <div className="md:w-[100%] space-y-6  ">
-
-
-                <div className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden">
-
-                  <div className="flex flex-row  gap-10 items-center w-full">
-                    <div
-                      className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
+                <div className="rounded-2xl border-2 border-[#5228A4] p-4 sm:p-7 mt-5 flex flex-col gap-4 items-center sm:items-start justify-center relative overflow-hidden">
+                  <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 items-center w-full">
+                    <div className="bg-[#554573] rounded-full p-4 sm:p-5 flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24">
                       <img
-                        className="w-14 h-14"
+                        className="w-12 h-12 sm:w-14 sm:h-14"
                         src="/6.svg"
                         alt="User Icon"
                       />
                     </div>
-                    <div className="flex flex-col gap-1.5">
-                      <div
-                        className="text-[#5228A4] font-semibold uppercase text-xl"
-                      >
+                    <div className="flex flex-col gap-2 items-center sm:items-start text-center sm:text-left w-full">
+                      <div className="text-[#5228A4] font-semibold uppercase text-lg sm:text-xl">
                         Total Activities:
                       </div>
-                      <div
-                        className="text-white text-[56px] font-medium text-center"
-                      >
+                      <div className="text-white text-[32px] sm:text-[56px] font-medium">
                         {activity.length} Activities so far.
                       </div>
-
                     </div>
                   </div>
-                  <div className='absolute bottom-0 right-0 p-4'>
-                    <Button variant="brand"
+                  <div className="mt-4 sm:mt-0 w-full sm:w-auto sm:absolute sm:bottom-0 sm:right-0 p-0 sm:p-4">
+                    <Button
+                      variant="brand"
                       onClick={() => setShowExpenses(!showExpenses)}
+                      className="w-full sm:w-auto"
                     >
                       Show Fund History
                     </Button>
                   </div>
                 </div>
+                <div className="flex flex-col lg:flex-row gap-4">
+                  <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] relative overflow-hidden w-full lg:w-[55%]">
 
+                    {/* Header */}
+                    <div className="bg-[#39246b] px-4 sm:px-[15px] flex flex-col sm:flex-row z-50 items-start sm:items-center justify-between w-full h-auto sm:h-[63px] sticky top-0 left-0 py-3 sm:py-0">
+                      <div className="text-white text-xl sm:text-2xl font-medium">
+                        Activity:
+                      </div>
+                      <div className="mt-2 sm:mt-0">
+                        <label htmlFor="activityTypeFilter" className="text-sm font-medium text-white mr-2">
+                          Filter by Activity Type:
+                        </label>
+                        <select
+                          id="activityTypeFilter"
+                          className="rounded px-2 py-1 bg-brand3 text-white border border-brand5 focus:outline-none"
+                          value={selectedActivityType}
+                          onChange={(e) => setSelectedActivityType(e.target.value)}
+                        >
+                          <option value="ALL">All</option>
+                          {ACTIVITY_TYPES.map(type => (
+                            <option key={type} value={type}>
+                              {activityTypeLabels[type]}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
 
-
-                <div className="flex gap-4">
-                  <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] h-full  relative overflow-hidden w-full">
-                  <div className="bg-[#39246b] px-[15px] flex z-50 items-center justify-between w-full h-[63px] sticky top-0 left-0">
-  <div className="text-white text-2xl font-medium">
-    Activity:
-  </div>
-  <div>
-  <label htmlFor="activityTypeFilter" className="text-sm font-medium text-white p-4">Filter by Activity Type:</label>
-    <select
-      id="activityTypeFilter"
-      className="rounded px-2 py-1 bg-brand3  text-white border border-brand5 focus:outline-none"
-      value={selectedActivityType}
-      onChange={e => setSelectedActivityType(e.target.value)}
-    >
-      <option value="ALL">All</option>
-      {ACTIVITY_TYPES.map(type => (
-        <option key={type} value={type}>{activityTypeLabels[type]}</option>
-      ))}
-    </select>
-  </div>
-</div>
-
-                    {!loading && (
-                      <div className="space-y-4 px-3 py-3 rounded-2xl h-[600px] overflow-y-auto ">
-                        {/* Activity Type Filter Dropdown */}
-                       
+                    {/* Activity Content */}
+                    {!loading ? (
+                      <div className="space-y-4 px-3 py-3 rounded-2xl max-h-[600px] overflow-y-auto">
                         {activity &&
                           activity
                             .filter(ac => selectedActivityType === 'ALL' || ac.activity_type === selectedActivityType)
@@ -299,36 +286,31 @@ const Activity = () => {
                                 clipAddress={clipAddress}
                                 formatStandardDateTime={formatStandardDateTime}
                               />
-                             
-
                             ))}
                       </div>
-                    )}
-                    {loading && (
-                      <div className="flex flex-col h-auto items-center justify-center text-center mt-5">
+                    ) : (
+                      <div className="flex flex-col px-4 items-center justify-center text-center mt-5">
                         {[...Array(8)].map((_, i) => (
                           <SkeletonActivity key={i} />
                         ))}
                       </div>
                     )}
                   </div>
+                  <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] relative overflow-hidden w-full lg:w-[45%]">
 
-                  <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] h-full    relative overflow-hidden w-[45%] ">
-                    <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
-                      <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
-
+                    <div className="bg-[#39246b] px-4 sm:px-[15px] flex items-center justify-between w-full h-[63px] sticky top-0 left-0">
+                      <div className="text-white text-xl sm:text-2xl font-medium">
                         Members:
                       </div>
-
                     </div>
                     {loading ? (
-                      <div className="flex flex-col h-auto W-[800px] px-4 items-center justify-center text-center mt-5">
+                      <div className="flex flex-col px-4 items-center justify-center text-center mt-5">
                         {[...Array(4)].map((_, i) => (
                           <SkeletonCard key={i} />
                         ))}
                       </div>
                     ) : participants.length === 0 ? (
-                      <div className="flex items-center justify-center h-20">
+                      <div className="flex items-center justify-center h-20 px-4 text-center">
                         Be the first one to join the community
                       </div>
                     ) : (
@@ -336,9 +318,9 @@ const Activity = () => {
                         <div
                           key={index}
                           className={`bg-gradient-to-br from-[rgba(17,12,36,0.85)] to-brand3 hover:scale-[0.98] transition-transform duration-300 
-                                    flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-2 
-                                    mx-2 my-2 p-4 border border-[#5228A4] rounded-lg shadow-md cursor-pointer 
-                                    ${participant.public_address === address
+                      flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-2 
+                      mx-2 my-2 p-4 border border-[#5228A4] rounded-lg shadow-md cursor-pointer 
+                      ${participant.public_address === address
                               ? "bg-gradient-to-br from-[rgba(103,103,133,0.85)] via-transparent to-brand1"
                               : ""
                             }`}
@@ -369,7 +351,6 @@ const Activity = () => {
                             </div>
                           </div>
                         </div>
-
                       ))
                     )}
                   </div>

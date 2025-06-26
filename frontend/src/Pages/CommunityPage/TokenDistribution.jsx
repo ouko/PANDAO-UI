@@ -78,34 +78,27 @@ const TokenDistribution = () => {
           <div className="flex md:flex-row flex-col  mx-auto gap-2">
             <div className="md:w-[100%] space-y-6  ">
 
-              <div
-                className="rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden"
-              >
-
-                <div className="flex flex-row  gap-10 items-center w-full">
-                  <div
-                    className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-24 h-24">
+              <div className="rounded-2xl border-2 border-[#5228A4] p-4 sm:p-7 mt-5 flex flex-col gap-4 items-center sm:items-start justify-center relative overflow-hidden">
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 items-center w-full">
+                  <div className="bg-[#554573] rounded-full p-4 sm:p-5 flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24">
                     <img
-                      className="w-14 h-14"
+                      className="w-12 h-12 sm:w-14 sm:h-14"
                       src="/5.svg"
                       alt="User Icon"
                     />
                   </div>
-                  <div className="flex flex-col gap-1.5">
-                    <div
-                      className="text-[#5228A4] font-semibold uppercase text-xl"
-                    >
+                  <div className="flex flex-col gap-2 items-center sm:items-start text-center sm:text-left w-full">
+                    <div className="text-[#5228A4] font-semibold uppercase text-lg sm:text-xl">
                       Total Vote Power:
                     </div>
-                    <div
-                      className="text-white text-[56px] font-medium text-center"
-                    >
+                    <div className="text-white text-[32px] sm:text-[56px] font-medium">
                       Voters
                     </div>
-                    {/* <Button variant="radix">
-                      Manage Vote
-                    </Button> */}
 
+                    {/* Optional Button (Uncomment if needed) */}
+                    {/* <Button variant="radix" className="w-full sm:w-auto">
+                            Manage Vote
+                         </Button> */}
                   </div>
                 </div>
               </div>
