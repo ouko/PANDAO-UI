@@ -243,63 +243,63 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
         </div>
       </div>
 
-      <Dialog open={quickStartOpen} onOpenChange={setQuickStartOpen}>
-        <DialogTrigger></DialogTrigger>
-        <DialogContent className="max-w-2xl w-full  p-6 bg-[rgba(169,126,255,0.34)] text-gray-300 backdrop-blur-md border-[1px] border-brand3 rounded-lg shadow-lg">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-semibold text-brand7 w-full text-center">
-              Quick Start
-            </DialogTitle>
-            <DialogDescription className="flex flex-col md:flex-row items-center gap-4 mt-4 w-full">
-              <Card
-                className="w-full p-6 bg-[rgba(121,84,196,0.8)] border-[1px] border-brand2 hover:bg-[rgba(169,126,255,0.34)] transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
-                onClick={() =>
-                  navigate(`/community/detail/${params.id}/proposals?state="proposal"`)
-                }
-              >
-                <h3 className="text-xl font-medium text-gray-300">
-                  Create a Proposal
-                </h3>
-                <p className="text-sm text-gray-400 mt-1">
-                  Start a new project by creating a detailed proposal.
-                </p>
-              </Card>
+     <Dialog open={quickStartOpen} onOpenChange={setQuickStartOpen}>
+  <DialogTrigger></DialogTrigger>
+  <DialogContent
+    className="w-[90vw] sm:max-w-2xl p-4 sm:p-6 bg-[rgba(169,126,255,0.34)] text-gray-300 backdrop-blur-md border border-brand3 rounded-lg shadow-lg"
+  >
+    <DialogHeader>
+      <DialogTitle className="text-xl sm:text-2xl font-semibold text-brand7 w-full text-center">
+        Quick Start
+      </DialogTitle>
 
-              {slug === 'insurance' ? (
-                <Card
-                  className="w-full p-6 bg-[rgba(121,84,196,0.8)] border-[1px] border-brand2 hover:bg-[rgba(169,126,255,0.34)] transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
-                  onClick={() =>
-                    navigate(`/community/detail/${params.id}/annissue`)
-                  }
-                >
-                  <h3 className="text-xl font-medium text-gray-300">
-                    Create AAN
-                  </h3>
-                  <p className="text-sm text-gray-400 mt-1">
-                    Create an Automated Assurance  (AAN) for insurance claims.
-                  </p>
-                </Card>
-              ) : (
-                <Card
-                  className="w-full p-6 bg-[rgba(121,84,196,0.8)] border-[1px] border-brand2 hover:bg-[rgba(169,126,255,0.34)] transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
-                  onClick={() =>
-                    navigate(`/community/detail/${params.id}/bondissue`)
-                  }
-                >
-                  <h3 className="text-xl font-medium text-gray-300">
-                    Create a Bond
-                  </h3>
-                  <p className="text-sm text-gray-400 mt-1">
-                    Secure your projects with a reliable bond.
-                  </p>
-                </Card>
-              )}
-            </DialogDescription>
+      <DialogDescription className="flex flex-col md:flex-row items-stretch gap-4 mt-4 w-full">
+        {/* Create Proposal Card */}
+        <Card
+          className="flex-1 w-full p-5 sm:p-6 bg-[rgba(121,84,196,0.8)] border border-brand2 hover:bg-[rgba(169,126,255,0.34)] transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
+          onClick={() =>
+            navigate(`/community/detail/${params.id}/proposals?state="proposal"`)
+          }
+        >
+          <h3 className="text-lg sm:text-xl font-medium text-gray-300">
+            Create a Proposal
+          </h3>
+          <p className="text-sm text-gray-400 mt-1">
+            Start a new project by creating a detailed proposal.
+          </p>
+        </Card>
 
+        {/* Conditional AAN or Bond Card */}
+        {slug === 'insurance' ? (
+          <Card
+            className="flex-1 w-full p-5 sm:p-6 bg-[rgba(121,84,196,0.8)] border border-brand2 hover:bg-[rgba(169,126,255,0.34)] transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
+            onClick={() => navigate(`/community/detail/${params.id}/annissue`)}
+          >
+            <h3 className="text-lg sm:text-xl font-medium text-gray-300">
+              Create AAN
+            </h3>
+            <p className="text-sm text-gray-400 mt-1">
+              Create an Automated Assurance (AAN) for insurance claims.
+            </p>
+          </Card>
+        ) : (
+          <Card
+            className="flex-1 w-full p-5 sm:p-6 bg-[rgba(121,84,196,0.8)] border border-brand2 hover:bg-[rgba(169,126,255,0.34)] transition-shadow duration-300 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
+            onClick={() => navigate(`/community/detail/${params.id}/bondissue`)}
+          >
+            <h3 className="text-lg sm:text-xl font-medium text-gray-300">
+              Create a Bond
+            </h3>
+            <p className="text-sm text-gray-400 mt-1">
+              Secure your projects with a reliable bond.
+            </p>
+          </Card>
+        )}
+      </DialogDescription>
+    </DialogHeader>
+  </DialogContent>
+</Dialog>
 
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
     </>
 
   );

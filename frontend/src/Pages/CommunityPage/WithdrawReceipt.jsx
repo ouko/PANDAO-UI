@@ -12,13 +12,13 @@ const WithdrawReceipt = () => {
   const params = useParams()
   const navigate = useNavigate()
 
-  const address = accounts && accounts.length > 0 ? accounts[0] : null 
+  const address = accounts && accounts.length > 0 ? accounts[0] : null
 
   // Using TanStack Query to fetch bond reports
-  const { 
-    data: issuedBonds = [], 
-    isLoading: loading, 
-    error 
+  const {
+    data: issuedBonds = [],
+    isLoading: loading,
+    error
   } = useQuery({
     queryKey: ['bondReports', params.id, address?.address],
     queryFn: async () => {
@@ -52,32 +52,25 @@ const WithdrawReceipt = () => {
         <div className="space-y-6 md:w-[100%]">
           <div className="flex md:flex-row flex-col md:w-[95%] mx-auto gap-2">
             <div className="md:w-[100%] w-full  space-y-6">
-              <div className =" rounded-2xl border-2 border-[#5228A4] p-7 mt-5 flex flex-col gap-2.5 items-start justify-center relative overflow-hidden ">  
-                <div className="flex flex-row  gap-10 items-center w-full">
-                  <div
-                    className="bg-[#321e58] rounded-full p-5 z-50 flex items-center justify-center w-24 h-24">
+              <div className="rounded-2xl border-2 border-[#5228A4] p-4 sm:p-7 mt-5 flex flex-col gap-4 relative overflow-hidden">
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 items-center w-full">
+                  <div className="bg-[#321e58] rounded-full p-5 flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24">
                     <img
-                      className="w-14 h-14"
+                      className="w-12 h-12 sm:w-14 sm:h-14"
                       src="/8.svg"
                       alt="User Icon"
                     />
                   </div>
-                  <div className="flex flex-col gap-1.5">
-                    <div
-                      className="text-brand6 font-semibold uppercase text-xl"
-                    >
+                  <div className="flex flex-col items-center sm:items-start gap-1.5 text-center sm:text-left">
+                    <div className="text-brand6 font-semibold uppercase text-lg sm:text-xl">
                       Total Bonds Report:
                     </div>
-                    <div
-                      className="text-white text-[56px] font-medium text-center"
-                    >
-                       Bonds Report
+                    <div className="text-white text-3xl sm:text-[56px] font-medium leading-tight">
+                      Bonds Report
                     </div>
                   </div>
                 </div>
               </div>
-
-              {/* Issued Bonds Section */}
 
               <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4]  relative overflow-hidden">
                 <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
@@ -85,7 +78,7 @@ const WithdrawReceipt = () => {
 
                     Bonds:
                   </div>
-                  
+
                 </div>
                 {loading ? (
                   <div className="flex flex-col h-auto items-center px-5 justify-center text-center mt-5">

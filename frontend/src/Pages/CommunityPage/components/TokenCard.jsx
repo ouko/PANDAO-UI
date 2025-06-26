@@ -253,29 +253,32 @@ const TokenCard = ({ data, onSuccess }) => {
 
 
   return (
-    <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-solid border-[#5228A4] border pt-[13px] pr-[25px] pb-[13px] pl-[25px] shrink-0 min-h-[345px] relative overflow-hidden backdrop-blur-[6.7px]">
-
-      <div className="bg-[#39246b] px-[13px] flex items-center justify-between w-full h-[63px]  absolute left-0 top-0">
-        <div className="text-white text-2xl font-medium">{data.name}</div>
-        <div className="flex gap-[5px]">
+    <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border border-[#5228A4] pt-4 px-4 pb-6 shrink-0 min-h-[345px] relative overflow-hidden backdrop-blur-[6.7px] w-full max-w-full">
+      <div className="bg-[#39246b] px-4 flex flex-col sm:flex-row items-start sm:items-center justify-between w-full h-auto sm:h-[63px] absolute left-0 top-0 py-4 sm:py-0">
+        <div className="text-white text-xl sm:text-2xl font-medium mb-2 sm:mb-0">{data.name}</div>
+        <div className="flex flex-wrap gap-2 sm:gap-[5px]">
           {data.total_token > 0 && data.token_bought > 0 && (
             <div>
               <Dialog open={openSellModal} onOpenChange={setSellModal}>
                 <DialogTrigger asChild>
-                  <Button variant="brand" className="text-white" >Sell Token</Button>
+                  <Button variant="brand" className="text-white">Sell Token</Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px] bg-[rgba(169,126,255,0.34)] backdrop-blur-md text-white  border-[1px] border-brand3 ">
+
+                <DialogContent className="w-[90vw] sm:max-w-[425px] bg-[rgba(169,126,255,0.34)] backdrop-blur-md text-white border border-brand3 rounded-lg shadow-lg p-4 sm:p-6">
                   <DialogHeader>
-                    <DialogTitle>Sell Token</DialogTitle>
+                    <DialogTitle className="text-center sm:text-left text-xl font-semibold text-white">
+                      Sell Token
+                    </DialogTitle>
                   </DialogHeader>
+
                   <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 text-white items-center gap-4">
-                      <Label htmlFor="sell-token" className="text-right">
+                    <div className="flex flex-col sm:grid sm:grid-cols-4 items-start sm:items-center gap-2 sm:gap-4">
+                      <Label htmlFor="sell-token" className="sm:text-right w-full sm:w-auto">
                         Token
                       </Label>
                       <Input
                         id="sell-token"
-                        className="col-span-3"
+                        className="w-full sm:col-span-3"
                         placeholder="How many tokens to sell"
                         type="number"
                         value={tokenToSell}
@@ -286,7 +289,7 @@ const TokenCard = ({ data, onSuccess }) => {
                       />
                     </div>
                   </div>
-                  <DialogFooter>
+                  <DialogFooter className="flex justify-center sm:justify-end">
                     {loading ? (
                       <Button variant="brand" disabled>
                         Selling...
@@ -307,75 +310,75 @@ const TokenCard = ({ data, onSuccess }) => {
           )}
 
 
-{data.total_token > data.token_bought && (
-  <div>
-    <Button
-      variant="brand"
-      className="text-white"
-      onClick={() => setBuyModal(true)} // OPEN MANUALLY
-    >
-      Buy Token
-    </Button>
+          {data.total_token > data.token_bought && (
+            <div>
+              <Button
+                variant="brand"
+                className="text-white"
+                onClick={() => setBuyModal(true)} // OPEN MANUALLY
+              >
+                Buy Token
+              </Button>
 
-    <Dialog open={openBuyModal} onOpenChange={setBuyModal}>
-      <DialogContent className="sm:max-w-[425px] bg-[rgba(169,126,255,0.34)] backdrop-blur-md text-white border-[1px] border-brand3">
-        <DialogHeader>
-          <DialogTitle>Buy Token</DialogTitle>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="token" className="text-right">
-              Token
-            </Label>
-            <Input
-              id="token"
-              className="col-span-3"
-              placeholder="How many tokens to buy"
-              type="number"
-              value={token}
-              onChange={(e) => setToken(e.target.value)}
-              required
-              min={0}
-            />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button
-            variant="brand"
-            onClick={handleBuyToken}
-            disabled={!token || Number(token) <= 0 || loading}
-          >
-            {loading ? 'Buying...' : 'Buy Token'}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  </div>
-)}
+              <Dialog open={openBuyModal} onOpenChange={setBuyModal}>
+                <DialogContent className="w-[90vw] sm:max-w-[425px] bg-[rgba(169,126,255,0.34)] backdrop-blur-md text-white border border-brand3 rounded-lg shadow-lg p-4 sm:p-6">
+                  <DialogHeader>
+                    <DialogTitle className="text-xl font-semibold text-white text-center sm:text-left">
+                      Buy Token
+                    </DialogTitle>
+                  </DialogHeader>
+                  <div className="grid gap-4 py-4">
+                    {/* Responsive Label + Input Row */}
+                    <div className="flex flex-col sm:grid sm:grid-cols-4 items-start sm:items-center gap-2 sm:gap-4">
+                      <Label htmlFor="token" className="sm:text-right w-full sm:w-auto">
+                        Token
+                      </Label>
+                      <Input
+                        id="token"
+                        className="w-full sm:col-span-3"
+                        placeholder="How many tokens to buy"
+                        type="number"
+                        value={token}
+                        onChange={(e) => setToken(e.target.value)}
+                        required
+                        min={0}
+                      />
+                    </div>
+                  </div>
+                  <DialogFooter className="flex justify-center sm:justify-end">
+                    <Button
+                      variant="brand"
+                      onClick={handleBuyToken}
+                      disabled={!token || Number(token) <= 0 || loading}
+                    >
+                      {loading ? 'Buying...' : 'Buy Token'}
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </div>
+          )}
 
         </div>
       </div>
 
 
-      <div className="flex flex-col gap-[25px] items-start justify-start mt-20 ">
-        <div className='flex items-center justify-between w-full'>
-          <div className="flex items-center gap-[26px] w-full">
+      <div className="flex flex-col gap-[25px] items-start justify-start mt-10 ">
+        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between w-full mt-[75px]">
+          <div className="flex items-center gap-4 w-full">
             <div className="rounded-full w-[45px] h-[45px] overflow-hidden">
-              <img
-                className="w-[50.16px] h-[45px] object-cover"
-                src="/radix.webp"
-                alt="Token Icon"
-              />
+              <img src="/radix.webp" className="w-full h-full object-cover" alt="Token Icon" />
             </div>
-            <div className="text-white text-4xl font-medium">{data.total_token} Tokens</div>
+            <div className="text-white text-2xl sm:text-4xl font-medium">{data.total_token} Tokens</div>
           </div>
+
           <select
-            value={selected.code} // Use .code here since we're storing the full object
+            value={selected.code}
             onChange={handleChange}
-            className="text-white bg-[rgba(169,126,255,0.2)]  backdrop-blur-md  border p-2 rounded-2xl hover:bg-brand3 border-brand3"
+            className="text-white bg-[rgba(169,126,255,0.2)] backdrop-blur-md border p-2 rounded-xl border-brand3 w-full sm:w-auto"
           >
             {currencies.map((c) => (
-              <option className="bg-brand5 hover:bg-slate-100" key={c.code} value={c.code}> {/* The value is just the code */}
+              <option key={c.code} value={c.code} className="bg-brand5">
                 {c.symbol} - {c.code}
               </option>
             ))}
@@ -383,34 +386,38 @@ const TokenCard = ({ data, onSuccess }) => {
         </div>
 
 
-        <div className="w-full text-left">
-          <table className="table-auto w-full text-lg">
+
+        <div className="w-full overflow-x-auto mt-4">
+          <table className="table-auto w-full text-sm sm:text-lg">
             <tbody className="text-white">
               <tr>
-                <td className=" pr-4 text-purple-400 uppercase font-medium">Token Price:</td>
-                <td className="">{data.token_price} XRD</td>
+                <td className="pr-2 sm:pr-4 text-purple-400 uppercase font-medium">Token Price:</td>
+                <td>{data.token_price} XRD</td>
               </tr>
               <tr>
-                <td className=" pr-4 text-purple-400 uppercase font-medium">Token Buy Back Price:</td>
-                <td className="">{data.token_buy_back_price}XRD</td>
+                <td className="pr-2 sm:pr-4 text-purple-400 uppercase font-medium">Token Buy Back Price:</td>
+                <td>{data.token_buy_back_price} XRD</td>
               </tr>
               <tr>
-                <td className=" pr-4 text-purple-400 uppercase font-medium">Token Price in {selected.code}:</td>
-                <td className="">
-                  {tokenPriceLoading ? (<div className="inline-block h-[1em] w-12 rounded bg-brand5 animate-pulse align-text-bottom" />
-                  ) :
-                    tokenPrice ? (Math.round(tokenPrice.token_price_in_fiat * 10000) / 10000).toFixed(4) : '0'} {selected.symbol}
+                <td className="pr-2 sm:pr-4 text-purple-400 uppercase font-medium">Token Price in {selected.code}:</td>
+                <td>
+                  {tokenPriceLoading ? (
+                    <div className="inline-block h-[1em] w-12 rounded bg-brand5 animate-pulse align-text-bottom" />
+                  ) : tokenPrice ? (
+                    (Math.round(tokenPrice.token_price_in_fiat * 10000) / 10000).toFixed(4)
+                  ) : (
+                    '0'
+                  )}{' '}
+                  {selected.symbol}
                 </td>
               </tr>
               <tr>
-                <td className=" pr-4 text-purple-400 uppercase font-medium">Token Buy Back Price in {selected.code}:</td>
-                <td className="">
+                <td className="pr-2 sm:pr-4 text-purple-400 uppercase font-medium">Buy Back Price in {selected.code}:</td>
+                <td>
                   {tokenPriceLoading ? (
-                    // shimmer placeholder
                     <div className="inline-block h-[1em] w-12 rounded bg-brand5 animate-pulse align-text-bottom" />
                   ) : tokenPrice ? (
-                    (Math.round(tokenPrice.token_buy_back_price_in_fiat * 10000) / 10000)
-                      .toFixed(4)
+                    (Math.round(tokenPrice.token_buy_back_price_in_fiat * 10000) / 10000).toFixed(4)
                   ) : (
                     '0'
                   )}{' '}

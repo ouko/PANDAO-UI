@@ -94,68 +94,72 @@ const TotalFund = ({ data }) => {
 
         <>
             <div className="bg-[rgba(169,126,255,0.08)] rounded-lg border border-[#5228A4] min-h-[155px] relative overflow-hidden backdrop-blur-[6.7px] flex flex-col justify-between">
-                {/* Header */}
                 <div className="bg-[#39246b] px-4 py-2 flex items-center rounded-md w-full">
                     <div className="text-white text-2xl font-medium">
                         Total Funds:
                     </div>
                 </div>
-                <div className="flex items-center justify-between">
-                    {/* Fund Details */}
-                    <div className="flex flex-col gap-2 mt-2 p-5">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center px-4 py-4 justify-between gap-4">
+                    <div className="flex flex-col gap-2">
                         <div className="flex gap-2">
-                            <div className="text-purple-300 text-xl uppercase">Funds In USD:</div>
-                            <div className="text-white text-xl">{Math.round(data.funds_in_usd * 10000) / 10000} $</div>
+                            <div className="text-purple-300 text-base sm:text-xl uppercase">Funds In USD:</div>
+                            <div className="text-white text-base sm:text-xl">
+                                {Math.round(data.funds_in_usd * 10000) / 10000} $
+                            </div>
                         </div>
 
                         <div className="flex gap-2">
-                            <div className="text-purple-300 text-xl uppercase">Total Funds:</div>
-                            <div className="text-white text-xl">{data.funds} XRD</div>
+                            <div className="text-purple-300 text-base sm:text-xl uppercase">Total Funds:</div>
+                            <div className="text-white text-base sm:text-xl">{data.funds} XRD</div>
                         </div>
                     </div>
 
                     {/* Withdraw Button */}
-                    <div className="flex items-center px-5  ">
+                    <div className="w-full sm:w-auto flex justify-end">
                         <button
                             onClick={() => setWithDrawModal(true)}
-                            className="rounded-[26px] px-4 py-2 bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] text-black text-sm leading-5 font-medium"
+                            className="rounded-[26px] px-4 py-2 bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] text-black text-sm leading-5 font-medium w-full sm:w-auto"
                         >
                             Withdraw Request
                         </button>
                     </div>
                 </div>
-
             </div>
 
+            {/* Withdraw Dialog */}
             <Dialog open={withDrawModal} onOpenChange={setWithDrawModal}>
                 <DialogTrigger></DialogTrigger>
-                <DialogContent className="w-[600px] pt-10 bg-[rgba(169,126,255,0.34)] text-white  border-[1px] border-brand3 rounded-lg shadow-lg max-w-5xl overflow-y-auto max-h-[80vh]">
-                    <DialogHeader className="w-full overflow-auto">
-                        <DialogTitle className="text-2xl font-semibold text-gray-300 w-full text-center">
+                <DialogContent className="w-[90vw] sm:w-[600px] pt-6 bg-[rgba(169,126,255,0.34)] text-white border border-brand3 rounded-lg shadow-lg max-h-[85vh] overflow-y-auto px-4 sm:px-6">
+                    <DialogHeader className="w-full">
+                        <DialogTitle className="text-xl sm:text-2xl font-semibold text-gray-300 text-center">
                             Fund Withdraw Request
                         </DialogTitle>
-                        <DialogDescription className="flex flex-col justify-center items-center gap-4 mt-4 w-full overflow-y-auto">
-
+                        <DialogDescription className="flex flex-col justify-center items-center gap-4 mt-6 w-full">
                             <div className="w-full">
                                 <Input
                                     type="number"
                                     value={withdrawAmount}
                                     onChange={(e) => setwithdrawAmout(e.target.value)}
                                     min={0}
+                                    placeholder="Enter amount to withdraw"
+                                    className="w-full"
                                 />
                             </div>
 
                             <Button
                                 variant="brand"
-                                onClick={handleWithdrawRequest} disabled={loadingMint}>
-                                Withdraw Request
+                                onClick={handleWithdrawRequest}
+                                disabled={loadingMint}
+                                className="w-full sm:w-auto"
+                            >
+                                {loadingMint ? 'Processing...' : 'Withdraw Request'}
                             </Button>
                         </DialogDescription>
                     </DialogHeader>
                 </DialogContent>
-
             </Dialog>
         </>
+
     )
 }
 
