@@ -4,7 +4,7 @@ import { useRdt } from '@/hooks/useRdt';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const Sidebar = () => {
+const Sidebar = ({ handleClose }) => {
   const rdt = useRdt();
   const navigate = useNavigate();
   const params = useParams();
@@ -102,6 +102,7 @@ const Sidebar = () => {
         <NavLink
           key={index}
           to={item.path}
+          onClick={handleClose}
           className={({ isActive }) =>
             `flex flex-row items-center justify-start my-0 md:my-3 cursor-pointer transition-all rounded-lg ${
               isActive ? 'bg-brand3 text-white' : 'text-purple-100'
