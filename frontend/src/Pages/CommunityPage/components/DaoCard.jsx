@@ -177,20 +177,20 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
             </div>
             {/* Airdrop Section */}
             {daoData.airdrop && (
-              <div className="w-full bg-brand1/20 rounded-xl p-4 mt-2 flex flex-col gap-2 border border-brand3">
+              <div className="w-full bg-brand1/20 rounded-xl p-4 mt-2 flex flex-col gap-2 border border-brand5">
                 <div className="flex flex-col md:flex-row gap-2 items-center justify-between">
-                  <div className="text-brand4 font-semibold text-base flex items-center gap-2">
+                  <div className="text-brand7 font-semibold text-base flex items-center gap-2">
                     <span className="bg-brand4/20 px-2 py-1 rounded">Airdrop</span>
                     <span className="text-white">{daoData.airdrop.amount_per_air_drop} tokens</span>
                   </div>
-                  <div className="text-xs text-gray-300">{new Date(daoData.airdrop.start_time).toLocaleDateString()} - {new Date(daoData.airdrop.end_time).toLocaleDateString()}</div>
+                  <div className="text-xs text-gray-300 border border-brand5 rounded px-2 py-1">{new Date(daoData.airdrop.start_time).toLocaleDateString()} - {new Date(daoData.airdrop.end_time).toLocaleDateString()}</div>
                 </div>
                 {/* Allocation Breakdown */}
                 <div className="flex flex-wrap gap-2 mt-2">
                   {daoData.airdrop.allocations && Object.entries(daoData.airdrop.allocations).map(([key, value]) => (
                     key !== 'total_allocated' && (
-                      <div key={key} className="flex flex-col items-center bg-brand2/20 rounded-lg px-3 py-1">
-                        <span className="text-xs text-brand4 capitalize">{key.replace('_', ' ')}</span>
+                      <div key={key} className="flex flex-col items-center bg-brand2/20 border border-brand5 rounded-lg px-3 py-1">
+                        <span className="text-xs text-brand7 capitalize">{key.replace('_', ' ')}</span>
                         <span className="text-white font-semibold text-sm">{value}%</span>
                       </div>
                     )
