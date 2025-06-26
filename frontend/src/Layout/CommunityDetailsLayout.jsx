@@ -36,7 +36,7 @@ const CommunityDetailsLayout = ({ children }) => {
 
         <div className="lg:hidden fixed top-20 left-4 z-50">
           <Sheet open={open} onOpenChange={setOpen}>
-            <SheetContent side="left" className=" mt-[70px] rounded-[30px] bg-brand1/40 text-gray-300 backdrop-blur-md border-0 border-brand3 ">
+            <SheetContent side="left" className=" mt-[60px] rounded-[30px] bg-brand1/40 text-gray-300 backdrop-blur-md border-0 border-brand3 ">
               <Sidebar />
             </SheetContent>
           </Sheet>
