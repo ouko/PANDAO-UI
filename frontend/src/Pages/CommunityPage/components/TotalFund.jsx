@@ -128,7 +128,7 @@ const TotalFund = ({ data }) => {
 
             {/* Withdraw Dialog */}
             <Dialog open={withDrawModal} onOpenChange={setWithDrawModal}>
-                <DialogTrigger></DialogTrigger>
+                <DialogTrigger className="hidden"></DialogTrigger>
                 <DialogContent className="w-[90vw] sm:w-[600px] pt-6 bg-[rgba(169,126,255,0.34)] text-white border border-brand3 rounded-lg shadow-lg max-h-[85vh] overflow-y-auto px-4 sm:px-6">
                     <DialogHeader className="w-full">
                         <DialogTitle className="text-xl sm:text-2xl font-semibold text-gray-300 text-center">

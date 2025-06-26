@@ -253,7 +253,7 @@ const TokenCard = ({ data, onSuccess }) => {
 
 
   return (
-    <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border border-[#5228A4] pt-4 px-4 pb-6 shrink-0 min-h-[345px] relative overflow-hidden backdrop-blur-[6.7px] w-full max-w-full">
+    <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border border-[#5228A4]  px-4 pb-6 shrink-0 min-h-[345px] relative overflow-hidden backdrop-blur-[6.7px] w-full max-w-full">
       <div className="bg-[#39246b] px-4 flex flex-col sm:flex-row items-start sm:items-center justify-between w-full h-auto sm:h-[63px] absolute left-0 top-0 py-4 sm:py-0">
         <div className="text-white text-xl sm:text-2xl font-medium mb-2 sm:mb-0">{data.name}</div>
         <div className="flex flex-wrap gap-2 sm:gap-[5px]">
@@ -363,7 +363,7 @@ const TokenCard = ({ data, onSuccess }) => {
       </div>
 
 
-      <div className="flex flex-col gap-[25px] items-start justify-start mt-10 ">
+      <div className="flex flex-col gap-[25px] items-start justify-start mt-5 ">
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between w-full mt-[75px]">
           <div className="flex items-center gap-4 w-full">
             <div className="rounded-full w-[45px] h-[45px] overflow-hidden">

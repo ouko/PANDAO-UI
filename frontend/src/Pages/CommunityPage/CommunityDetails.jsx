@@ -290,7 +290,7 @@ const CommunityDetails = () => {
         </div>
       </div>
     ) : communityData ? (
-      <div className="w-full px-2 mt-6 md:mt-0 space-y-6">
+      <div className="w-full px-2 mt-6 md:mt-0 space-y-0  ">
         <DaoCard
           daoData={communityData}
           isUserParticipant={isUserParticipant}
@@ -300,8 +300,8 @@ const CommunityDetails = () => {
           onSuccess={handleSuccess}
         />
 
-        <div className="flex flex-col md:flex-row w-full gap-4">
-          <div className="w-full space-y-4">
+        <div className="flex flex-col md:flex-row w-full gap-4 ">
+          <div className="w-full space-y-4" >
             <TokenCard data={communityData} onSuccess={handleSuccess} />
             <TotalFund data={communityData} />
             <WithdrawCard withDrawRequest={withDrawRequest} participant={participants} onSuccess={handleSuccess} />

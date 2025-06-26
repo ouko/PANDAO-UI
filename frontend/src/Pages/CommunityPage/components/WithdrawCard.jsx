@@ -92,7 +92,7 @@ console.log(participant,"faisal")
 
   console.log(withDrawRequest)
   return (
-    <div className="bg-[rgba(169,126,255,0.08)] rounded-lg border border-[#5228A4]  overflow-hidden backdrop-blur-[6.7px]">
+    <div className="bg-[rgba(169,126,255,0.08)]  rounded-lg border border-[#5228A4]  overflow-hidden backdrop-blur-[6.7px] z-20">
 
       <div className="bg-[#39246b] px-3   flex items-center w-full  h-[53px] ">
         <div className="text-white text-2xl font-medium font-[ClashDisplayVariable-Medium, sans-serif]">
