@@ -193,10 +193,10 @@ const Members = () => {
                   participants.map((participant, index) => (
                     <div
                       key={index}
-                      className="bg-gradient-to-br from-[rgba(24,18,45,0.59)] via-transparent to-brand1 hover:border-brand5 transition-transform duration-300 
-    flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-2 mx-2 sm:mx-4 p-4 border border-brand2 rounded-lg shadow-sm"
+                      className="bg-gradient-to-br from-[rgba(24,18,45,0.59)] via-transparent py-3 to-brand1 hover:border-brand5 transition-transform duration-300 
+                      flex flex-col md:flex-row items-start md:items-center my-4 justify-between gap-4 md:gap-2 mx-2 sm:mx-4 p-4 border border-brand2 rounded-lg shadow-sm"
                     >
-                       <div className="flex flex-col sm:flex-row w-full sm:w-auto items-start sm:items-center gap-3">
+                      <div className="flex flex-col sm:flex-row w-full sm:w-auto items-start sm:items-center gap-3">
                         <Avatar>
                           <AvatarImage
                             alt="Avatar"
@@ -263,7 +263,7 @@ const Members = () => {
                         </div>
                       </div>
 
-                        <div className="flex flex-col sm:flex-row w-full sm:w-auto items-stretch sm:items-center gap-3">
+                      <div className="flex flex-col sm:flex-row w-full sm:w-auto items-stretch sm:items-center gap-3">
                         <Dialog open={openParticipantIndex === index}
                           onOpenChange={(isOpen) => setOpenParticipantIndex(isOpen ? index : null)}
                           key={index}>
