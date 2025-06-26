@@ -236,20 +236,20 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                   <thead>
                     <tr className="bg-brand1/20">
                       <th className="px-3 py-2 text-brand7 font-semibold text-left">Type</th>
-                      <th className="px-3 py-2 text-brand7 font-semibold text-left">Value (USD)</th>
+                      <th className="px-3 py-2 text-brand7 font-semibold text-left">Value (XRD)</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr className="border-t border-brand2">
                       <td className="px-3 py-2 text-brand7 font-medium">Token Price</td>
                       <td className="px-3 py-2 text-white font-bold">
-                        {daoData.token_price_in_fiat?.toFixed(4) || daoData.token_price || "-"}
+                        {daoData.token_price_in_fiat?.toFixed(4) || daoData.token_price || "-" } <span className="text-[#86efac]">XRD</span>
                       </td>
                     </tr>
                     <tr className="border-t border-brand2">
                       <td className="px-3 py-2 text-brand7 font-medium">Buy Back</td>
                       <td className="px-3 py-2 text-white font-bold">
-                        {daoData.token_buy_back_price_in_fiat?.toFixed(4) || daoData.token_buy_back_price || "-"}
+                        {daoData.token_buy_back_price_in_fiat?.toFixed(4) || daoData.token_buy_back_price || "-"} <span className="text-[#86efac]">XRD</span>
                       </td>
                     </tr>
                   </tbody>
