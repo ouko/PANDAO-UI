@@ -684,7 +684,7 @@ const BondIssue = () => {
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger></DialogTrigger>
-          <DialogContent className="max-w-2xl bg-[rgba(169,126,255,0.2)] text-white backdrop-blur-md border border-brand3 rounded-lg shadow-lg">
+          <DialogContent className="w-full max-w-2xl mx-4 sm:mx-auto bg-[rgba(169,126,255,0.2)] text-white backdrop-blur-md border border-brand3 rounded-lg shadow-lg px-4 py-6">
             <h2 className="text-2xl font-bold mb-2">Confirm Submission</h2>
             <p className="mb-4 text-white/90">Review the details below before submitting:</p>
 
