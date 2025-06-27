@@ -29,7 +29,7 @@ const CommunityDetailsLayout = ({ children }) => {
       {/* Background Decorations */}
 
 
-      <div className="flex container mx-auto p-1 gap-3 relative z-10">
+      <div className="flex container mx-auto p-3 gap-3 relative z-10 ">
         <div className="hidden lg:block sticky top-0 z-50 mt-20">
           <Sidebar />
         </div>
