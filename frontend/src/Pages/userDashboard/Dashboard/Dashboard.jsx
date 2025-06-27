@@ -72,10 +72,13 @@ const Dashboard = () => {
     queryFn: () => fetchData('/user/activity', { user_address: userAddress, page: 1, page_size: 10 }),
     enabled: !!userAddress,
     select: (data) => ({
-      data: data.data || [],
-      totalPages: data.page || 1
+      data: data.activities || [],
+      totalPages: data.total || 1
     })
   });
+console.log("activityData", activityData)
+
+  
 
   const { data: createdCommunities = [] } = useQuery({
     queryKey: ['createdCommunities', userAddress],
@@ -273,9 +276,9 @@ const Dashboard = () => {
               </section>
             </TabsContent>
             <TabsContent value="useractivity">
-              <section className="">
-                <UserActivity activityData={activityData?.data} />
-              </section>
+             <section className="">
+             <UserActivity activityData={activityData?.data} />
+            </section>
             </TabsContent>
             <TabsContent value="transactions">
               <section className="">
