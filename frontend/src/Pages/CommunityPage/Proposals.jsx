@@ -1528,7 +1528,8 @@ const Proposals = () => {
                     <span>Not able to create proposal?</span>
                     <CircleHelp className="size-4" />
                   </DialogTrigger>
-                  <DialogContent className="bg-[rgba(169,126,255,0.34)] text-gray-300 backdrop-blur-md border-[1px] border-brand3 rounded-lg shadow-lg">
+                  <DialogContent className="h-auto w-[90%] max-w-md mx-auto bg-[rgba(169,126,255,0.34)] backdrop-blur-md 
+             text-gray-300 border border-brand3 rounded-xl p-4 sm:p-6">
                     <DialogHeader>
                       <DialogTitle>Please review the following points</DialogTitle>
                       <DialogDescription>
