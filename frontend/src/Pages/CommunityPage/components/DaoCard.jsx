@@ -112,7 +112,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
 
     <>
       <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] border border-[#5228A4] pt-[13px] pb-[13px] px-[8px] h-auto relative overflow-hidden w-full">
-        <div className="grid md:grid-cols-7 grid-cols-1 gap-4 items-start md:items-start px-2">
+        <div className="grid md:grid-cols-8 grid-cols-1 gap-4 items-start md:items-start px-2">
           {/* Left: Logo, Token, Tags */}
           <div className="flex flex-col col-span-2 gap-3 py-4 items-center md:items-center w-full  mt-4 ">
             <img
@@ -201,7 +201,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
           </div>
 
           {/* Right: DAO Type, Proposal Rights */}
-          <div className="flex flex-col gap-3 col-span-2 items-end justify-start w-full p-4">
+          <div className="flex flex-col gap-3 col-span-3 items-end justify-start w-full p-4">
             {/* First Box */}
             <Card className="flex flex-col gap-1.5 items-start justify-start bg-[rgba(0,0,0,0.20)] rounded-[15px] border border-[rgba(255,255,255,0.12)] px-5 py-3 w-full">
               <div className="flex flex-row gap-[11px] items-center">
