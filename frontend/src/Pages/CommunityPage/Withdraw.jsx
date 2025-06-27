@@ -90,7 +90,7 @@ const Withdraw = () => {
   );
 
   return (
-    <div className="px-4 sm:px-8">
+    <div className="px-[12px] pt-[3px]">
       <div className="rounded-2xl border border-[#5228A4] p-4 sm:p-7 mt-16 flex flex-col gap-4 items-center sm:items-start justify-center relative overflow-hidden">
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 items-center w-full">
           <div className="bg-[#321e58] rounded-full p-4 sm:p-5 z-50 flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24">

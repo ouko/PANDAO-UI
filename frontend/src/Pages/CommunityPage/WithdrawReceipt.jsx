@@ -47,10 +47,10 @@ const WithdrawReceipt = () => {
     return null // navigation already handled in useEffect
   }
   return (
-    <div className=" items-start gap-3 justify-start min-h-screen overflow-hidden z-50  text-black px-2">
-      <div className="flex md:flex-row flex-col gap-6 py-8 md:py-12 max-w-[1440px] mx-auto">
+    <div className=" items-start justify-start min-h-screen overflow-hidden z-50  text-black px-[12px]">
+      <div className="flex md:flex-row flex-col py-8 md:py-12 max-w-[1440px] mx-auto">
         <div className="space-y-6 md:w-[100%]">
-          <div className="flex md:flex-row flex-col md:w-[95%] mx-auto gap-2">
+          <div className="flex md:flex-row flex-col md:w-[95%]  ">
             <div className="md:w-[100%] w-full  space-y-6">
               <div className="rounded-2xl border border-[#5228A4] p-4 sm:p-7 mt-5 flex flex-col gap-4 relative overflow-hidden">
                 <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 items-center w-full">

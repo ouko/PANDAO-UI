@@ -44,7 +44,7 @@ const CommunityDetailsLayout = ({ children }) => {
 
         {/* Main Content */}
         <div className="flex-1 overflow-y-auto">
-          <div className="community-details-content py-4">
+          <div className="community-details-content py-4 ">
             {children || <Outlet />}
           </div>
         </div>

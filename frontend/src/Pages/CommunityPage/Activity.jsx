@@ -212,9 +212,9 @@ const Activity = () => {
           </div>
         </div>
       ) : (
-        <div className="flex md:flex-row flex-col gap-6 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
+        <div className="flex md:flex-row flex-col  px-[5px] py-8 md:py-12 max-w-[1440px] ">
           <div className="space-y-6 md:w-[100%] ">
-            <div className="flex md:flex-row flex-col w-full  mx-auto gap-2">
+            <div className="flex md:flex-row flex-col w-full  gap-2">
               <div className="md:w-[100%] space-y-6  ">
                 <div className="rounded-2xl border border-[#5228A4] p-4 sm:p-7 mt-5 flex flex-col gap-4 items-center sm:items-start justify-center relative overflow-hidden">
                   <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 items-center w-full">
