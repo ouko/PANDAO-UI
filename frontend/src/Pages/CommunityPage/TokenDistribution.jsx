@@ -78,7 +78,7 @@ const TokenDistribution = () => {
           <div className="flex md:flex-row flex-col  mx-auto gap-2">
             <div className="md:w-[100%] space-y-6  ">
 
-              <div className="rounded-2xl border-2 border-[#5228A4] p-4 sm:p-7 mt-5 flex flex-col gap-4 items-center sm:items-start justify-center relative overflow-hidden">
+              <div className="rounded-2xl border border-[#5228A4] p-4 sm:p-7 mt-5 flex flex-col gap-4 items-center sm:items-start justify-center relative overflow-hidden">
                 <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 items-center w-full">
                   <div className="bg-[#554573] rounded-full p-4 sm:p-5 flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24">
                     <img
@@ -103,7 +103,7 @@ const TokenDistribution = () => {
                 </div>
               </div>
 
-              <div className=" bg-[rgba(169,126,255,0.08)] rounded-[10px] z-50 border-2 border-[#5228A4] h-full relative  overflow-hidden">
+              <div className=" bg-[rgba(169,126,255,0.08)] rounded-[10px] z-50 border border-[#5228A4] h-full relative  overflow-hidden">
                 {isLoading ? (
                   <div className="flex flex-col h-auto items-center justify-center text-center mt-5">
                     {[...Array(4)].map((_, i) => (

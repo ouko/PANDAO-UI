@@ -319,7 +319,7 @@ const BondIssue = () => {
         <div className="space-y-6 md:w-[100%] ">
           <div className="flex md:flex-row flex-col md:w-[90%] mx-auto gap-2">
             <div className="md:w-[100%] space-y-6  ">
-              <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-5 gap-6 sm:gap-7 p-4 sm:p-10 border-2 border-brand5 flex flex-col justify-start items-start">
+              <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] w-full mt-5 gap-6 sm:gap-7 p-4 sm:p-10 border border-[#5228A4] flex flex-col justify-start items-start">
                 <div className="z-50 flex flex-col sm:flex-row items-start sm:items-center justify-between w-full gap-4 sm:gap-0">
                   <div className="w-full">
                     <span className="text-[28px] sm:text-[40px] leading-[130%] font-semibold text-amber-50 text-center md:text-left block">

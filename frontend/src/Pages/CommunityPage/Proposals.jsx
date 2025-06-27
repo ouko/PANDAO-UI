@@ -716,7 +716,7 @@ const Proposals = () => {
           <div className="space-y-6 md:w-[100%] ">
             <div className="flex md:flex-row flex-col md:w-[100%] z-50 mx-auto gap-2">
               <div className="md:w-[100%] space-y-2  ">
-                <div className="rounded-2xl border-2 border-[#5228A4] p-5 sm:p-7 mt-5 flex flex-col gap-5 sm:gap-4 items-start justify-center relative overflow-hidden">
+                <div className="rounded-2xl border border-[#5228A4] p-5 sm:p-7 mt-5 flex flex-col gap-5 sm:gap-4 items-start justify-center relative overflow-hidden">
                   <div className="flex flex-col md:flex-row gap-5 md:gap-10 items-center w-full">
                     <div className="bg-[#554573] rounded-full p-5 flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24">
                       <img className="w-10 h-10 sm:w-14 sm:h-14" src="/member.svg" alt="User Icon" />
@@ -745,7 +745,7 @@ const Proposals = () => {
                 </div>
                 <Tabs
                   defaultValue="PENDING"
-                  className="w-full py-5 border-2  bg-transparent rounded-[10px] border-[#8861d7]"
+                  className="w-full py-5 border  bg-transparent rounded-[10px] border-[#5228A4]"
                   onValueChange={setActiveTab}
                 >
                   <TabsList className="z-50 bg-transparent p-2 flex gap-3 mx-auto shadow-md w-full items-center justify-start mb-3">
@@ -808,7 +808,7 @@ const Proposals = () => {
       ) : activeProposal ? (
         <div className="flex mt-6 flex-col  px-4 md:px-6 py-8 md:py-12 max-w-[1440px] mx-auto ">
 
-          <Card className="bg-white md:w-[100%] z-50 mx-auto border-2 border-[#5228A4] md:p-4 p-4 space-y-2 ">
+          <Card className="bg-white md:w-[100%] z-50 mx-auto border border-[#5228A4] md:p-4 p-4 space-y-2 ">
             <div
               onClick={() => {
                 setActiveProposal(null) // Reset active proposal
@@ -1037,7 +1037,7 @@ const Proposals = () => {
                       comments.map((comment, index) => (
                         <div
                           key={index}
-                          className="my-3 flex gap-4 bg-white border-2 border-brand3 z-50 rounded-xl p-3  text-brand7"
+                          className="my-3 flex gap-4 bg-white border border-brand3 z-50 rounded-xl p-3  text-brand7"
                         >
                           <Avatar className="w-12 h-12 overflow-hidden rounded-sm">
                             <img src={comment.image_url} alt="Avatar" className="w-full h-full object-cover" />
@@ -1086,7 +1086,7 @@ const Proposals = () => {
 
 
 
-          <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] mt-8 w-full z-50 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
+          <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] mt-8 w-full z-50 gap-7 p-10 border border-brand5 flex flex-col justify-start items-start ">
             <div className="  text-[40px] leading-[130%] z-50 font-semibold flex flex-col items-center gap-3">
               <div className="w-full cursor-pointer flex  items-center text-[22px]   m-2"
                 onClick={() => {
@@ -1326,7 +1326,7 @@ const Proposals = () => {
       ) : tokenChangeform ? (
         <div className=''>
 
-          <div className="bg-[rgba(169,126,255,0.08)] mb-2 mt-20 rounded-[20px]  z-50 gap-7 p-10 border-2 border-brand5 flex flex-col justify-start items-start ">
+          <div className="bg-[rgba(169,126,255,0.08)] mb-2 mt-20 rounded-[20px]  z-50 gap-7 p-10 border border-brand5 flex flex-col justify-start items-start ">
             <div className="w-full cursor-pointer items-center z-[999] justify-start text-[22px] flex  "
               onClick={() => {
                 setShowTokenChangeForm(false) // Hide the form and return to the list
@@ -1505,7 +1505,7 @@ const Proposals = () => {
         </div>
       ) : (
         <div className="flex flex-col mt-5 px-4 md:px-6 py-6 md:py-12 max-w-[1440px] mx-auto">
-          <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] relative overflow-hidden">
+          <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border border-[#5228A4] relative overflow-hidden">
             <div className="bg-[#39246b] px-4 sm:px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 w-full py-4 sm:h-[63px] sticky top-0 left-0 z-50">
               <div className="flex items-center gap-2 flex-wrap">
                 <div

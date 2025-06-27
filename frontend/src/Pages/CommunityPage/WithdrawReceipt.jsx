@@ -52,7 +52,7 @@ const WithdrawReceipt = () => {
         <div className="space-y-6 md:w-[100%]">
           <div className="flex md:flex-row flex-col md:w-[95%] mx-auto gap-2">
             <div className="md:w-[100%] w-full  space-y-6">
-              <div className="rounded-2xl border-2 border-[#5228A4] p-4 sm:p-7 mt-5 flex flex-col gap-4 relative overflow-hidden">
+              <div className="rounded-2xl border border-[#5228A4] p-4 sm:p-7 mt-5 flex flex-col gap-4 relative overflow-hidden">
                 <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 items-center w-full">
                   <div className="bg-[#321e58] rounded-full p-5 flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24">
                     <img
@@ -72,7 +72,7 @@ const WithdrawReceipt = () => {
                 </div>
               </div>
 
-              <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] relative overflow-hidden">
+              <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border border-[#5228A4] relative overflow-hidden">
                 <div className="bg-[#39246b] px-4 sm:px-6 flex z-50 flex-row items-center justify-between w-full h-[63px] sticky top-0 left-0">
                   <div className="text-white text-left text-lg sm:text-2xl font-medium flex items-center gap-2">
                     Bonds:
