@@ -176,15 +176,15 @@ const Comments = () => {
   }
 
   return (
-    <div className=" items-start gap-3 justify-start z-40 min-h-screen overflow-hidden text-black px-2">
-      <div className="flex md:flex-row flex-col gap-2 mx-auto z-50 px-4 md:px-6 py-8 md:py-12 max-w-[1440px] ">
+    <div className=" items-start justify-start z-40 min-h-screen overflow-hidden text-black px-[12px]">
+      <div className="flex md:flex-row flex-col gap-2 mx-auto z-50  py-8 md:py-12 max-w-[1440px] ">
         <div className="space-y-6 md:w-[100%]">
           <div className="flex md:flex-row flex-col  mx-auto gap-2">
             <div className="md:w-[100%] space-y-6">
 
 
 
-              <div className="rounded-2xl border-2 border-[#5228A4] p-4 sm:p-7 mt-5 flex flex-col gap-4 items-center sm:items-start justify-center relative overflow-hidden">
+              <div className="rounded-2xl border border-[#5228A4] p-4 sm:p-7 mt-5 flex flex-col gap-4 items-center sm:items-start justify-center relative overflow-hidden">
                 <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 items-center w-full">
                   <div className="bg-[#554573] rounded-full p-4 sm:p-5 flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24">
                     <img className="w-12 h-12 sm:w-14 sm:h-14" src="/4.svg" alt="User Icon" />
@@ -231,7 +231,7 @@ const Comments = () => {
                 </div>
               </div>
               {!selectedDiscussion && (
-                <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] z-50 relative overflow-hidden">
+                <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border border-[#5228A4] z-50 relative overflow-hidden">
                   <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
                     <div className="text-[#ffffff] text-left  text-xl md:text-2xl font-medium flex items-center gap-2">
 
@@ -295,7 +295,7 @@ const Comments = () => {
               )}
               {selectedDiscussion && (
                 <div>
-                  <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] z-50 relative overflow-hidden">
+                  <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border border-[#5228A4] z-50 relative overflow-hidden">
                     <div className="flex items-center justify-between ">
                       <div className="bg-[#39246b]  pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
                         <div className="text-[#ffffff] text-left  text-3xl font-medium flex items-center gap-2">
