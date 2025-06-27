@@ -8,7 +8,7 @@ function ProposalExecuted({ proposals, loading, setActiveProposal, setShowForm, 
   return (
     <div className=" h-full  relative overflow-hidden ">
       <div className="bg-[#39246b] pr-[15px] pl-[15px] flex z-50 flex-row items-center justify-between w-full h-[63px] sticky left-0 top-0">
-        <div className="text-[#ffffff] text-left text-2xl font-medium flex items-center gap-2">
+        <div className="text-[#ffffff] text-left text-xl md:text-2xl font-medium flex items-center gap-2">
           Executed Proposals:
         </div>
       </div>

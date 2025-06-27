@@ -11,7 +11,7 @@ const MembersCard = ({ participants }) => {
     <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border border-[#5228A4]  pt-[13px] pr-[25px] pb-[13px] pl-[25px] self-stretch shrink-0 h-[152px] relative overflow-hidden">
      
       <div className="bg-[#39246b] pr-[15px] pl-[15px] flex flex-row items-center justify-between w-full h-[53px] absolute left-0 top-0">
-        <div className="text-[#ffffff] text-left  text-2xl font-medium flex items-center gap-2">
+        <div className="text-[#ffffff] text-left  text-xl md:text-2xl font-medium flex items-center gap-2">
           
           Members:
         </div>

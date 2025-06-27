@@ -10,7 +10,7 @@ function DiscussionCard({ communities }) {
 
             {/* Sticky Header */}
             <div className="bg-[#39246b] px-4 flex items-center justify-between w-full h-[53px] sticky top-0 z-10">
-                <div className="text-white text-2xl font-medium flex items-center gap-2">
+                <div className="text-white text-xl md:text-2xl font-medium flex items-center gap-2">
                     Discussion:
                 </div>
                 <button

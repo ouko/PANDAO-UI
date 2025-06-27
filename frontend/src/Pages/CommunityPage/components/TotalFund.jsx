@@ -95,7 +95,7 @@ const TotalFund = ({ data }) => {
         <>
             <div className="bg-[rgba(169,126,255,0.08)] rounded-lg border border-[#5228A4] min-h-[155px] relative overflow-hidden backdrop-blur-[6.7px] flex flex-col justify-between">
                 <div className="bg-[#39246b] px-4 py-2 flex items-center rounded-md w-full">
-                    <div className="text-white text-2xl font-medium">
+                    <div className="text-white text-xl md:text-2xl font-medium">
                         Total Funds:
                     </div>
                 </div>
