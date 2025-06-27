@@ -72,28 +72,28 @@ const WithdrawReceipt = () => {
                 </div>
               </div>
 
-              <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4]  relative overflow-hidden">
-                <div className="bg-[#39246b] pr-[15px] pl-[15px]  flex z-50 flex-row items-center justify-between w-full h-[63px] sticky  left-0 top-0">
-                  <div className="text-[#ffffff] text-left  text-xl md:text-2xl font-medium flex items-center gap-2">
-
+              <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border-2 border-[#5228A4] relative overflow-hidden">
+                <div className="bg-[#39246b] px-4 sm:px-6 flex z-50 flex-row items-center justify-between w-full h-[63px] sticky top-0 left-0">
+                  <div className="text-white text-left text-lg sm:text-2xl font-medium flex items-center gap-2">
                     Bonds:
                   </div>
-
                 </div>
                 {loading ? (
-                  <div className="flex flex-col h-auto items-center px-5 justify-center text-center mt-5">
+                  <div className="flex flex-col items-center px-4 py-6 gap-4 justify-center text-center">
                     {[...Array(2)].map((_, i) => (
                       <SkeletonBond key={i} />
                     ))}
                   </div>
                 ) : error ? (
-                  <div className="text-center text-red-500 py-4">
+                  <div className="text-center text-red-500 py-4 px-2 sm:px-4">
                     {error instanceof Error ? error.message : 'Failed to load bond reports'}
                   </div>
                 ) : issuedBonds.length === 0 ? (
-                  <div className="text-center py-4 text-white">No bonds reports available</div>
+                  <div className="text-center py-4 my-8 text-white px-2 sm:px-4">
+                    No bonds reports available
+                  </div>
                 ) : (
-                  <div className="space-y-4 px-6 py-6">
+                  <div className="space-y-4 px-4 sm:px-6 py-6">
                     {issuedBonds.map((bond) => (
                       <BondCard key={bond.id} bond={bond} />
                     ))}
