@@ -29,7 +29,7 @@ const UserCommunities = ({ communities = [] }) => {
         <div className="overflow-hidden">
           <div
             className="flex transition-transform py-4 duration-500 ease-in-out"
-            style={{ transform: `translateX(-${currentIndex * 50}%)` }}
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
             {communities.length === 0 ? (
               <div className="flex items-center justify-center h-24 text-white min-w-full">
@@ -37,10 +37,13 @@ const UserCommunities = ({ communities = [] }) => {
               </div>
             ) : (
               communities.map((dao, index) => (
-                <BrandCard2 key={dao.community_id || index} dao={dao} />
+                <div key={dao.community_id || index} className="min-w-full md:min-w-[40%] px-2">
+                  <BrandCard2 dao={dao} />
+                </div>
               ))
             )}
           </div>
+
         </div>
 
         {communities.length > 1 && (
