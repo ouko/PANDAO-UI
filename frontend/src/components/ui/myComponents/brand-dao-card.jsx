@@ -1,4 +1,4 @@
-import { Users, Banknote } from "lucide-react";
+import { Users, Banknote, Coins } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import {
   Tooltip,
@@ -61,7 +61,7 @@ const DaoCard = ({ dao, onClick }) => {
       </div>
 
       <div className="flex items-center justify-end w-full mt-1">
-        <div className="flex items-center gap-2">
+       <div className="flex items-center gap-2">
           {renderStat(
             <Users className="h-4 w-4 text-white" />,
             dao.number_of_participants,
@@ -71,6 +71,11 @@ const DaoCard = ({ dao, onClick }) => {
             <Banknote className="h-4 w-4 text-white" />,
             dao.funds || 0,
             "Total Funds"
+          )}
+          {renderStat(
+            <Coins className="h-4 w-4 text-white" />,
+            dao.total_token || 0,
+            "Total Token Supply"
           )}
         </div>
       </div>
