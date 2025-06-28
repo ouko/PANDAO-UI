@@ -242,6 +242,7 @@ const DeployView = () => {
       formFields.governance.votingPeriodDays > 0 &&
       formFields.governance.passThresholdPercentage > 0 &&
       formFields.governance.proposal_right.trim() !== '' &&
+      formFields.governance.proposal_right !== 'Select' && 
       formFields.governance.proposal_minimum_token > 0
     );
   }
@@ -748,11 +749,15 @@ const DeployView = () => {
               required
               className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-2 shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             >
+              <option value="Select" disabled>
+              Select Who Can Propose
+            </option>
               <option value="all_members">All Members</option>
               <option value="token_holders">Token Holders Only</option>
               <option value="council_members">Council Members Only</option>
             </select>
           </div>
+
 
           <div className="w-full gap-2.5 pb-8">
             <div className="flex items-center justify-between">
