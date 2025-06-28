@@ -722,7 +722,7 @@ const Proposals = () => {
                       <img className="w-10 h-10 sm:w-14 sm:h-14" src="/member.svg" alt="User Icon" />
                     </div>
                     <div className="flex flex-col items-center md:items-start gap-1.5 text-center md:text-left">
-                      <div className="text-[#5228A4] font-semibold uppercase text-base sm:text-xl">
+                      <div className="text-brand6 font-semibold uppercase text-base sm:text-xl">
                         Total Proposal:
                       </div>
                       <div className="text-white text-[36px] sm:text-[56px] font-medium">

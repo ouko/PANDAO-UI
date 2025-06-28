@@ -226,7 +226,7 @@ const Activity = () => {
                       />
                     </div>
                     <div className="flex flex-col gap-2 items-center sm:items-start text-center sm:text-left w-full">
-                      <div className="text-[#5228A4] font-semibold uppercase text-lg sm:text-xl">
+                      <div className="text-brand6 font-semibold uppercase text-lg sm:text-xl">
                         Total Activities:
                       </div>
                       <div className="text-white text-[32px] sm:text-[56px] font-medium">

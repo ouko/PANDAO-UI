@@ -191,7 +191,7 @@ const Comments = () => {
                   </div>
                   <div className="flex flex-col gap-2 text-center sm:text-left items-center sm:items-start w-full">
                     {!selectedDiscussion && (
-                      <div className="text-brand5 font-semibold uppercase text-lg sm:text-xl">
+                      <div className="text-brand6 font-semibold uppercase text-lg sm:text-xl">
                         Total Discussions:
                       </div>
                     )}

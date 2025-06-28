@@ -97,7 +97,7 @@ const Withdraw = () => {
             <img className="w-12 h-12 sm:w-14 sm:h-14" src="/8.svg" alt="User Icon" />
           </div>
           <div className="flex flex-col gap-2 items-center sm:items-start text-center sm:text-left w-full">
-            <div className="text-[#5228A4] font-semibold uppercase text-lg sm:text-xl">
+            <div className="text-brand6 font-semibold uppercase text-lg sm:text-xl">
               Total Withdraw:
             </div>
             <div className="text-white text-[32px] sm:text-[56px] font-medium">
