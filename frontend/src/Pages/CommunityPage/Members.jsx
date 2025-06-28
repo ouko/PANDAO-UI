@@ -197,7 +197,20 @@ const Members = () => {
                       flex flex-col md:flex-row items-start md:items-center my-4 justify-between gap-4 md:gap-2 mx-2 sm:mx-4 p-4 border border-brand2 rounded-lg shadow-sm"
                     >
                       <div className="flex flex-col sm:flex-row w-full sm:w-auto items-start sm:items-center gap-3 relative">
-                        <div className="absolute right-0 top-0 sm:static sm:mt-0 flex items-center gap-2 sm:flex-row flex-col">
+                       
+                        <Avatar>
+                          <AvatarImage alt="Avatar" src={participant.image_url} />
+                          <AvatarFallback>JD</AvatarFallback>
+                        </Avatar>
+                        <div className="text-left cursor-pointer text-ellipsis overflow-hidden">
+                          <p className="font-medium text-brand7 text-lg">
+                            {participant.name || 'Unnamed Participant'}
+                          </p>
+                          <div className="text-gray-200 dark:text-gray-400 text-sm truncate">
+                            {clipAddress(participant.public_address || '')}
+                          </div>
+                        </div>
+                         <div className="absolute right-0 top-0 sm:static sm:mt-0 flex items-center gap-2 sm:flex-row flex-col">
                           {participant.is_executive_member && (
                             <TooltipProvider>
                               <Tooltip>
@@ -242,18 +255,6 @@ const Members = () => {
                               ))}
                             </div>
                           )}
-                        </div>
-                        <Avatar>
-                          <AvatarImage alt="Avatar" src={participant.image_url} />
-                          <AvatarFallback>JD</AvatarFallback>
-                        </Avatar>
-                        <div className="text-left cursor-pointer text-ellipsis overflow-hidden">
-                          <p className="font-medium text-brand7 text-lg">
-                            {participant.name || 'Unnamed Participant'}
-                          </p>
-                          <div className="text-gray-200 dark:text-gray-400 text-sm truncate">
-                            {clipAddress(participant.public_address || '')}
-                          </div>
                         </div>
                       </div>
 
