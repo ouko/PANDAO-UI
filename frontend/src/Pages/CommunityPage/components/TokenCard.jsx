@@ -363,7 +363,7 @@ const TokenCard = ({ data, onSuccess }) => {
       </div>
 
 
-      <div className="flex flex-col gap-[25px] items-start justify-start mt-5 ">
+      <div className="flex flex-col gap-[25px] items-start justify-start mt-10 md:mt-5 ">
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between w-full mt-[75px]">
           <div className="flex items-center gap-4 w-full">
             <div className="rounded-full w-[45px] h-[45px] overflow-hidden">
