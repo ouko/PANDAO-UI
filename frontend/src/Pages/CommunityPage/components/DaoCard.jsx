@@ -32,6 +32,8 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
   const params = useParams()
   const navigate = useNavigate()
   const [showFullDescription, setShowFullDescription] = useState(false);
+  const wordCount = daoData.description?.split(/\s+/).length || 0;
+  const shouldShowToggle = wordCount > 70;
 
   // Fetch user bond earnings when component mounts or when accounts/params change
   useEffect(() => {
@@ -163,15 +165,19 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
             </div>
             <div className="w-full">
               <div className="text-[#AE85FF] text-sm uppercase">Description:</div>
-              <div className={`text-white text-sm mt-1 ${!showFullDescription ? 'line-clamp-2 sm:line-clamp-3' : ''}`}>
+              <div
+                className={`text-white text-sm mt-1 ${!showFullDescription && shouldShowToggle ? 'line-clamp-2 sm:line-clamp-3' : ''
+                  }`}
+              >
                 {daoData.description || 'No description available'}
               </div>
-              {daoData.description && (
+
+              {shouldShowToggle && (
                 <button
                   onClick={() => setShowFullDescription(!showFullDescription)}
-                  className="text-purple-400 text-sm underline hover:text-purple-300 mt-1"
+                  className="text-[#AE85FF]  text-sm  hover:text-purple-300 mt-1"
                 >
-                  {showFullDescription ? "See less" : "See more"}
+                  {showFullDescription ? 'See less' : 'See more'}
                 </button>
               )}
             </div>
