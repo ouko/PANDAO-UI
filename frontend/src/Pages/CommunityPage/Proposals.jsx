@@ -1329,7 +1329,7 @@ const Proposals = () => {
               onSubmit={handleSubmitTokenChangeForm}
             >
               <div className="flex flex-col z-50 gap-2">
-                <Label className="text-2xl p-1">Proposal Name</Label>
+                <Label className="text-brand7 text-xl sm:text-2xl p-1">Proposal Name</Label>
                 <Input
                   placeholder="Proposal Name..."
                   value={tokenPriceChangeForm.proposalText}
@@ -1339,7 +1339,7 @@ const Proposals = () => {
                 />
               </div>
               <div className="flex flex-col z-50 gap-2">
-                <Label className="text-2xl p-1">Proposal Description</Label>
+                <Label className="text-brand7 text-xl sm:text-2xl p-1">Proposal Description</Label>
                 <Textarea
                   placeholder="Type your proposal description ..."
                   value={tokenPriceChangeForm.proposalDescription}
@@ -1395,7 +1395,7 @@ const Proposals = () => {
 
 
                 <div className="flex flex-col  gap-2">
-                  <Label className="text-2xl p-1">Minimum Quorum</Label>
+                  <Label className="text-brand7 text-xl sm:text-2xl p-1">Minimum Quorum</Label>
                   <Input
                     placeholder="Enter Minimum quorum"
                     type="number"
@@ -1415,7 +1415,7 @@ const Proposals = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label className="text-2xl p-1">Vote Type</Label>
+                  <Label className="text-brand7 text-xl sm:text-2xl p-1">Vote Type</Label>
                   <Select
                     onValueChange={(value) =>
                       handleInputChange('voteType', value)
@@ -1433,7 +1433,7 @@ const Proposals = () => {
                   </Select>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label className="text-2xl p-1">Desired Token Price</Label>
+                  <Label className="text-brand7 text-xl sm:text-2xl p-1">Desired Token Price</Label>
                   <Input
                     placeholder="Enter desired token price"
                     type="number"
@@ -1445,7 +1445,7 @@ const Proposals = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-2 mb-10">
-                  <Label className="text-2xl p-1">
+                  <Label className="text-brand7 text-xl sm:text-2xl p-1">
                     Desired Token Buy Back Price
                   </Label>
                   <Input
