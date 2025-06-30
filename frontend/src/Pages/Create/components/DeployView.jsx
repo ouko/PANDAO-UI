@@ -749,7 +749,7 @@ const DeployView = () => {
               required
               className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-2 shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             >
-              <option value="Select" disabled>
+              <option value="Select" >
               Select Who Can Propose
             </option>
               <option value="all_members">All Members</option>
