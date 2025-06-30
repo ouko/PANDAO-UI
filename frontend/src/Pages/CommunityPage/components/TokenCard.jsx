@@ -255,7 +255,10 @@ const TokenCard = ({ data, onSuccess }) => {
   return (
     <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border border-[#5228A4]  px-4 pb-6 shrink-0 min-h-[345px] relative overflow-hidden backdrop-blur-[6.7px] w-full max-w-full">
       <div className="bg-[#39246b] px-4 flex flex-col sm:flex-row items-start sm:items-center justify-between w-full h-auto sm:h-[63px] absolute left-0 top-0 py-4 sm:py-0">
-        <div className="text-white text-xl sm:text-2xl font-medium mb-2 sm:mb-0">{data.name}</div>
+        <div className="text-white text-xl sm:text-2xl font-medium border-b-2 border-brand5 sm:border-b-0 mb-2 sm:mb-0">
+          {data.name}
+        </div>
+
         <div className="flex flex-wrap gap-2 sm:gap-[5px]">
           {data.total_token > 0 && data.token_bought > 0 && (
             <div>
