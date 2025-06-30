@@ -10,7 +10,7 @@ function FeePaid({ xrdSpent }) {
             <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-purple-300">Transaction Fee</span>
                 <div className="flex items-center">
-                    <span className="text-red-400 font-mono font-bold">{`-${xrdSpent}`}</span>
+                    <span className="text-red-400  font-bold">{`-${xrdSpent}`}</span>
                     <span className="ml-1 text-xs text-gray-400">XRD</span>
                 </div>
             </div>
@@ -52,7 +52,7 @@ function ReceiptComponentAccount({ entityArrayAccount }) {
                             )}
                             <span className="font-medium text-gray-200">{entity.entityName}</span>
                         </div>
-                        <span className={`text-sm font-mono font-bold ${entity.balanceChange > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                        <span className={`text-sm font-bold ${entity.balanceChange > 0 ? 'text-green-400' : 'text-red-400'}`}>
                             {entity.balanceChange > 0 ? `+${entity.balanceChange}` : entity.balanceChange}
                         </span>
                     </div>
@@ -96,7 +96,7 @@ function ReceiptComponent({ entityArrayComponent }) {
                             )}
                             <span className="font-medium text-gray-200">{entity.entityName}</span>
                         </div>
-                        <span className={`text-sm font-mono font-bold ${entity.balanceChange > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                        <span className={`text-sm font-bold ${entity.balanceChange > 0 ? 'text-green-400' : 'text-red-400'}`}>
                             {entity.balanceChange > 0 ? `+${entity.balanceChange}` : entity.balanceChange}
                         </span>
                     </div>

@@ -87,7 +87,7 @@ const ExploreSection = () => {
             <div className="text-[40px] md:text-[64px]  leading-tight font-semibold bg-gradient-to-r from-white to-[#6359E9] bg-clip-text text-transparent text-center font-clash">
               Explore Top DAOs
             </div>
-            <div className="text-[#B59AEC] text-center font-mono text-base sm:text-lg md:text-xl leading-6 font-normal w-full max-w-4xl px-4">
+            <div className="text-[#B59AEC] text-center text-base sm:text-lg md:text-xl leading-6 font-normal w-full max-w-4xl px-4">
               Lorem ipsum dolor sit amet consectetur. Aliquam risus sit vehicula congue diam sapien
             </div>
           </div>

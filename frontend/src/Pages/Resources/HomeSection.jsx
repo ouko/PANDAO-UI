@@ -42,10 +42,10 @@ const HomeSection = () => {
               />
 
 
-              <div className="text-white text-left font-mono md:text-base text-md font-medium relative pr-4 ">
+              <div className="text-white text-left  md:text-base text-md font-medium relative pr-4 ">
                 
 
-                 <TextLoop className='font-mono text-sm'>
+                 <TextLoop className=' text-sm'>
                    <span>Build Your DAO. Govern Your Future.</span>
                    <span>The Fastest Way to Launch a DAO on Radix.</span>
                    <span>Governance Made Simple. Power Made Scalable</span>
