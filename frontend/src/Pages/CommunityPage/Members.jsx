@@ -237,7 +237,7 @@ const Members = () => {
                                           className="w-8 h-8 rounded-full"
                                           onError={(e) => {
                                             e.target.onerror = null;
-                                            e.target.src = "/default-badge.png";
+                                            e.target.src = "/radix.webp";
                                           }}
                                         />
                                         <span className="absolute -top-1 -right-1 bg-purple-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
