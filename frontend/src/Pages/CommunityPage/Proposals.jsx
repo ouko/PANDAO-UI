@@ -745,36 +745,23 @@ const Proposals = () => {
                 </div>
                 <Tabs
                   defaultValue="PENDING"
-                  className="w-full py-5 border  bg-transparent rounded-[10px] border-[#5228A4]"
+                  className="w-full py-2 border  bg-transparent rounded-[10px] border-[#5228A4]"
                   onValueChange={setActiveTab}
                 >
-                  <TabsList className="z-50 bg-transparent p-2 flex gap-3 mx-auto shadow-md w-full items-center justify-start mb-3">
+                  <TabsList className=" min-h-12 bg-black/30 grid grid-cols-2 w-1/2 p-0">
+                    <TabsTrigger
+                      value="EXECUTED"
+                      className="relative w-full h-[45px] py-5  text-lg rounded-none border-b-2 border-b-transparent bg-transparent px-4 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-white data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5"
+                    >
+                      Success
+                    </TabsTrigger>
                     <TabsTrigger
                       value="PENDING"
-                      disabled={false}
-                      className={` px-6 py-2 font-semibold border-brand6 transition-all duration-200
-      data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-brand3
-      data-[state=active]:text-white data-[state=active]:shadow-lg
-      data-[state=inactive]:bg-transparent data-[state=inactive]:text-brand7
-      hover:bg-brand2 focus:outline-none focus:ring-2 focus:ring-brand3`}
+                      className="relative w-full h-[45px] py-5 border-l-2 border-r-2 border-brand3 text-lg rounded-none border-b-2 border-b-transparent bg-transparent px-4 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-white data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5"
                     >
                       Pending
                     </TabsTrigger>
-                    <TabsTrigger
-                      value="EXECUTED"
-                      disabled={false}
-                      className=" px-6 py-2 font-semibold transition-all duration-200
-      data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-brand3
-      data-[state=active]:text-white data-[state=active]:shadow-lg
-      data-[state=inactive]:bg-transparent data-[state=inactive]:text-brand7
-      hover:bg-brand2 focus:outline-none focus:ring-2 focus:ring-brand3"
-                    >
-                      Executed
-                    </TabsTrigger>
                   </TabsList>
-
-
-
                   <TabsContent value="PENDING" >
                     <div >
                       <ProposalPending
