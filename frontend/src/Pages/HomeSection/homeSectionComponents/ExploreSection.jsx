@@ -88,7 +88,7 @@ const ExploreSection = () => {
               Explore Top DAOs
             </div>
             <div className="text-[#B59AEC] text-center text-base sm:text-lg md:text-xl leading-6 font-normal w-full max-w-4xl px-4">
-              Lorem ipsum dolor sit amet consectetur. Aliquam risus sit vehicula congue diam sapien
+              Discover leading decentralized communities shaping the future of governance and innovation.
             </div>
           </div>
 
