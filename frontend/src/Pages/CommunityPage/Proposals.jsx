@@ -1074,27 +1074,30 @@ const Proposals = () => {
 
 
           <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] mt-8 w-full z-50 gap-7 p-10 border border-brand5 flex flex-col justify-start items-start ">
-            <div className="  text-[40px] leading-[130%] z-50 font-semibold flex flex-col items-center gap-3">
-              <div className="w-full cursor-pointer flex  items-center text-[22px]   m-2"
+            <div className="text-2xl sm:text-3xl md:text-[40px] leading-[120%] z-50 font-semibold flex flex-col items-center gap-3 px-4 sm:px-6">
+              <div
+                className="w-full cursor-pointer flex items-center text-base sm:text-lg md:text-[22px] m-2"
                 onClick={() => {
-                  setShowForm(false) // Hide the form and return to the list
-                  setActiveProposal(null) // Ensure no proposal is active
-                }}>
-                <ChevronLeft /> <span className='' >Back</span>
+                  setShowForm(false); 
+                  setActiveProposal(null); 
+                }}
+              >
+                <ChevronLeft className="mr-1" />
+                <span>Back</span>
               </div>
-              <span className="step-2-describe-your-dao-span3 text-amber-50 whitespace-nowrap">Proposal Form</span>
 
-
+              <span className="step-2-describe-your-dao-span3 text-amber-50 whitespace-nowrap text-center">
+                Proposal Form
+              </span>
             </div>
+
 
 
           </div>
           <div className="flex items-center justify-center z-50 p-2 w-full mx-auto">
             <form className="w-full max-w-4xl flex flex-col z-50 py-5 space-y-6" onSubmit={handleSubmit}>
               <div className="flex flex-col w-full space-y-2 ">
-                <label
-                  className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
-                >
+                <label className="text-brand7 text-left text-xl sm:text-2xl font-medium">
                   Proposal:
                 </label>
                 <textarea
@@ -1107,9 +1110,7 @@ const Proposals = () => {
               </div>
 
               <div className="flex flex-col w-full space-y-2">
-                <label
-                  className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
-                >
+                <label className="text-brand7 text-left text-xl sm:text-2xl font-medium">
                   Proposal Description:
                 </label>
                 <textarea
@@ -1170,9 +1171,7 @@ const Proposals = () => {
                 </div>
 
                 <div className="flex flex-col w-full space-y-2">
-                  <label
-                    className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
-                  >
+                 <label className="text-brand7 text-left text-xl sm:text-2xl font-medium">
                     Minimum Quorum:
                   </label>
                   <input
@@ -1194,9 +1193,7 @@ const Proposals = () => {
                 </div>
 
                 <div className="flex flex-col w-full space-y-2">
-                  <label
-                    className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
-                  >
+                  <label className="text-brand7 text-left text-xl sm:text-2xl font-medium">
                     Vote Type:
                   </label>
                   <div className="w-full">
@@ -1220,9 +1217,7 @@ const Proposals = () => {
                 </div>
 
                 <div className="flex flex-col w-full space-y-2">
-                  <label
-                    className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
-                  >
+                  <label className="text-brand7 text-left text-xl sm:text-2xl font-medium">
                     Bond Issuer Address:
                   </label>
                   <div className="w-full">
@@ -1265,9 +1260,7 @@ const Proposals = () => {
 
 
                 <div className="flex flex-col w-full space-y-2">
-                  <label
-                    className="text-brand7 text-left text-2xl leading-[120%] font-medium relative self-stretch"
-                  >
+                 <label className="text-brand7 text-left text-xl sm:text-2xl font-medium">
                     Target XRD Amount:
                   </label>
                   <input
@@ -1313,22 +1306,23 @@ const Proposals = () => {
       ) : tokenChangeform ? (
         <div className=''>
 
-          <div className="bg-[rgba(169,126,255,0.08)] mb-2 mt-20 rounded-[20px]  z-50 gap-7 p-10 border border-brand5 flex flex-col justify-start items-start ">
-            <div className="w-full cursor-pointer items-center z-[999] justify-start text-[22px] flex  "
+          <div className="bg-[rgba(169,126,255,0.08)] mt-10 sm:mt-20 mb-2 rounded-[20px] z-50 gap-5 sm:gap-7 p-4 sm:p-6 md:p-10 border border-brand5 flex flex-col items-start">
+            <div
+              className="w-full cursor-pointer flex items-center text-base sm:text-lg md:text-[22px] z-[999]"
               onClick={() => {
-                setShowTokenChangeForm(false) // Hide the form and return to the list
-                setActiveProposal(null) // Ensure no proposal is active
-              }}>
-              <ChevronLeft /> <span >Back</span>
-            </div>
-            <div className="  text-[40px] leading-[130%] z-50 font-semibold text-start">
-              <span className="step-2-describe-your-dao-span3 text-amber-50">Token Price Change Form</span>
-
-
+                setShowTokenChangeForm(false); // Hide the form and return to the list
+                setActiveProposal(null); // Ensure no proposal is active
+              }}
+            >
+              <ChevronLeft className="mr-1" />
+              <span>Back</span>
             </div>
 
-
+            <div className="text-2xl sm:text-3xl md:text-[40px] leading-snug sm:leading-[120%] font-semibold text-amber-50 z-50 text-start">
+              <span className="step-2-describe-your-dao-span3">Token Price Change Form</span>
+            </div>
           </div>
+
           <div className="flex items-center justify-center z-50 p-2 w-full mx-auto">
             <form
               className="w-full max-w-4xl flex flex-col z-50 py-5 space-y-6"
