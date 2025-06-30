@@ -1,12 +1,11 @@
 import {
     Breadcrumb,
-
     BreadcrumbItem,
     BreadcrumbLink,
     BreadcrumbList,
-    BreadcrumbPage,
     BreadcrumbSeparator,
   } from "@/components/ui/breadcrumb"
+import PropTypes from "prop-types"
 
   
   export function BreadCrumb({name}) {
@@ -27,3 +26,6 @@ import {
     )
   }
   
+ BreadCrumb.propTypes = {
+  name: PropTypes.string.isRequired,
+};

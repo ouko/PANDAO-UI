@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -7,8 +6,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ChevronLeft, Menu, Rocket } from "lucide-react";
-import { Link, NavLink, useParams } from "react-router-dom";
+import {  Menu } from "lucide-react";
+import {  NavLink, useParams } from "react-router-dom";
 
 const MobileNav = () => {
   const params = useParams();

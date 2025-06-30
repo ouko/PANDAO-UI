@@ -1,4 +1,4 @@
-
+import PropTypes from "prop-types";
 const cardData = [
   {
     icon: "light.svg",
@@ -74,4 +74,11 @@ const WhyWeAreBetter = () => {
   );
 };
 
+
+Card.propTypes = {
+  icon: PropTypes.string.isRequired,
+  heading: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  className: PropTypes.string,
+};
 export default WhyWeAreBetter

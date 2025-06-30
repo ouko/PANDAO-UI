@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useRdt } from '@/hooks/useRdt';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
 const Sidebar = ({ handleClose }) => {
   const rdt = useRdt();
@@ -136,6 +137,11 @@ const Sidebar = ({ handleClose }) => {
       ))}
     </div>
   );
+};
+
+Sidebar.propTypes = {
+  open: PropTypes.bool,
+  handleClose: PropTypes.func,
 };
 
 export default Sidebar;
