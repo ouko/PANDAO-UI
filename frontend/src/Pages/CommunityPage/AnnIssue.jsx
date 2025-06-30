@@ -84,7 +84,7 @@ const AnnIssue = () => {
   const { accounts } = useAccount()
   const params = useParams()
   const navigate = useNavigate()
-  const [manifest, setManifest] = useState('')
+  // const [manifest, setManifest] = useState('')
   const sendTransaction = useSendTransaction()
   const { annuity, updateAnnuity } = useAnnFormStore((state) => state)
   const [isFormComplete, setIsFormComplete] = useState(false)
@@ -128,11 +128,11 @@ const AnnIssue = () => {
     }
   }, [accounts])
 
-  const updateBond = (key, value) => {
-    if (key === 'nft') {
-      setSelectedNft(value)
-    }
-  }
+  // const updateBond = (key, value) => {
+  //   if (key === 'nft') {
+  //     setSelectedNft(value)
+  //   }
+  // }
 
 
 
@@ -156,7 +156,7 @@ const AnnIssue = () => {
 
 
       if (res.status === 200) {
-        setManifest(res.data)
+        // setManifest(res.data)
         console.log('Form submitted successfully', res.data)
 
         // Wait for manifest to update before sending the transaction

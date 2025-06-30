@@ -11,7 +11,7 @@ import { useSendTransaction } from '@/hooks/useSendTransaction'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 
-const PurchasedBond = (props) => {
+const PurchasedBond = () => {
   const { accounts } = useAccount()
   const [loading2, setLoading2] = useState(false)
 

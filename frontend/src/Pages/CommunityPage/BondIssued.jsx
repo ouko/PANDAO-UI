@@ -15,7 +15,7 @@ const fetchData = async (endpoint, params = {}) => {
   return response.data;
 };
 
-const BondIssued = (props) => {
+const BondIssued = () => {
   const { accounts } = useAccount()
   const params = useParams()
   const navigate = useNavigate()

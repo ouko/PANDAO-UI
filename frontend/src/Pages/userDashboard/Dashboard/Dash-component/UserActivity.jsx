@@ -1,6 +1,6 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import {PropTypes} from 'prop-types';
 
 const UserActivity = ({ activityData = [] }) => {
   const navigate = useNavigate();
@@ -26,9 +26,9 @@ const UserActivity = ({ activityData = [] }) => {
             <div
               key={index}
               onClick={() => navigate(`/community/detail/${activity.community_id}`)}
-              className="bg-gradient-to-br from-[rgba(39,18,76,0.68)] to-brand1 rounded-2xl border-2 border-brand3 hover:border-brand2  p-4 flex flex-col sm:flex-row items-center gap-4 w-full max-w-5xl cursor-pointer"
+              className="bg-gradient-to-br from-[rgba(39,18,76,0.68)] to-brand1 rounded-2xl border-2 border-brand3 hover:border-brand2  p-1 px-4 flex flex-col sm:flex-row items-center gap-4 w-full max-w-5xl cursor-pointer"
             >
-              <Avatar className="w-20 h-20 rounded-md overflow-hidden">
+              <Avatar className="w-14 h-14 rounded-md overflow-hidden">
                 <AvatarImage src={activity.user_image_url} className="object-cover" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
@@ -47,5 +47,8 @@ const UserActivity = ({ activityData = [] }) => {
     </div>
   );
 };
-
+UserActivity.propTypes = {
+  activityData: PropTypes.arrayOf
+};
+ 
 export default UserActivity;

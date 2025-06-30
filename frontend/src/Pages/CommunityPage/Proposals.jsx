@@ -1,14 +1,14 @@
 import { useAccount } from '@/AccountContext'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import { Card, CardDescription, CardTitle } from '@/components/ui/card'
+import { Card} from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import axios from 'axios'
 import 'react-datepicker/dist/react-datepicker.css'
 
-import { ChevronLeft, CircleHelp, HandHelping } from 'lucide-react'
+import { ChevronLeft, CircleHelp } from 'lucide-react'
 import {
   Select,
   SelectContent,
@@ -67,8 +67,8 @@ const Proposals = () => {
   const [loadingCom, setLoadingCom] = useState(false)
   const [loading, setLoading] = useState(true)
   const [loadingCommnets, setLoadingComments] = useState(true)
-  const [loadingAgainst, setLoadingAgainst] = useState(true)
-  const [loadingFor, setLoadingFor] = useState(true)
+  // const [loadingAgainst, setLoadingAgainst] = useState(true)
+  // const [loadingFor, setLoadingFor] = useState(true)
   const [loadingButtonAgainst, setLoadingButtonAgainst] = useState(false)
   const [loadingButtonFor, setLoadingButtonFor] = useState(false)
   const [loadingButton, setLoadingButton] = useState(false)
@@ -103,8 +103,8 @@ const Proposals = () => {
   const [manifest, setManifest] = useState('')
   const [issuedBond, setIssuedBond] = useState(null)
   const queryParam = searchParams.get('state')
-  const [manifestForVoteAgainst, setManifestForVoteAgainst] = useState('')
-  const [manifestForVoteFor, setManifestForVoteFor] = useState('')
+  // const [manifestForVoteAgainst, setManifestForVoteAgainst] = useState('')
+  // const [manifestForVoteFor, setManifestForVoteFor] = useState('')
   const sendTransaction = useSendTransaction()
   const handleAddComment = async () => {
     if (!activeProposal || !activeProposal.id) {
@@ -745,10 +745,10 @@ const Proposals = () => {
                 </div>
                 <Tabs
                   defaultValue="PENDING"
-                  className="w-full py-2 border  bg-transparent rounded-[10px] border-[#5228A4]"
+                  className="w-full py-0 border  bg-transparent rounded-[10px] border-[#5228A4]"
                   onValueChange={setActiveTab}
                 >
-                  <TabsList className=" min-h-12 bg-black/30 grid grid-cols-2 w-1/2 p-0">
+                  <TabsList className=" min-h-12 bg-black/30 grid grid-cols-2 w-full p-0">
                     <TabsTrigger
                       value="EXECUTED"
                       className="relative w-full h-[45px] py-5  text-lg rounded-none border-b-2 border-b-transparent bg-transparent px-4 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-white data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5"
@@ -757,7 +757,7 @@ const Proposals = () => {
                     </TabsTrigger>
                     <TabsTrigger
                       value="PENDING"
-                      className="relative w-full h-[45px] py-5 border-l-2 border-r-2 border-brand3 text-lg rounded-none border-b-2 border-b-transparent bg-transparent px-4 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-white data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5"
+                      className="relative w-full h-[45px] py-5  border-brand3 text-lg rounded-none border-b-2 border-b-transparent bg-transparent px-4 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-white data-[state=active]:shadow-none data-[state=active]:bg-brand5/20 data-[state=active]:border-b-2 data-[state=active]:border-brand5"
                     >
                       Pending
                     </TabsTrigger>
