@@ -6,6 +6,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import PropTypes from "prop-types";
 
 const DaoCard = ({ dao, onClick }) => {
   const renderStat = (icon, value, tooltip) => (
@@ -64,7 +65,7 @@ const DaoCard = ({ dao, onClick }) => {
        <div className="flex items-center gap-2">
           {renderStat(
             <Users className="h-4 w-4 text-white" />,
-            dao.number_of_participants,
+            dao.participants,
             "Total Number of Participants"
           )}
           {renderStat(
@@ -81,6 +82,19 @@ const DaoCard = ({ dao, onClick }) => {
       </div>
     </Card>
   );
+};
+
+DaoCard.propTypes = {
+  dao: PropTypes.shape({
+    image: PropTypes.string,
+    name: PropTypes.string,
+    description: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string),
+    participants: PropTypes.number,
+    funds: PropTypes.number,
+    total_token: PropTypes.number,
+  }).isRequired,
+  onClick: PropTypes.func,
 };
 
 export default DaoCard;
