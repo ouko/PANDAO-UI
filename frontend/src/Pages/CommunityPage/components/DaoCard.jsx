@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Check, Copy, Info } from 'lucide-react';
+import { Check, Copy, Info, Clock } from 'lucide-react';
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import { Button } from '@/components/ui/button';
 import {
@@ -26,6 +26,8 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
   const [quickStartOpen, setQuickStartOpen] = useState(false);
   const [userBondEarnings, setUserBondEarnings] = useState(null);
   const [loadingEarnings, setLoadingEarnings] = useState(false);
+  const [countdown, setCountdown] = useState({days: 0, hours: 0, minutes: 0, seconds: 0});
+  const [airdropStatus, setAirdropStatus] = useState(''); // 'upcoming', 'live', 'ended'
   const { slug } = useBluePrintSlugStore()
 
   const { accounts } = useAccount()
@@ -41,6 +43,54 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
       fetchUserBondEarnings();
     }
   }, [accounts, params.id, isUserParticipant]);
+
+  // Airdrop countdown timer effect
+  useEffect(() => {
+    if (!daoData.airdrop) return;
+    
+    const updateCountdown = () => {
+      const now = new Date();
+      const startTime = new Date(daoData.airdrop.start_time);
+      const endTime = new Date(daoData.airdrop.end_time);
+      
+      // Determine airdrop status
+      if (now < startTime) {
+        setAirdropStatus('upcoming');
+        calculateTimeRemaining(startTime);
+      } else if (now >= startTime && now <= endTime) {
+        setAirdropStatus('live');
+        calculateTimeRemaining(endTime);
+      } else {
+        setAirdropStatus('ended');
+        setCountdown({days: 0, hours: 0, minutes: 0, seconds: 0});
+      }
+    };
+    
+    const calculateTimeRemaining = (targetDate) => {
+      const now = new Date();
+      const difference = targetDate - now;
+      
+      if (difference <= 0) {
+        setCountdown({days: 0, hours: 0, minutes: 0, seconds: 0});
+        return;
+      }
+      
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+      
+      setCountdown({days, hours, minutes, seconds});
+    };
+    
+    // Initial update
+    updateCountdown();
+    
+    // Update countdown every second
+    const timer = setInterval(updateCountdown, 1000);
+    
+    return () => clearInterval(timer);
+  }, [daoData.airdrop]);
 
   // Function to fetch user bond earnings
   const fetchUserBondEarnings = async () => {
@@ -182,29 +232,9 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
               )}
             </div>
             {/* Airdrop Section */}
-            {daoData.airdrop && (
-              <div className="w-full bg-brand1/20 rounded-xl p-4 mt-2 flex flex-col gap-2 border border-brand5">
-                <div className="flex flex-col md:flex-row gap-2 items-center justify-between">
-                  <div className="text-brand7 font-semibold text-base flex items-center gap-2">
-                    <span className="bg-brand4/20 px-2 py-1 rounded">Airdrop</span>
-                    <span className="text-white">{daoData.airdrop.amount_per_air_drop} tokens</span>
-                  </div>
-                  <div className="text-xs text-gray-300 border border-brand5 rounded px-2 py-1">{new Date(daoData.airdrop.start_time).toLocaleDateString()} - {new Date(daoData.airdrop.end_time).toLocaleDateString()}</div>
-                </div>
-                {/* Allocation Breakdown */}
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {daoData.airdrop.allocations && Object.entries(daoData.airdrop.allocations).map(([key, value]) => (
-                    key !== 'total_allocated' && (
-                      <div key={key} className="flex flex-col items-center bg-brand2/20 border border-brand5 rounded-lg px-3 py-1">
-                        <span className="text-xs text-brand7 capitalize">{key.replace('_', ' ')}</span>
-                        <span className="text-white font-semibold text-sm">{value}%</span>
-                      </div>
-                    )
-                  ))}
-                </div>
-              </div>
-            )}
+            
           </div>
+
 
           {/* Right: DAO Type, Proposal Rights */}
           <div className="flex flex-col gap-3 col-span-3 items-end justify-start w-full p-4">
@@ -269,57 +299,118 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
           </div>
         </div>
 
-        {/* Actions and Earnings */}
-        <div className="p-4 mt-2 w-full">
-          {!isUserParticipant && (
-            <div className="w-full flex items-center justify-end">
-              <Button variant="brand" className="w-full sm:w-auto" onClick={handleJoinCommunity}>
-                Join Community
-              </Button>
-            </div>
-          )}
-          {isUserParticipant && (
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col w-full justify-end sm:flex-row gap-2">
-                {isOwner && (
-                  <Button variant="brand" className="w-full sm:w-auto" onClick={() => setExecOpen(true)}>
-                    Mint Executive Badge
-                  </Button>
+        {/* Airdrop and Actions Section */}
+        <div className="flex flex-col md:flex-row w-full mt-4">
+          {/* Airdrop Section */}
+          <div className="w-full md:w-1/2 md:pr-2">
+            {daoData.airdrop && (
+              <div className="w-full bg-brand1/20 rounded-xl p-4 flex flex-col gap-2 border border-brand5">
+                <div className="flex flex-col md:flex-row gap-2 items-center justify-between">
+                  <div className="text-brand7 font-semibold text-base flex items-center gap-2">
+                    <span className={`px-2 py-1 rounded ${airdropStatus === 'live' ? 'bg-green-500/20' : airdropStatus === 'upcoming' ? 'bg-yellow-500/20' : 'bg-brand4/20'}`}>
+                      {airdropStatus === 'live' ? 'Airdrop Per User' : airdropStatus === 'upcoming' ? 'Upcoming Airdrop' : 'Airdrop Ended'}
+                    </span>
+                    <span className="text-white">{daoData.airdrop.amount_per_air_drop} TOKEN </span>
+                  </div>
+                  <div className="text-xs text-gray-300 border border-brand5 rounded px-2 py-1">{new Date(daoData.airdrop.start_time).toLocaleDateString()} - {new Date(daoData.airdrop.end_time).toLocaleDateString()}</div>
+                </div>
+                
+                {/* Countdown Timer */}
+                {(airdropStatus === 'live' || airdropStatus === 'upcoming') && (
+                  <div className="flex flex-col gap-1 mt-1">
+                    <div className="flex items-center gap-1 text-xs text-brand7">
+                      <Clock size={14} />
+                      <span>{airdropStatus === 'live' ? 'Ends in:' : 'Starts in:'}</span>
+                    </div>
+                    <div className="grid grid-cols-4 gap-1 text-center">
+                      <div className="bg-brand4/60 rounded p-1">
+                        <span className="text-white font-bold text-sm">{countdown.days}</span>
+                        <p className="text-xs text-gray-300">Days</p>
+                      </div>
+                      <div className="bg-brand4/60 rounded p-1">
+                        <span className="text-white font-bold text-sm">{countdown.hours}</span>
+                        <p className="text-xs text-gray-300">Hours</p>
+                      </div>
+                      <div className="bg-brand4/60 rounded p-1">
+                        <span className="text-white font-bold text-sm">{countdown.minutes}</span>
+                        <p className="text-xs text-gray-300">Mins</p>
+                      </div>
+                      <div className="bg-brand4/60 rounded p-1">
+                        <span className="text-white font-bold text-sm">{countdown.seconds}</span>
+                        <p className="text-xs text-gray-300">Secs</p>
+                      </div>
+                    </div>
+                  </div>
                 )}
-                <Button variant="brand" className="w-full sm:w-auto text-white" onClick={() => setQuickStartOpen(true)}>
-                  Quick Start
-                </Button>
-              </div>
-              {/* {loadingEarnings ? (
-              <div className="text-brand7 text-sm">Loading bond earnings...</div>
-            ) : userBondEarnings ? (
-              <div className="bg-[rgba(169,126,255,0.15)] p-4 rounded-lg flex flex-col">
-                <h3 className="text-brand7 font-medium text-sm mb-1">Your Bond Earnings</h3>
-                <div className="flex flex-col gap-1 text-sm text-white">
-                  <div className="flex justify-between">
-                    <span className="text-gray-300">Total Earnings:</span>
-                    <span className="text-green-400">{userBondEarnings.total_earnings || '0'} XRD</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-300">Total Return:</span>
-                    <span className="text-green-400">{userBondEarnings.total_return_value || '0'} XRD</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-300">Total Bonds:</span>
-                    <span>{userBondEarnings.total_bonds || '0'}</span>
-                  </div>
-                  <Button
-                    variant="link"
-                    className="text-brand7 text-xs p-0 mt-1 hover:text-brand5"
-                    onClick={() => navigate(`/community/detail/${params.id}/bondrecipt`)}
-                  >
-                    View All Bonds
-                  </Button>
+                
+                {/* Allocation Breakdown */}
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {daoData.airdrop.allocations && Object.entries(daoData.airdrop.allocations).map(([key, value]) => (
+                    key !== 'total_allocated' && (
+                      <div key={key} className="flex flex-col items-center bg-brand2/20 border border-brand5 rounded-lg px-3 py-1">
+                        <span className="text-xs text-brand7 capitalize">{key.replace('_', ' ')}</span>
+                        <span className="text-white font-semibold text-sm">{value}%</span>
+                      </div>
+                    )
+                  ))}
                 </div>
               </div>
-            ) : null} */}
+            )}
+          </div>
+
+          {/* Action Buttons Section */}
+          <div className="w-full md:w-1/2 md:pl-2 flex flex-col justify-end">
+            <div className="mt-4 md:mt-0 p-4 bg-brand1/10 rounded-xl ">
+              {!isUserParticipant ? (
+                <div className="w-full flex items-center justify-center md:justify-end">
+                  <Button variant="brand" className="w-full sm:w-auto" onClick={handleJoinCommunity}>
+                    Join Community
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-col w-full justify-end sm:flex-row gap-2">
+                    {isOwner && (
+                      <Button variant="brand" className="w-full sm:w-auto" onClick={() => setExecOpen(true)}>
+                        Mint Executive Badge
+                      </Button>
+                    )}
+                    <Button variant="brand" className="w-full sm:w-auto text-white" onClick={() => setQuickStartOpen(true)}>
+                      Quick Start
+                    </Button>
+                  </div>
+                  {/* {loadingEarnings ? (
+                  <div className="text-brand7 text-sm">Loading bond earnings...</div>
+                ) : userBondEarnings ? (
+                  <div className="bg-[rgba(169,126,255,0.15)] p-4 rounded-lg flex flex-col">
+                    <h3 className="text-brand7 font-medium text-sm mb-1">Your Bond Earnings</h3>
+                    <div className="flex flex-col gap-1 text-sm text-white">
+                      <div className="flex justify-between">
+                        <span className="text-gray-300">Total Earnings:</span>
+                        <span className="text-green-400">{userBondEarnings.total_earnings || '0'} XRD</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-300">Total Return:</span>
+                        <span className="text-green-400">{userBondEarnings.total_return_value || '0'} XRD</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-300">Total Bonds:</span>
+                        <span>{userBondEarnings.total_bonds || '0'}</span>
+                      </div>
+                      <Button
+                        variant="link"
+                        className="text-brand7 text-xs p-0 mt-1 hover:text-brand5"
+                        onClick={() => navigate(`/community/detail/${params.id}/bondrecipt`)}
+                      >
+                        View All Bonds
+                      </Button>
+                    </div>
+                  </div>
+                ) : null} */}
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
 
