@@ -211,7 +211,7 @@ function AirDrop() {
           </div>
 
           {/* AirDrop End Time */}
-          <div className="flex flex-col gap-2.5 py-2 self-stretch relative">
+          <div className="flex flex-col gap-2.5 py-2 self-stretch text-white relative">
             <div className="flex items-center justify-between w-full">
               <label htmlFor="airdrop-end-time" className="text-white text-2xl leading-[120%] font-medium">
                 AirDrop End Time
@@ -232,7 +232,7 @@ function AirDrop() {
               value={formFields.airDrop.airDropEndTime}
               onChange={handleInputChange}
               onClick={(e) => e.target.showPicker()}
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white shadow-xs focus:outline-none focus:ring-1 [color-scheme:dark] focus:ring-purple-400"
             />
           </div>
 

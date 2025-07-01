@@ -172,30 +172,61 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     animation: bell-wiggle 0.5s ease-in-out;
   }
 }
-.css-13cymwt-control{
+/* Select dropdown control (outer box) */
+.css-13cymwt-control {
   background-color: #1B0D37 !important;
   border: 1px solid #5228A4 !important;
 }
 
-.select__value-container{
+/* Container for selected values */
+.select__value-container,
+.select__value-container--has-value {
   background-color: #1B0D37 !important;
+  padding: 12px !important;
 }
 
+/* Dropdown arrow area */
 .css-1xc3v61-indicatorContainer {
   background-color: #1B0D37 !important;
-
+  
 }
 .select__value-container--has-value{
   background-color: #1B0D37 !important;
 }
 
+/* Dropdown menu container */
 .css-1nmdiq5-menu {
   background-color: #1B0D37 !important;
-  border: #2a164d !important;
+  border: 1px solid #2a164d !important;
   color: white !important;
 }
 
+/* Each option inside dropdown */
+.select__option {
+  background-color: transparent !important;
+  color: #b59aec !important;
+  cursor: pointer;
+}
 
+/* On hover */
+.select__option:hover {
+  background-color: #341f67 !important;
+  color: white !important;
+}
+
+/* On selection */
+.select__option--is-selected {
+  background-color: #5228A4 !important;
+  color: white !important;
+}
+
+/* On focus (keyboard nav) */
+.select__option--is-focused {
+  background-color: #341f67 !important;
+  color: white !important;
+}
+
+/* TAB Trigger styles */
 .tab-trigger {
   border-radius: 26px;
   z-index: 50;
@@ -217,9 +248,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background: linear-gradient(to bottom, #7c3aed, #6d28d9);
 }
 
+/* Background and input borders */
 .bg-background {
   background-color: #1B0D37 !important;
 }
+
 .bg-white {
   --tw-bg-opacity: 0;
   background-color: #1b0d3727 !important;
@@ -232,4 +265,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .ring-offset-background {
   --tw-ring-offset-color: #5228A4;
+}
+
+input[type="datetime-local"] {
+  color-scheme: dark;
 }

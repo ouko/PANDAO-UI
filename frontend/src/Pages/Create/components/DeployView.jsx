@@ -622,7 +622,7 @@ const DeployView = () => {
           <div className="w-full mt-10 mb-6">
           </div>
 
-          <div className="w-full gap-2.5 pb-8">
+          <div className="w-full gap-2.5 py-2">
             <div className="flex items-center justify-between">
               <label className="text-white text-2xl leading-[120%] font-medium">
                 Proposal Threshold
@@ -648,7 +648,7 @@ const DeployView = () => {
             />
           </div>
 
-          <div className="w-full gap-2.5 pb-8">
+          <div className="w-full gap-2.5 py-2">
             <div className="flex items-center justify-between">
               <label className="text-white text-2xl leading-[120%] font-medium">
                 Quorum Percentage
@@ -675,7 +675,7 @@ const DeployView = () => {
             />
           </div>
 
-          <div className="w-full gap-2.5 pb-8">
+          <div className="w-full gap-2.5 py-2">
             <div className="flex items-center justify-between">
               <label className="text-white text-2xl leading-[120%] font-medium">
                 Voting Period (Days)
@@ -701,7 +701,7 @@ const DeployView = () => {
             />
           </div>
 
-          <div className="w-full gap-2.5 pb-8">
+          <div className="w-full gap-2.5 py-2">
             <div className="flex items-center justify-between">
               <label className="text-white text-2xl leading-[120%] font-medium">
                 Pass Threshold Percentage
@@ -728,7 +728,7 @@ const DeployView = () => {
             />
           </div>
 
-          <div className="w-full gap-2.5 pb-8">
+          <div className="w-full gap-2.5 py-2">
             <div className="flex items-center justify-between">
               <label className="text-white text-2xl leading-[120%] font-medium">
                 Who Can Propose
@@ -759,7 +759,7 @@ const DeployView = () => {
           </div>
 
 
-          <div className="w-full gap-2.5 pb-8">
+          <div className="w-full gap-2.5 py-2">
             <div className="flex items-center justify-between">
               <label className="text-white text-2xl leading-[120%] font-medium">
                 Minimum Tokens to Propose

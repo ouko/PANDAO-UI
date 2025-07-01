@@ -104,7 +104,7 @@ const TokenView = () => {
                 <FiHelpCircle title="The full name of the token (e.g., Community Coin)" className="text-[#b59aec] cursor-pointer" size={20} />
               </div>
               <div className="text-[#b59aec] text-sm leading-[120%]">The full name of the token (e.g., Community Coin).</div>
-              <input type="text" name="name" value={formFields.token.name} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
+              <input type="text" name="name" value={formFields.token.name} onChange={handleInputChange} className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] focus:outline-none focus:border-brand5 rounded-md" />
             </div>
 
 
@@ -114,7 +114,7 @@ const TokenView = () => {
                 <FiHelpCircle title="The token symbol used in short form" className="text-[#b59aec] cursor-pointer" size={20} />
               </div>
               <div className="text-[#b59aec] text-sm leading-[120%]">The token symbol used in short form.</div>
-              <input type="text" name="symbol" value={formFields.token.symbol} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
+              <input type="text" name="symbol" value={formFields.token.symbol} onChange={handleInputChange} className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] focus:outline-none focus:border-brand5 rounded-md" />
             </div>
 
      
@@ -130,7 +130,7 @@ const TokenView = () => {
                 <FiHelpCircle title="The total number of tokens that will ever exist" className="text-[#b59aec] cursor-pointer" size={20} />
               </div>
               <div className="text-[#b59aec] text-sm leading-[120%]">The total number of tokens that will ever exist.</div>
-              <input type="number" name="totalSupply" value={formFields.token.totalSupply} min={0} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
+              <input type="number" name="totalSupply" value={formFields.token.totalSupply} min={0} onChange={handleInputChange} className="w-full p-4 border bg-[#1B0D37] focus:outline-none focus:border-brand5 border-[#5228A4] rounded-md" />
             </div>
 
             <div className="w-full gap-2.5 py-2 flex flex-col">
@@ -139,7 +139,7 @@ const TokenView = () => {
                 <FiHelpCircle title="The price of one token (in native currency or USD)" className="text-[#b59aec] cursor-pointer" size={20} />
               </div>
               <div className="text-[#b59aec] text-sm leading-[120%]">The price of one token (in native currency or USD).</div>
-              <input type="number" name="tokenPrice" value={formFields.token.tokenPrice} min={0} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
+              <input type="number" name="tokenPrice" value={formFields.token.tokenPrice} min={0} onChange={handleInputChange} className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] focus:outline-none focus:border-brand5 rounded-md" />
             </div>
 
             <div className="w-full gap-2.5 py-2 flex flex-col">
@@ -148,7 +148,7 @@ const TokenView = () => {
                 <FiHelpCircle title="Price at which users can withdraw or redeem tokens" className="text-[#b59aec] cursor-pointer" size={20} />
               </div>
               <div className="text-[#b59aec] text-sm leading-[120%]">Price at which users can withdraw or redeem tokens.</div>
-              <input type="number" name="tokenWithDrawPrice" value={formFields.token.tokenWithDrawPrice} min={0} onChange={handleInputChange} className="w-full p-3 border bg-[#1B0D37] border-[#5228A4] rounded-md" />
+              <input type="number" name="tokenWithDrawPrice" value={formFields.token.tokenWithDrawPrice} min={0} onChange={handleInputChange} className="w-full p-4 border bg-[#1B0D37] focus:outline-none focus:border-brand5 border-[#5228A4] rounded-md" />
             </div>
 
             <div className="w-full gap-2.5 py-2">
@@ -156,7 +156,7 @@ const TokenView = () => {
                 <label className="text-white text-2xl font-medium">Token Image URL:</label>
                 <FiHelpCircle title="Token logo or image" className="text-[#b59aec] cursor-pointer" size={20} />
               </div>
-              <div className="text-[#b59aec] text-sm leading-[120%]">Token logo or image.</div>
+              <div className="text-[#b59aec] text-sm leading-[120%] mt-2.5">Token logo or image.</div>
               <TokenImageURL onUploadComplete2={handleTokenUrl} />
             </div>
           </div>

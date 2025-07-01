@@ -196,7 +196,7 @@ const DescribeView = () => {
           </div>
 
           {/* Community Image Upload */}
-          <div className="flex flex-row gap-8 py-2">
+          <div className="flex flex-row gap-2.5 py-2">
             <div className="flex-1">
               <div className="flex items-center justify-between">
                 <label className="text-white text-2xl font-medium">Community Image:</label>
@@ -212,7 +212,7 @@ const DescribeView = () => {
           </div>
 
           {/* Purpose */}
-          <div className="flex flex-col gap-2.5 items-start py-2 text-white justify-start self-stretch shrink-0 relative">
+          <div className="flex flex-col gap-2.5 items-start py-2 text-white justify-start self-stretch shrink-0 ">
             <div className="flex items-center justify-between w-full">
               <label className="text-white text-2xl font-medium" htmlFor="dao-purpose">
                 What is the purpose of creating that DAO:
@@ -223,54 +223,83 @@ const DescribeView = () => {
                 size={20}
               />
             </div>
-            <div className="text-[#b59aec] text-sm mt-2">Purpose of creating that DAO</div>
+            <div className="text-[#b59aec] text-sm mt-1">Purpose of creating that DAO</div>
             <Select2 onValueChange={handleDaoPurposeChange}>
               <SelectTrigger className="w-full bg-[#1B0D37] rounded-md border border-[#5228A4] p-4 h-14 shadow-xs">
                 <SelectValue placeholder="Select the purpose" />
               </SelectTrigger>
               <SelectContent className="bg-[#1B0D37] rounded-md border border-[#5228A4] text-white">
-                <SelectItem value="governance">Governance</SelectItem>
-                <SelectItem value="communityBuilding">Community Building</SelectItem>
-                <SelectItem value="fundraising">Fundraising</SelectItem>
-                <SelectItem value="socialImpact">Social Impact</SelectItem>
+                <SelectItem
+                  value="governance"
+                  className="hover:bg-brand2 focus:text-white focus:bg-brand2"
+                >
+                  Governance
+                </SelectItem>
+                <SelectItem
+                  value="communityBuilding"
+                  className="hover:bg-brand2 focus:text-white focus:bg-brand2"
+                >
+                  Community Building
+                </SelectItem>
+                <SelectItem
+                  value="fundraising"
+                  className="hover:bg-brand2 focus:text-white focus:bg-brand2"
+                >
+                  Fundraising
+                </SelectItem>
+                <SelectItem
+                  value="socialImpact"
+                  className="hover:bg-brand2 focus:text-white focus:bg-brand2"
+                >
+                  Social Impact
+                </SelectItem>
               </SelectContent>
+
+
             </Select2>
           </div>
 
           {/* Tags */}
-          <div className="flex flex-col gap-2.5 items-start justify-start self-stretch py-2 shrink-0 relative">
-            <div className="flex items-center justify-between w-full">
-              <label className="text-white text-2xl font-medium">
+
+          <div className="w-full gap-2.5 pb-8">
+            <div className="flex items-center justify-between">
+              <label className="text-white text-2xl leading-[120%] font-medium">
                 Choose 5 communities you might be interested in:
               </label>
               <FiHelpCircle
                 className="text-[#b59aec] cursor-pointer"
-                title="Select up to 5 tags that best describe your interests"
                 size={20}
+                title="Select up to 5 tags that best describe your interests"
               />
             </div>
-            <div className="flex flex-col gap-1 w-full">
-              <span className="font-medium text-lg text-[#b59aec] px-1">Tags</span>
+
+            <div className="text-[#b59aec] text-sm mt-2 font-normal">
+              Select up to 5 tags that best describe your interests.
+            </div>
+
+            <div className="w-full mt-2 ">
               <Select
                 isMulti
                 name="tags"
                 options={predefinedTags}
-                className="basic-multi-select"
-                classNamePrefix="select"
                 value={selectedTags}
                 onChange={handleTagsChange}
                 placeholder="Select tags..."
+                className="react-select-container"
+                classNamePrefix="select"
                 components={{
                   MultiValue: ({ data, removeProps }) => (
-                    <div className="bg-brand3 text-white px-2 ms-2 py-0.5 rounded-md flex items-center gap-1">
-                      <span>{data.label}</span>
-                      <button {...removeProps} className="text-white hover:text-red-500 focus:outline-none">✕</button>
+                    <div className="bg-brand3 text-white px-2 mx-1 py-1 rounded-md flex items-center gap-1">
+                      <span className=''>{data.label}</span>
+                      <button {...removeProps} className="text-white  focus:outline-none">✕</button>
                     </div>
                   ),
                 }}
               />
             </div>
           </div>
+
+
 
 
           {/* Proposal Rights */}
