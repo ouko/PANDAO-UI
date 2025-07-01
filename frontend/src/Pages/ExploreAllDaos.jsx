@@ -1,12 +1,6 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Banknote, ChevronDown, Users } from "lucide-react";
-import { useAccount } from "@/AccountContext";
 import { Input } from "@/components/ui/input";
 import BrandCard from '@/components/ui/myComponents/brand-card';
 import {
@@ -18,18 +12,19 @@ import {
 import { SkeletonCard } from "@/components/ui/myComponents/card-skeleton";
 import TileEffect4 from "@/components/ui/myComponents/grid-bg-4";
 import Footer from "./HomeSection/homeSectionComponents/Footer";
+import { ChevronDown } from "lucide-react";
 
-const debounce = (func, delay) => {
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => func(...args), delay);
-  };
-};
+// const debounce = (func, delay) => {
+//   let timer;
+//   return (...args) => {
+//     clearTimeout(timer);
+//     timer = setTimeout(() => func(...args), delay);
+//   };
+// };
 
 const ExploreAllDao = () => {
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  // const navigate = useNavigate();
+  // const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTag, setActiveTag] = useState(null);
 
@@ -46,18 +41,18 @@ const ExploreAllDao = () => {
   });
 
   // Fetch DAOs with TanStack Query
-  const { data: daos = [], isLoading, refetch } = useQuery({
-    queryKey: ['daos', searchQuery, activeTag],
-    queryFn: async () => {
-      const params = {};
-      if (searchQuery) params.name = searchQuery;
-      if (activeTag) params.tags = activeTag;
-      
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/community/all`, { params });
-      return res.data;
-    },
-    enabled: true,
-  });
+  const { data: daos = [], isLoading } = useQuery({
+  queryKey: ['daos', searchQuery, activeTag],
+  queryFn: async () => {
+    const params = {};
+    if (searchQuery) params.name = searchQuery;
+    if (activeTag) params.tags = activeTag;
+    
+    const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/community/all`, { params });
+    return res.data;
+  },
+  enabled: true,
+});
 
   // Handle search with debounce
   const handleSearchChange = (e) => {

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useAccount } from "@/AccountContext";
 import DaoCard from "./brand-dao-card";
+import PropTypes from "prop-types";
 
 const BrandCard = ({ daos }) => {
   const navigate = useNavigate();
@@ -47,5 +48,18 @@ const BrandCard = ({ daos }) => {
 
   );
 };
-
+BrandCard.propTypes = {
+  daos: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      image: PropTypes.string,
+      name: PropTypes.string,
+      description: PropTypes.string,
+      tags: PropTypes.arrayOf(PropTypes.string),
+      participants: PropTypes.number,
+      funds: PropTypes.number,
+      total_token: PropTypes.number,
+    })
+  ).isRequired,
+};
 export default BrandCard;

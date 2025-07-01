@@ -17,9 +17,9 @@ const DaoCard = ({ dao, onClick }) => {
             {icon}
             <p className="text-sm text-white">{value}</p>
           </TooltipTrigger>
-          <TooltipContent side="bottom">
+          <TooltipContent side="bottom" className="bg-[#5228A4] text-brand7 border-brand2">
             <p>{tooltip}</p>
-          </TooltipContent>
+          </TooltipContent> 
         </Tooltip>
       </TooltipProvider>
     </div>
