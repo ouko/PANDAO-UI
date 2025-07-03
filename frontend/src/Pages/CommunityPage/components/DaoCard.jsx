@@ -394,8 +394,8 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
               style={{ background: 'transparent', border: 'none' }}
             >
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-purple-600/40 rounded-lg">
-                  <Gift className="w-6 h-6 text-purple-300" />
+                <div className="p-2 bg-brand6/20 rounded-lg">
+                  <Gift className="w-6 h-6 text-brand6" />
                 </div>
                 <div className="text-left">
                   <h2 className="text-xl font-bold text-white">Token Airdrop</h2>
@@ -459,28 +459,28 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                       {(airdropStatus === 'live' || airdropStatus === 'upcoming') && (
                         <div className="bg-brand2/10 rounded-xl border border-brand3 p-4">
                           <div className="flex items-center gap-2 mb-3">
-                            <Clock className="w-4 h-4 text-purple-300" />
-                            <span className="text-sm font-medium text-purple-300">
+                            <Clock className="w-4 h-4 text-brand6" />
+                            <span className="text-sm font-medium text-brand6">
                               {airdropStatus === 'live' ? 'Ends in:' : 'Starts in:'}
                             </span>
                           </div>
                           <div className="flex items-center gap-2 text-center">
-                            <div className="flex-1 bg-purple-600/40 rounded-lg py-2">
+                            <div className="flex-1 bg-brand6/10 rounded-lg py-2">
                               <div className="text-lg font-bold text-white">{countdown.days}</div>
                               <div className="text-xs text-gray-300">Days</div>
                             </div>
-                            <div className="text-purple-300">:</div>
-                            <div className="flex-1 bg-purple-600/40 rounded-lg py-2">
+                            <div className="text-brand6">:</div>
+                            <div className="flex-1 bg-brand6/10 rounded-lg py-2">
                               <div className="text-lg font-bold text-white">{countdown.hours}</div>
                               <div className="text-xs text-gray-300">Hours</div>
                             </div>
-                            <div className="text-purple-300">:</div>
-                            <div className="flex-1 bg-purple-600/40 rounded-lg py-2">
+                            <div className="text-brand6">:</div>
+                            <div className="flex-1 bg-brand6/10 rounded-lg py-2">
                               <div className="text-lg font-bold text-white">{countdown.minutes}</div>
                               <div className="text-xs text-gray-300">Mins</div>
                             </div>
-                            <div className="text-purple-300">:</div>
-                            <div className="flex-1 bg-purple-600/40 rounded-lg py-2">
+                            <div className="text-brand6">:</div>
+                            <div className="flex-1 bg-brand6/10 rounded-lg py-2">
                               <div className="text-lg font-bold text-white">{countdown.seconds}</div>
                               <div className="text-xs text-gray-300">Secs</div>
                             </div>
@@ -492,25 +492,25 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                     {/* Allocation Breakdown */}
                     <div className="space-y-4">
                       <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                        <Calendar className="w-5 h-5 text-purple-300" />
+                        <Calendar className="w-5 h-5 text-brand6" />
                         Allocation Breakdown
                       </h3>
-                      <div className="bg-purple-800/20 rounded-xl border border-purple-500/30 overflow-hidden">
+                      <div className="bg-brand2/10 rounded-xl border border-brand3 overflow-hidden">
                         <table className="w-full">
                           <thead>
-                            <tr className="bg-purple-600/20 border-b border-purple-500/30">
-                              <th className="px-4 py-3 text-left text-sm font-semibold text-purple-300">Category</th>
-                              <th className="px-4 py-3 text-right text-sm font-semibold text-purple-300">Allocation</th>
+                            <tr className="bg-brand2/10 border-b border-brand3">
+                              <th className="px-4 py-3 text-left text-sm font-semibold text-brand6">Category</th>
+                              <th className="px-4 py-3 text-right text-sm font-semibold text-brand6">Allocation</th>
                             </tr>
                           </thead>
                           <tbody>
                             {allocationEntries.map(([key, value], index) => (
-                              <tr key={key} className={index !== allocationEntries.length - 1 ? 'border-b border-purple-500/20' : ''}>
+                              <tr key={key} className={index !== allocationEntries.length - 1 ? 'border-b border-brand3' : ''}>
                                 <td className="px-4 py-3 text-sm text-gray-300 capitalize">
                                   {key.replace(/_/g, ' ')}
                                 </td>
                                 <td className="px-4 py-3 text-right">
-                                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-purple-600/40 text-white">
+                                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-brand6/10 text-white">
                                     {value}%
                                   </span>
                                 </td>
@@ -518,10 +518,10 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                             ))}
                           </tbody>
                           <tfoot>
-                            <tr className="bg-purple-600/20 border-t border-purple-500/30">
+                            <tr className="bg-brand2/10 border-t border-brand3">
                               <td className="px-4 py-3 text-sm font-semibold text-white">Total Allocated</td>
                               <td className="px-4 py-3 text-right">
-                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-purple-300/20 text-purple-300">
+                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-brand6/10 text-brand6">
                                   {daoData.airdrop.allocations?.total_allocated || 100}%
                                 </span>
                               </td>
