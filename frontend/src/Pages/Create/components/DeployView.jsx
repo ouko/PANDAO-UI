@@ -22,6 +22,13 @@ import { toast } from 'sonner'
 import { Coins, ImageIcon } from 'lucide-react'
 import { Checkbox } from '@/components/ui/checkbox'
 import { FiHelpCircle } from 'react-icons/fi'
+import {
+  Select as Select2,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 const Section = ({ title, children }) => (
   <div className="space-y-4">
     <h3 className="text-xl font-bold text-white border-b border-purple-900/50 pb-2 flex items-center gap-2">
@@ -242,7 +249,7 @@ const DeployView = () => {
       formFields.governance.votingPeriodDays > 0 &&
       formFields.governance.passThresholdPercentage > 0 &&
       formFields.governance.proposal_right.trim() !== '' &&
-      formFields.governance.proposal_right !== 'Select' && 
+      formFields.governance.proposal_right !== 'Select' &&
       formFields.governance.proposal_minimum_token > 0
     );
   }
@@ -742,20 +749,30 @@ const DeployView = () => {
             <div className="text-[#b59aec] text-sm mt-2 font-normal">
               Role or user type who is allowed to create proposals (e.g., admin, member).
             </div>
-            <select
+            <Select2
               name="proposal_right"
               value={formFields.governance.proposal_right}
-              onChange={handleInputChange}
+              onValueChange={(value) => {
+                const event = {
+                  target: {
+                    name: "proposal_right",
+                    value: value
+                  }
+                };
+                handleInputChange(event);
+              }}
               required
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md mt-2 shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             >
-              <option value="Select" >
-              Select Who Can Propose
-            </option>
-              <option value="all_members">All Members</option>
-              <option value="token_holders">Token Holders Only</option>
-              <option value="council_members">Council Members Only</option>
-            </select>
+              <SelectTrigger className="w-full bg-[#1B0D37] rounded-md border mt-1 border-[#5228A4] p-4 h-14 shadow-xs">
+                <SelectValue placeholder="Select Who Can Propose" />
+              </SelectTrigger>
+              <SelectContent className="bg-[#1B0D37] rounded-md border border-[#5228A4] text-white">
+                {/* <SelectItem value="Select"  className="hover:bg-brand2 focus:text-white focus:bg-brand2">Select Who Can Propose</SelectItem> */}
+                <SelectItem value="all_members" className="hover:bg-brand2 focus:text-white focus:bg-brand2" >All Members</SelectItem>
+                <SelectItem value="token_holders" className="hover:bg-brand2 focus:text-white focus:bg-brand2">Token Holders Only</SelectItem>
+                <SelectItem value="council_members" className="hover:bg-brand2 focus:text-white focus:bg-brand2">Council Members Only</SelectItem>
+              </SelectContent>
+            </Select2>
           </div>
 
 
@@ -770,7 +787,7 @@ const DeployView = () => {
                 title="Minimum number of tokens a user must hold to gain proposal rights."
               />
             </div>
-            <div className="text-[#b59aec] text-sm mt-2 font-normal">
+            <div className="text-[#b59aec] text-sm mt-2 mx-1 font-normal">
               Minimum number of tokens a user must hold to gain proposal rights.
             </div>
             <input
