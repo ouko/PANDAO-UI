@@ -1,7 +1,7 @@
 import { useAccount } from '@/AccountContext'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import { Card} from '@/components/ui/card'
+import { Card } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { clipAddress } from '@/utils/functions/ClipAddress'
@@ -1073,27 +1073,25 @@ const Proposals = () => {
 
 
 
-          <div className="bg-[rgba(169,126,255,0.08)] rounded-[20px] mt-8 w-full z-50 gap-7 p-10 border border-brand5 flex flex-col justify-start items-start ">
+          <div className="relative bg-[rgba(169,126,255,0.08)] w-full rounded-[20px] mt-8 z-50 gap-7 h-1/3 p-10 border border-brand5 flex flex-col justify-start items-start ">
             <div className="text-2xl sm:text-3xl md:text-[40px] leading-[120%] z-50 font-semibold flex flex-col items-center gap-3 px-4 sm:px-6">
-              <div
-                className="w-full cursor-pointer flex items-center text-base sm:text-lg md:text-[22px] m-2"
-                onClick={() => {
-                  setShowForm(false); 
-                  setActiveProposal(null); 
-                }}
-              >
-                <ChevronLeft className="mr-1" />
-                <span>Back</span>
-              </div>
-
               <span className="step-2-describe-your-dao-span3 text-amber-50 whitespace-nowrap text-center">
                 Proposal Form
               </span>
             </div>
-
-
-
+            <div
+              className="absolute bottom-4 right-4 cursor-pointer flex items-center text-base sm:text-lg md:text-[22px]"
+              onClick={() => {
+                setShowForm(false);
+                setActiveProposal(null);
+              }}
+            >
+              <ChevronLeft className="mr-1" />
+              <span>Back</span>
+            </div>
           </div>
+
+
           <div className="flex items-center justify-center z-50 p-2 w-full mx-auto">
             <form className="w-full max-w-4xl flex flex-col z-50 py-5 space-y-6" onSubmit={handleSubmit}>
               <div className="flex flex-col w-full space-y-2 ">
@@ -1144,7 +1142,7 @@ const Proposals = () => {
                           type="time"
                           value={startTime}
                           onChange={(e) => setStartTime(e.target.value)}
-                          className="w-full sm:w-fit p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
+                          className="w-full sm:w-fit p-2 py-4 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
                         />
                       </div>
                     </div>
@@ -1163,7 +1161,7 @@ const Proposals = () => {
                           type="time"
                           value={endTime}
                           onChange={(e) => setEndTime(e.target.value)}
-                          className="w-full sm:w-fit p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
+                          className="w-full sm:w-fit p-2 py-4 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
                         />
                       </div>
                     </div>
@@ -1171,7 +1169,7 @@ const Proposals = () => {
                 </div>
 
                 <div className="flex flex-col w-full space-y-2">
-                 <label className="text-brand7 text-left text-xl sm:text-2xl font-medium">
+                  <label className="text-brand7 text-left text-xl sm:text-2xl font-medium">
                     Minimum Quorum:
                   </label>
                   <input
@@ -1188,7 +1186,7 @@ const Proposals = () => {
                     }}
                     min="0"
                     max={participants.length}
-                    className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
+                    className="w-full p-4 py-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white text-left font-inter-body-large-16-regular-font-family text-inter-body-large-16-regular-font-size leading-inter-body-large-16-regular-line-height font-inter-body-large-16-regular-font-weight shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
                   />
                 </div>
 
@@ -1199,9 +1197,9 @@ const Proposals = () => {
                   <div className="w-full">
                     <Select
                       onValueChange={handleVoteType}
-                      className="w-full bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
+                      className="w-full bg-[#1B0D37] border  border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
                     >
-                      <SelectTrigger className="w-full p-2 text-white bg-[#1B0D37] rounded-md shadow-xs">
+                      <SelectTrigger className="w-full bg-[#1B0D37] border border-[#5228A4] rounded-md shadow-xs px-4 py-4 h-auto min-h-[56px] text-white text-left">
                         <SelectValue placeholder="Select Vote Type" />
                       </SelectTrigger>
                       <SelectContent className="bg-[#1B0D37] text-white rounded-md">
@@ -1225,7 +1223,7 @@ const Proposals = () => {
                       onValueChange={handleBondAddress}
                       className="w-full bg-[#1B0D37] border border-[#5228A4] rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-400"
                     >
-                      <SelectTrigger className="w-full p-2 text-white bg-[#1B0D37] rounded-md shadow-xs">
+                      <SelectTrigger className="w-full py-4 px-4 min-h-[56px] text-white bg-[#1B0D37] rounded-md shadow-xs text-left">
                         <SelectValue placeholder="Select Bond Issuer Address" />
                       </SelectTrigger>
                       <SelectContent className="bg-[#1B0D37] text-white rounded-md">
@@ -1246,6 +1244,7 @@ const Proposals = () => {
                         )}
                       </SelectContent>
                     </Select>
+
                   </div>
 
 
@@ -1260,7 +1259,7 @@ const Proposals = () => {
 
 
                 <div className="flex flex-col w-full space-y-2">
-                 <label className="text-brand7 text-left text-xl sm:text-2xl font-medium">
+                  <label className="text-brand7 text-left text-xl sm:text-2xl font-medium">
                     Target XRD Amount:
                   </label>
                   <input
@@ -1306,22 +1305,22 @@ const Proposals = () => {
       ) : tokenChangeform ? (
         <div className=''>
 
-          <div className="bg-[rgba(169,126,255,0.08)] mt-10 sm:mt-20 mb-2 rounded-[20px] z-50 gap-5 sm:gap-7 p-4 sm:p-6 md:p-10 border border-brand5 flex flex-col items-start">
+          <div className="relative bg-[rgba(169,126,255,0.08)] mt-10 sm:mt-20 mb-2 rounded-[20px] z-50 gap-5 sm:gap-7 p-4 sm:p-6 md:p-10 border border-brand5 flex flex-col items-start ">
+            <div className="text-2xl sm:text-3xl md:text-[40px] leading-snug sm:leading-[120%] font-semibold text-amber-50 z-50 text-start">
+              <span className="step-2-describe-your-dao-span3">Token Price Change Form</span>
+            </div>
             <div
-              className="w-full cursor-pointer flex items-center text-base sm:text-lg md:text-[22px] z-[999]"
+              className="absolute bottom-4 right-4 cursor-pointer flex items-center text-base sm:text-lg md:text-[22px] z-[999]"
               onClick={() => {
-                setShowTokenChangeForm(false); // Hide the form and return to the list
-                setActiveProposal(null); // Ensure no proposal is active
+                setShowTokenChangeForm(false)
+                setActiveProposal(null)
               }}
             >
               <ChevronLeft className="mr-1" />
               <span>Back</span>
             </div>
-
-            <div className="text-2xl sm:text-3xl md:text-[40px] leading-snug sm:leading-[120%] font-semibold text-amber-50 z-50 text-start">
-              <span className="step-2-describe-your-dao-span3">Token Price Change Form</span>
-            </div>
           </div>
+
 
           <div className="flex items-center justify-center z-50 p-2 w-full mx-auto">
             <form
@@ -1330,7 +1329,8 @@ const Proposals = () => {
             >
               <div className="flex flex-col z-50 gap-2">
                 <Label className="text-brand7 text-xl sm:text-2xl p-1">Proposal Name</Label>
-                <Input
+                <input
+                  className='bg-[#1B0D37] border border-[#5228A4] rounded-md px-4 py-4 w-full text-white cursor-pointer'
                   placeholder="Proposal Name..."
                   value={tokenPriceChangeForm.proposalText}
                   onChange={(e) =>
@@ -1363,11 +1363,11 @@ const Proposals = () => {
                         customInput={<CustomDatePicker />}
                         minDate={new Date()}
                       />
-                      <Input
+                      <input
                         type="time"
                         value={tokenPriceChangeForm.startTime}
                         onChange={(e) => handleInputChange('startTime', e.target.value)}
-                        className="w-full sm:w-fit p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white"
+                        className="w-full sm:w-fit p-2 py-4 bg-[#1B0D37] border outline-none border-[#5228A4] rounded-md text-white"
                       />
                     </div>
                   </div>
@@ -1382,11 +1382,11 @@ const Proposals = () => {
                         customInput={<CustomDatePicker />}
                         minDate={new Date()}
                       />
-                      <Input
+                      <input
                         type="time"
                         value={tokenPriceChangeForm.endTime}
                         onChange={(e) => handleInputChange('endTime', e.target.value)}
-                        className="w-full sm:w-fit p-2 bg-[#1B0D37] border border-[#5228A4] rounded-md text-white"
+                        className="w-full sm:w-fit p-2 py-4 bg-[#1B0D37] border outline-none border-[#5228A4] rounded-md text-white"
                       />
                     </div>
                   </div>
@@ -1394,9 +1394,10 @@ const Proposals = () => {
                 </div>
 
 
-                <div className="flex flex-col  gap-2">
+                <div className="flex flex-col gap-2">
                   <Label className="text-brand7 text-xl sm:text-2xl p-1">Minimum Quorum</Label>
-                  <Input
+                  <input
+                    className="py-4 px-4 bg-[#1B0D37] text-white border border-[#5228A4] rounded-md focus:outline-none focus:ring-1 focus:ring-purple-400"
                     placeholder="Enter Minimum quorum"
                     type="number"
                     value={tokenPriceChangeForm.minimumQuorum}
@@ -1414,27 +1415,36 @@ const Proposals = () => {
                     max={participants.length}
                   />
                 </div>
+
                 <div className="flex flex-col gap-2">
                   <Label className="text-brand7 text-xl sm:text-2xl p-1">Vote Type</Label>
-                  <Select
-                    onValueChange={(value) =>
-                      handleInputChange('voteType', value)
-                    }
-                  >
-                    <SelectTrigger className="w-full ">
+                  <Select onValueChange={(value) => handleInputChange("voteType", value)}>
+                    <SelectTrigger
+                      className="w-full h-auto min-h-[56px] px-4 py-4 bg-[#1B0D37] text-white border border-[#5228A4] rounded-md text-left"
+                    >
                       <SelectValue placeholder="Select Vote Type" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Equality">Equality</SelectItem>
-                      <SelectItem value="ResourceOwned">
+                    <SelectContent className="bg-[#1B0D37] text-white rounded-md border border-[#5228A4]">
+                      <SelectItem
+                        value="Equality"
+                        className="p-2 hover:bg-[#5228A4] cursor-pointer"
+                      >
+                        Equality
+                      </SelectItem>
+                      <SelectItem
+                        value="ResourceOwned"
+                        className="p-2 hover:bg-[#5228A4] cursor-pointer"
+                      >
                         Resource Owned
                       </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
+
                 <div className="flex flex-col gap-2">
                   <Label className="text-brand7 text-xl sm:text-2xl p-1">Desired Token Price</Label>
-                  <Input
+                  <input
+                    className='py-4 px-4 bg-[#1B0D37] text-white border border-[#5228A4] rounded-md focus:outline-none focus:ring-1 focus:ring-purple-400'
                     placeholder="Enter desired token price"
                     type="number"
                     min="0"
@@ -1448,7 +1458,8 @@ const Proposals = () => {
                   <Label className="text-brand7 text-xl sm:text-2xl p-1">
                     Desired Token Buy Back Price
                   </Label>
-                  <Input
+                  <input
+                    className='py-4 px-4 bg-[#1B0D37] text-white border border-[#5228A4] rounded-md focus:outline-none focus:ring-1 focus:ring-purple-400'
                     placeholder="Enter desired token buy-back price"
                     type="number"
                     min="0"
