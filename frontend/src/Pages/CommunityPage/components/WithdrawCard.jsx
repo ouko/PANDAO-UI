@@ -1,15 +1,11 @@
 import { useAccount } from "@/AccountContext";
 import { Button } from "@/components/ui/button";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
 import { useSendTransaction } from "@/hooks/useSendTransaction";
 import axios from "axios";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
+import PropTypes from "prop-types";
 
 
 const WithdrawCard = ({ withDrawRequest, participant,onSuccess }) => {
@@ -187,5 +183,35 @@ console.log(participant,"faisal")
     </div>
   );
 }
+
+WithdrawCard.propTypes = {
+  withDrawRequest: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      amount_to_withdraw: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      request_date: PropTypes.string.isRequired,
+      status: PropTypes.bool.isRequired,
+      user_image: PropTypes.string.isRequired,
+      user_name: PropTypes.string.isRequired,
+      user_address: PropTypes.string.isRequired,
+      signed_users: PropTypes.arrayOf(
+        PropTypes.shape({
+          public_address: PropTypes.string.isRequired,
+          name: PropTypes.string.isRequired,
+          image_url: PropTypes.string.isRequired,
+        })
+      ).isRequired,
+    })
+  ).isRequired,
+
+  participant: PropTypes.arrayOf(
+    PropTypes.shape({
+      is_executive_member: PropTypes.bool.isRequired,
+      public_address: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+
+  onSuccess: PropTypes.func.isRequired,
+};
 
 export default WithdrawCard;

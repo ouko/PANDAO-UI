@@ -7,7 +7,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
-
+import PropTypes from "prop-types";
 const TotalFund = ({ data }) => {
     const [withDrawModal, setWithDrawModal] = useState(false);
     const [withdrawAmount, setwithdrawAmout] = useState(0)
@@ -163,4 +163,10 @@ const TotalFund = ({ data }) => {
     )
 }
 
+TotalFund.propTypes = {
+  data: PropTypes.shape({
+    funds: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    funds_in_usd: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  }).isRequired,
+};
 export default TotalFund

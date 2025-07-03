@@ -1,5 +1,6 @@
 import { Clock } from "lucide-react";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 export default function ActivityCard({ ac, navigate, clipAddress, formatStandardDateTime }) {
     const [isHovered, setIsHovered] = useState(false);
@@ -44,17 +45,20 @@ export default function ActivityCard({ ac, navigate, clipAddress, formatStandard
                 {/* Activity Info */}
                 <div className="space-y-2">
                     <div className="text-sm font-medium text-gray-100 bg-indigo-900 bg-opacity-40 px-4 py-2 rounded-lg space-x-2">
-                        <span className="text-purple-400">Activity Info:</span> <span className="text-white capitalize">{ac.transaction_info}</span>
+                        <span className="text-purple-400">Activity Info:</span> 
+                        <span className="text-white capitalize">{ac.transaction_info}</span>
                     </div>
+
                     {ac.funds_effected != null && (
-    <div className="text-xs font-semibold text-white bg-purple-700 px-4 py-1.5 rounded-full mx-1 inline-block space-x-2">
-        <span className="text-purple-400">Funds Effected:</span> 
-        <span className="text-white">{ac.funds_effected} Tokens</span>
-    </div>
-)}
+                        <div className="text-xs font-semibold text-white bg-purple-700 px-4 py-1.5 rounded-full mx-1 inline-block space-x-2">
+                            <span className="text-purple-400">Funds Effected:</span> 
+                            <span className="text-white">{ac.funds_effected} Tokens</span>
+                        </div>
+                    )}
 
                     <div className="text-xs font-semibold text-white bg-purple-800 px-4 py-1.5 rounded-full inline-block space-x-2">
-                     <span className="text-purple-400">Activity Type:</span> <span className="text-white capitalize">{ac.activity_type}</span>
+                        <span className="text-purple-400">Activity Type:</span> 
+                        <span className="text-white capitalize">{ac.activity_type}</span>
                     </div>
                 </div>
 
@@ -67,3 +71,22 @@ export default function ActivityCard({ ac, navigate, clipAddress, formatStandard
         </div>
     );
 }
+
+// ✅ PropTypes Validation
+ActivityCard.propTypes = {
+    ac: PropTypes.shape({
+        image_url: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        user_address: PropTypes.string.isRequired,
+        transaction_info: PropTypes.string.isRequired,
+        funds_effected: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number,
+        ]),
+        activity_type: PropTypes.string.isRequired,
+        created_at: PropTypes.string.isRequired,
+    }).isRequired,
+    navigate: PropTypes.func.isRequired,
+    clipAddress: PropTypes.func.isRequired,
+    formatStandardDateTime: PropTypes.func.isRequired,
+};

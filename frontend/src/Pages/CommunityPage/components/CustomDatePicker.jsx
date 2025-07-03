@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Calendar } from "lucide-react";
+import PropTypes from "prop-types";
 
 const CustomDatePicker = ({ value, onClick }) => {
   return (
@@ -8,7 +9,7 @@ const CustomDatePicker = ({ value, onClick }) => {
       onClick={onClick}
     >
       <Input
-        className="bg-transparent  outline-none focus:outline-none ring-0 border-transparent shadow-none text-white w-full cursor-pointer p-0"
+        className="bg-transparent outline-none focus:outline-none ring-0 border-transparent shadow-none text-white w-full cursor-pointer p-0"
         type="text"
         value={value}
         readOnly
@@ -16,6 +17,11 @@ const CustomDatePicker = ({ value, onClick }) => {
       <Calendar className="text-white w-5 h-5" />
     </div>
   );
+};
+
+CustomDatePicker.propTypes = {
+  value: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default CustomDatePicker;
