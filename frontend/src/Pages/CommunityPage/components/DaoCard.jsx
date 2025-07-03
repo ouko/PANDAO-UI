@@ -378,11 +378,13 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
         </div>
       </div>
       {/* Airdrop Section */}
-      <div className={`w-full fixed bottom-2 right-4 z-20 ${isOpen ? "max-w-4xl" : "max-w-md"}`}>
+      <motion.div 
+      animate={{width : isOpen ? "896px" : "448px"}}
+      className={`w-full fixed bottom-2 right-4 z-20 `}>
         {daoData.airdrop && (
           <motion.div
             className="bg-gradient-to-br from-brand1 to-brand2 rounded-2xl border border-brand3 overflow-hidden shadow-2xl"
-            animate={{ height: isOpen ? 'auto' : 80 }}
+            animate={{ height: isOpen ? 470 : 80 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             layout
           >
@@ -536,7 +538,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
             </AnimatePresence>
           </motion.div>
         )}
-      </div>
+      </motion.div>
       <Dialog open={quickStartOpen} onOpenChange={setQuickStartOpen}>
         <DialogTrigger></DialogTrigger>
         <DialogContent
