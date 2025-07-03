@@ -26,7 +26,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
   const [quickStartOpen, setQuickStartOpen] = useState(false);
   const [userBondEarnings, setUserBondEarnings] = useState(null);
   const [loadingEarnings, setLoadingEarnings] = useState(false);
-  const [countdown, setCountdown] = useState({days: 0, hours: 0, minutes: 0, seconds: 0});
+  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [airdropStatus, setAirdropStatus] = useState(''); // 'upcoming', 'live', 'ended'
   const { slug } = useBluePrintSlugStore()
 
@@ -47,12 +47,12 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
   // Airdrop countdown timer effect
   useEffect(() => {
     if (!daoData.airdrop) return;
-    
+
     const updateCountdown = () => {
       const now = new Date();
       const startTime = new Date(daoData.airdrop.start_time);
       const endTime = new Date(daoData.airdrop.end_time);
-      
+
       // Determine airdrop status
       if (now < startTime) {
         setAirdropStatus('upcoming');
@@ -62,33 +62,33 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
         calculateTimeRemaining(endTime);
       } else {
         setAirdropStatus('ended');
-        setCountdown({days: 0, hours: 0, minutes: 0, seconds: 0});
+        setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 });
       }
     };
-    
+
     const calculateTimeRemaining = (targetDate) => {
       const now = new Date();
       const difference = targetDate - now;
-      
+
       if (difference <= 0) {
-        setCountdown({days: 0, hours: 0, minutes: 0, seconds: 0});
+        setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 });
         return;
       }
-      
+
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-      
-      setCountdown({days, hours, minutes, seconds});
+
+      setCountdown({ days, hours, minutes, seconds });
     };
-    
+
     // Initial update
     updateCountdown();
-    
+
     // Update countdown every second
     const timer = setInterval(updateCountdown, 1000);
-    
+
     return () => clearInterval(timer);
   }, [daoData.airdrop]);
 
@@ -172,7 +172,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
               src={daoData.image}
               alt="Community Logo"
             />
-            <div className="text-white text-xl font-semibold">
+            <div className="text-white text-xl font-semibold text-center">
               {daoData.name}
             </div>
             {/* Tags */}
@@ -232,7 +232,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
               )}
             </div>
             {/* Airdrop Section */}
-            
+
           </div>
 
 
@@ -279,7 +279,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                     <tr className="border-t border-brand2">
                       <td className="px-3 py-2 text-brand7 font-medium">Token Price</td>
                       <td className="px-3 py-2 text-white font-bold">
-                        {daoData.token_price_in_fiat?.toFixed(4) || daoData.token_price || "-" } <span className="text-[#86efac]">XRD</span>
+                        {daoData.token_price_in_fiat?.toFixed(4) || daoData.token_price || "-"} <span className="text-[#86efac]">XRD</span>
                       </td>
                     </tr>
                     <tr className="border-t border-brand2">
@@ -314,7 +314,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                   </div>
                   <div className="text-xs text-gray-300 border border-brand5 rounded px-2 py-1">{new Date(daoData.airdrop.start_time).toLocaleDateString()} - {new Date(daoData.airdrop.end_time).toLocaleDateString()}</div>
                 </div>
-                
+
                 {/* Countdown Timer */}
                 {(airdropStatus === 'live' || airdropStatus === 'upcoming') && (
                   <div className="flex flex-col gap-1 mt-1">
@@ -342,7 +342,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                     </div>
                   </div>
                 )}
-                
+
                 {/* Allocation Breakdown */}
                 <div className="flex flex-wrap gap-2 mt-2">
                   {daoData.airdrop.allocations && Object.entries(daoData.airdrop.allocations).map(([key, value]) => (
