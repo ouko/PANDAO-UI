@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -7,7 +8,6 @@ function DiscussionCard({ communities }) {
 
     return (
         <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border border-[#5228A4] pt-0 h-[352px] relative overflow-y-auto">
-
             {/* Sticky Header */}
             <div className="bg-[#39246b] px-4 flex items-center justify-between w-full h-[53px] sticky top-0 z-10">
                 <div className="text-white text-xl md:text-2xl font-medium flex items-center gap-2">
@@ -59,5 +59,20 @@ function DiscussionCard({ communities }) {
         </div>
     );
 }
+
+DiscussionCard.propTypes = {
+    communities: PropTypes.arrayOf(
+        PropTypes.shape({
+            title: PropTypes.string.isRequired,
+            user_image: PropTypes.string,
+            user_name: PropTypes.string.isRequired,
+            created_at: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.number,
+                PropTypes.instanceOf(Date),
+            ]).isRequired,
+        })
+    ).isRequired,
+};
 
 export default DiscussionCard;

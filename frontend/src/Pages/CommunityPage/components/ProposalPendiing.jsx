@@ -1,16 +1,13 @@
-
-import { SkeletonCard } from "@/Pages/GlobalComponents/Skeleton";
-
+import PropTypes from "prop-types";
 import ProposalCard from "./ProposalCard";
 import { SkeletonProposal } from "@/Pages/GlobalComponents/SkeletonProposal";
 
-
 function ProposalPending({ proposals, loading, setActiveProposal, setShowForm, convertUnixTimestamp, clipAddress }) {
   return (
-    <div className=" h-full relative overflow-hidden ">
+    <div className="h-full relative overflow-hidden">
       <div className="bg-[#39246b] pr-[15px] pl-[15px] flex z-50 flex-row items-center justify-between w-full h-[63px] sticky left-0 top-0">
         <div className="text-[#ffffff] text-left text-xl md:text-2xl font-medium flex items-center gap-2">
-         Pending Proposals:
+          Pending Proposals:
         </div>
       </div>
 
@@ -25,18 +22,18 @@ function ProposalPending({ proposals, loading, setActiveProposal, setShowForm, c
       )}
 
       {!loading && proposals && (
-        <div className="flex flex-col gap-4 px-5 py-5  rounded-lg overflow-y-clip">
+        <div className="flex flex-col gap-4 px-5 py-5 rounded-lg overflow-y-clip">
           {proposals.map((proposalItem, index) => (
-           <ProposalCard
-           key={index}
-           proposalItem={proposalItem}
-           onClick={() => {
-             setActiveProposal(proposalItem);
-             setShowForm(null);
-           }}
-           convertUnixTimestamp={convertUnixTimestamp}
-           clipAddress={clipAddress}
-         />
+            <ProposalCard
+              key={index}
+              proposalItem={proposalItem}
+              onClick={() => {
+                setActiveProposal(proposalItem);
+                setShowForm(null);
+              }}
+              convertUnixTimestamp={convertUnixTimestamp}
+              clipAddress={clipAddress}
+            />
           ))}
         </div>
       )}
@@ -51,5 +48,14 @@ function ProposalPending({ proposals, loading, setActiveProposal, setShowForm, c
     </div>
   );
 }
+
+ProposalPending.propTypes = {
+  proposals: PropTypes.arrayOf(PropTypes.object).isRequired,
+  loading: PropTypes.bool.isRequired,
+  setActiveProposal: PropTypes.func.isRequired,
+  setShowForm: PropTypes.func.isRequired,
+  convertUnixTimestamp: PropTypes.func.isRequired,
+  clipAddress: PropTypes.func.isRequired,
+};
 
 export default ProposalPending;

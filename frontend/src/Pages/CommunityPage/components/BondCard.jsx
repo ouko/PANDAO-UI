@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 import { useAccount } from '@/AccountContext';
 import axios from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import PropTypes from 'prop-types';
 
 const BondCard = ({ bond }) => {
     const [showFullDescription, setShowFullDescription] = useState(false);
@@ -319,5 +320,56 @@ const BondCard = ({ bond }) => {
         </div>
     );
 };
+BondCard.propTypes = {
+  bond: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    asset_url: PropTypes.string,
+    asset_name: PropTypes.string,
+    asset_address: PropTypes.string,
+    bond_position: PropTypes.string,
+    price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    currency: PropTypes.string,
+    creator: PropTypes.string,
+    creator_name: PropTypes.string,
+    creator_image: PropTypes.string,
+    created_on_blockchain: PropTypes.bool,
+    created_at: PropTypes.string,
+    initial_exchange_date: PropTypes.string,
+    maturity_date: PropTypes.string,
+    contract_type: PropTypes.string,
+    interest_rate: PropTypes.number,
+    notional_principle: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    number_of_bonds: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    description: PropTypes.string,
+    likes_count: PropTypes.number,
+    dislikes_count: PropTypes.number,
+
+    proposals: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        proposal: PropTypes.string,
+        status: PropTypes.number,
+        description: PropTypes.string,
+        voted_for: PropTypes.number,
+        voted_against: PropTypes.number,
+        creator_name: PropTypes.string,
+      })
+    ),
+
+    earnings: PropTypes.arrayOf(
+      PropTypes.shape({
+        user_address: PropTypes.string,
+        user_name: PropTypes.string,
+        user_profile_picture: PropTypes.string,
+        bond_price: PropTypes.number,
+        bond_return_value: PropTypes.number,
+        potential_earning: PropTypes.number,
+        is_bond_successful: PropTypes.bool,
+        people_invested: PropTypes.number,
+      })
+    ),
+  }).isRequired,
+};
+
 
 export default BondCard;
