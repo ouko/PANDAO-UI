@@ -384,7 +384,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
         {daoData.airdrop && (
           <motion.div
             className="bg-gradient-to-br from-brand1 to-brand2 rounded-2xl border border-brand3 overflow-hidden shadow-2xl"
-            animate={{ height: isOpen ? 400 : 80 }}
+            animate={{ height: isOpen ? 470 : 80 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             layout
           >
@@ -607,5 +607,4 @@ DaoCard.propTypes = {
   onSuccess: PropTypes.func.isRequired,
   isOwner: PropTypes.bool.isRequired,
 };
-
 export default DaoCard;
