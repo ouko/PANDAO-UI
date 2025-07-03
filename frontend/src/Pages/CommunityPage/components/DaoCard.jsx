@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Check, Copy, Info, Clock } from 'lucide-react';
+import { Check, Copy, Info, Clock, Gift, Target, Calendar, ChevronDown } from 'lucide-react';
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import { Button } from '@/components/ui/button';
 import {
@@ -18,15 +18,18 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import useBluePrintSlugStore from '@/store/blueprintSlug';
 import PropTypes from 'prop-types';
+import { motion, AnimatePresence } from "framer-motion";
 
 
 const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }) => {
   const [copied, setCopied] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
   const [copied1, setCopied1] = useState(false);
   const [quickStartOpen, setQuickStartOpen] = useState(false);
   const [userBondEarnings, setUserBondEarnings] = useState(null);
   const [loadingEarnings, setLoadingEarnings] = useState(false);
-  const [countdown, setCountdown] = useState({days: 0, hours: 0, minutes: 0, seconds: 0});
+  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [airdropStatus, setAirdropStatus] = useState(''); // 'upcoming', 'live', 'ended'
   const { slug } = useBluePrintSlugStore()
 
@@ -47,12 +50,12 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
   // Airdrop countdown timer effect
   useEffect(() => {
     if (!daoData.airdrop) return;
-    
+
     const updateCountdown = () => {
       const now = new Date();
       const startTime = new Date(daoData.airdrop.start_time);
       const endTime = new Date(daoData.airdrop.end_time);
-      
+
       // Determine airdrop status
       if (now < startTime) {
         setAirdropStatus('upcoming');
@@ -62,33 +65,33 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
         calculateTimeRemaining(endTime);
       } else {
         setAirdropStatus('ended');
-        setCountdown({days: 0, hours: 0, minutes: 0, seconds: 0});
+        setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 });
       }
     };
-    
+
     const calculateTimeRemaining = (targetDate) => {
       const now = new Date();
       const difference = targetDate - now;
-      
+
       if (difference <= 0) {
-        setCountdown({days: 0, hours: 0, minutes: 0, seconds: 0});
+        setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 });
         return;
       }
-      
+
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-      
-      setCountdown({days, hours, minutes, seconds});
+
+      setCountdown({ days, hours, minutes, seconds });
     };
-    
+
     // Initial update
     updateCountdown();
-    
+
     // Update countdown every second
     const timer = setInterval(updateCountdown, 1000);
-    
+
     return () => clearInterval(timer);
   }, [daoData.airdrop]);
 
@@ -158,7 +161,23 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
       setCopied1(false);
     }, 1000);
   };
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'live': return 'bg-green-500/20 text-green-400 border-green-500/30 animate-pulse';
+      case 'upcoming': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+    }
+  };
 
+  const getStatusText = (status) => {
+    switch (status) {
+      case 'live': return 'Live Airdrop';
+      case 'upcoming': return 'Upcoming';
+      default: return 'Ended';
+    }
+  };
+  const allocationEntries = Object.entries(daoData.airdrop.allocations || {})
+    .filter(([key]) => key !== 'total_allocated');
   console.log(daoData)
   return (
 
@@ -172,7 +191,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
               src={daoData.image}
               alt="Community Logo"
             />
-            <div className="text-white text-xl font-semibold">
+            <div className="text-white text-xl font-semibold text-center">
               {daoData.name}
             </div>
             {/* Tags */}
@@ -232,7 +251,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
               )}
             </div>
             {/* Airdrop Section */}
-            
+
           </div>
 
 
@@ -279,7 +298,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                     <tr className="border-t border-brand2">
                       <td className="px-3 py-2 text-brand7 font-medium">Token Price</td>
                       <td className="px-3 py-2 text-white font-bold">
-                        {daoData.token_price_in_fiat?.toFixed(4) || daoData.token_price || "-" } <span className="text-[#86efac]">XRD</span>
+                        {daoData.token_price_in_fiat?.toFixed(4) || daoData.token_price || "-"} <span className="text-[#86efac]">XRD</span>
                       </td>
                     </tr>
                     <tr className="border-t border-brand2">
@@ -301,65 +320,10 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
 
         {/* Airdrop and Actions Section */}
         <div className="flex flex-col md:flex-row w-full mt-4">
-          {/* Airdrop Section */}
-          <div className="w-full md:w-1/2 md:pr-2">
-            {daoData.airdrop && (
-              <div className="w-full bg-brand1/20 rounded-xl p-4 flex flex-col gap-2 border border-brand5">
-                <div className="flex flex-col md:flex-row gap-2 items-center justify-between">
-                  <div className="text-brand7 font-semibold text-base flex items-center gap-2">
-                    <span className={`px-2 py-1 rounded ${airdropStatus === 'live' ? 'bg-green-500/20' : airdropStatus === 'upcoming' ? 'bg-yellow-500/20' : 'bg-brand4/20'}`}>
-                      {airdropStatus === 'live' ? 'Airdrop Per User' : airdropStatus === 'upcoming' ? 'Upcoming Airdrop' : 'Airdrop Ended'}
-                    </span>
-                    <span className="text-white">{daoData.airdrop.amount_per_air_drop} TOKEN </span>
-                  </div>
-                  <div className="text-xs text-gray-300 border border-brand5 rounded px-2 py-1">{new Date(daoData.airdrop.start_time).toLocaleDateString()} - {new Date(daoData.airdrop.end_time).toLocaleDateString()}</div>
-                </div>
-                
-                {/* Countdown Timer */}
-                {(airdropStatus === 'live' || airdropStatus === 'upcoming') && (
-                  <div className="flex flex-col gap-1 mt-1">
-                    <div className="flex items-center gap-1 text-xs text-brand7">
-                      <Clock size={14} />
-                      <span>{airdropStatus === 'live' ? 'Ends in:' : 'Starts in:'}</span>
-                    </div>
-                    <div className="grid grid-cols-4 gap-1 text-center">
-                      <div className="bg-brand4/60 rounded p-1">
-                        <span className="text-white font-bold text-sm">{countdown.days}</span>
-                        <p className="text-xs text-gray-300">Days</p>
-                      </div>
-                      <div className="bg-brand4/60 rounded p-1">
-                        <span className="text-white font-bold text-sm">{countdown.hours}</span>
-                        <p className="text-xs text-gray-300">Hours</p>
-                      </div>
-                      <div className="bg-brand4/60 rounded p-1">
-                        <span className="text-white font-bold text-sm">{countdown.minutes}</span>
-                        <p className="text-xs text-gray-300">Mins</p>
-                      </div>
-                      <div className="bg-brand4/60 rounded p-1">
-                        <span className="text-white font-bold text-sm">{countdown.seconds}</span>
-                        <p className="text-xs text-gray-300">Secs</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                
-                {/* Allocation Breakdown */}
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {daoData.airdrop.allocations && Object.entries(daoData.airdrop.allocations).map(([key, value]) => (
-                    key !== 'total_allocated' && (
-                      <div key={key} className="flex flex-col items-center bg-brand2/20 border border-brand5 rounded-lg px-3 py-1">
-                        <span className="text-xs text-brand7 capitalize">{key.replace('_', ' ')}</span>
-                        <span className="text-white font-semibold text-sm">{value}%</span>
-                      </div>
-                    )
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+
 
           {/* Action Buttons Section */}
-          <div className="w-full md:w-1/2 md:pl-2 flex flex-col justify-end">
+          <div className="w-full  flex flex-col justify-end">
             <div className="mt-4 md:mt-0 p-4 bg-brand1/10 rounded-xl ">
               {!isUserParticipant ? (
                 <div className="w-full flex items-center justify-center md:justify-end">
@@ -413,7 +377,168 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
           </div>
         </div>
       </div>
+      {/* Airdrop Section */}
+      <motion.div 
+      animate={{width : isOpen ? "896px" : "448px"}}
+      className={`w-full fixed bottom-2 right-4 z-20 `}>
+        {daoData.airdrop && (
+          <motion.div
+            className="bg-gradient-to-br from-brand1 to-brand2 rounded-2xl border border-brand3 overflow-hidden shadow-2xl"
+            animate={{ height: isOpen ? 470 : 80 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            layout
+          >
+            {/* Collapsible Header */}
+            <button
+              className="flex items-center justify-between w-full px-6 py-4 focus:outline-none cursor-pointer bg-brand2 border-b border-brand3 hover:bg-brand2/30 transition-colors"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? 'Collapse airdrop panel' : 'Expand airdrop panel'}
+              style={{ background: 'transparent', border: 'none' }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-brand6/20 rounded-lg">
+                  <Gift className="w-6 h-6 text-brand6" />
+                </div>
+                <div className="text-left">
+                  <h2 className="text-xl font-bold text-white">Token Airdrop</h2>
+                  <p className="text-sm text-gray-300">{daoData.airdrop.amount_per_air_drop} TOKEN per user</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className={`px-4 py-2 rounded-full border font-semibold text-sm ${getStatusColor(airdropStatus)}`}>
+                  {getStatusText(airdropStatus)}
+                </div>
+                <ChevronDown
+                  className={`w-5 h-5 text-white/60 transition-transform duration-300 ${!isOpen ? 'rotate-180' : ''}`}
+                />
+              </div>
+            </button>
 
+            {/* Collapsible Content */}
+            <AnimatePresence initial={false}>
+              {isOpen && (
+                <motion.div
+                  key="airdrop-content"
+                  initial={{ opacity: 0, y: -16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -16 }}
+                  transition={{ duration: 0.25 }}
+                  className="p-6"
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* Airdrop Details */}
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                        <Target className="w-5 h-5 text-brand6" />
+                        Airdrop Details
+                      </h3>
+                      <div className="bg-brand2/10 rounded-xl border border-brand3 overflow-hidden">
+                        <table className="w-full">
+                          <tbody>
+                            <tr className="border-b border-brand3">
+                              <td className="px-4 py-3 text-sm text-gray-300">Amount per User</td>
+                              <td className="px-4 py-3 text-sm font-semibold text-white">
+                                {daoData.airdrop.amount_per_air_drop} TOKEN
+                              </td>
+                            </tr>
+                            <tr className="border-b border-brand3">
+                              <td className="px-4 py-3 text-sm text-gray-300">Start Date</td>
+                              <td className="px-4 py-3 text-sm text-white">
+                                {new Date(daoData.airdrop.start_time).toLocaleDateString()}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="px-4 py-3 text-sm text-gray-300">End Date</td>
+                              <td className="px-4 py-3 text-sm text-white">
+                                {new Date(daoData.airdrop.end_time).toLocaleDateString()}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                      {/* Compact Timer */}
+                      {(airdropStatus === 'live' || airdropStatus === 'upcoming') && (
+                        <div className="bg-brand2/10 rounded-xl border border-brand3 p-4">
+                          <div className="flex items-center gap-2 mb-3">
+                            <Clock className="w-4 h-4 text-brand6" />
+                            <span className="text-sm font-medium text-brand6">
+                              {airdropStatus === 'live' ? 'Ends in:' : 'Starts in:'}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 text-center">
+                            <div className="flex-1 bg-brand6/10 rounded-lg py-2">
+                              <div className="text-lg font-bold text-white">{countdown.days}</div>
+                              <div className="text-xs text-gray-300">Days</div>
+                            </div>
+                            <div className="text-brand6">:</div>
+                            <div className="flex-1 bg-brand6/10 rounded-lg py-2">
+                              <div className="text-lg font-bold text-white">{countdown.hours}</div>
+                              <div className="text-xs text-gray-300">Hours</div>
+                            </div>
+                            <div className="text-brand6">:</div>
+                            <div className="flex-1 bg-brand6/10 rounded-lg py-2">
+                              <div className="text-lg font-bold text-white">{countdown.minutes}</div>
+                              <div className="text-xs text-gray-300">Mins</div>
+                            </div>
+                            <div className="text-brand6">:</div>
+                            <div className="flex-1 bg-brand6/10 rounded-lg py-2">
+                              <div className="text-lg font-bold text-white">{countdown.seconds}</div>
+                              <div className="text-xs text-gray-300">Secs</div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Allocation Breakdown */}
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                        <Calendar className="w-5 h-5 text-brand6" />
+                        Allocation Breakdown
+                      </h3>
+                      <div className="bg-brand2/10 rounded-xl border border-brand3 overflow-hidden">
+                        <table className="w-full">
+                          <thead>
+                            <tr className="bg-brand2/10 border-b border-brand3">
+                              <th className="px-4 py-3 text-left text-sm font-semibold text-brand6">Category</th>
+                              <th className="px-4 py-3 text-right text-sm font-semibold text-brand6">Allocation</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {allocationEntries.map(([key, value], index) => (
+                              <tr key={key} className={index !== allocationEntries.length - 1 ? 'border-b border-brand3' : ''}>
+                                <td className="px-4 py-3 text-sm text-gray-300 capitalize">
+                                  {key.replace(/_/g, ' ')}
+                                </td>
+                                <td className="px-4 py-3 text-right">
+                                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-brand6/10 text-white">
+                                    {value}%
+                                  </span>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                          <tfoot>
+                            <tr className="bg-brand2/10 border-t border-brand3">
+                              <td className="px-4 py-3 text-sm font-semibold text-white">Total Allocated</td>
+                              <td className="px-4 py-3 text-right">
+                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-brand6/10 text-brand6">
+                                  {daoData.airdrop.allocations?.total_allocated || 100}%
+                                </span>
+                              </td>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </motion.div>
       <Dialog open={quickStartOpen} onOpenChange={setQuickStartOpen}>
         <DialogTrigger></DialogTrigger>
         <DialogContent
