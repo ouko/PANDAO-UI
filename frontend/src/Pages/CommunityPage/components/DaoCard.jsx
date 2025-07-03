@@ -381,14 +381,14 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
       <div className="w-full fixed bottom-2 right-4 max-w-4xl z-20">
         {daoData.airdrop && (
           <motion.div
-            className="bg-gradient-to-br from-purple-900 to-blue-900 rounded-2xl border border-purple-500/50 overflow-hidden shadow-2xl"
+            className="bg-gradient-to-br from-brand1 to-brand2 rounded-2xl border border-brand3 overflow-hidden shadow-2xl"
             animate={{ height: isOpen ? 'auto' : 80 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             layout
           >
             {/* Collapsible Header */}
             <button
-              className="flex items-center justify-between w-full px-6 py-4 focus:outline-none cursor-pointer bg-purple-800/20 border-b border-purple-500/30 hover:bg-purple-800/30 transition-colors"
+              className="flex items-center justify-between w-full px-6 py-4 focus:outline-none cursor-pointer bg-brand2 border-b border-brand3 hover:bg-brand2/30 transition-colors"
               onClick={() => setIsOpen(!isOpen)}
               aria-label={isOpen ? 'Collapse airdrop panel' : 'Expand airdrop panel'}
               style={{ background: 'transparent', border: 'none' }}
@@ -427,19 +427,19 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                     {/* Airdrop Details */}
                     <div className="space-y-4">
                       <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                        <Target className="w-5 h-5 text-purple-300" />
+                        <Target className="w-5 h-5 text-brand6" />
                         Airdrop Details
                       </h3>
-                      <div className="bg-purple-800/20 rounded-xl border border-purple-500/30 overflow-hidden">
+                      <div className="bg-brand2/10 rounded-xl border border-brand3 overflow-hidden">
                         <table className="w-full">
                           <tbody>
-                            <tr className="border-b border-purple-500/20">
+                            <tr className="border-b border-brand3">
                               <td className="px-4 py-3 text-sm text-gray-300">Amount per User</td>
                               <td className="px-4 py-3 text-sm font-semibold text-white">
                                 {daoData.airdrop.amount_per_air_drop} TOKEN
                               </td>
                             </tr>
-                            <tr className="border-b border-purple-500/20">
+                            <tr className="border-b border-brand3">
                               <td className="px-4 py-3 text-sm text-gray-300">Start Date</td>
                               <td className="px-4 py-3 text-sm text-white">
                                 {new Date(daoData.airdrop.start_time).toLocaleDateString()}
@@ -457,7 +457,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
 
                       {/* Compact Timer */}
                       {(airdropStatus === 'live' || airdropStatus === 'upcoming') && (
-                        <div className="bg-purple-600/20 rounded-xl border border-purple-500/30 p-4">
+                        <div className="bg-brand2/10 rounded-xl border border-brand3 p-4">
                           <div className="flex items-center gap-2 mb-3">
                             <Clock className="w-4 h-4 text-purple-300" />
                             <span className="text-sm font-medium text-purple-300">
