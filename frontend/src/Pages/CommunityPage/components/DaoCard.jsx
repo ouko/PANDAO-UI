@@ -378,7 +378,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
         </div>
       </div>
       {/* Airdrop Section */}
-      <div className="w-full fixed bottom-2 right-4 max-w-4xl z-20">
+      <div className={`w-full fixed bottom-2 right-4 z-20 ${isOpen ? "max-w-4xl" : "max-w-md"}`}>
         {daoData.airdrop && (
           <motion.div
             className="bg-gradient-to-br from-brand1 to-brand2 rounded-2xl border border-brand3 overflow-hidden shadow-2xl"
