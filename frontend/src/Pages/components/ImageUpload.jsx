@@ -73,7 +73,7 @@ const ImageUpload = ({ onUploadSuccess, imageUrl }) => {
   return (
     <div className="flex flex-col gap-2 items-center justify-center">
 
-      <label className="cursor-pointer bg-brand1 text-white px-1 rounded-md py-2.5  border border-brand5 hover:bg-brand2 w-full">
+      <label className="cursor-pointer  bg-brand1 text-white px-1 rounded-md py-4  border border-brand5 hover:bg-brand2 w-full">
         <span className="bg-brand5 p-2 rounded-md"> 
         Choose File
         </span>

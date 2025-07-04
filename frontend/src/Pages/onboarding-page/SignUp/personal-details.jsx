@@ -217,7 +217,7 @@ const PersonalDetail = () => {
                         </label>
                         <DropdownMenuTrigger asChild>
                             <button
-                                className={`bg-[#1B0D37] border p-2 rounded-md w-full flex flex-wrap gap-2 min-h-[40px] items-center mt-2 ${
+                                className={`bg-[#1B0D37] border p-2  py-4  rounded-md w-full flex flex-wrap gap-2 min-h-[40px] items-center mt-2 ${
                                     !touched.tags || isTagsValid ? 'border-brand5' : 'border-rose-500'
                                 }`}
                                 onClick={() => setTouched(prev => ({...prev, tags: true}))}
@@ -238,7 +238,7 @@ const PersonalDetail = () => {
                         </DropdownMenuTrigger>
                            <DropdownMenuContent
                             align="start"
-                            className="max-h-60  w-[30rem] bg-[#1B0D37] rounded-md border border-[#5228A4] overflow-y-auto outline-none text-white ">
+                            className="max-h-60 w-[30rem] bg-[#1B0D37] rounded-md border border-[#5228A4] overflow-y-auto outline-none text-white ">
         {isLoading ? (
           <DropdownMenuItem>Loading...</DropdownMenuItem>
         ) : error ? (
@@ -326,7 +326,7 @@ const InputField = ({
             />
         ) : (
             <input
-                className={`bg-[#1B0D37] rounded-md border p-4 w-full ${
+                className={`bg-[#1B0D37] border-brand5 rounded-md border p-4 w-full ${
                     disabled ? 'opacity-70 cursor-not-allowed' : 
                     (showError && !isValid ? 'border-rose-500' : 'border-brand5')
                 }`}
