@@ -65,7 +65,7 @@ const DaoCard = ({ dao, onClick }) => {
        <div className="flex items-center gap-2">
           {renderStat(
             <Users className="h-4 w-4 text-white" />,
-            dao.participants,
+            dao.participants || dao.number_of_participants || 0,
             "Total Number of Participants"
           )}
           {renderStat(
