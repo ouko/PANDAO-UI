@@ -254,7 +254,7 @@ const PersonalDetail = () => {
                   : "hover:bg-brand2 hover:text-white"
               }`}
             >
-              {tag.name} {selectedTags.includes(tag.name) && "✅"}
+              {tag.name} {selectedTags.includes(tag.name) && "✓"}
             </DropdownMenuItem>
           ))
         )}
