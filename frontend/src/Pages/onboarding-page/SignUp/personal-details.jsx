@@ -250,8 +250,8 @@ const PersonalDetail = () => {
               onClick={() => toggleTag(tag.name)}
               className={`cursor-pointer ${
                 selectedTags.includes(tag.name)
-                  ? "bg-brand2 text-white"
-                  : "hover:bg-brand2 hover:text-white"
+                  ? "bg-brand2 text-white focus:bg-brand2 focus:text-white"
+                  : "hover:bg-brand2 focus:text-white focus:bg-brand2"
               }`}
             >
               {tag.name} {selectedTags.includes(tag.name) && "✓"}
