@@ -236,22 +236,29 @@ const PersonalDetail = () => {
                                 )}
                             </button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent
+                           <DropdownMenuContent
                             align="start"
-                            className="max-h-60 w-[30rem] overflow-y-auto"
-                        >
-                            {isLoading ? (
-                                <DropdownMenuItem>Loading...</DropdownMenuItem>
-                            ) : error ? (
-                                <DropdownMenuItem>Error loading tags</DropdownMenuItem>
-                            ) : (
-                                tagsData.map((tag) => (
-                                    <DropdownMenuItem key={tag.id} onClick={() => toggleTag(tag.name)}>
-                                        {tag.name} {selectedTags.includes(tag.name) && '✅'}
-                                    </DropdownMenuItem>
-                                ))
-                            )}
-                        </DropdownMenuContent>
+                            className="max-h-60  w-[30rem] bg-[#1B0D37] rounded-md border border-[#5228A4] overflow-y-auto outline-none text-white ">
+        {isLoading ? (
+          <DropdownMenuItem>Loading...</DropdownMenuItem>
+        ) : error ? (
+          <DropdownMenuItem>Error loading tags</DropdownMenuItem>
+        ) : (
+          tagsData.map((tag) => (
+            <DropdownMenuItem
+              key={tag.id}
+              onClick={() => toggleTag(tag.name)}
+              className={`cursor-pointer ${
+                selectedTags.includes(tag.name)
+                  ? "bg-brand2 text-white"
+                  : "hover:bg-brand2 hover:text-white"
+              }`}
+            >
+              {tag.name} {selectedTags.includes(tag.name) && "✅"}
+            </DropdownMenuItem>
+          ))
+        )}
+      </DropdownMenuContent>
                         {touched.tags && !isTagsValid && (
                             <span className="text-rose-500 text-sm">
                                 Select between 5 and 10 tags.
