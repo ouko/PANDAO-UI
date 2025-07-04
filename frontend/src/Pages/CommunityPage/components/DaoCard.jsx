@@ -178,7 +178,6 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
   };
   const allocationEntries = Object.entries(daoData.airdrop.allocations || {})
     .filter(([key]) => key !== 'total_allocated');
-  console.log(daoData)
   return (
 
     <>
