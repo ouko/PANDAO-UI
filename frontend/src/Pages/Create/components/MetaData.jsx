@@ -160,27 +160,35 @@ function MetaData() {
             />
           </div>
 
+          <div className="flex flex-col gap-4 pt-8 w-full">
+            <div className="flex gap-4 text-2xl w-full">
+              <button
+                onClick={() => setView('4')}
+                type="button"
+                className="flex-1 rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"
+              >
+                Back
+              </button>
+              <button
+                disabled={!allFieldsFilled()}
+                onClick={handleViewChange}
+                type="submit"
+                className={`flex-1 rounded-2xl p-3 font-semibold shadow-inner ${allFieldsFilled()
+                    ? "text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF]"
+                    : "bg-brand2 text-gray-300 cursor-not-allowed"
+                  }`}
+              >
+                Next
+              </button>
 
-          {/* Navigation Buttons */}
-          <div className="flex gap-4 pt-8 text-2xl w-full">
-            <button
-              onClick={() => setView('4')}
-              type="button"
-              className="flex-1 rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner"
-            >
-              Back
-            </button>
-            <button
-              disabled={!allFieldsFilled()}
-              onClick={handleViewChange}
-              type="submit"
-              className={`flex-1 rounded-2xl p-3 font-semibold shadow-inner ${allFieldsFilled()
-                ? "text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF]"
-                : "bg-brand2 text-gray-300 cursor-not-allowed"
-                }`}
-            >
-              Next
-            </button>
+              <button
+                onClick={() => setView('6')}
+                type="button"
+                className="flex-1 rounded-2xl p-3 text-white hover:bg-gradient-to-b hover:from-[#C0A1FF] hover:to-[#391483] bg-gradient-to-b from-[#C0A1FF] to-[#7D3DFF] font-semibold shadow-inner "
+              >
+                Skip
+              </button>
+            </div>
           </div>
         </div>
       </div>
