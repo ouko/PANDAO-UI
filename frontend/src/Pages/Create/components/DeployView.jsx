@@ -391,7 +391,7 @@ const DeployView = () => {
                     />
                     <InfoItem
                       label="Token Price"
-                      value={`${formFields.token.tokenPrice} SUI`}
+                      value={`${formFields.token.tokenPrice} `}
                     />
                   </div>
                 </Section>

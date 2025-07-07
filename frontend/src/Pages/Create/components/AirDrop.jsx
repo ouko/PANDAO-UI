@@ -226,12 +226,15 @@ function AirDrop() {
                     value={formFields.airDrop[item.key]}
                     onChange={(e) => handleSliderChange(item.key, Number(e.target.value))}
                     disabled={lockedSliders[item.key]}
-                    className={`w-full h-2 rounded-lg appearance-none cursor-pointer ${
+                    className={`w-full  rounded-lg appearance-none cursor-pointer h-5 ${
                       lockedSliders[item.key] 
                         ? 'bg-gray-600 cursor-not-allowed opacity-50' 
                         : 'bg-[#1B0D37] cursor-pointer'
                     }`}
-                    style={{ accentColor: lockedSliders[item.key] ? '#6B7280' : '#AE85FF' }}
+                    style={{
+                      accentColor: lockedSliders[item.key] ? '#6B7280' : '#AE85FF',
+                      background: `linear-gradient(to right, #AE85FF 0%, #AE85FF ${formFields.airDrop[item.key]}%, #1B0D37 ${formFields.airDrop[item.key]}%, #1B0D37 100%)`
+                    }}
                   />
                   {lockedSliders[item.key] && (
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
