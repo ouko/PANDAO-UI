@@ -6,6 +6,52 @@ function AirDrop() {
   const { setView } = useViewStore();
   const { formFields, setFormFields } = useTokenWeightStore();
 
+  // Compute the total of all four sliders
+  const totalSlider =
+    Number(formFields.airDrop.publicSale) +
+    Number(formFields.airDrop.foundingTeam) +
+    Number(formFields.airDrop.treasury) +
+    Number(formFields.airDrop.communityIncentives);
+
+  // Handle slider change and proportionally adjust others
+  const handleSliderChange = (changedKey, newValue) => {
+    // Get the old values
+    const keys = ['publicSale', 'foundingTeam', 'treasury', 'communityIncentives'];
+    const oldValues = keys.map(k => Number(formFields.airDrop[k]) || 0);
+    const changedIdx = keys.indexOf(changedKey);
+    const oldChangedValue = oldValues[changedIdx];
+    const delta = newValue - oldChangedValue;
+    const otherIndices = keys.map((_, i) => i).filter(i => i !== changedIdx);
+    let sumOthers = otherIndices.reduce((sum, i) => sum + oldValues[i], 0);
+
+    // If others are all zero, just set changed and others to 0
+    if (sumOthers === 0 && newValue <= 100) {
+      const next = { ...formFields.airDrop };
+      keys.forEach((k, i) => { next[k] = i === changedIdx ? newValue : 0; });
+      setFormFields({ airDrop: next });
+      return;
+    }
+
+    // Compute new values for others proportionally
+    let remaining = 100 - newValue;
+    let newOthers = otherIndices.map(i => Math.max(0, Math.round((oldValues[i] / sumOthers) * remaining)));
+    // Correction for rounding errors
+    let othersSum = newOthers.reduce((a, b) => a + b, 0);
+    let diff = remaining - othersSum;
+    if (diff !== 0 && newOthers.length > 0) {
+      // Add/subtract the diff to the largest (or smallest) other
+      let idxToFix = newOthers.indexOf(Math.max(...newOthers));
+      newOthers[idxToFix] += diff;
+    }
+    // Compose the new values
+    const next = { ...formFields.airDrop };
+    keys.forEach((k, i) => {
+      if (i === changedIdx) next[k] = newValue;
+      else next[k] = newOthers[otherIndices.indexOf(i)] ?? 0;
+    });
+    setFormFields({ airDrop: next });
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormFields({
@@ -70,117 +116,46 @@ function AirDrop() {
 
       <div className="w-full max-w-screen-lg text-white mx-auto pt-6 md:pt-10 gap-4 shadow-lg rounded-lg space-y-6">
         <div className="space-y-4">
-          {/* Public Sale */}
-          {/* Public Sale (%) */}
-          <div className="flex flex-col gap-2.5 items-start justify-start py-2 self-stretch relative">
-            <div className="flex items-center justify-between w-full">
-              <label htmlFor="public-sale" className="text-white text-2xl leading-[120%] font-medium">
-                Public Sale (%)
-              </label>
-              <FiHelpCircle
-                className="text-[#b59aec] cursor-pointer"
-                title="Percentage allocated for public sale"
-                size={20}
-              />
+          {/* Token Distribution Sliders */}
+          <div className="flex flex-col gap-6 py-2 self-stretch relative">
+            {[
+              { key: 'publicSale', label: 'Public Sale', help: 'Percentage allocated for public sale' },
+              { key: 'foundingTeam', label: 'Founding Team', help: 'Percentage allocated for founding team' },
+              { key: 'treasury', label: 'Treasury', help: 'Percentage allocated for treasury' },
+              { key: 'communityIncentives', label: 'Community Incentives', help: 'Percentage allocated for community incentives' },
+            ].map((item, idx) => (
+              <div key={item.key} className="flex flex-col gap-2.5 items-start justify-start">
+                <div className="flex items-center justify-between w-full">
+                  <label htmlFor={item.key} className="text-white text-2xl leading-[120%] font-medium">
+                    {item.label} (<span className="text-[#AE85FF]">{formFields.airDrop[item.key]}</span>%)
+                  </label>
+                  <FiHelpCircle
+                    className="text-[#b59aec] cursor-pointer"
+                    title={item.help}
+                    size={20}
+                  />
+                </div>
+                <div className="text-[#b59aec] text-sm leading-[120%] font-normal self-stretch">
+                  {item.help}
+                </div>
+                <input
+                  id={item.key}
+                  name={item.key}
+                  type="range"
+                  min="0"
+                  max="100"
+                  step="1"
+                  value={formFields.airDrop[item.key]}
+                  onChange={(e) => handleSliderChange(item.key, Number(e.target.value))}
+                  className="w-full h-2 bg-[#1B0D37] rounded-lg appearance-none cursor-pointer"
+                  style={{ accentColor: '#AE85FF' }}
+                />
+              </div>
+            ))}
+            {/* Show sum for clarity */}
+            <div className="text-right w-full text-lg text-[#b59aec] pt-2">
+              Total: <span className={totalSlider === 100 ? 'text-green-400' : 'text-red-400'}>{totalSlider}</span>%
             </div>
-            <div className="text-[#b59aec] text-sm leading-[120%] font-normal self-stretch">
-              Percentage allocated for public sale
-            </div>
-            <input
-              id="public-sale"
-              name="publicSale"
-              type="number"
-              min="0"
-              max="100"
-              placeholder="Enter percentage..."
-              value={formFields.airDrop.publicSale}
-              onChange={handleInputChange}
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
-            />
-          </div>
-
-          {/* Founding Team (%) */}
-          <div className="flex flex-col gap-2.5 py-2 self-stretch relative">
-            <div className="flex items-center justify-between w-full">
-              <label htmlFor="founding-team" className="text-white text-2xl leading-[120%] font-medium">
-                Founding Team (%)
-              </label>
-              <FiHelpCircle
-                className="text-[#b59aec] cursor-pointer"
-                title="Percentage allocated for founding team"
-                size={20}
-              />
-            </div>
-            <div className="text-[#b59aec] text-sm leading-[120%] font-normal self-stretch">
-              Percentage allocated for founding team
-            </div>
-            <input
-              id="founding-team"
-              name="foundingTeam"
-              type="number"
-              min="0"
-              max="100"
-              placeholder="Enter percentage..."
-              value={formFields.airDrop.foundingTeam}
-              onChange={handleInputChange}
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
-            />
-          </div>
-
-          {/* Treasury (%) */}
-          <div className="flex flex-col gap-2.5 py-2 self-stretch relative">
-            <div className="flex items-center justify-between w-full">
-              <label htmlFor="treasury" className="text-white text-2xl leading-[120%] font-medium">
-                Treasury (%)
-              </label>
-              <FiHelpCircle
-                className="text-[#b59aec] cursor-pointer"
-                title="Percentage allocated for treasury"
-                size={20}
-              />
-            </div>
-            <div className="text-[#b59aec] text-sm leading-[120%] font-normal self-stretch">
-              Percentage allocated for treasury
-            </div>
-            <input
-              id="treasury"
-              name="treasury"
-              type="number"
-              min="0"
-              max="100"
-              placeholder="Enter percentage..."
-              value={formFields.airDrop.treasury}
-              onChange={handleInputChange}
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
-            />
-          </div>
-
-          {/* Community Incentives (%) */}
-          <div className="flex flex-col gap-2.5 py-2 self-stretch relative">
-            <div className="flex items-center justify-between w-full">
-              <label htmlFor="community-incentives" className="text-white text-2xl leading-[120%] font-medium">
-                Community Incentives (%)
-              </label>
-              <FiHelpCircle
-                className="text-[#b59aec] cursor-pointer"
-                title="Percentage allocated for community incentives"
-                size={20}
-              />
-            </div>
-            <div className="text-[#b59aec] text-sm leading-[120%] font-normal self-stretch">
-              Percentage allocated for community incentives
-            </div>
-            <input
-              id="community-incentives"
-              name="communityIncentives"
-              type="number"
-              min="0"
-              max="100"
-              placeholder="Enter percentage..."
-              value={formFields.airDrop.communityIncentives}
-              onChange={handleInputChange}
-              className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
-            />
           </div>
 
           {/* AirDrop Start Time */}
