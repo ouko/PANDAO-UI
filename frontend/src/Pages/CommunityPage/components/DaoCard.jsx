@@ -20,6 +20,13 @@ import useBluePrintSlugStore from '@/store/blueprintSlug';
 import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from "framer-motion";
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
 
 const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }) => {
   const [copied, setCopied] = useState(false);
@@ -605,13 +612,13 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                         <tr className="border-b border-brand3">
                           <td className="px-4 py-3 text-sm text-gray-300">Token Price</td>
                           <td className="px-4 py-3 text-sm font-semibold text-white text-right">
-                            XRD{daoData.token_meta?.token_price}
+                            {daoData.token_meta?.token_price}XRD
                           </td>
                         </tr>
                         <tr className="border-b border-brand3">
                           <td className="px-4 py-3 text-sm text-gray-300">Buy Back Price</td>
                           <td className="px-4 py-3 text-sm font-semibold text-white text-right">
-                            XRD{daoData.token_meta?.token_buy_back_price}
+                            {daoData.token_meta?.token_buy_back_price}XRD
                           </td>
                         </tr>
                         <tr className="border-b border-brand3">
