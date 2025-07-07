@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { useParams } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const CustomTooltip = ({ active, payload, label }) => {
+const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length > 0) {
     // Your expense object for this point
     const expense = payload[0].payload;
@@ -101,6 +102,22 @@ const FundHistoryGraph = () => {
       </div>
     </div>
   );
+};
+
+CustomTooltip.propTypes = {
+  active: PropTypes.bool,
+  payload: PropTypes.arrayOf(PropTypes.shape({
+    payload: PropTypes.shape({
+      image_url: PropTypes.string,
+      user_name: PropTypes.string,
+      info: PropTypes.string,
+      date: PropTypes.string,
+      xrd_added: PropTypes.number,
+      current_xrd: PropTypes.number,
+      // tx_hash: PropTypes.string, // Uncomment if used
+    }),
+  })),
+  label: PropTypes.any,
 };
 
 export default FundHistoryGraph;
