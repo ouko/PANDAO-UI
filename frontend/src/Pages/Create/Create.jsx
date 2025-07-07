@@ -23,7 +23,7 @@ const Create = () => {
             <TileEffect4 />
           </div>
    
-      {view === "1" && (
+      {view === "6" && (
        <InstructionView/>
       )}
          {view === "2" && (
@@ -39,7 +39,7 @@ const Create = () => {
        <MetaData/>
       )}
 
-       {view === "6" && (
+       {view === "1" && (
        <AirDrop/>
       )}
               {view === "7" && (

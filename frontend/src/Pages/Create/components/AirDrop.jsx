@@ -1,10 +1,19 @@
 import useTokenWeightStore from '@/store/templateStore/tokenWeightStore';
 import useViewStore from '@/store/view';
-import { FiHelpCircle } from 'react-icons/fi';
+import { FiHelpCircle, FiLock, FiUnlock } from 'react-icons/fi';
+import { useState } from 'react';
 
 function AirDrop() {
   const { setView } = useViewStore();
   const { formFields, setFormFields } = useTokenWeightStore();
+  
+  // State to track which sliders are locked
+  const [lockedSliders, setLockedSliders] = useState({
+    publicSale: false,
+    foundingTeam: false,
+    treasury: false,
+    communityIncentives: false
+  });
 
   // Compute the total of all four sliders
   const totalSlider =
@@ -13,42 +22,98 @@ function AirDrop() {
     Number(formFields.airDrop.treasury) +
     Number(formFields.airDrop.communityIncentives);
 
+  // Toggle lock state for a slider
+  const toggleLock = (sliderKey) => {
+    setLockedSliders(prev => ({
+      ...prev,
+      [sliderKey]: !prev[sliderKey]
+    }));
+  };
+
   // Handle slider change and proportionally adjust others
   const handleSliderChange = (changedKey, newValue) => {
+    // Don't allow changes to locked sliders
+    if (lockedSliders[changedKey]) {
+      return;
+    }
+
     // Get the old values
     const keys = ['publicSale', 'foundingTeam', 'treasury', 'communityIncentives'];
     const oldValues = keys.map(k => Number(formFields.airDrop[k]) || 0);
     const changedIdx = keys.indexOf(changedKey);
     const oldChangedValue = oldValues[changedIdx];
-    const delta = newValue - oldChangedValue;
-    const otherIndices = keys.map((_, i) => i).filter(i => i !== changedIdx);
-    let sumOthers = otherIndices.reduce((sum, i) => sum + oldValues[i], 0);
+    
+    // Get unlocked indices (excluding the changed one)
+    const unlockedIndices = keys
+      .map((_, i) => i)
+      .filter(i => i !== changedIdx && !lockedSliders[keys[i]]);
+    
+    // Calculate sum of locked sliders (excluding the changed one)
+    const lockedSum = keys.reduce((sum, key, i) => {
+      if (i !== changedIdx && lockedSliders[key]) {
+        return sum + oldValues[i];
+      }
+      return sum;
+    }, 0);
 
-    // If others are all zero, just set changed and others to 0
-    if (sumOthers === 0 && newValue <= 100) {
+    // Calculate remaining percentage available for unlocked sliders
+    const availableForUnlocked = 100 - newValue - lockedSum;
+    
+    // If no unlocked sliders or not enough space, don't allow the change
+    if (unlockedIndices.length === 0 || availableForUnlocked < 0) {
+      return;
+    }
+
+    // Get current sum of unlocked sliders
+    let sumUnlocked = unlockedIndices.reduce((sum, i) => sum + oldValues[i], 0);
+
+    // If unlocked sliders are all zero, distribute remaining equally
+    if (sumUnlocked === 0 && availableForUnlocked > 0) {
+      const equalShare = Math.floor(availableForUnlocked / unlockedIndices.length);
+      const remainder = availableForUnlocked - (equalShare * unlockedIndices.length);
+      
       const next = { ...formFields.airDrop };
-      keys.forEach((k, i) => { next[k] = i === changedIdx ? newValue : 0; });
+      keys.forEach((k, i) => {
+        if (i === changedIdx) {
+          next[k] = newValue;
+        } else if (!lockedSliders[k]) {
+          const unlockedIdx = unlockedIndices.indexOf(i);
+          next[k] = equalShare + (unlockedIdx < remainder ? 1 : 0);
+        }
+        // Locked sliders keep their current values
+      });
       setFormFields({ airDrop: next });
       return;
     }
 
-    // Compute new values for others proportionally
-    let remaining = 100 - newValue;
-    let newOthers = otherIndices.map(i => Math.max(0, Math.round((oldValues[i] / sumOthers) * remaining)));
+    // Distribute the available percentage proportionally among unlocked sliders
+    let newUnlocked = unlockedIndices.map(i => 
+      Math.max(0, Math.round((oldValues[i] / sumUnlocked) * availableForUnlocked))
+    );
+    
     // Correction for rounding errors
-    let othersSum = newOthers.reduce((a, b) => a + b, 0);
-    let diff = remaining - othersSum;
-    if (diff !== 0 && newOthers.length > 0) {
-      // Add/subtract the diff to the largest (or smallest) other
-      let idxToFix = newOthers.indexOf(Math.max(...newOthers));
-      newOthers[idxToFix] += diff;
+    let unlockedSum = newUnlocked.reduce((a, b) => a + b, 0);
+    let diff = availableForUnlocked - unlockedSum;
+    
+    if (diff !== 0 && newUnlocked.length > 0) {
+      // Add/subtract the diff to the largest (or smallest) unlocked slider
+      let maxValue = Math.max(...newUnlocked);
+      let idxToFix = newUnlocked.indexOf(maxValue);
+      newUnlocked[idxToFix] += diff;
     }
+    
     // Compose the new values
     const next = { ...formFields.airDrop };
     keys.forEach((k, i) => {
-      if (i === changedIdx) next[k] = newValue;
-      else next[k] = newOthers[otherIndices.indexOf(i)] ?? 0;
+      if (i === changedIdx) {
+        next[k] = newValue;
+      } else if (!lockedSliders[k]) {
+        const unlockedIdx = unlockedIndices.indexOf(i);
+        next[k] = unlockedIdx !== -1 ? newUnlocked[unlockedIdx] : oldValues[i];
+      }
+      // Locked sliders keep their current values
     });
+    
     setFormFields({ airDrop: next });
   };
 
@@ -86,7 +151,6 @@ function AirDrop() {
       parseFloat(ad.amount_per_air_drop) > 0 // Ensure amount is positive
     );
   };
-
 
   const handleViewChange = () => {
     if (allFieldsFilled()) {
@@ -128,28 +192,53 @@ function AirDrop() {
                 <div className="flex items-center justify-between w-full">
                   <label htmlFor={item.key} className="text-white text-2xl leading-[120%] font-medium">
                     {item.label} (<span className="text-[#AE85FF]">{formFields.airDrop[item.key]}</span>%)
+                    {lockedSliders[item.key] && <span className="text-yellow-400 ml-2">🔒</span>}
                   </label>
-                  <FiHelpCircle
-                    className="text-[#b59aec] cursor-pointer"
-                    title={item.help}
-                    size={20}
-                  />
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => toggleLock(item.key)}
+                      className={`p-1 rounded ${lockedSliders[item.key] 
+                        ? 'text-yellow-400 hover:text-yellow-300' 
+                        : 'text-gray-400 hover:text-gray-300'
+                      }`}
+                      title={lockedSliders[item.key] ? 'Unlock slider' : 'Lock slider'}
+                    >
+                      {lockedSliders[item.key] ? <FiLock size={18} /> : <FiUnlock size={18} />}
+                    </button>
+                    <FiHelpCircle
+                      className="text-[#b59aec] cursor-pointer"
+                      title={item.help}
+                      size={20}
+                    />
+                  </div>
                 </div>
                 <div className="text-[#b59aec] text-sm leading-[120%] font-normal self-stretch">
                   {item.help}
                 </div>
-                <input
-                  id={item.key}
-                  name={item.key}
-                  type="range"
-                  min="0"
-                  max="100"
-                  step="1"
-                  value={formFields.airDrop[item.key]}
-                  onChange={(e) => handleSliderChange(item.key, Number(e.target.value))}
-                  className="w-full h-2 bg-[#1B0D37] rounded-lg appearance-none cursor-pointer"
-                  style={{ accentColor: '#AE85FF' }}
-                />
+                <div className="relative w-full">
+                  <input
+                    id={item.key}
+                    name={item.key}
+                    type="range"
+                    min="0"
+                    max="100"
+                    step="1"
+                    value={formFields.airDrop[item.key]}
+                    onChange={(e) => handleSliderChange(item.key, Number(e.target.value))}
+                    disabled={lockedSliders[item.key]}
+                    className={`w-full h-2 rounded-lg appearance-none cursor-pointer ${
+                      lockedSliders[item.key] 
+                        ? 'bg-gray-600 cursor-not-allowed opacity-50' 
+                        : 'bg-[#1B0D37] cursor-pointer'
+                    }`}
+                    style={{ accentColor: lockedSliders[item.key] ? '#6B7280' : '#AE85FF' }}
+                  />
+                  {lockedSliders[item.key] && (
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <FiLock className="text-yellow-400" size={16} />
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
             {/* Show sum for clarity */}
@@ -176,7 +265,7 @@ function AirDrop() {
             <input
               id="airdrop-start-time"
               name="airDropStartTime"
-              type="datetime-local"
+              min={new Date().toISOString().slice(0, 16)}              type="datetime-local"
               value={formFields.airDrop.airDropStartTime}
               onChange={handleInputChange}
               onClick={(e) => e.target.showPicker()}
@@ -208,7 +297,7 @@ function AirDrop() {
               onChange={handleInputChange}
               onClick={(e) => e.target.showPicker()}
               className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white shadow-xs focus:outline-none focus:ring-1 [color-scheme:dark] focus:ring-purple-400"
-            />
+              min={formFields.airDrop.airDropStartTime || new Date().toISOString().slice(0, 16)}            />
           </div>
 
           {/* Amount per AirDrop */}
@@ -237,7 +326,6 @@ function AirDrop() {
               className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white shadow-xs focus:outline-none focus:ring-1 focus:ring-purple-400"
             />
           </div>
-
 
           {/* Navigation Buttons */}
           <div className="flex gap-4 pt-8 text-2xl w-full">
