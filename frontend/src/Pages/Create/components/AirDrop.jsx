@@ -181,6 +181,7 @@ function AirDrop() {
       <div className="w-full max-w-screen-lg text-white mx-auto pt-6 md:pt-10 gap-4 shadow-lg rounded-lg space-y-6">
         <div className="space-y-4">
           {/* Token Distribution Sliders */}
+          <div className="text-lg font-semibold text-white">Total Tokens: {formFields.token.totalSupply || 0}</div>
           <div className="flex flex-col gap-6 py-2 self-stretch relative">
             {[
               { key: 'publicSale', label: 'Public Sale', help: 'Percentage allocated for public sale' },
@@ -191,9 +192,15 @@ function AirDrop() {
               <div key={item.key} className="flex flex-col gap-2.5 items-start justify-start">
                 <div className="flex items-center justify-between w-full">
                   <label htmlFor={item.key} className="text-white text-2xl leading-[120%] font-medium">
-                    {item.label} (<span className="text-[#AE85FF]">{formFields.airDrop[item.key]}</span>%)
-                    {lockedSliders[item.key] && <span className="text-yellow-400 ml-2">🔒</span>}
-                  </label>
+  {item.label} (
+    <span className="text-[#AE85FF]">{formFields.airDrop[item.key]}</span>%
+    <span className="text-[#6EE7B7] ml-2 text-base font-normal">
+      {((formFields.token.totalSupply || 0) * (formFields.airDrop[item.key] / 100)).toLocaleString(undefined, { maximumFractionDigits: 4 })}
+    </span>
+    <span className="text-[#6EE7B7] ml-1 text-base font-normal">tokens</span>
+  )
+  {lockedSliders[item.key] && <span className="text-yellow-400 ml-2">🔒</span>}
+</label>
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => toggleLock(item.key)}
