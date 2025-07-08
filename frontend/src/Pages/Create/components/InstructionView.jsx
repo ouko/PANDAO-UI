@@ -1,4 +1,4 @@
-import { ChevronRight, CirclePlus, Pen, ShieldCheck } from "lucide-react";
+import { ChevronRight, Pen, Coins, Send, Gavel, Rocket, LayoutTemplate } from "lucide-react";
 import { StepsCard } from "./StepsCard";
 import useViewStore from "@/store/view";
 import { useRef, useState, useEffect } from "react";
@@ -68,16 +68,14 @@ const InstructionView = () => {
             <span className="step-2-describe-your-dao-span3 text-amber-50">Build your DAO</span>
           </span>
         </div>
-        <div className="text-[#ffffff]   text-xl leading-[130%] font-normal text-left ">
-          <span>
-          Welcome to the How to Build Your DAO hub. Here you can find a variety of
-            guides and resources to assist you in forming and operating your own
-            Decentralized Autonomous Organization . If you're unfamiliar with what a
-            DAO is or an experienced builder interested in exploring the best practices,
-            we've compiled the ideal tutorials for you. Check our collection and get the
-            skills you need to create, launch, and regulate your DAO.
-          </span>
-        </div>
+        <div className="text-[#ffffff] text-base md:text-xl tracking-wider  leading-[130%] font-normal text-left max-w-xs sm:max-w-md md:max-w-full mx-auto md:mx-0 break-words">
+  <span>
+  Create your DAO in minutes.
+  Start by picking a template that fits your needs.
+  Customize the details, governance, and token settings.
+  Launch and manage your DAO with just a few steps.
+</span>
+</div>
       </div>
 
       {/* Enhanced Horizontal Scrollable Steps Container */}
@@ -98,12 +96,12 @@ const InstructionView = () => {
           onTouchMove={handleTouchMove}
         >
           <div className="flex gap-4 md:gap-5 min-w-max pb-2 select-none">
-            <StepsCard title="Select Template" step="Step 1" icon={CirclePlus} />
+            <StepsCard title="Select Template" step="Step 1" icon={LayoutTemplate} />
             <StepsCard title="Describe your DAO" step="Step 2" icon={Pen} />
-            <StepsCard title="Token View" step="Step 3" icon={ShieldCheck} />
-            <StepsCard title="AirDrop" step="Step 4" icon={ShieldCheck} />
-            <StepsCard title="Governance" step="Step 5" icon={ShieldCheck} />
-            <StepsCard title="Deploy" step="Step 6" icon={ShieldCheck} />
+            <StepsCard title="Token Details" step="Step 3" icon={Coins} />
+            <StepsCard title="AirDrop" step="Step 4" icon={Send} />
+            <StepsCard title="Governance" step="Step 5" icon={Gavel} />
+            <StepsCard title="Deploy" step="Step 6" icon={Rocket} />
           </div>
         </div>
       </div>
