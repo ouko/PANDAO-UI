@@ -415,12 +415,12 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
       </div>
       {/* Airdrop Section */}
       <motion.div
-        animate={{ width: isOpen ? "896px" : "448px" }}
+        animate={{ width: isOpen ? "448px" : "448px" }}
         className={`w-full fixed bottom-2 right-4 z-20 `}>
         {daoData.airdrop && (
           <motion.div
             className="bg-gradient-to-br from-brand1 to-brand2 rounded-2xl border border-brand3 overflow-hidden shadow-2xl"
-            animate={{ height: isOpen ? 470 : 80 }}
+            animate={{ height: isOpen ? 530 : 80 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             layout
           >
@@ -461,7 +461,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                   transition={{ duration: 0.25 }}
                   className="p-6"
                 >
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1  gap-6">
                     {/* Airdrop Details */}
                     <div className="space-y-4">
                       <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
@@ -527,9 +527,31 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                       )}
 
                     </div>
-
+                    <div>
+                        {airdropStatus === 'live' && (
+                          <div className="mt-4 flex items-center justify-center ">
+                            <Button
+                              onClick={handleMintAirdrop}
+                              variant="brand"
+                              disabled={isMinting}
+                            >
+                              {isMinting ? (
+                                <>
+                                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                                  <span>Minting...</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Sparkles className="w-5 h-5 mx-2"  />
+                                  <span>Mint Airdrop Token</span>
+                                </>
+                              )}
+                            </Button>
+                          </div>
+                        )}
+                      </div>
                     {/* Allocation Breakdown */}
-                    <div className="space-y-4">
+                    <div className="space-y-4 hidden">
                       <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                         <Calendar className="w-5 h-5 text-brand6" />
                         Allocation Breakdown
@@ -569,29 +591,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                         </table>
 
                       </div>
-                      <div>
-                        {airdropStatus === 'live' && (
-                          <div className="mt-4 ">
-                            <Button
-                              onClick={handleMintAirdrop}
-                              variant="brand"
-                              disabled={isMinting}
-                            >
-                              {isMinting ? (
-                                <>
-                                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                                  <span>Minting...</span>
-                                </>
-                              ) : (
-                                <>
-                                  <Sparkles className="w-5 h-5 mx-2"  />
-                                  <span>Mint Airdrop Token</span>
-                                </>
-                              )}
-                            </Button>
-                          </div>
-                        )}
-                      </div>
+                     
                     </div>
                   </div>
                 </motion.div>
