@@ -6,7 +6,7 @@ import { useState } from 'react';
 function AirDrop() {
   const { setView } = useViewStore();
   const { formFields, setFormFields } = useTokenWeightStore();
-  
+
   // State to track which sliders are locked
   const [lockedSliders, setLockedSliders] = useState({
     publicSale: false,
@@ -42,12 +42,12 @@ function AirDrop() {
     const oldValues = keys.map(k => Number(formFields.airDrop[k]) || 0);
     const changedIdx = keys.indexOf(changedKey);
     const oldChangedValue = oldValues[changedIdx];
-    
+
     // Get unlocked indices (excluding the changed one)
     const unlockedIndices = keys
       .map((_, i) => i)
       .filter(i => i !== changedIdx && !lockedSliders[keys[i]]);
-    
+
     // Calculate sum of locked sliders (excluding the changed one)
     const lockedSum = keys.reduce((sum, key, i) => {
       if (i !== changedIdx && lockedSliders[key]) {
@@ -58,7 +58,7 @@ function AirDrop() {
 
     // Calculate remaining percentage available for unlocked sliders
     const availableForUnlocked = 100 - newValue - lockedSum;
-    
+
     // If no unlocked sliders or not enough space, don't allow the change
     if (unlockedIndices.length === 0 || availableForUnlocked < 0) {
       return;
@@ -71,7 +71,7 @@ function AirDrop() {
     if (sumUnlocked === 0 && availableForUnlocked > 0) {
       const equalShare = Math.floor(availableForUnlocked / unlockedIndices.length);
       const remainder = availableForUnlocked - (equalShare * unlockedIndices.length);
-      
+
       const next = { ...formFields.airDrop };
       keys.forEach((k, i) => {
         if (i === changedIdx) {
@@ -87,21 +87,21 @@ function AirDrop() {
     }
 
     // Distribute the available percentage proportionally among unlocked sliders
-    let newUnlocked = unlockedIndices.map(i => 
+    let newUnlocked = unlockedIndices.map(i =>
       Math.max(0, Math.round((oldValues[i] / sumUnlocked) * availableForUnlocked))
     );
-    
+
     // Correction for rounding errors
     let unlockedSum = newUnlocked.reduce((a, b) => a + b, 0);
     let diff = availableForUnlocked - unlockedSum;
-    
+
     if (diff !== 0 && newUnlocked.length > 0) {
       // Add/subtract the diff to the largest (or smallest) unlocked slider
       let maxValue = Math.max(...newUnlocked);
       let idxToFix = newUnlocked.indexOf(maxValue);
       newUnlocked[idxToFix] += diff;
     }
-    
+
     // Compose the new values
     const next = { ...formFields.airDrop };
     keys.forEach((k, i) => {
@@ -113,7 +113,7 @@ function AirDrop() {
       }
       // Locked sliders keep their current values
     });
-    
+
     setFormFields({ airDrop: next });
   };
 
@@ -181,48 +181,64 @@ function AirDrop() {
       <div className="w-full max-w-screen-lg text-white mx-auto pt-6 md:pt-10 gap-4 shadow-lg rounded-lg space-y-6">
         <div className="space-y-4">
           {/* Token Distribution Sliders */}
-          <div className="text-lg font-semibold text-white">Total Tokens: {formFields.token.totalSupply || 0}</div>
-          <div className="flex flex-col gap-6 py-2 self-stretch relative">
+          <div className="text-xl hidden font-bold text-white mb-8 text-center bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-lg">
+            Total Tokens: {formFields.token.totalSupply || 0}
+          </div>
+
+          <div className="flex flex-col gap-8 py-4 self-stretch relative">
             {[
               { key: 'publicSale', label: 'Public Sale', help: 'Percentage allocated for public sale' },
               { key: 'foundingTeam', label: 'Founding Team', help: 'Percentage allocated for founding team' },
               { key: 'treasury', label: 'Treasury', help: 'Percentage allocated for treasury' },
               { key: 'communityIncentives', label: 'Community Incentives', help: 'Percentage allocated for community incentives' },
             ].map((item, idx) => (
-              <div key={item.key} className="flex flex-col gap-2.5 items-start justify-start">
-                <div className="flex items-center justify-between w-full">
-                  <label htmlFor={item.key} className="text-white text-2xl leading-[120%] font-medium">
-  {item.label} (
-    <span className="text-[#AE85FF]">{formFields.airDrop[item.key]}</span>%
-    <span className="text-[#6EE7B7] ml-2 text-base font-normal">
-      {((formFields.token.totalSupply || 0) * (formFields.airDrop[item.key] / 100)).toLocaleString(undefined, { maximumFractionDigits: 4 })}
-    </span>
-    <span className="text-[#6EE7B7] ml-1 text-base font-normal">tokens</span>
-  )
-  {lockedSliders[item.key] && <span className="text-yellow-400 ml-2">🔒</span>}
-</label>
-                  <div className="flex items-center gap-2">
+              <div key={item.key} className="group relative bg-gradient-to-br from-purple-900/20 to-indigo-900/20 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/20 hover:border-purple-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10 hover:transform ">
+                <div className="flex items-center justify-between w-full mb-4">
+                  <label htmlFor={item.key} className="text-white text-2xl leading-[120%] font-semibold tracking-wide flex items-center gap-2">
+                    {item.label}
+                    <div className="flex items-center justify-between border border-brand5 px-3 py-2 rounded-md bg-gray-900 gap-3">
+                      <span className="text-white font-semibold text-lg">
+                        {formFields.airDrop[item.key]}%
+                      </span>
+                      <div className="flex items-baseline gap-1">
+                        (<span className="text-transparent bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-lg font-medium">
+                          {((formFields.token.totalSupply || 0) * (formFields.airDrop[item.key] / 100)).toLocaleString(undefined, { maximumFractionDigits: 4 })}
+                        </span>
+                        <span className="text-transparent bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-sm font-medium">
+                          tokens
+                        </span>)
+                      </div>
+                    </div>
+
+
+
+                    {lockedSliders[item.key] && <span className="text-yellow-400 ml-3 animate-bounce">🔒</span>}
+                  </label>
+
+                  <div className="flex items-center gap-3">
                     <button
                       onClick={() => toggleLock(item.key)}
-                      className={`p-1 rounded ${lockedSliders[item.key] 
-                        ? 'text-yellow-400 hover:text-yellow-300' 
-                        : 'text-gray-400 hover:text-gray-300'
-                      }`}
+                      className={`p-2 rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-110 ${lockedSliders[item.key]
+                        ? 'bg-yellow-500/20 text-yellow-400 hover:bg-yellow-500/30 shadow-lg shadow-yellow-500/20'
+                        : 'bg-gray-500/20 text-gray-400 hover:bg-gray-500/30 hover:text-gray-300'
+                        }`}
                       title={lockedSliders[item.key] ? 'Unlock slider' : 'Lock slider'}
                     >
-                      {lockedSliders[item.key] ? <FiLock size={18} /> : <FiUnlock size={18} />}
+                      {lockedSliders[item.key] ? <FiLock size={20} /> : <FiUnlock size={20} />}
                     </button>
                     <FiHelpCircle
-                      className="text-[#b59aec] cursor-pointer"
+                      className="text-purple-400 cursor-pointer hover:text-purple-300 transition-colors duration-300 hover:scale-110"
                       title={item.help}
-                      size={20}
+                      size={22}
                     />
                   </div>
                 </div>
-                <div className="text-[#b59aec] text-sm leading-[120%] font-normal self-stretch">
+
+                <div className="text-purple-300 text-sm leading-[140%] font-medium mb-6 px-2 opacity-80">
                   {item.help}
                 </div>
-                <div className="relative w-full">
+
+                <div className="relative w-full group">
                   <input
                     id={item.key}
                     name={item.key}
@@ -233,27 +249,76 @@ function AirDrop() {
                     value={formFields.airDrop[item.key]}
                     onChange={(e) => handleSliderChange(item.key, Number(e.target.value))}
                     disabled={lockedSliders[item.key]}
-                    className={`w-full  rounded-lg appearance-none cursor-pointer h-5 ${
-                      lockedSliders[item.key] 
-                        ? 'bg-gray-600 cursor-not-allowed opacity-50' 
-                        : 'bg-[#1B0D37] cursor-pointer'
-                    }`}
+                    className={`w-full rounded-xl appearance-none cursor-pointer h-6 transition-all duration-300 ${lockedSliders[item.key]
+                      ? 'bg-gray-600/50 cursor-not-allowed opacity-50'
+                      : 'bg-slate-800/50 cursor-pointer hover:h-7 shadow-inner'
+                      }`}
                     style={{
                       accentColor: lockedSliders[item.key] ? '#6B7280' : '#AE85FF',
-                      background: `linear-gradient(to right, #AE85FF 0%, #AE85FF ${formFields.airDrop[item.key]}%, #1B0D37 ${formFields.airDrop[item.key]}%, #1B0D37 100%)`
+                      background: `linear-gradient(to right, 
+               #AE85FF 0%, 
+               #AE85FF ${formFields.airDrop[item.key]}%, 
+               rgba(30, 20, 60, 0.8) ${formFields.airDrop[item.key]}%, 
+               rgba(30, 20, 60, 0.8) 100%),
+               linear-gradient(45deg, #1e1a3d 25%, transparent 25%, transparent 75%, #1e1a3d 75%, #1e1a3d),
+               linear-gradient(45deg, #1e1a3d 25%, transparent 25%, transparent 75%, #1e1a3d 75%, #1e1a3d)`
                     }}
                   />
+
+                  {/* Animated progress overlay */}
+                  <div
+                    className="absolute top-0 left-0 h-full rounded-xl bg-gradient-to-r from-purple-500/30 to-pink-500/30 transition-all duration-300 pointer-events-none"
+                    style={{ width: `${formFields.airDrop[item.key]}%` }}
+                  />
+
+                  {/* Glow effect */}
+                  <div
+                    className="absolute top-0 left-0 h-full rounded-xl bg-gradient-to-r from-purple-400/20 to-pink-400/20 blur-sm transition-all duration-300 pointer-events-none opacity-0 group-hover:opacity-100"
+                    style={{ width: `${formFields.airDrop[item.key]}%` }}
+                  />
+
                   {lockedSliders[item.key] && (
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <FiLock className="text-yellow-400" size={16} />
+                      <div className="bg-slate-800/80 backdrop-blur-sm rounded-full p-2">
+                        <FiLock className="text-yellow-400 drop-shadow-lg" size={18} />
+                      </div>
                     </div>
                   )}
+
+                  {/* Value indicator */}
+                  <div
+                    className="absolute -top-10 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none"
+                    style={{ left: `${Math.max(0, Math.min(90, formFields.airDrop[item.key] - 5))}%` }}
+                  >
+                    {formFields.airDrop[item.key]}%
+                  </div>
                 </div>
               </div>
             ))}
-            {/* Show sum for clarity */}
-            <div className="text-right w-full text-lg text-[#b59aec] pt-2">
-              Total: <span className={totalSlider === 100 ? 'text-green-400' : 'text-red-400'}>{totalSlider}</span>%
+
+            {/* Enhanced total display */}
+            <div className="relative hidden mt-8 p-6 bg-gradient-to-r from-slate-900/40 to-slate-800/40 backdrop-blur-md rounded-2xl border border-slate-700/50 shadow-2xl">
+              <div className="text-right w-full text-2xl font-bold pt-2">
+                <span className="text-slate-300">Total Allocation: </span>
+                <span className={`transition-all duration-500 text-3xl font-black ${totalSlider === 100
+                  ? 'text-transparent bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text  drop-shadow-lg'
+                  : 'text-transparent bg-gradient-to-r from-red-400 to-pink-400 bg-clip-text '
+                  }`}>
+                  {totalSlider}%
+                </span>
+
+                {/* Status indicator */}
+                <div className="mt-3 flex items-center justify-end gap-2">
+                  <div className={`w-3 h-3 rounded-full ${totalSlider === 100 ? 'bg-emerald-400  shadow-lg shadow-emerald-400/50' : 'bg-red-400  shadow-lg shadow-red-400/50'
+                    }`} />
+                  <span className={`text-sm font-medium ${totalSlider === 100 ? 'text-emerald-400' : 'text-red-400'
+                    }`}>
+                    {totalSlider === 100 ? 'Perfect Balance' : 'Needs Adjustment'}
+                  </span>
+                </div>
+              </div>
+
+
             </div>
           </div>
 
@@ -275,7 +340,7 @@ function AirDrop() {
             <input
               id="airdrop-start-time"
               name="airDropStartTime"
-              min={new Date().toISOString().slice(0, 16)}              type="datetime-local"
+              min={new Date().toISOString().slice(0, 16)} type="datetime-local"
               value={formFields.airDrop.airDropStartTime}
               onChange={handleInputChange}
               onClick={(e) => e.target.showPicker()}
@@ -307,7 +372,7 @@ function AirDrop() {
               onChange={handleInputChange}
               onClick={(e) => e.target.showPicker()}
               className="w-full p-4 border bg-[#1B0D37] border-[#5228A4] rounded-md text-white shadow-xs focus:outline-none focus:ring-1 [color-scheme:dark] focus:ring-purple-400"
-              min={formFields.airDrop.airDropStartTime || new Date().toISOString().slice(0, 16)}            />
+              min={formFields.airDrop.airDropStartTime || new Date().toISOString().slice(0, 16)} />
           </div>
 
           {/* Amount per AirDrop */}
