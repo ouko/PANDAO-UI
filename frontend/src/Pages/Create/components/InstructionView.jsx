@@ -30,22 +30,13 @@ const InstructionView = () => {
         </div>
       </div>
 
-
-
-
-
-
-
-
-
-
-
-
       <div className="flex md:flex-row flex-col items-center justify-center gap-4 md:gap-5 mt-2 mb-5 px-2 md:px-0">
         <StepsCard title="Select Template" step="Step 1" icon={CirclePlus} />
         <StepsCard title="Describe your DAO" step="Step 2" icon={Pen} />
-        <StepsCard title="Deploy" step="Step 3" icon={ShieldCheck} />
-
+        <StepsCard title="Token View" step="Step 3" icon={ShieldCheck} />
+        <StepsCard title="AirDrop" step="Step 4" icon={ShieldCheck} />
+        <StepsCard title="Governance" step="Step 5" icon={ShieldCheck} />
+        <StepsCard title="Deploy" step="Step 6" icon={ShieldCheck} />
       </div>
 
 
