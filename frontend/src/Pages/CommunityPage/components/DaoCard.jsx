@@ -5,12 +5,11 @@ import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
-
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { DialogDescription } from '@radix-ui/react-dialog'
 import { Card } from '@/components/ui/card'
 import { useAccount } from '@/AccountContext';
 import { toast } from 'sonner';
@@ -335,13 +334,13 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                     <tr className="border-t border-brand2">
                       <td className="px-3 py-2 text-brand7 font-medium">Token Price</td>
                       <td className="px-3 py-2 text-white font-bold">
-                        {daoData.token_price_in_fiat?.toFixed(4) || daoData.token_price || "-"} <span className="text-[#86efac]">XRD</span>
+                        { daoData.token_price || "-"} <span className="text-[#86efac]">XRD</span>
                       </td>
                     </tr>
                     <tr className="border-t border-brand2">
                       <td className="px-3 py-2 text-brand7 font-medium">Buy Back</td>
                       <td className="px-3 py-2 text-white font-bold">
-                        {daoData.token_buy_back_price_in_fiat?.toFixed(4) || daoData.token_buy_back_price || "-"} <span className="text-[#86efac]">XRD</span>
+                        { daoData.token_buy_back_price || "-"} <span className="text-[#86efac]">XRD</span>
                       </td>
                     </tr>
                   </tbody>
@@ -585,7 +584,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                                 </>
                               ) : (
                                 <>
-                                  <Sparkles className="w-5 h-5" />
+                                  <Sparkles className="w-5 h-5 mx-2"  />
                                   <span>Mint Airdrop Token</span>
                                 </>
                               )}
