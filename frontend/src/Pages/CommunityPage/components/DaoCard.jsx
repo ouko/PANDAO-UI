@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Check, Copy, Info, Clock, Gift, Target, Calendar, ChevronDown, Coins, PieChart } from 'lucide-react';
+import { Check, Copy, Info, Clock, Gift, Target, Calendar, ChevronDown, Coins, PieChart, Sparkles } from 'lucide-react';
 import { clipAddress } from '@/utils/functions/ClipAddress'
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
-
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { DialogDescription } from '@radix-ui/react-dialog'
 import { Card } from '@/components/ui/card'
 import { useAccount } from '@/AccountContext';
 import { toast } from 'sonner';
@@ -20,11 +19,18 @@ import useBluePrintSlugStore from '@/store/blueprintSlug';
 import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from "framer-motion";
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
 
 const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }) => {
   const [copied, setCopied] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [tokenInfoOpen, setTokenInfoOpen] = useState(false);
+  const [isMinting, setIsMinting] = useState(false);
 
   const [copied1, setCopied1] = useState(false);
   const [quickStartOpen, setQuickStartOpen] = useState(false);
@@ -160,8 +166,38 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
     setCopied1(true);
     setTimeout(() => {
       setCopied1(false);
-    }, 1000);
+    }, 2000);
   };
+
+  // Function to handle airdrop token minting
+  const handleMintAirdrop = async () => {
+    if (!accounts || accounts.length === 0) {
+      toast.error('Please connect your wallet first');
+      return;
+    }
+
+    setIsMinting(true);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/manifest/airdrop/mint`,
+        {
+          community_id: params.id,
+          user_address: accounts[0]?.address
+        }
+      );
+
+      if (response.status === 200) {
+        toast.success('Airdrop token minted successfully!');
+        if (onSuccess) onSuccess();
+      }
+    } catch (error) {
+      console.error('Error minting airdrop token:', error);
+      toast.error(error.response?.data?.message || 'Failed to mint airdrop token');
+    } finally {
+      setIsMinting(false);
+    }
+  };
+
   const getStatusColor = (status) => {
     switch (status) {
       case 'live': return 'bg-green-500/20 text-green-400 border-green-500/30 animate-pulse';
@@ -298,13 +334,13 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                     <tr className="border-t border-brand2">
                       <td className="px-3 py-2 text-brand7 font-medium">Token Price</td>
                       <td className="px-3 py-2 text-white font-bold">
-                        {daoData.token_price_in_fiat?.toFixed(4) || daoData.token_price || "-"} <span className="text-[#86efac]">XRD</span>
+                        { daoData.token_price || "-"} <span className="text-[#86efac]">XRD</span>
                       </td>
                     </tr>
                     <tr className="border-t border-brand2">
                       <td className="px-3 py-2 text-brand7 font-medium">Buy Back</td>
                       <td className="px-3 py-2 text-white font-bold">
-                        {daoData.token_buy_back_price_in_fiat?.toFixed(4) || daoData.token_buy_back_price || "-"} <span className="text-[#86efac]">XRD</span>
+                        { daoData.token_buy_back_price || "-"} <span className="text-[#86efac]">XRD</span>
                       </td>
                     </tr>
                   </tbody>
@@ -378,9 +414,9 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
         </div>
       </div>
       {/* Airdrop Section */}
-      <motion.div 
-      animate={{width : isOpen ? "896px" : "448px"}}
-      className={`w-full fixed bottom-2 right-4 z-20 `}>
+      <motion.div
+        animate={{ width: isOpen ? "896px" : "448px" }}
+        className={`w-full fixed bottom-2 right-4 z-20 `}>
         {daoData.airdrop && (
           <motion.div
             className="bg-gradient-to-br from-brand1 to-brand2 rounded-2xl border border-brand3 overflow-hidden shadow-2xl"
@@ -489,6 +525,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                           </div>
                         </div>
                       )}
+
                     </div>
 
                     {/* Allocation Breakdown */}
@@ -530,6 +567,30 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                             </tr>
                           </tfoot>
                         </table>
+
+                      </div>
+                      <div>
+                        {airdropStatus === 'live' && (
+                          <div className="mt-4 ">
+                            <Button
+                              onClick={handleMintAirdrop}
+                              variant="brand"
+                              disabled={isMinting}
+                            >
+                              {isMinting ? (
+                                <>
+                                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                                  <span>Minting...</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Sparkles className="w-5 h-5 mx-2"  />
+                                  <span>Mint Airdrop Token</span>
+                                </>
+                              )}
+                            </Button>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -540,177 +601,142 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
         )}
       </motion.div>
 
-      <div className=' pt-[4px]'>
-
-       {daoData.token_meta && (
-        <motion.div 
-          className="mt-6 bg-brand2/20 rounded-xl gap-2 border p border-brand3 overflow-hidden"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-        <button
-          onClick={() => setTokenInfoOpen(!tokenInfoOpen)}
-          className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
-        >
-          <div className="flex items-center gap-4">
-            <div className="p-3 rounded-full bg-brand6/10">
-              <Coins className="w-6 h-6 text-brand6" />
-            </div>
-            <div className="text-left">
-              <h2 className="text-xl font-bold text-white">Token Information</h2>
-              <p className="text-sm text-gray-300">View token details and allocation</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <ChevronDown
-              className={`w-5 h-5 text-white/60 transition-transform duration-300 ${!tokenInfoOpen ? 'rotate-180' : ''}`}
-            />
-          </div>
-        </button>
-
-        {/* Collapsible Token Content */}
-        <AnimatePresence initial={false}>
-          {tokenInfoOpen && (
-            <motion.div
-              key="token-content"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.25 }}
-              className="p-6"
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Token Details */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                    <Coins className="w-5 h-5 text-brand6" />
-                    Token Details
-                  </h3>
-                  <div className="bg-brand2/10 rounded-xl border border-brand3 overflow-hidden">
-                    <table className="w-full">
-                      <tbody>
-                        <tr className="border-b border-brand3">
-                          <td className="px-4 py-3 text-sm text-gray-300">Token Address</td>
-                          <td className="px-4 py-3 text-sm font-semibold text-white flex items-center justify-end">
-                            <span className="mr-2">{clipAddress(daoData.token_meta?.token_address)}</span>
-                            <button
-                              onClick={() => handleCopy(daoData.token_meta?.token_address)}
-                              className="p-1 hover:bg-brand3/20 rounded-full"
-                            >
-                              {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4 text-gray-400" />}
-                            </button>
-                          </td>
-                        </tr>
-                        <tr className="border-b border-brand3">
-                          <td className="px-4 py-3 text-sm text-gray-300">Token Price</td>
-                          <td className="px-4 py-3 text-sm font-semibold text-white text-right">
-                            XRD{daoData.token_meta?.token_price}
-                          </td>
-                        </tr>
-                        <tr className="border-b border-brand3">
-                          <td className="px-4 py-3 text-sm text-gray-300">Buy Back Price</td>
-                          <td className="px-4 py-3 text-sm font-semibold text-white text-right">
-                            XRD{daoData.token_meta?.token_buy_back_price}
-                          </td>
-                        </tr>
-                        <tr className="border-b border-brand3">
-                          <td className="px-4 py-3 text-sm text-gray-300">Total Supply</td>
-                          <td className="px-4 py-3 text-sm font-semibold text-white text-right">
-                            {daoData.token_meta?.total_token}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="px-4 py-3 text-sm text-gray-300">Available for Sale</td>
-                          <td className="px-4 py-3 text-sm font-semibold text-white text-right">
-                            {daoData.token_meta?.token_avaliable_for_sale}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+    
+        <div className='pt-[8px]'>
+          {daoData.token_meta && (
+            <Accordion type="single" collapsible className="w-full text-white  bg-[rgba(169,126,255,0.08)] rounded-[20px] border border-[#5228A4]">
+              <AccordionItem value="token-info" className="border-none">
+                <AccordionTrigger className="p-6 hover:no-underline [&[data-state=open]>div>div:last-child>svg]:rotate-180">
+                  <div className="flex items-center justify-between w-full">
+                    <div className="flex items-center gap-4">                   
+                        <img
+                          className=" rounded-full w-12 h-12 text-brand6"
+                          src={daoData.token_meta.token_image}
+                          alt="token Logo"
+                        />                   
+                      <div className="text-left">
+                        <h2 className="text-xl font-bold text-white">Token Information</h2>
+                        <p className="text-sm text-gray-300">View token details and allocation</p>
+                      </div>
+                    </div>                   
                   </div>
-                </div>
-
-                {/* Token Allocation */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                    <PieChart className="w-5 h-5 text-brand6" />
-                    Token Allocation
-                  </h3>
-                  <div className="bg-brand2/10 rounded-xl border border-brand3 overflow-hidden">
-                    <table className="w-full">
-                      <tbody>
-                        <tr className="border-b border-brand3">
-                          <td className="px-4 py-3 text-sm text-gray-300">Public Sale</td>
-                          <td className="px-4 py-3 text-sm font-semibold text-white text-right">
-                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-brand6/10 text-brand6">
-                              {daoData.token_meta?.public_sale}
-                            </span>
-                          </td>
-                        </tr>
-                        <tr className="border-b border-brand3">
-                          <td className="px-4 py-3 text-sm text-gray-300">Founding Team</td>
-                          <td className="px-4 py-3 text-sm font-semibold text-white text-right">
-                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-brand6/10 text-brand6">
-                              {daoData.token_meta?.founding_team}
-                            </span>
-                          </td>
-                        </tr>
-                        <tr className="border-b border-brand3">
-                          <td className="px-4 py-3 text-sm text-gray-300">Treasury</td>
-                          <td className="px-4 py-3 text-sm font-semibold text-white text-right">
-                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-brand6/10 text-brand6">
-                              {daoData.token_meta?.treasury}
-                            </span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="px-4 py-3 text-sm text-gray-300">Community Incentives</td>
-                          <td className="px-4 py-3 text-sm font-semibold text-white text-right">
-                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-brand6/10 text-brand6">
-                              {daoData.token_meta?.community_incentives}
-                            </span>
-                          </td>
-                        </tr>
-                      </tbody>
-                      <tfoot className="bg-brand2/20">
-                        <tr>
-                          <td className="px-4 py-3 text-sm font-semibold text-white">Tokens Bought</td>
-                          <td className="px-4 py-3 text-right">
-                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-green-500/10 text-green-500">
-                              {daoData.token_meta?.token_bought}
-                            </span>
-                          </td>
-                        </tr>
-                      </tfoot>
-                    </table>
-                  </div>
-                  
-                  {/* Token Image */}
-                  {daoData.token_meta?.token_image && (
-                    <div className="mt-4">
-                      <h4 className="text-sm font-medium text-gray-300 mb-2">Token Image</h4>
-                      <div className="rounded-lg overflow-hidden border border-brand3">
-                        <img 
-                          src={daoData.token_meta.token_image} 
-                          alt="Token" 
-                          className="w-full h-auto object-cover"
-                        />
+                </AccordionTrigger>
+                <AccordionContent className="p-6 pt-0">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* Token Details */}
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                        <Coins className="w-5 h-5 text-brand6" />
+                        Token Details
+                      </h3>
+                      <div className="bg-brand2/10 rounded-xl border border-brand3 overflow-hidden">
+                        <table className="w-full">
+                          <tbody>
+                            <tr className="border-b border-brand3">
+                              <td className="px-4 py-3 text-sm text-gray-300">Token Address</td>
+                              <td className="px-4 py-3 text-sm font-semibold text-white flex items-center justify-end">
+                                <span className="mr-2">{clipAddress(daoData.token_meta?.token_address)}</span>
+                                <button
+                                  onClick={() => handleCopy(daoData.token_meta?.token_address)}
+                                  className="p-1 hover:bg-brand3/20 rounded-full"
+                                >
+                                  {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4 text-gray-400" />}
+                                </button>
+                              </td>
+                            </tr>
+                            <tr className="border-b border-brand3">
+                              <td className="px-4 py-3 text-sm text-gray-300">Token Price</td>
+                              <td className="px-4 py-3 text-sm font-semibold text-white text-right">
+                                {daoData.token_meta?.token_price}XRD
+                              </td>
+                            </tr>
+                            <tr className="border-b border-brand3">
+                              <td className="px-4 py-3 text-sm text-gray-300">Buy Back Price</td>
+                              <td className="px-4 py-3 text-sm font-semibold text-white text-right">
+                                {daoData.token_meta?.token_buy_back_price}XRD
+                              </td>
+                            </tr>
+                            <tr className="border-b border-brand3">
+                              <td className="px-4 py-3 text-sm text-gray-300">Total Supply</td>
+                              <td className="px-4 py-3 text-sm font-semibold text-white text-right">
+                                {daoData.token_meta?.total_token}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="px-4 py-3 text-sm text-gray-300">Available for Sale</td>
+                              <td className="px-4 py-3 text-sm font-semibold text-white text-right">
+                                {daoData.token_meta?.token_avaliable_for_sale}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </div>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
-      )}
 
-      </div>
-      
+                    {/* Token Allocation */}
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                        <PieChart className="w-5 h-5 text-brand6" />
+                        Token Allocation
+                      </h3>
+                      <div className="bg-brand2/10 rounded-xl border border-brand3 overflow-hidden">
+                        <table className="w-full">
+                          <tbody>
+                            <tr className="border-b border-brand3">
+                              <td className="px-4 py-3 text-sm text-gray-300">Public Sale</td>
+                              <td className="px-4 py-3 text-sm font-semibold text-white text-right">
+                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-brand6/10 text-brand6">
+                                  {daoData.token_meta?.public_sale}
+                                </span>
+                              </td>
+                            </tr>
+                            <tr className="border-b border-brand3">
+                              <td className="px-4 py-3 text-sm text-gray-300">Founding Team</td>
+                              <td className="px-4 py-3 text-sm font-semibold text-white text-right">
+                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-brand6/10 text-brand6">
+                                  {daoData.token_meta?.founding_team}
+                                </span>
+                              </td>
+                            </tr>
+                            <tr className="border-b border-brand3">
+                              <td className="px-4 py-3 text-sm text-gray-300">Treasury</td>
+                              <td className="px-4 py-3 text-sm font-semibold text-white text-right">
+                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-brand6/10 text-brand6">
+                                  {daoData.token_meta?.treasury}
+                                </span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="px-4 py-3 text-sm text-gray-300">Community Incentives</td>
+                              <td className="px-4 py-3 text-sm font-semibold text-white text-right">
+                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-brand6/10 text-brand6">
+                                  {daoData.token_meta?.community_incentives}
+                                </span>
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tfoot className="bg-brand2/20">
+                            <tr>
+                              <td className="px-4 py-3 text-sm font-semibold text-white">Tokens Bought</td>
+                              <td className="px-4 py-3 text-right">
+                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-green-500/10 text-green-500">
+                                  {daoData.token_meta?.token_bought}
+                                </span>
+                              </td>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          )}
+        </div>
+
       {/* Token Information Section - Only show if token_meta exists */}
-     
+
       <Dialog open={quickStartOpen} onOpenChange={setQuickStartOpen}>
         <DialogTrigger></DialogTrigger>
         <DialogContent
