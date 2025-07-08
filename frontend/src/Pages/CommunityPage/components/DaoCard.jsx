@@ -25,12 +25,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { useSendTransaction } from '@/hooks/useSendTransaction';
 
 
 const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }) => {
   const [copied, setCopied] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
+  const sendTransaction = useSendTransaction()
 
   const [copied1, setCopied1] = useState(false);
   const [quickStartOpen, setQuickStartOpen] = useState(false);
@@ -171,32 +173,65 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
 
   // Function to handle airdrop token minting
   const handleMintAirdrop = async () => {
-    if (!accounts || accounts.length === 0) {
-      toast.error('Please connect your wallet first');
-      return;
-    }
-
-    setIsMinting(true);
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/manifest/airdrop/mint`,
-        {
-          community_id: params.id,
-          user_address: accounts[0]?.address
-        }
-      );
-
-      if (response.status === 200) {
-        toast.success('Airdrop token minted successfully!');
-        if (onSuccess) onSuccess();
+  if (!accounts || accounts.length === 0) {
+    toast.error('Please connect your wallet first');
+    return;
+  }
+  setIsMinting(true);
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/manifest/airdrop/mint`,
+      {
+        community_id: params.id,
+        user_address: accounts[0]?.address,
       }
-    } catch (error) {
-      console.error('Error minting airdrop token:', error);
-      toast.error(error.response?.data?.message || 'Failed to mint airdrop token');
-    } finally {
-      setIsMinting(false);
+    );
+
+    // The backend returns a manifest/transaction string or object
+    const responseData =
+      typeof response.data === 'string'
+        ? response.data.trim()
+        : JSON.stringify(response.data);
+
+    console.log('Airdrop Mint Response:', responseData);
+
+    // Send transaction
+    const { receipt } = await sendTransaction(responseData);
+    const txId = receipt?.transaction?.intent_hash;
+
+    if (txId) {
+      try {
+        const submitResponse = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/submit-tx`,
+          {
+            tx_id: txId,
+            user_address: accounts[0]?.address,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        console.log('Submit Transaction Response:', submitResponse.data);
+        toast.success('Airdrop token minted successfully!');
+        setBuyModal && setBuyModal(false); // If modal state exists
+        if (onSuccess) onSuccess();
+      } catch (submitError) {
+        console.error('Error submitting transaction:', submitError);
+        toast.error('Failed to submit transaction.');
+      }
+    } else {
+      console.error('Transaction ID not found in receipt:', receipt);
+      toast.error('Transaction failed. Please try again.');
     }
-  };
+  } catch (error) {
+    console.error('Error minting airdrop token:', error);
+    toast.error(error.response?.data?.message || 'Failed to mint airdrop token');
+  } finally {
+    setIsMinting(false);
+  }
+};
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -541,10 +576,10 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                                   <span>Minting...</span>
                                 </>
                               ) : (
-                                <>
+                                <div className="flex items-center gap-2">
                                   <Sparkles className="w-5 h-5 mx-2"  />
                                   <span>Mint Airdrop Token</span>
-                                </>
+                                </div>
                               )}
                             </Button>
                           </div>
