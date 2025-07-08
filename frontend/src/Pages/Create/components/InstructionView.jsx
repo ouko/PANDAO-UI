@@ -1,9 +1,59 @@
 import { ChevronRight, CirclePlus, Pen, ShieldCheck } from "lucide-react";
 import { StepsCard } from "./StepsCard";
 import useViewStore from "@/store/view";
+import { useRef, useState, useEffect } from "react";
 
 const InstructionView = () => {
   const { setView } = useViewStore();
+  const scrollContainerRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  // Mouse drag handlers
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+    scrollContainerRef.current.style.cursor = 'grabbing';
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll speed multiplier
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    scrollContainerRef.current.style.cursor = 'grab';
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+    scrollContainerRef.current.style.cursor = 'grab';
+  };
+
+  // Touch handlers for mobile
+  const handleTouchStart = (e) => {
+    setStartX(e.touches[0].pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+  };
+
+  const handleTouchMove = (e) => {
+    const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5; // Touch scroll speed
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.style.cursor = 'grab';
+    }
+  }, []);
 
   return (
     <div className="container mx-auto mt-10 z-50 ">
@@ -22,23 +72,41 @@ const InstructionView = () => {
           <span>
           Welcome to the How to Build Your DAO hub. Here you can find a variety of
             guides and resources to assist you in forming and operating your own
-            Decentralized Autonomous Organization . If you’re unfamiliar with what a
+            Decentralized Autonomous Organization . If you're unfamiliar with what a
             DAO is or an experienced builder interested in exploring the best practices,
-            we’ve compiled the ideal tutorials for you. Check our collection and get the
+            we've compiled the ideal tutorials for you. Check our collection and get the
             skills you need to create, launch, and regulate your DAO.
           </span>
         </div>
       </div>
 
-      <div className="flex md:flex-row flex-col items-center justify-center gap-4 md:gap-5 mt-2 mb-5 px-2 md:px-0">
-        <StepsCard title="Select Template" step="Step 1" icon={CirclePlus} />
-        <StepsCard title="Describe your DAO" step="Step 2" icon={Pen} />
-        <StepsCard title="Token View" step="Step 3" icon={ShieldCheck} />
-        <StepsCard title="AirDrop" step="Step 4" icon={ShieldCheck} />
-        <StepsCard title="Governance" step="Step 5" icon={ShieldCheck} />
-        <StepsCard title="Deploy" step="Step 6" icon={ShieldCheck} />
+      {/* Enhanced Horizontal Scrollable Steps Container */}
+      <div className="w-full mt-2 mb-5 px-2 md:px-0">
+        <div 
+          ref={scrollContainerRef}
+          className="overflow-x-auto scrollbar-hidden scroll-smooth"
+          style={{ 
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            WebkitOverflowScrolling: 'touch'
+          }}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+        >
+          <div className="flex gap-4 md:gap-5 min-w-max pb-2 select-none">
+            <StepsCard title="Select Template" step="Step 1" icon={CirclePlus} />
+            <StepsCard title="Describe your DAO" step="Step 2" icon={Pen} />
+            <StepsCard title="Token View" step="Step 3" icon={ShieldCheck} />
+            <StepsCard title="AirDrop" step="Step 4" icon={ShieldCheck} />
+            <StepsCard title="Governance" step="Step 5" icon={ShieldCheck} />
+            <StepsCard title="Deploy" step="Step 6" icon={ShieldCheck} />
+          </div>
+        </div>
       </div>
-
 
       <div className="flex items-center mt-10 justify-center ">
           {/* <Button

@@ -270,3 +270,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 input[type="datetime-local"] {
   color-scheme: dark;
 }
+
+/* Hide scrollbar utility for horizontal/vertical scroll areas */
+.scrollbar-hidden {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
