@@ -118,7 +118,7 @@ const TotalFund = ({ data }) => {
                     <div className="w-full sm:w-auto flex justify-end">
                         <button
                             onClick={() => setWithDrawModal(true)}
-                            className="rounded-[26px] px-4 py-2 bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] text-black text-sm leading-5 font-medium w-full sm:w-auto"
+                            className="rounded-[26px] px-4 py-2 bg-gradient-to-b from-[rgba(192,161,255,1)] to-[rgba(130,69,255,1)] shadow-[inset_0px_0px_2px_1px_rgba(255,255,255,0.25)] text-white text-sm leading-5 font-medium w-full sm:w-auto"
                         >
                             Withdraw Request
                         </button>

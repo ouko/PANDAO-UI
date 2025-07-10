@@ -1,5 +1,3 @@
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import PropTypes from 'prop-types'
@@ -117,44 +115,43 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
               failedTransaction.map((activity, index) => (
                 <div
                   key={index}
-                  className="w-full p-4 bg-gradient-to-br from-[rgba(39,18,76,0.68)] to-brand1 shadow-lg rounded-xl border border-brand3 flex flex-col gap-3 transition-transform transform"
+                  className="w-full p-4 sm:p-6 bg-gradient-to-br from-[rgba(39,18,76,0.68)] to-brand1 shadow-lg rounded-xl border border-brand3 flex flex-col gap-4 transition-transform transform"
                 >
                   {/* Header */}
-                  <div className="flex justify-between items-center flex-wrap">
-                    <p className="text-base md:text-lg font-bold text-red-500">
+                  <div className="flex justify-between items-center flex-wrap gap-2">
+                    <p className="text-sm sm:text-base md:text-lg font-bold text-red-500">
                       Pending Transaction
                     </p>
                   </div>
 
-                  {/* Details */}
-                  <div className="flex flex-col gap-2 text-sm text-gray-300">
-                    <p>
-                      <span className="font-semibold text-white">Creator:</span> {activity.creator}
+                  <div className="flex flex-col gap-2 text-xs sm:text-sm text-gray-300">
+                    <p className='break-all '>
+                      <span className="font-semibold text-brand6 mx-[2px]">Creator:</span> {activity.creator}
                     </p>
                     <p>
-                      <span className="font-semibold text-white">Event Type:</span> {activity.event_type}
+                      <span className="font-semibold text-brand6 mx-1">Event Type:</span> {activity.event_type}
                     </p>
                     <p>
-                      <span className="font-semibold text-white">Error:</span> {activity.error}
+                      <span className="font-semibold text-brand6 mx-1">Error:</span> {activity.error}
                     </p>
-                    <p>
-                      <span className="font-semibold text-white">Transaction Hash:</span> {activity.tx_hash}
+                    <p className="break-all">
+                      <span className="font-semibold text-brand6 mx-1">Transaction Hash:</span> {activity.tx_hash}
                     </p>
                     <p className="text-gray-400">
-                      <span className="font-semibold text-white">Date:</span> {new Date(activity.date).toLocaleString()}
+                      <span className="font-semibold text-brand6 mx-1">Date:</span> {new Date(activity.date).toLocaleString()}
                     </p>
                   </div>
 
-                  {/* Button */}
-                  <div className="mt-2">
+                  <div className="mt-3">
                     <Link
                       to={`https://stokenet-dashboard.radixdlt.com/transaction/${activity.tx_hash}/summary`}
-                      className="block w-full sm:w-auto text-center rounded-[26px] py-2 px-4 bg-gradient-to-b from-purple-300 to-purple-600 text-white text-sm font-medium shadow-inner hover:shadow-lg hover:scale-[1.02] transition-all duration-300"
+                      className="block w-full sm:w-1/2 text-center rounded-full py-2 px-4 bg-gradient-to-b from-purple-300 to-purple-600 text-white text-sm font-medium shadow-inner hover:shadow-lg hover:scale-105 transition-all duration-300"
                     >
                       View Transaction
                     </Link>
                   </div>
                 </div>
+
 
               ))}
           </div>
@@ -164,16 +161,30 @@ const UserTransaction = ({ expneseData, failedTransaction }) => {
 
   )
 }
+
 UserTransaction.propTypes = {
   expneseData: PropTypes.arrayOf(
     PropTypes.shape({
       community_image: PropTypes.string.isRequired,
       community_name: PropTypes.string.isRequired,
+      community_id: PropTypes.string.isRequired,
       xrd_spent_on: PropTypes.string.isRequired,
+      xrd_spent_on_transactions: PropTypes.number,
+      xrd_spent_on_assets: PropTypes.number,
       xrd_spent: PropTypes.number.isRequired,
-      date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)])
-        .isRequired,
-    }),
+      tx_hash: PropTypes.string.isRequired,
+      date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]).isRequired,
+    })
   ).isRequired,
-}
+  failedTransaction: PropTypes.arrayOf(
+    PropTypes.shape({
+      creator: PropTypes.string,
+      event_type: PropTypes.string,
+      error: PropTypes.string,
+      tx_hash: PropTypes.string.isRequired,
+      date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]).isRequired,
+    })
+  ).isRequired,
+};
+
 export default UserTransaction

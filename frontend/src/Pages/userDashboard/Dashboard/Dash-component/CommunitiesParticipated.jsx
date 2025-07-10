@@ -1,21 +1,30 @@
+import PropTypes from "prop-types";
 import BrandCard2 from "@/components/ui/myComponents/brand-cards";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-
-const CommunitiesParticipated = ({ participatedCommunities }) => {
+const CommunitiesParticipated = ({ participatedCommunities = [] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [cardsPerSlide, setCardsPerSlide] = useState(1);
+
+  useEffect(() => {
+    const updateCardsPerSlide = () => {
+      setCardsPerSlide(window.innerWidth >= 768 ? 2 : 1);
+    };
+
+    updateCardsPerSlide();
+    window.addEventListener("resize", updateCardsPerSlide);
+    return () => window.removeEventListener("resize", updateCardsPerSlide);
+  }, []);
+
+  const maxIndex = Math.ceil(participatedCommunities.length / cardsPerSlide) - 1;
 
   const handleNext = () => {
-    setCurrentIndex((prev) =>
-      prev + 2 >= participatedCommunities.length ? 0 : prev + 2
-    );
+    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) =>
-      prev - 2 < 0 ? Math.max(participatedCommunities.length - 2, 0) : prev - 2
-    );
+    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   };
 
   return (
@@ -27,18 +36,21 @@ const CommunitiesParticipated = ({ participatedCommunities }) => {
       </div>
 
       <div className="relative px-6">
-        <div className="overflow-hidden">
+        <div className="overflow-hidden w-full">
           <div
-           className="flex transition-transform py-4 duration-500 ease-in-out"
-            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{ transform: `translateX(-${currentIndex * (100 / cardsPerSlide)}%)` }}
           >
             {participatedCommunities.length === 0 ? (
-              <div className="flex items-center justify-center h-24 text-white min-w-full">
+              <div className="flex items-center justify-center h-24 text-white w-full">
                 No participated communities.
               </div>
             ) : (
               participatedCommunities.map((dao, index) => (
-               <div key={dao.community_id || index} className="min-w-full md:min-w-[40%] px-2">
+                <div
+                  key={dao?.community_id || index}
+                  className="w-full md:w-1/2 shrink-0 px-2 py-4"
+                >
                   <BrandCard2 dao={dao} />
                 </div>
               ))
@@ -46,7 +58,7 @@ const CommunitiesParticipated = ({ participatedCommunities }) => {
           </div>
         </div>
 
-        {participatedCommunities.length > 2 && (
+        {participatedCommunities.length > cardsPerSlide && (
           <div className="flex justify-end gap-4 mt-4 py-3">
             <button
               onClick={handlePrev}
@@ -65,6 +77,14 @@ const CommunitiesParticipated = ({ participatedCommunities }) => {
       </div>
     </div>
   );
+};
+
+CommunitiesParticipated.propTypes = {
+  participatedCommunities: PropTypes.arrayOf(PropTypes.object),
+};
+
+CommunitiesParticipated.defaultProps = {
+  participatedCommunities: [],
 };
 
 export default CommunitiesParticipated;

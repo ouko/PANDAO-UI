@@ -254,12 +254,77 @@ const TokenCard = ({ data, onSuccess }) => {
 
   return (
     <div className="bg-[rgba(169,126,255,0.08)] rounded-[10px] border border-[#5228A4]  px-4 pb-6 shrink-0 min-h-[345px] relative overflow-hidden backdrop-blur-[6.7px] w-full max-w-full">
-      <div className="bg-[#39246b] px-4 flex flex-col sm:flex-row items-start sm:items-center justify-between w-full h-auto sm:h-[63px] absolute left-0 top-0 py-4 sm:py-0">
-        <div className="text-white text-xl sm:text-2xl font-medium border-b-2 border-brand5 sm:border-b-0 mb-2 sm:mb-0">
+      <div className="bg-[#39246b] px-4 flex flex-col sm:flex-row items-start sm:items-center justify-between w-full  sm:h-[63px] absolute left-0 top-0 py-2 sm:py-0">
+        <div className="text-white text-xl sm:text-2xl font-medium  border-brand5 sm:border-b-0 mb-2 sm:mb-0">
           {data.name}
         </div>
+      </div>
+      <div className="flex flex-col gap-[25px] items-start justify-start mt-10 md:mt-5 ">
+        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between w-full mt-[75px]">
+          <div className="flex items-center gap-4 w-full">
+            <div className="rounded-full w-[45px] h-[45px] overflow-hidden">
+              <img src="/radix.webp" className="w-full h-full object-cover" alt="Token Icon" />
+            </div>
+            <div className="text-white text-2xl sm:text-4xl font-medium">{data.total_token} Tokens</div>
+          </div>
 
-        <div className="flex flex-wrap gap-2 sm:gap-[5px]">
+          <select
+            value={selected.code}
+            onChange={handleChange}
+            className="text-white bg-[rgba(169,126,255,0.2)] backdrop-blur-md border p-2 rounded-xl border-brand3 w-full sm:w-auto"
+          >
+            {currencies.map((c) => (
+              <option key={c.code} value={c.code} className="bg-brand5">
+                {c.symbol} - {c.code}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="w-full overflow-x-auto mt-4">
+          <table className="table-auto w-full text-sm sm:text-lg">
+            <tbody className="text-white">
+              <tr>
+                <td className="pr-2 sm:pr-4 text-purple-400 uppercase font-medium">Token Price:</td>
+                <td>{data.token_price} XRD</td>
+              </tr>
+              <tr>
+                <td className="pr-2 sm:pr-4 text-purple-400 uppercase font-medium">Token Buy Back Price:</td>
+                <td>{data.token_buy_back_price} XRD</td>
+              </tr>
+              <tr>
+                <td className="pr-2 sm:pr-4 text-purple-400 uppercase font-medium">Token Price in {selected.code}:</td>
+                <td>
+                  {tokenPriceLoading ? (
+                    <div className="inline-block h-[1em] w-12 rounded bg-brand5 animate-pulse align-text-bottom" />
+                  ) : tokenPrice ? (
+                    (Math.round(tokenPrice.token_price_in_fiat * 10000) / 10000).toFixed(4)
+                  ) : (
+                    '0'
+                  )}{' '}
+                  {selected.symbol}
+                </td>
+              </tr>
+              <tr>
+                <td className="pr-2 sm:pr-4 text-purple-400 uppercase font-medium">Buy Back Price in {selected.code}:</td>
+                <td>
+                  {tokenPriceLoading ? (
+                    <div className="inline-block h-[1em] w-12 rounded bg-brand5 animate-pulse align-text-bottom" />
+                  ) : tokenPrice ? (
+                    (Math.round(tokenPrice.token_buy_back_price_in_fiat * 10000) / 10000).toFixed(4)
+                  ) : (
+                    '0'
+                  )}{' '}
+                  {selected.symbol}
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      
+       <div className="flex flex-wrap justify-end gap-2 sm:gap-[5px] items-end mt-4">
           {data.total_token > 0 && data.token_bought > 0 && (
             <div>
               <Dialog open={openSellModal} onOpenChange={setSellModal}>
@@ -363,78 +428,6 @@ const TokenCard = ({ data, onSuccess }) => {
           )}
 
         </div>
-      </div>
-
-
-      <div className="flex flex-col gap-[25px] items-start justify-start mt-10 md:mt-5 ">
-        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between w-full mt-[75px]">
-          <div className="flex items-center gap-4 w-full">
-            <div className="rounded-full w-[45px] h-[45px] overflow-hidden">
-              <img src="/radix.webp" className="w-full h-full object-cover" alt="Token Icon" />
-            </div>
-            <div className="text-white text-2xl sm:text-4xl font-medium">{data.total_token} Tokens</div>
-          </div>
-
-          <select
-            value={selected.code}
-            onChange={handleChange}
-            className="text-white bg-[rgba(169,126,255,0.2)] backdrop-blur-md border p-2 rounded-xl border-brand3 w-full sm:w-auto"
-          >
-            {currencies.map((c) => (
-              <option key={c.code} value={c.code} className="bg-brand5">
-                {c.symbol} - {c.code}
-              </option>
-            ))}
-          </select>
-        </div>
-
-
-
-        <div className="w-full overflow-x-auto mt-4">
-          <table className="table-auto w-full text-sm sm:text-lg">
-            <tbody className="text-white">
-              <tr>
-                <td className="pr-2 sm:pr-4 text-purple-400 uppercase font-medium">Token Price:</td>
-                <td>{data.token_price} XRD</td>
-              </tr>
-              <tr>
-                <td className="pr-2 sm:pr-4 text-purple-400 uppercase font-medium">Token Buy Back Price:</td>
-                <td>{data.token_buy_back_price} XRD</td>
-              </tr>
-              <tr>
-                <td className="pr-2 sm:pr-4 text-purple-400 uppercase font-medium">Token Price in {selected.code}:</td>
-                <td>
-                  {tokenPriceLoading ? (
-                    <div className="inline-block h-[1em] w-12 rounded bg-brand5 animate-pulse align-text-bottom" />
-                  ) : tokenPrice ? (
-                    (Math.round(tokenPrice.token_price_in_fiat * 10000) / 10000).toFixed(4)
-                  ) : (
-                    '0'
-                  )}{' '}
-                  {selected.symbol}
-                </td>
-              </tr>
-              <tr>
-                <td className="pr-2 sm:pr-4 text-purple-400 uppercase font-medium">Buy Back Price in {selected.code}:</td>
-                <td>
-                  {tokenPriceLoading ? (
-                    <div className="inline-block h-[1em] w-12 rounded bg-brand5 animate-pulse align-text-bottom" />
-                  ) : tokenPrice ? (
-                    (Math.round(tokenPrice.token_buy_back_price_in_fiat * 10000) / 10000).toFixed(4)
-                  ) : (
-                    '0'
-                  )}{' '}
-                  {selected.symbol}
-                </td>
-
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-
-
-      </div>
       {data && <div className="mt-10 ">
         <div className="flex-1 pb-0 ">
           <ChartContainer
