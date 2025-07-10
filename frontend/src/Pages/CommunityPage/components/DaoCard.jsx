@@ -453,7 +453,7 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
           <Accordion type="single" collapsible className="w-full text-white  bg-[rgba(169,126,255,0.08)] rounded-[20px] border border-[#5228A4]">
             <AccordionItem value="token-info" className="border-none">
               <AccordionTrigger className="p-6 hover:no-underline [&[data-state=open]>div>div:last-child>svg]:rotate-180">
-                <div className="flex items-center justify-between px-4 w-full">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-4 w-full">
                   <div className="flex items-center gap-4">
                     <img
                       className="rounded-full w-12 h-12 text-brand6"
@@ -466,12 +466,11 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                     </div>
                   </div>
                   <div
-                    className={`px-8 py-2 rounded-full border font-semibold text-sm ${getStatusColor(airdropStatus)}`}
+                    className={`px-6 py-2 rounded-full border font-semibold text-sm text-center sm:text-right w-fit ${getStatusColor(airdropStatus)}`}
                   >
                     {getStatusText(airdropStatus)}
                   </div>
                 </div>
-
               </AccordionTrigger>
               <AccordionContent className="p-6 pt-0">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -713,6 +712,79 @@ const DaoCard = ({ daoData, isUserParticipant, setExecOpen, onSuccess, isOwner }
                       </div>
 
                     </div>
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        )}
+
+        {/* Proposal Protocol Section */}
+        {daoData.proposal_protocol && (
+          <Accordion type="single" collapsible className="w-full text-white bg-[rgba(169,126,255,0.08)] rounded-[20px] border border-[#5228A4] mt-4">
+            <AccordionItem value="proposal-protocol" className="border-none">
+              <AccordionTrigger className="p-6 hover:no-underline [&[data-state=open]>div>div:last-child>svg]:rotate-180">
+                <div className="flex items-center justify-between px-4 w-full">
+                  <div className="flex items-center gap-4">
+                    <img
+                      className="rounded-full w-12 h-12 text-brand6"
+                      src={daoData.image}
+                      alt="token Logo"
+                    />
+                    <div className="text-left">
+                      <h2 className="text-xl font-bold text-white">Proposal Protocol</h2>
+                      <p className="text-sm text-gray-300">View proposal settings and requirements</p>
+                    </div>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="p-6 pt-0">
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <Target className="w-5 h-5 text-brand6" />
+                    Proposal Settings
+                  </h3>
+                  <div className="bg-brand2/10 rounded-xl border border-brand3 overflow-hidden">
+                    <table className="w-full">
+                      <tbody>
+                        <tr className="border-b border-brand3">
+                          <td className="px-4 py-3 text-sm text-gray-300">Proposal Threshold</td>
+                          <td className="px-4 py-3 text-sm font-semibold text-white text-right">
+                            {daoData.proposal_protocol.proposal_threshold}
+                          </td>
+                        </tr>
+                        <tr className="border-b border-brand3">
+                          <td className="px-4 py-3 text-sm text-gray-300">Voting Period</td>
+                          <td className="px-4 py-3 text-sm font-semibold text-white text-right">
+                            {daoData.proposal_protocol.voting_period_days} days
+                          </td>
+                        </tr>
+                        <tr className="border-b border-brand3">
+                          <td className="px-4 py-3 text-sm text-gray-300">Quorum Percentage</td>
+                          <td className="px-4 py-3 text-sm font-semibold text-white text-right">
+                            {daoData.proposal_protocol.quorum_percentage}%
+                          </td>
+                        </tr>
+                        <tr className="border-b border-brand3">
+                          <td className="px-4 py-3 text-sm text-gray-300">Pass Threshold</td>
+                          <td className="px-4 py-3 text-sm font-semibold text-white text-right">
+                            {daoData.proposal_protocol.pass_threshold_percentage}%
+                          </td>
+                        </tr>
+                        <tr className="border-b border-brand3">
+                          <td className="px-4 py-3 text-sm text-gray-300">Proposal Right</td>
+                          <td className="px-4 py-3 text-sm font-semibold text-white text-right">
+                            <span className="capitalize">{daoData.proposal_protocol.proposal_right.replace(/_/g, ' ')}</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="px-4 py-3 text-sm text-gray-300">Minimum Token Required</td>
+                          <td className="px-4 py-3 text-sm font-semibold text-white text-right">
+                            {daoData.proposal_protocol.proposal_minimum_token}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </AccordionContent>
