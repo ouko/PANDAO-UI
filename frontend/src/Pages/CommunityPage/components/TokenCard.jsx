@@ -324,7 +324,7 @@ const TokenCard = ({ data, onSuccess }) => {
       </div>
 
       
-       <div className="flex flex-wrap gap-2 sm:gap-[5px] items-center mt-4">
+       <div className="flex flex-wrap justify-end gap-2 sm:gap-[5px] items-end mt-4">
           {data.total_token > 0 && data.token_bought > 0 && (
             <div>
               <Dialog open={openSellModal} onOpenChange={setSellModal}>
