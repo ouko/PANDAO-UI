@@ -15,6 +15,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { SkeletonCard } from "../GlobalComponents/Skeleton";
+import { Coins } from "lucide-react";
 
 
 const TokenDistribution = () => {
@@ -103,48 +104,55 @@ const TokenDistribution = () => {
                 </div>
               </div>
 
-              <div className=" bg-[rgba(169,126,255,0.08)] rounded-[10px] z-50 border border-[#5228A4] h-full relative  overflow-hidden">
+              <div className="bg-[rgba(24,18,45,0.9)] text-white rounded-2xl border border-[#7b3fe4]/50 shadow-xl backdrop-blur-sm overflow-hidden">
                 {isLoading ? (
-                  <div className="flex flex-col h-auto items-center justify-center text-center mt-5">
+                  <div className="flex flex-col items-center justify-center p-8">
                     {[...Array(4)].map((_, i) => (
-                      <SkeletonCard key={i} />
+                      <SkeletonCard key={i} className="w-full max-w-3xl mb-4" />
                     ))}
                   </div>
                 ) : (
                   <>
                     <Table>
-                      {/* <TableCaption>A list of your recent .</TableCaption> */}
                       <TableHeader>
-                        <TableRow className="bg-[#39246b] h-[65px] hover:bg-[#39246b] text-white text-[20px] ">
-                          <TableHead className="w-[150px] text-white  ">User Name</TableHead>
-                          <TableHead className="w-[150px] text-white  " >Token Owned</TableHead>
-                          <TableHead className="w-[150px] text-white  " >Address</TableHead>
-                          {/* <TableHead className="text-right">Amount</TableHead> */}
+                        <TableRow className="bg-[#2e1a5c] h-16 hover:bg-[#2e1a5c] text-white text-lg font-medium border-[#7b3fe4]/50">
+                          <TableHead className="text-white w-[200px] pl-6">User Name</TableHead>
+                          <TableHead className="text-white w-[200px]">Token Owned</TableHead>
+                          <TableHead className="text-white w-[200px]">Address</TableHead>
                         </TableRow>
                       </TableHeader>
-
-                      <TableBody className="text-[18px] bg-gradient-to-br from-[rgba(24,18,45,0.59)]  via-transparent to-brand1  border-2 border-brand2  px-2 py-2 text-brand7">
+                      <TableBody className="text-base bg-gradient-to-b from-[rgba(24,18,45,0.9)] to-[rgba(75,37,142,0.2)]">
                         {tokens.map((token, index) => (
-                          <TableRow key={index} className="hover:bg-[#7057ab] hover:text-white ">
-                            <TableCell className="font-medium  ">
-                              {" "}
+                          <TableRow
+                            key={index}
+                            className="hover:bg-[#4b258e]/50 transition-colors duration-200 border-b border-[#7b3fe4]/20"
+                          >
+                            <TableCell className="font-medium pl-6 py-4">
                               {token.user_name}
                             </TableCell>
-                            <TableCell className>{token.token_owned}</TableCell>
-                            <TableCell onClick={() =>
-                              navigate(
-                                `/userDashboard/userProfile/${token.public_address}`
-                              )
-                            }  >
+                            <TableCell className="py-4">
+                              <span className="flex items-center gap-2 text-[#b8a1ff] font-semibold">
+                                {token.token_owned}
+                                <Coins className="w-5 h-5 text-[#b8a1ff]" />
+                              </span>
+                            </TableCell>
+                            <TableCell
+                              className="py-4 cursor-pointer hover:text-[#b8a1ff] transition-colors duration-150"
+                              onClick={() =>
+                                navigate(`/userDashboard/userProfile/${token.public_address}`)
+                              }
+                            >
                               {clipAddress(token.public_address)}
                             </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
                     </Table>
-                    {tokens.length === 0 && <div className="flex items-center justify-center h-20 text-white">
-                      No trade happened yet.
-                    </div>}
+                    {tokens.length === 0 && (
+                      <div className="flex items-center justify-center h-24 text-white/80 text-lg">
+                        No trades have occurred yet.
+                      </div>
+                    )}
                   </>
                 )}
               </div>
